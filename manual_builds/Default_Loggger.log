@@ -1,0 +1,25 @@
+2025-06-25 18:41:42.939137 starting: opening Default_Loggger.log for logging
+2025-06-25 18:41:42.940137 starting: plot res_1to1
+2025-06-25 18:41:42.942913 starting: plotting 1to1 for oname:cum_otype:lst_usecol:drn
+2025-06-25 18:41:43.068054 finished: plotting 1to1 for oname:cum_otype:lst_usecol:drn took: 0:00:00.125141
+2025-06-25 18:41:43.068054 starting: plotting 1to1 for oname:cum_otype:lst_usecol:rcha
+2025-06-25 18:41:43.105383 finished: plotting 1to1 for oname:cum_otype:lst_usecol:rcha took: 0:00:00.037329
+2025-06-25 18:41:43.105383 starting: plotting 1to1 for oname:cum_otype:lst_usecol:wel
+2025-06-25 18:41:43.142141 finished: plotting 1to1 for oname:cum_otype:lst_usecol:wel took: 0:00:00.036758
+2025-06-25 18:41:43.142141 starting: plotting 1to1 for oname:cum_otype:lst_usecol:wel2
+2025-06-25 18:41:43.180744 finished: plotting 1to1 for oname:cum_otype:lst_usecol:wel2 took: 0:00:00.038603
+2025-06-25 18:41:43.180744 starting: plotting 1to1 for oname:springobs_otype:lst_usecol:pk2_head
+2025-06-25 18:41:44.094644 finished: plotting 1to1 for oname:springobs_otype:lst_usecol:pk2_head took: 0:00:00.913900
+2025-06-25 18:41:44.094644 starting: plotting 1to1 for oname:springobs_otype:lst_usecol:pk4_head
+2025-06-25 18:41:44.131705 finished: plotting 1to1 for oname:springobs_otype:lst_usecol:pk4_head took: 0:00:00.037061
+2025-06-25 18:41:44.131705 starting: plotting 1to1 for oname:springobs_otype:lst_usecol:pk4_pk2_diff
+2025-06-25 18:41:44.161468 finished: plotting 1to1 for oname:springobs_otype:lst_usecol:pk4_pk2_diff took: 0:00:00.029763
+2025-06-25 18:41:44.161468 starting: plotting 1to1 for oname:springobs_otype:lst_usecol:spring_flux
+2025-06-25 18:41:44.202419 finished: plotting 1to1 for oname:springobs_otype:lst_usecol:spring_flux took: 0:00:00.040951
+2025-06-25 18:41:44.202419 starting: plotting 1to1 for oname:springobs_otype:lst_usecol:spring_pk2_diff
+2025-06-25 18:41:44.843515 finished: plotting 1to1 for oname:springobs_otype:lst_usecol:spring_pk2_diff took: 0:00:00.641096
+2025-06-25 18:41:44.843515 starting: plotting 1to1 for oname:springobs_otype:lst_usecol:spring_pk4_diff
+2025-06-25 18:41:44.881813 finished: plotting 1to1 for oname:springobs_otype:lst_usecol:spring_pk4_diff took: 0:00:00.038298
+2025-06-25 18:41:44.881813 starting: plotting 1to1 for springobs
+2025-06-25 18:41:44.911356 finished: plotting 1to1 for springobs took: 0:00:00.029543
+2025-06-25 18:41:45.248159 finished: plot res_1to1 took: 0:00:02.308022

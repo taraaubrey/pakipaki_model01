@@ -1,0 +1,19 @@
+2025-06-25 18:42:07.505294 starting: opening ensemble_helper.log for logging
+2025-06-25 18:42:07.505294 starting: pyemu.plot_utils.ensemble_helper()
+2025-06-25 18:42:07.505294 plotting 7 histograms
+2025-06-25 18:42:07.505294 saving pdf to None
+2025-06-25 18:42:07.505294 starting: plotting reals for drn cum
+2025-06-25 18:42:07.605587 drn cum min:-217628, max:-754.948
+2025-06-25 18:42:07.646973 starting: plotting reals for pk2 springobs
+2025-06-25 18:42:07.660494 pk2 springobs min:6.32212, max:14.0672
+2025-06-25 18:42:07.702749 starting: plotting reals for pk4 springobs
+2025-06-25 18:42:07.710740 pk4 springobs min:-0.81642, max:0.722779
+2025-06-25 18:42:07.753441 starting: plotting reals for rcha cum
+2025-06-25 18:42:07.761716 rcha cum min:6.7824, max:1729.46
+2025-06-25 18:42:07.804685 starting: plotting reals for spring springobs
+2025-06-25 18:42:07.812693 spring springobs min:-5.10085, max:0.104746
+2025-06-25 18:42:07.857462 starting: plotting reals for wel cum
+2025-06-25 18:42:07.865461 wel cum min:41.8411, max:3883.36
+2025-06-25 18:42:07.906125 starting: plotting reals for wel2 cum
+2025-06-25 18:42:07.912454 wel2 cum min:19.4124, max:4533.43
+2025-06-25 18:42:08.204980 finished: pyemu.plot_utils.ensemble_helper() took: 0:00:00.699686
