@@ -1,0 +1,21 @@
+chmod: cannot access './examples/pakipaki_model01/bin/*': No such file or directory
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+ModuleNotFoundError: No module named 'pyemu'
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+ModuleNotFoundError: No module named 'flopy'
+
+[notice] A new release of pip is available: 24.0 -> 25.2
+[notice] To update, run: pip install --upgrade pip
+
+[notice] A new release of pip is available: 24.0 -> 25.2
+[notice] To update, run: pip install --upgrade pip
+/var/spool/slurmd/job14404/slurm_script: line 85: cd: /tmp/pest_mc_14404/examples/pakipaki_model01/manual_builds/dvc_scripts: No such file or directory
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+ModuleNotFoundError: No module named 'setup'
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+ModuleNotFoundError: No module named 'setup'
+python: can't open file '/tmp/pest_mc_14404/e_pest_MC.py': [Errno 2] No such file or directory
