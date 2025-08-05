@@ -1,0 +1,31 @@
+,org_file,model_file,use_cols,index_cols,fmt,sep,head_rows,upper_bound,lower_bound,operator,mlt_file,fac_file,pp_file,pp_fill_value,pp_lower_limit,pp_upper_limit,zone_file,apply_order,chkpar,zero_based
+0,org\local1.npf_k_layer1.txt,local1.npf_k_layer1.txt,,,%24.18E,,0,1000.0,0.0001,m,mult\npfklayer1pp_inst0_pilotpoints.csv,npfklayer1pp_inst0pp.fac,npfklayer1pp_inst0pp.dat,1.0,1e-30,1e+30,npfklayer1pp_inst0pp.dat.zone,999,,False
+1,org\local1.npf_k_layer1.txt,local1.npf_k_layer1.txt,,,%24.18E,,0,1000.0,0.0001,m,mult\npfklayer1cn_inst0_constant.csv,,,,,,npfklayer1cn_inst0_constant.csv.zone,999,,False
+2,org\local1.npf_k_layer2.txt,local1.npf_k_layer2.txt,,,%24.18E,,0,1000.0,0.0001,m,mult\npfklayer2pp_inst0_pilotpoints.csv,npfklayer1pp_inst0pp.fac,npfklayer2pp_inst0pp.dat,1.0,1e-30,1e+30,npfklayer2pp_inst0pp.dat.zone,999,,False
+3,org\local1.npf_k_layer2.txt,local1.npf_k_layer2.txt,,,%24.18E,,0,1000.0,0.0001,m,mult\npfklayer2cn_inst0_constant.csv,,,,,,npfklayer2cn_inst0_constant.csv.zone,999,,False
+4,org\local1.npf_k_layer3.txt,local1.npf_k_layer3.txt,,,%24.18E,,0,1000.0,0.0001,m,mult\npfklayer3pp_inst0_pilotpoints.csv,npfklayer1pp_inst0pp.fac,npfklayer3pp_inst0pp.dat,1.0,1e-30,1e+30,npfklayer3pp_inst0pp.dat.zone,999,,False
+5,org\local1.npf_k_layer3.txt,local1.npf_k_layer3.txt,,,%24.18E,,0,1000.0,0.0001,m,mult\npfklayer3cn_inst0_constant.csv,,,,,,npfklayer3cn_inst0_constant.csv.zone,999,,False
+6,org\local1.npf_k_layer4.txt,local1.npf_k_layer4.txt,,,%24.18E,,0,1000.0,0.0001,m,mult\npfklayer4pp_inst0_pilotpoints.csv,npfklayer1pp_inst0pp.fac,npfklayer4pp_inst0pp.dat,1.0,1e-30,1e+30,npfklayer4pp_inst0pp.dat.zone,999,,False
+7,org\local1.npf_k_layer4.txt,local1.npf_k_layer4.txt,,,%24.18E,,0,1000.0,0.0001,m,mult\npfklayer4cn_inst0_constant.csv,,,,,,npfklayer4cn_inst0_constant.csv.zone,999,,False
+8,org\local1.npf_k_layer5.txt,local1.npf_k_layer5.txt,,,%24.18E,,0,1000.0,0.0001,m,mult\npfklayer5pp_inst0_pilotpoints.csv,npfklayer1pp_inst0pp.fac,npfklayer5pp_inst0pp.dat,1.0,1e-30,1e+30,npfklayer5pp_inst0pp.dat.zone,999,,False
+9,org\local1.npf_k_layer5.txt,local1.npf_k_layer5.txt,,,%24.18E,,0,1000.0,0.0001,m,mult\npfklayer5cn_inst0_constant.csv,,,,,,npfklayer5cn_inst0_constant.csv.zone,999,,False
+10,org\local1.npf_k_layer6.txt,local1.npf_k_layer6.txt,,,%24.18E,,0,1000.0,0.0001,m,mult\npfklayer6pp_inst0_pilotpoints.csv,npfklayer1pp_inst0pp.fac,npfklayer6pp_inst0pp.dat,1.0,1e-30,1e+30,npfklayer6pp_inst0pp.dat.zone,999,,False
+11,org\local1.npf_k_layer6.txt,local1.npf_k_layer6.txt,,,%24.18E,,0,1000.0,0.0001,m,mult\npfklayer6cn_inst0_constant.csv,,,,,,npfklayer6cn_inst0_constant.csv.zone,999,,False
+12,org\local1.npf_k_layer7.txt,local1.npf_k_layer7.txt,,,%24.18E,,0,100.0,1e-06,m,mult\npfklayer7pp_inst0_pilotpoints.csv,npfklayer7pp_inst0pp.fac,npfklayer7pp_inst0pp.dat,1.0,1e-30,1e+30,npfklayer7pp_inst0pp.dat.zone,999,,False
+13,org\local1.npf_k_layer7.txt,local1.npf_k_layer7.txt,,,%24.18E,,0,100.0,1e-06,m,mult\npfklayer7cn_inst0_constant.csv,,,,,,npfklayer7cn_inst0_constant.csv.zone,999,,False
+14,org\local1.npf_k_layer8.txt,local1.npf_k_layer8.txt,,,%24.18E,,0,100000.0,100.0,m,mult\npfklayer8pp_inst0_pilotpoints.csv,npfklayer8pp_inst0pp.fac,npfklayer8pp_inst0pp.dat,1.0,1e-30,1e+30,npfklayer8pp_inst0pp.dat.zone,999,,False
+15,org\local1.npf_k_layer8.txt,local1.npf_k_layer8.txt,,,%24.18E,,0,100000.0,100.0,m,mult\npfklayer8cn_inst0_constant.csv,,,,,,npfklayer8cn_inst0_constant.csv.zone,999,,False
+16,org\local1.rcha_recharge.txt,local1.rcha_recharge.txt,,,%24.18E,,0,0.1,0,m,mult\rcharechargepp_inst0_pilotpoints.csv,npfklayer1pp_inst0pp.fac,rcharechargepp_inst0pp.dat,1.0,1e-30,1e+30,rcharechargepp_inst0pp.dat.zone,999,,False
+17,org\local1.rcha_recharge.txt,local1.rcha_recharge.txt,,,%24.18E,,0,0.1,0,m,mult\rcharechargecn_inst0_constant.csv,,,,,,rcharechargecn_inst0_constant.csv.zone,999,,False
+18,org\local1.wel_mbr_stress_period_data.txt,local1.wel_mbr_stress_period_data.txt,[3],"[0, 1, 2]",free, ,0,[10],[0.01],m,mult\mbr_cond_condgr_inst0_grid.csv,,,,,,,999,407.0,False
+19,org\local1.wel_mbr_stress_period_data.txt,local1.wel_mbr_stress_period_data.txt,[3],"[0, 1, 2]",free, ,0,[10],[0.01],m,mult\mbr_cond_condcn_inst0_constant.csv,,,,,,,999,407.0,False
+20,org\local1.wel_influx_stress_period_data.txt,local1.wel_influx_stress_period_data.txt,[3],"[0, 1, 2]",free, ,0,[10],[0.01],m,mult\influx_cond_condgr_inst0_grid.csv,,,,,,,999,330.0,False
+21,org\local1.wel_influx_stress_period_data.txt,local1.wel_influx_stress_period_data.txt,[3],"[0, 1, 2]",free, ,0,[10],[0.01],m,mult\influx_cond_condcn_inst0_constant.csv,,,,,,,999,330.0,False
+22,org\local1.wel_outflux_stress_period_data.txt,local1.wel_outflux_stress_period_data.txt,[3],"[0, 1, 2]",free, ,0,[10],[0.01],m,mult\outflux_cond_condgr_inst0_grid.csv,,,,,,,999,282.0,False
+23,org\local1.wel_outflux_stress_period_data.txt,local1.wel_outflux_stress_period_data.txt,[3],"[0, 1, 2]",free, ,0,[10],[0.01],m,mult\outflux_cond_condcn_inst0_constant.csv,,,,,,,999,282.0,False
+24,org\local1.drn_riv_stress_period_data.txt,local1.drn_riv_stress_period_data.txt,[4],"[0, 1, 2]",free, ,0,[1000.0],[0.01],m,mult\drn_riv_condgr_inst0_grid.csv,,,,,,,999,136.0,False
+25,org\local1.drn_riv_stress_period_data.txt,local1.drn_riv_stress_period_data.txt,[4],"[0, 1, 2]",free, ,0,[1000.0],[0.01],m,mult\drn_riv_condcn_inst0_constant.csv,,,,,,,999,136.0,False
+26,org\local1.drn_riv_stress_period_data.txt,local1.drn_riv_stress_period_data.txt,[3],"[0, 1, 2]",free, ,0,[15.0],[5.0],a,mult\drn_riv_cond_headgr_inst0_grid.csv,,,,,,,999,136.0,False
+27,org\local1.drn_riv_stress_period_data.txt,local1.drn_riv_stress_period_data.txt,[3],"[0, 1, 2]",free, ,0,[15.0],[5.0],a,mult\drn_riv_cond_headcn_inst0_constant.csv,,,,,,,999,136.0,False
+28,org\local1.chd_pw_stress_period_data.txt,local1.chd_pw_stress_period_data.txt,[3],"[0, 1, 2]",free, ,0,[15],[5],a,mult\chd_pw_headgr_inst0_grid.csv,,,,,,,999,32.0,False
+29,org\local1.chd_pw_stress_period_data.txt,local1.chd_pw_stress_period_data.txt,[3],"[0, 1, 2]",free, ,0,[15],[5],a,mult\chd_pw_headcn_inst0_constant.csv,,,,,,,999,32.0,False

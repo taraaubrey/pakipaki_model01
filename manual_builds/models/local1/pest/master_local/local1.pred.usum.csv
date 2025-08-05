@@ -1,0 +1,7 @@
+name,prior_mean,prior_stdev,prior_lower_bound,prior_upper_bound,post_mean,post_stdev,post_lower_bound,post_upper_bound
+oname:cum_otype:lst_usecol:chd2_totim:1,295.38,17156.4,-34017.4,34608.2,295.38,420.852,-546.324,1137.08
+oname:cum_otype:lst_usecol:chd_totim:1,-84.2871,4595.26,-9274.8,9106.23,-84.2871,101.71,-287.707,119.133
+oname:cum_otype:lst_usecol:in-out_totim:1,-26.7837,122240,-244507,244454,-26.7837,4779.44,-9585.65,9532.09
+oname:cum_otype:lst_usecol:percent-discrepancy_totim:1,-1.51,6778.19,-13557.9,13554.9,-1.51,265.657,-532.825,529.805
+oname:cum_otype:lst_usecol:total_totim:1,-26.7837,122240,-244507,244454,-26.7837,4779.44,-9585.66,9532.09
+oname:cum_otype:lst_usecol:wel3_totim:1,2.82,0,2.82,2.82,2.82,0,2.82,2.82
