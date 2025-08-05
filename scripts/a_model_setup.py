@@ -223,7 +223,7 @@ def main():
 
     sim = fp.mf6.MFSimulation(sim_name=MODEL_NAME, # name of simulation
                             version='mf6', # version of MODFLOW
-                            exe_name=f'{BIN_DIR}\mf6.exe', # absolute path to MODFLOW executable
+                            exe_name=f'{BIN_DIR}/mf6.exe', # absolute path to MODFLOW executable
                             sim_ws=MODEL_DIR, # path to workspace where all files are stored
                             )
 
