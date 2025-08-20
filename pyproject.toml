@@ -1,0 +1,17 @@
+[project]
+name = "pakipaki-01"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fiona>=1.10.1",
+    "flopy>=3.9.3",
+    "geopandas>=1.1.1",
+    "gridit>=0.8",
+    "matplotlib>=3.10.5",
+    "numpy>=2.3.2",
+    "pandas>=2.3.1",
+    "rasterio>=1.4.3",
+    "scikit-learn>=1.7.1",
+]

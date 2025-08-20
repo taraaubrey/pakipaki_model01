@@ -24,11 +24,17 @@ def extract_value_with_indices(arr, layer=None, val_col='elev', mask_value=np.na
     elev_list = []
     
     for i in range(len(values)):
-        index_tuple = tuple(int(idx[i]) for idx in indices)
-        if layer is not None:
-            index_tuple = (layer, index_tuple[0], index_tuple[1])
+        if arr.ndim == 2:
+            index_tuple = (indices[0][i], indices[1][i])
+            if layer is not None:
+                index_tuple = (layer, index_tuple[0], index_tuple[1])
+        elif arr.ndim == 3:
+            index_tuple = (indices[0][i], indices[1][i], indices[2][i])
+        else:
+            # Fallback for other dimensions, though not expected
+            index_tuple = tuple(int(idx[i]) for idx in indices)
         
-        index_list.append(index_tuple)
+        index_list.append(tuple(map(int, index_tuple)))
         elev_list.append(float(values[i]))
     
     # Create DataFrame
@@ -98,15 +104,27 @@ def get_indices(arr, layer=None, value=False):
     indices = np.where(arr)
     result = []
     for i in range(len(indices[0])):
-        index_tuple = tuple(int(idx[i]) for idx in indices)
-        ivalue = arr[tuple(index_tuple)]
-        if layer is not None:
-            index_tuple = (layer, index_tuple[0], index_tuple[1])
+        if arr.ndim == 2:
+            index_tuple_2d = (indices[0][i], indices[1][i])
+            ivalue = arr[index_tuple_2d]
+            index_tuple = index_tuple_2d
+            if layer is not None:
+                index_tuple = (layer, index_tuple[0], index_tuple[1])
+        elif arr.ndim == 3:
+            index_tuple = (indices[0][i], indices[1][i], indices[2][i])
+            ivalue = arr[index_tuple]
+        else:
+            # Fallback for other dimensions, though not expected
+            index_tuple = tuple(int(idx[i]) for idx in indices)
+            ivalue = arr[index_tuple]
+
         if value:
-            index_tuple = [index_tuple, ivalue]
-        result.append(index_tuple)
+            result.append([tuple(map(int, index_tuple)), ivalue])
+        else:
+            result.append(tuple(map(int, index_tuple)))
 
     return result
+
 
 
 def savedf2txt(df, filename):

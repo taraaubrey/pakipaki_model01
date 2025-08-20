@@ -27,9 +27,17 @@ def main():
         shutil.rmtree(MODEL_DIR)
     # create model directory
     os.makedirs(MODEL_DIR)  # create model directory
+    
     # copy all the contents of bin into model directory
     if os.path.exists(BIN_DIR):
-        shutil.copytree(BIN_DIR, MODEL_DIR, dirs_exist_ok=True)  # copy bin directory to model directory
+        if os.name == 'nt':  # if on Windows, copy files
+            os_bin = os.path.join(BIN_DIR, 'windows')
+        elif os.name == 'posix':  # if on Linux or MacOS, copy files
+            os_bin = os.path.join(BIN_DIR, 'linux')
+        else:
+            raise ValueError(f'Unsupported OS: {os.name}. Please check the BIN_DIR path.')
+
+        shutil.copytree(os_bin, MODEL_DIR, dirs_exist_ok=True)  # copy bin directory to model directory
         # Make executable files executable
         import stat
         for root, dirs, files in os.walk(MODEL_DIR):
@@ -55,12 +63,12 @@ def main():
     bottom = grid.array_from_raster(BOTTOM)  # get the bottom elevation
 
     # open domain
-    arr = grid.array_from_vector(DOMAIN)
+    arr = ~grid.array_from_vector(DOMAIN).mask # want the binary version of the domain
     # arr = np.where(top.data > 15, 0, arr)
 
     idomain = np.stack([arr] * NLAY, axis=0)
     # confining layer active map
-    conf_area = grid.array_from_vector(CONF_AREA_ACTIVE)
+    conf_area = ~grid.array_from_vector(CONF_AREA_ACTIVE).mask
     idomain[-2] = np.where(conf_area.data == 0, 0, idomain[-2])  # set the confining layer active where the confining area is active
     idomain[-1] = np.where(conf_area.data == 0, 0, idomain[-1])
 
@@ -116,21 +124,20 @@ def main():
     idomain[-1] = np.where(b_arr[-1] <= min_b, 0, idomain[-1])  # layer 8
 
     # drains
-    drain_arr = grid.array_from_vector(DRAINS)
-    # grid_gpd['drn'] = drain_arr.data.flatten().tolist()
-    # grid_gpd.to_file(os.path.join(SPATIAL_DIR, f'{MODEL_NAME}_drn.shp'), driver='ESRI Shapefile')
-
-    spring_arr = grid.array_from_vector(SPRING)  # get the spring array
-    drain_arr = np.where(spring_arr.data == 1, 1, drain_arr.data)  # convert to binary array
-    drain_elev = grid.array_from_raster(TOP, resampling='min') * drain_arr * idomain[0]  # use the top elevation for drains, only where idomain is active
+    drain_mask = ~grid.array_from_vector(DRAINS).mask
+    spring_mask = ~grid.array_from_vector(SPRING).mask  # get the spring array
+    drain_arr = np.where(spring_mask, True, drain_mask) * idomain[0]
+    
+    drain_elev = grid.array_from_raster(TOP, resampling='min').data * drain_arr  # use the top elevation for drains, only where idomain is active
     drain_input = extract_value_with_indices(drain_elev, layer=0, val_col='elev', mask_value=0)  # extract non-NaN values from the drain elevation array
 
     # add top drains
+    
     drain_top = top * np.where(drain_elev > 0, 0, 1) * idomain[0]
     drn_top_input = extract_value_with_indices(drain_top, layer=0, val_col='elev', mask_value=0)  # extract non-NaN values
 
     # mbr
-    mbr_arr = grid.array_from_vector(MBR)
+    mbr_arr = ~grid.array_from_vector(MBR).mask
     mbr_indices = []
     for i in range(NLAY-2):  # remove mbr from bottom 2 layers
         in_idomarr, idom_i = get_interior_indices(idomain[i], layer=i)  # idomainget interior indices of the mbr area
@@ -140,7 +147,7 @@ def main():
 
     # chd - Poukawa boundary
     top_min = grid.array_from_raster(TOP, resampling='min')
-    chd_pw_arr = grid.array_from_vector(POUKAWA_BOUNDARY)
+    chd_pw_arr = ~grid.array_from_vector(POUKAWA_BOUNDARY).mask
     chd_pw_active = np.logical_and(chd_pw_arr.data, in_idomarr)  # mbr area that is active in the model domain
     chd_pw_active = chd_pw_active * top_min.data
     chd_pw_indices = get_indices(chd_pw_active, layer=0, value=True)
@@ -149,7 +156,7 @@ def main():
 
 
     # influx boundaries
-    influx_arr = grid.array_from_vector(INFLUX_BOUNDARY)
+    influx_arr = ~grid.array_from_vector(INFLUX_BOUNDARY).mask
     influx_indices = []
     for i in range(NLAY-2): # remove influx from bottom 2 layers
         in_idomarr, idom_i = get_interior_indices(idomain[i], layer=i)  # idomainget interior indices of the mbr area
@@ -158,7 +165,7 @@ def main():
     influx_df = pd.DataFrame({'index': influx_indices})
 
     # outflux boundaries
-    outflux_arr = grid.array_from_vector(OUTFLUX_BOUNDARY)
+    outflux_arr = ~grid.array_from_vector(OUTFLUX_BOUNDARY).mask
     outflux_indices = []
     for i in range(NLAY-2):
         in_idomarr, idom_i = get_interior_indices(idomain[i], layer=i)  # idomainget interior indices of the mbr area
@@ -214,7 +221,7 @@ def main():
     outflux_df = outflux_df[~outflux_df['index'].isin(mbr_df['index'])]  # remove mbr indices from outflux
 
     # recharge
-    recharge = np.ones_like(idomain.data[0]) * 0.0001 * idomain.data[0]
+    recharge = np.ones_like(idomain[0]) * 0.0001 * idomain[0]
 
     icell_type = np.zeros((NLAY, nrow, ncol), dtype=int)  # cell type for each layer
 
@@ -349,9 +356,10 @@ def main():
     print('Running model...')
     success, _ = sim.run_simulation()  # run the model
 
+    if not success:
+        raise Exception("Model did not run successfully. Please check the output files for errors.")
 
-
-    # OUPUT PLOTS --------------------------------------------------------
+    # OUTPUT PLOTS --------------------------------------------------------
     # visual check
     pmv = fp.plot.PlotMapView(model=gwf, layer=0) # create view of layer 0
     pmv.plot_array(top *idomain[0], masked_values=[1e30], alpha=0.5, cmap='viridis') # plot top elevation
