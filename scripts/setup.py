@@ -21,7 +21,7 @@ OUTFLUX_BOUNDARY = r"../data/model2_outflux.shp"
 
 
 # Directories / paths
-BIN_DIR = f'../bin'
+BIN_DIR = f'../bin/linux' # relative from model_dir
 SCRIPTS_DIR = r'./scripts'
 FIG_DIR = f'../models/{MODEL_NAME}/figures'  # directory for figures
 MODEL_DIR = f'../models/{MODEL_NAME}/{MODEL_NAME}' # model workspace to be used

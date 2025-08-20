@@ -13,6 +13,11 @@ from utils import *
 from setup import *
 
 def main():
+
+    # print working directory
+    print(f'Working directory: {os.getcwd()}')
+    print(f'Model directory: {os.path.abspath(MODEL_DIR)}')
+
     # create directories if they do not exist
     for d in [SPATIAL_DIR, FIG_DIR]:
         if not os.path.exists(d):
@@ -20,7 +25,24 @@ def main():
     # if dir exists delete it
     if os.path.exists(MODEL_DIR):
         shutil.rmtree(MODEL_DIR)
+    # create model directory
     os.makedirs(MODEL_DIR)  # create model directory
+    # copy all the contents of bin into model directory
+    if os.path.exists(BIN_DIR):
+        shutil.copytree(BIN_DIR, MODEL_DIR, dirs_exist_ok=True)  # copy bin directory to model directory
+        # Make executable files executable
+        import stat
+        for root, dirs, files in os.walk(MODEL_DIR):
+            for file in files:
+                # Make all files that could be executables executable
+                if file in ['mf6']:
+                    file_path = os.path.join(root, file)
+                    current_permissions = os.stat(file_path).st_mode
+                    os.chmod(file_path, current_permissions | stat.S_IEXEC | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
+                    print(f"Made executable: {file_path}")
+    else:
+        print(f'Bin directory {BIN_DIR} does not exist. Please check the path.')
+
 
     grid = gi.Grid.from_vector(DOMAIN, RES)
 
@@ -223,7 +245,7 @@ def main():
 
     sim = fp.mf6.MFSimulation(sim_name=MODEL_NAME, # name of simulation
                             version='mf6', # version of MODFLOW
-                            exe_name=f'{BIN_DIR}/mf6.exe', # absolute path to MODFLOW executable
+                            exe_name=f'{MODEL_DIR}/mf6', # relative path from sim_ws
                             sim_ws=MODEL_DIR, # path to workspace where all files are stored
                             )
 

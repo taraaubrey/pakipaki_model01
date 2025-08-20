@@ -1,8 +1,0 @@
-time,elapsed_seconds,message
-17:52:14,0.0001415,PEST++ performance logger started
-17:52:14,0.0053488,starting to process control file
-17:52:14,0.058463,finished processing control file
-17:52:14,0.0767052,starting to read parameter csv file
-17:52:14,0.699835,finished reading parameter csv file
-17:55:31,196.564,starting to read parameter csv file
-17:55:31,0.105093,finished reading parameter csv file
