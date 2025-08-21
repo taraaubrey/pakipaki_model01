@@ -172,11 +172,11 @@ def main():
     
     # OBSERVATIONS ------------------------------------------------------
     for f in ["cum.csv"]:
-        df = pd.read_csv(os.path.join(TEMP_DIR, f), index_col=0)
+        df = pd.read_csv(os.path.join(TEMP_DIR, f))
         pf.add_observations(
             f,
-            # index_cols=["totim"],
-            use_cols=list(df.columns.values),
+            index_cols=["totim"],
+            # use_cols=list(df.columns.values)[1:],
             prefix=f.split('.')[0],
             obsgp=f.split(".")[0])
 
