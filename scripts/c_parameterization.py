@@ -1,4 +1,5 @@
 import os
+import stat
 import shutil
 import pyemu
 import flopy as fp
@@ -14,13 +15,29 @@ def main():
     if os.path.exists(PEST_DIR):
         shutil.rmtree(PEST_DIR)
     shutil.copytree(MODEL_DIR, PEST_DIR)
+    
+    # copy all the contents of bin into model directory
+    if os.path.exists(BIN_DIR):
+        if os.name == 'nt':  # if on Windows, copy files
+            os_bin = os.path.join(BIN_DIR, 'windows')
 
-    files = os.listdir(BIN_DIR)
-    for f in files:
-        if os.path.exists(os.path.join(PEST_DIR, f)):
-            os.remove(os.path.join(PEST_DIR, f))
-        shutil.copy2(os.path.join(BIN_DIR, f), os.path.join(PEST_DIR, f))
+        elif os.name == 'posix':  # if on Linux or MacOS, copy files
+            os_bin = os.path.join(BIN_DIR, 'linux')
+        else:
+            raise ValueError(f'Unsupported OS: {os.name}. Please check the BIN_DIR path.')
 
+        files = os.listdir(os_bin)
+        for f in files:
+            if os.path.exists(os.path.join(PEST_DIR, f)):
+                file_path = os.path.join(PEST_DIR, f)
+                os.remove(file_path)
+                shutil.copy2(os.path.join(os_bin, f), file_path)
+                current_permissions = os.stat(file_path).st_mode
+                os.chmod(file_path, current_permissions | stat.S_IEXEC | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
+                print(f"Made executable: {file_path}")
+                        
+    else:
+        print(f'Bin directory {BIN_DIR} does not exist. Please check the path.')
 # -----------------------------------------------------------------
 
     # load simulation

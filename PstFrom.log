@@ -1,0 +1,36 @@
+2025-08-21 15:16:41.837414 starting: opening PstFrom.log for logging
+2025-08-21 15:16:41.837414 starting PstFrom process
+2025-08-21 15:16:41.839435 starting: setting up dirs
+2025-08-21 15:16:41.840431 starting: copying original_d 'models\local2\pest\local2' to new_d 'models\local2\pest\local2_template'
+2025-08-21 15:16:41.965440 finished: copying original_d 'models\local2\pest\local2' to new_d 'models\local2\pest\local2_template' took: 0:00:00.125009
+2025-08-21 15:16:41.967476 finished: setting up dirs took: 0:00:00.128041
+2025-08-21 15:16:41.969772 transform was not passed, setting default tranform to 'log'
+2025-08-21 15:16:41.969772 starting: adding pilotpoints type m style parameters for file(s) ['local2.npf_k_layer1.txt']
+2025-08-21 15:16:41.970796 starting: using geostruct:name:struct1,nugget:0.0,structures:
+name:var1,contribution:1.0,a:1000.0,anisotropy:1.0,bearing:0.0
+
+2025-08-21 15:16:41.970796 starting: loading array models\local2\pest\local2_template\local2.npf_k_layer1.txt
+2025-08-21 15:16:42.021588 finished: loading array models\local2\pest\local2_template\local2.npf_k_layer1.txt took: 0:00:00.050792
+2025-08-21 15:16:42.021588 loaded array 'models\local2\pest\local2\local2.npf_k_layer1.txt' of shape (121, 151)
+2025-08-21 15:16:42.039362 starting: writing array-style template file 'models\local2\pest\local2_template\npfklayer1pp_inst0_pilotpoints.csv.tpl'
+2025-08-21 15:16:42.039362 starting: setting up pilot point parameters
+2025-08-21 15:16:42.040362 'use_pp_zones' not set in pp_options, Setting to default value: [False]
+2025-08-21 15:16:42.040362 'spatial_reference' not set in pp_options, Setting to default value: [None]
+2025-08-21 15:16:42.040362 'try_use_ppu' not set in pp_options, Setting to default value: [True]
+2025-08-21 15:16:42.040362 'num_threads' not set in pp_options, Setting to default value: [10]
+2025-08-21 15:16:42.040362 'minpts_interp' not set in pp_options, Setting to default value: [1]
+2025-08-21 15:16:42.040362 'maxpts_interp' not set in pp_options, Setting to default value: [20]
+2025-08-21 15:16:42.040362 'search_radius' not set in pp_options, Setting to default value: [10000000000.0]
+2025-08-21 15:16:42.040362 'fill_value' not set in pp_options, Setting to default value: [1.0]
+2025-08-21 15:16:42.040362 'lower_limit' not set in pp_options, Setting to default value: [1e-30]
+2025-08-21 15:16:42.040362 'upper_limit' not set in pp_options, Setting to default value: [1e+30]
+2025-08-21 15:16:42.040362 WARNING: `use_ppu` requested but failed to import
+falling back to pyemu pp methods
+2025-08-21 15:16:42.041362 No spatial reference (containing cell spacing) passed.
+2025-08-21 15:16:42.041362 OK - using spatial reference in parent object.
+2025-08-21 15:16:42.229098 100 pilot point parameters created
+2025-08-21 15:16:42.229098 pilot point 'pargp':n,p,f,k,l,a,y,e,r,1,p,p
+2025-08-21 15:16:42.229098 finished: setting up pilot point parameters took: 0:00:00.189736
+2025-08-21 15:16:42.248761 starting: calculating factors for pargp=npfklayer1pp
+2025-08-21 15:16:42.249330 saving krige variance file:models\local2\pest\local2_template\npfklayer1pp_inst0pp.var.dat
+2025-08-21 15:16:42.249330 saving krige factors file:models\local2\pest\local2_template\npfklayer1pp_inst0pp.fac
