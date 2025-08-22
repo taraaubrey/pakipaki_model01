@@ -175,8 +175,8 @@ def main():
         df = pd.read_csv(os.path.join(TEMP_DIR, f))
         pf.add_observations(
             f,
-            index_cols=["totim"],
-            # use_cols=list(df.columns.values)[1:],
+            index_cols=list(df.columns.values)[0],
+            use_cols=list(df.columns.values)[1:],
             prefix=f.split('.')[0],
             obsgp=f.split(".")[0])
 
@@ -185,7 +185,7 @@ def main():
     spring_obs = pd.read_csv(spring_f)
     pf.add_observations(
         'obs_results.csv',
-        # index_cols=[list(spring_obs.columns.values)[0]],
+        index_cols=[list(spring_obs.columns.values)[0]],
         use_cols=list(spring_obs.columns.values)[1:], # skip the index column
         prefix='springobs',
         obsgp='springobs',
@@ -208,10 +208,10 @@ def main():
     sample_rel = os.path.relpath(SAMPLES, TEMP_DIR)
     # post-processing to get observations
     pf.add_py_function(
-        f"{SCRIPTS_DIR}helpers.py",
+        f"{SCRIPTS_DIR}/helpers.py",
         f"extract_heads_and_budget(model_name='{MODEL_NAME}')", is_pre_cmd=False)
     pf.add_py_function(
-        f"{SCRIPTS_DIR}helpers.py",
+        f"{SCRIPTS_DIR}/helpers.py",
         f"extract_spring_obs(gwf=None, model_name='{MODEL_NAME}', samples_path=r'{sample_rel}')", is_pre_cmd=False)
 
     pst = pf.build_pst()
@@ -232,19 +232,20 @@ def main():
 
     # UPDATE OBSERVATIONS ------------------------------------------------------
 
-    # obs = pst.observation_data
     pst.observation_data.loc[:, 'weight'] = 0
 
     tspringdf = pd.read_csv(os.path.join(TRUTH_DIR, 'obs_results.csv'))
     tcumdf = pd.read_csv(os.path.join(TRUTH_DIR, 'cum.csv'), index_col=0)
 
     for col in tspringdf.columns[2:]:
-        pst.observation_data.loc[f'oname:springobs_otype:lst_usecol:{col}','obsval'] = tspringdf[col].iloc[0]
-        pst.observation_data.loc[f'oname:springobs_otype:lst_usecol:{col}','weight'] = 1/(0.3*tspringdf[col].iloc[0])
+        new_col = col.replace('-', '_')
+        pst.observation_data.loc[f'oname:springobs_otype:lst_usecol:{new_col}_kper:0','obsval'] = tspringdf[col].iloc[0]
+        pst.observation_data.loc[f'oname:springobs_otype:lst_usecol:{new_col}_kper:0','weight'] = 1/(0.3*tspringdf[col].iloc[0])
 
     for col in tcumdf.columns:
-        pst.observation_data.loc[f'oname:cum_otype:lst_usecol:{col}','obsval'] = tcumdf[col].iloc[0]
-        pst.observation_data.loc[f'oname:cum_otype:lst_usecol:{col}','weight'] = tcumdf[col].iloc[2]
+        new_col = col.replace('-', '_')  # replace spaces with underscores
+        pst.observation_data.loc[f'oname:cum_otype:lst_usecol:{new_col}_totim:1','obsval'] = tcumdf[col].iloc[0]
+        pst.observation_data.loc[f'oname:cum_otype:lst_usecol:{new_col}_totim:1','weight'] = tcumdf[col].iloc[2]
 
     print("Updating observation weights...")
 
