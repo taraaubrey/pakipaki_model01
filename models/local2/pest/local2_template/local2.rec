@@ -13,7 +13,7 @@ binary compiled on Aug 15 2023 at 14:55:58
 using control file: "local2.pst"
 in directory: "C:\Users\tfo46\e_Python\e_projects\pakipaki_01\models\local2\pest\local2_template"
 on host: "L161LU"
-started at 08/22/25 13:45:06
+started at 08/22/25 14:08:00
 
 ...reading external file 'local2.pargp_data.csv'
 ...header line: PARGPNME,INCTYP,DERINC,DERINCLB,FORCEN,DERINCMUL,DERMTHD,SPLITTHRESH,SPLITRELDIFF,SPLITACTION
@@ -12803,6 +12803,6 @@ springobs                                           0.00339         0   0.00339 
 
 
 pestpp-ies analysis complete...
-started at 08/22/25 13:45:06
-finished at 08/22/25 13:45:18
-took 0.2 minutes
+started at 08/22/25 14:08:00
+finished at 08/22/25 14:08:10
+took 0.15 minutes

@@ -19,10 +19,10 @@ def main():
     # copy all the contents of bin into model directory
     if os.path.exists(BIN_DIR):
         if os.name == 'nt':  # if on Windows, copy files
-            os_bin = os.path.join(BIN_DIR, 'windows')
+            os_bin = os.path.join(BIN_DIR, 'windows', 'pestpp')
 
         elif os.name == 'posix':  # if on Linux or MacOS, copy files
-            os_bin = os.path.join(BIN_DIR, 'linux')
+            os_bin = os.path.join(BIN_DIR, 'linux', 'pestpp')
         else:
             raise ValueError(f'Unsupported OS: {os.name}. Please check the BIN_DIR path.')
 
@@ -228,7 +228,7 @@ def main():
     # RUN PESTPP-IES --------------------------------------------------
     print("Running PESTPP-IES 2nd time...")
 
-    pyemu.os_utils.run("pestpp-ies.exe {0}".format(pst_file), cwd=TEMP_DIR)
+    pyemu.os_utils.run("pestpp-ies {0}".format(pst_file), cwd=TEMP_DIR)
 
     # UPDATE OBSERVATIONS ------------------------------------------------------
 
@@ -253,7 +253,7 @@ def main():
 
     # RUN PESTPP-IES --------------------------------------------------
 
-    pyemu.os_utils.run("pestpp-ies.exe {0}".format(pst_file), cwd=TEMP_DIR)
+    pyemu.os_utils.run("pestpp-ies {0}".format(pst_file), cwd=TEMP_DIR)
     
     
     # EVAL --------------------------------------------------------------------------

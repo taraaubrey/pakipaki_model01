@@ -1,18 +1,18 @@
 time,elapsed_seconds,message
-13:45:06,0.0001848,PEST++ performance logger started
-13:45:06,0.0012184,starting to process control file
-13:45:07,0.368357,finished processing control file
-13:45:07,0.133999,starting basic model IO error checking
-13:45:07,0.511185,finished basic model IO error checking
-13:45:07,0.033358,initializing
-13:45:07,0.0054061,'noptmax'=0, running control file parameter values and quitting
-13:45:07,0.0159045,saving control file parameter ensemble to  local2.base.par.csv
-13:45:07,0.0112228,initializing prior parameter covariance matrix
-13:45:07,3.15e-05,initializing parcov
-13:45:07,0.0305519,parcov loaded  from parameter bounds, using par_sigma_range 4
-13:45:07,0.0479088,running control file parameter values
-13:45:07,4.5e-05,queuing 1 runs
-13:45:07,0.0395479,making runs
-13:45:18,10.87,processing runs
-13:45:18,0.0347852,saving results from control file parameter value run to  local2.base.obs.csv
-13:45:18,0.0010719,control file parameter phi report:
+14:08:00,0.000112,PEST++ performance logger started
+14:08:00,0.0010366,starting to process control file
+14:08:01,0.463444,finished processing control file
+14:08:01,0.194513,starting basic model IO error checking
+14:08:01,0.194195,finished basic model IO error checking
+14:08:01,0.0412987,initializing
+14:08:01,0.0058685,'noptmax'=0, running control file parameter values and quitting
+14:08:01,0.0207393,saving control file parameter ensemble to  local2.base.par.csv
+14:08:01,0.0149987,initializing prior parameter covariance matrix
+14:08:01,4.19e-05,initializing parcov
+14:08:01,0.0408794,parcov loaded  from parameter bounds, using par_sigma_range 4
+14:08:01,0.0676728,running control file parameter values
+14:08:01,7.21e-05,queuing 1 runs
+14:08:01,0.0409491,making runs
+14:08:10,8.35139,processing runs
+14:08:10,0.0366363,saving results from control file parameter value run to  local2.base.obs.csv
+14:08:10,0.0015575,control file parameter phi report:
