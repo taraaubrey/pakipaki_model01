@@ -1,4 +1,4 @@
-kper,index,spring-head,pk2-head,pk4-head,spring-pk4-diff,spring-pk2-diff,pk4-pk2-diff,spring-flux
-0,spring,7.65,7.6,7.8,-0.15,0.05,-0.2,-3
+kper,index,spring-head,pk2-head,pk4-head,spring-pk4-diff,spring-pk2-diff,pk4-pk2-diff,confined - pk4
+0,spring,7.65,7.6,7.8,-0.15,0.05,-0.2,3
 1,summer,7.4,7.35,7.35,0.05,0.05,0,0
-100,weight,10,10,10,10,10,10,3.333333333
+2,weight,2,2,2,20,20,20,10

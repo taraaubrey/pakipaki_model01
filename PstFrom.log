@@ -1,624 +1,624 @@
-2025-08-22 14:06:01.358911 starting: opening PstFrom.log for logging
-2025-08-22 14:06:01.358911 starting PstFrom process
-2025-08-22 14:06:01.364924 starting: setting up dirs
-2025-08-22 14:06:01.364924 starting: removing existing new_d 'models\local2\pest\local2_template'
-2025-08-22 14:06:01.478171 finished: removing existing new_d 'models\local2\pest\local2_template' took: 0:00:00.113247
-2025-08-22 14:06:01.479184 starting: copying original_d 'models\local2\pest\local2' to new_d 'models\local2\pest\local2_template'
-2025-08-22 14:06:01.618979 finished: copying original_d 'models\local2\pest\local2' to new_d 'models\local2\pest\local2_template' took: 0:00:00.139795
-2025-08-22 14:06:01.619976 finished: setting up dirs took: 0:00:00.255052
-2025-08-22 14:06:01.621988 transform was not passed, setting default tranform to 'log'
-2025-08-22 14:06:01.621988 starting: adding pilotpoints type m style parameters for file(s) ['local2.npf_k_layer1.txt']
-2025-08-22 14:06:01.621988 starting: using geostruct:name:struct1,nugget:0.0,structures:
+2025-08-25 18:09:04.558268 starting: opening PstFrom.log for logging
+2025-08-25 18:09:04.558268 starting PstFrom process
+2025-08-25 18:09:04.561278 starting: setting up dirs
+2025-08-25 18:09:04.561278 starting: removing existing new_d 'models\local2\pest\local2_template'
+2025-08-25 18:09:04.679751 finished: removing existing new_d 'models\local2\pest\local2_template' took: 0:00:00.118473
+2025-08-25 18:09:04.679751 starting: copying original_d 'models\local2\pest\local2' to new_d 'models\local2\pest\local2_template'
+2025-08-25 18:09:04.887807 finished: copying original_d 'models\local2\pest\local2' to new_d 'models\local2\pest\local2_template' took: 0:00:00.208056
+2025-08-25 18:09:04.897880 finished: setting up dirs took: 0:00:00.336602
+2025-08-25 18:09:04.899250 transform was not passed, setting default tranform to 'log'
+2025-08-25 18:09:04.899250 starting: adding pilotpoints type m style parameters for file(s) ['local2.npf_k_layer1.txt']
+2025-08-25 18:09:04.899250 starting: using geostruct:name:struct1,nugget:0.0,structures:
 name:var1,contribution:1.0,a:1000.0,anisotropy:1.0,bearing:0.0
 
-2025-08-22 14:06:01.621988 starting: loading array models\local2\pest\local2_template\local2.npf_k_layer1.txt
-2025-08-22 14:06:01.651383 finished: loading array models\local2\pest\local2_template\local2.npf_k_layer1.txt took: 0:00:00.029395
-2025-08-22 14:06:01.651383 loaded array 'models\local2\pest\local2\local2.npf_k_layer1.txt' of shape (121, 151)
-2025-08-22 14:06:01.665405 starting: writing array-style template file 'models\local2\pest\local2_template\npfklayer1pp_inst0_pilotpoints.csv.tpl'
-2025-08-22 14:06:01.665405 starting: setting up pilot point parameters
-2025-08-22 14:06:01.665405 'use_pp_zones' not set in pp_options, Setting to default value: [False]
-2025-08-22 14:06:01.665405 'spatial_reference' not set in pp_options, Setting to default value: [None]
-2025-08-22 14:06:01.665405 'try_use_ppu' not set in pp_options, Setting to default value: [True]
-2025-08-22 14:06:01.665405 'num_threads' not set in pp_options, Setting to default value: [10]
-2025-08-22 14:06:01.665405 'minpts_interp' not set in pp_options, Setting to default value: [1]
-2025-08-22 14:06:01.665405 'maxpts_interp' not set in pp_options, Setting to default value: [20]
-2025-08-22 14:06:01.665405 'search_radius' not set in pp_options, Setting to default value: [10000000000.0]
-2025-08-22 14:06:01.665405 'fill_value' not set in pp_options, Setting to default value: [1.0]
-2025-08-22 14:06:01.665405 'lower_limit' not set in pp_options, Setting to default value: [1e-30]
-2025-08-22 14:06:01.665405 'upper_limit' not set in pp_options, Setting to default value: [1e+30]
-2025-08-22 14:06:01.665405 WARNING: `use_ppu` requested but failed to import
+2025-08-25 18:09:04.899250 starting: loading array models\local2\pest\local2_template\local2.npf_k_layer1.txt
+2025-08-25 18:09:04.918839 finished: loading array models\local2\pest\local2_template\local2.npf_k_layer1.txt took: 0:00:00.019589
+2025-08-25 18:09:04.918839 loaded array 'models\local2\pest\local2\local2.npf_k_layer1.txt' of shape (121, 151)
+2025-08-25 18:09:04.939237 starting: writing array-style template file 'models\local2\pest\local2_template\npfklayer1pp_inst0_pilotpoints.csv.tpl'
+2025-08-25 18:09:04.939237 starting: setting up pilot point parameters
+2025-08-25 18:09:04.939237 'use_pp_zones' not set in pp_options, Setting to default value: [False]
+2025-08-25 18:09:04.945271 'spatial_reference' not set in pp_options, Setting to default value: [None]
+2025-08-25 18:09:04.945271 'try_use_ppu' not set in pp_options, Setting to default value: [True]
+2025-08-25 18:09:04.945271 'num_threads' not set in pp_options, Setting to default value: [10]
+2025-08-25 18:09:04.945271 'minpts_interp' not set in pp_options, Setting to default value: [1]
+2025-08-25 18:09:04.945271 'maxpts_interp' not set in pp_options, Setting to default value: [20]
+2025-08-25 18:09:04.945271 'search_radius' not set in pp_options, Setting to default value: [10000000000.0]
+2025-08-25 18:09:04.945271 'fill_value' not set in pp_options, Setting to default value: [1.0]
+2025-08-25 18:09:04.945271 'lower_limit' not set in pp_options, Setting to default value: [1e-30]
+2025-08-25 18:09:04.945271 'upper_limit' not set in pp_options, Setting to default value: [1e+30]
+2025-08-25 18:09:04.945271 WARNING: `use_ppu` requested but failed to import
 falling back to pyemu pp methods
-2025-08-22 14:06:01.665405 No spatial reference (containing cell spacing) passed.
-2025-08-22 14:06:01.665405 OK - using spatial reference in parent object.
-2025-08-22 14:06:01.885526 100 pilot point parameters created
-2025-08-22 14:06:01.885526 pilot point 'pargp':n,p,f,k,l,a,y,e,r,1,p,p
-2025-08-22 14:06:01.885526 finished: setting up pilot point parameters took: 0:00:00.220121
-2025-08-22 14:06:01.909087 starting: calculating factors for pargp=npfklayer1pp
-2025-08-22 14:06:01.909087 saving krige variance file:models\local2\pest\local2_template\npfklayer1pp_inst0pp.var.dat
-2025-08-22 14:06:01.909087 saving krige factors file:models\local2\pest\local2_template\npfklayer1pp_inst0pp.fac
-2025-08-22 14:06:37.429920 finished: calculating factors for pargp=npfklayer1pp took: 0:00:35.520833
-2025-08-22 14:06:37.430930 starting: writing array-based template file 'models\local2\pest\local2_template\npfklayer1pp_inst0pp.dat.tpl'
-2025-08-22 14:06:37.430930 saving zone array models\local2\pest\local2_template\npfklayer1pp_inst0pp.dat.zone for tpl file models\local2\pest\local2_template\npfklayer1pp_inst0pp.dat.tpl
-2025-08-22 14:06:37.441921 finished: adding pilotpoints type m style parameters for file(s) ['local2.npf_k_layer1.txt'] took: 0:00:35.819933
-2025-08-22 14:06:37.441921 transform was not passed, setting default tranform to 'log'
-2025-08-22 14:06:37.447918 starting: adding constant type m style parameters for file(s) ['local2.npf_k_layer1.txt']
-2025-08-22 14:06:37.447918 finished: using geostruct:name:struct1,nugget:0.0,structures:
+2025-08-25 18:09:04.946776 No spatial reference (containing cell spacing) passed.
+2025-08-25 18:09:04.946776 OK - using spatial reference in parent object.
+2025-08-25 18:09:05.178893 100 pilot point parameters created
+2025-08-25 18:09:05.178893 pilot point 'pargp':n,p,f,k,l,a,y,e,r,1,p,p
+2025-08-25 18:09:05.178893 finished: setting up pilot point parameters took: 0:00:00.239656
+2025-08-25 18:09:05.199066 starting: calculating factors for pargp=npfklayer1pp
+2025-08-25 18:09:05.199066 saving krige variance file:models\local2\pest\local2_template\npfklayer1pp_inst0pp.var.dat
+2025-08-25 18:09:05.199066 saving krige factors file:models\local2\pest\local2_template\npfklayer1pp_inst0pp.fac
+2025-08-25 18:09:51.638720 finished: calculating factors for pargp=npfklayer1pp took: 0:00:46.439654
+2025-08-25 18:09:51.638720 starting: writing array-based template file 'models\local2\pest\local2_template\npfklayer1pp_inst0pp.dat.tpl'
+2025-08-25 18:09:51.638720 saving zone array models\local2\pest\local2_template\npfklayer1pp_inst0pp.dat.zone for tpl file models\local2\pest\local2_template\npfklayer1pp_inst0pp.dat.tpl
+2025-08-25 18:09:51.647805 finished: adding pilotpoints type m style parameters for file(s) ['local2.npf_k_layer1.txt'] took: 0:00:46.748555
+2025-08-25 18:09:51.647805 transform was not passed, setting default tranform to 'log'
+2025-08-25 18:09:51.647805 starting: adding constant type m style parameters for file(s) ['local2.npf_k_layer1.txt']
+2025-08-25 18:09:51.647805 finished: using geostruct:name:struct1,nugget:0.0,structures:
 name:var1,contribution:1.0,a:1000.0,anisotropy:1.0,bearing:0.0
- took: 0:00:35.825930
-2025-08-22 14:06:37.448918 starting: loading array models\local2\pest\local2_template\local2.npf_k_layer1.txt
-2025-08-22 14:06:37.455001 finished: loading array models\local2\pest\local2_template\local2.npf_k_layer1.txt took: 0:00:00.006083
-2025-08-22 14:06:37.455001 loaded array 'models\local2\pest\local2\local2.npf_k_layer1.txt' of shape (121, 151)
-2025-08-22 14:06:37.466013 starting: writing array-style template file 'models\local2\pest\local2_template\npfklayer1cn_inst0_constant.csv.tpl'
-2025-08-22 14:06:37.466013 starting: writing template file models\local2\pest\local2_template\npfklayer1cn_inst0_constant.csv.tpl for ['npfklayer1cn_inst:0']
-2025-08-22 14:06:37.509120 finished: writing template file models\local2\pest\local2_template\npfklayer1cn_inst0_constant.csv.tpl for ['npfklayer1cn_inst:0'] took: 0:00:00.043107
-2025-08-22 14:06:37.509120 starting: writing array-based template file 'models\local2\pest\local2_template\npfklayer1cn_inst0_constant.csv.tpl'
-2025-08-22 14:06:37.509120 saving zone array models\local2\pest\local2_template\npfklayer1cn_inst0_constant.csv.zone for tpl file models\local2\pest\local2_template\npfklayer1cn_inst0_constant.csv.tpl
-2025-08-22 14:06:37.521836 finished: adding constant type m style parameters for file(s) ['local2.npf_k_layer1.txt'] took: 0:00:00.073918
-2025-08-22 14:06:37.521836 transform was not passed, setting default tranform to 'log'
-2025-08-22 14:06:37.521836 starting: adding pilotpoints type m style parameters for file(s) ['local2.npf_k_layer2.txt']
-2025-08-22 14:06:37.521836 starting: using geostruct:name:struct1,nugget:0.0,structures:
+ took: 0:00:46.748555
+2025-08-25 18:09:51.647805 starting: loading array models\local2\pest\local2_template\local2.npf_k_layer1.txt
+2025-08-25 18:09:51.658680 finished: loading array models\local2\pest\local2_template\local2.npf_k_layer1.txt took: 0:00:00.010875
+2025-08-25 18:09:51.658680 loaded array 'models\local2\pest\local2\local2.npf_k_layer1.txt' of shape (121, 151)
+2025-08-25 18:09:51.667719 starting: writing array-style template file 'models\local2\pest\local2_template\npfklayer1cn_inst0_constant.csv.tpl'
+2025-08-25 18:09:51.667719 starting: writing template file models\local2\pest\local2_template\npfklayer1cn_inst0_constant.csv.tpl for ['npfklayer1cn_inst:0']
+2025-08-25 18:09:51.717854 finished: writing template file models\local2\pest\local2_template\npfklayer1cn_inst0_constant.csv.tpl for ['npfklayer1cn_inst:0'] took: 0:00:00.050135
+2025-08-25 18:09:51.717854 starting: writing array-based template file 'models\local2\pest\local2_template\npfklayer1cn_inst0_constant.csv.tpl'
+2025-08-25 18:09:51.717854 saving zone array models\local2\pest\local2_template\npfklayer1cn_inst0_constant.csv.zone for tpl file models\local2\pest\local2_template\npfklayer1cn_inst0_constant.csv.tpl
+2025-08-25 18:09:51.729812 finished: adding constant type m style parameters for file(s) ['local2.npf_k_layer1.txt'] took: 0:00:00.082007
+2025-08-25 18:09:51.729812 transform was not passed, setting default tranform to 'log'
+2025-08-25 18:09:51.729812 starting: adding pilotpoints type m style parameters for file(s) ['local2.npf_k_layer2.txt']
+2025-08-25 18:09:51.729812 starting: using geostruct:name:struct1,nugget:0.0,structures:
 name:var1,contribution:1.0,a:1000.0,anisotropy:1.0,bearing:0.0
 
-2025-08-22 14:06:37.521836 starting: loading array models\local2\pest\local2_template\local2.npf_k_layer2.txt
-2025-08-22 14:06:37.526922 finished: loading array models\local2\pest\local2_template\local2.npf_k_layer2.txt took: 0:00:00.005086
-2025-08-22 14:06:37.526922 loaded array 'models\local2\pest\local2\local2.npf_k_layer2.txt' of shape (121, 151)
-2025-08-22 14:06:37.537220 starting: writing array-style template file 'models\local2\pest\local2_template\npfklayer2pp_inst0_pilotpoints.csv.tpl'
-2025-08-22 14:06:37.537220 starting: setting up pilot point parameters
-2025-08-22 14:06:37.537220 'use_pp_zones' not set in pp_options, Setting to default value: [False]
-2025-08-22 14:06:37.537220 'spatial_reference' not set in pp_options, Setting to default value: [None]
-2025-08-22 14:06:37.537220 'try_use_ppu' not set in pp_options, Setting to default value: [True]
-2025-08-22 14:06:37.537220 'num_threads' not set in pp_options, Setting to default value: [10]
-2025-08-22 14:06:37.537220 'minpts_interp' not set in pp_options, Setting to default value: [1]
-2025-08-22 14:06:37.537220 'maxpts_interp' not set in pp_options, Setting to default value: [20]
-2025-08-22 14:06:37.537220 'search_radius' not set in pp_options, Setting to default value: [10000000000.0]
-2025-08-22 14:06:37.537220 'fill_value' not set in pp_options, Setting to default value: [1.0]
-2025-08-22 14:06:37.537220 'lower_limit' not set in pp_options, Setting to default value: [1e-30]
-2025-08-22 14:06:37.537220 'upper_limit' not set in pp_options, Setting to default value: [1e+30]
-2025-08-22 14:06:37.538168 WARNING: `use_ppu` requested but failed to import
+2025-08-25 18:09:51.729812 starting: loading array models\local2\pest\local2_template\local2.npf_k_layer2.txt
+2025-08-25 18:09:51.733811 finished: loading array models\local2\pest\local2_template\local2.npf_k_layer2.txt took: 0:00:00.003999
+2025-08-25 18:09:51.733811 loaded array 'models\local2\pest\local2\local2.npf_k_layer2.txt' of shape (121, 151)
+2025-08-25 18:09:51.744963 starting: writing array-style template file 'models\local2\pest\local2_template\npfklayer2pp_inst0_pilotpoints.csv.tpl'
+2025-08-25 18:09:51.744963 starting: setting up pilot point parameters
+2025-08-25 18:09:51.744963 'use_pp_zones' not set in pp_options, Setting to default value: [False]
+2025-08-25 18:09:51.744963 'spatial_reference' not set in pp_options, Setting to default value: [None]
+2025-08-25 18:09:51.745469 'try_use_ppu' not set in pp_options, Setting to default value: [True]
+2025-08-25 18:09:51.745469 'num_threads' not set in pp_options, Setting to default value: [10]
+2025-08-25 18:09:51.745469 'minpts_interp' not set in pp_options, Setting to default value: [1]
+2025-08-25 18:09:51.745524 'maxpts_interp' not set in pp_options, Setting to default value: [20]
+2025-08-25 18:09:51.745524 'search_radius' not set in pp_options, Setting to default value: [10000000000.0]
+2025-08-25 18:09:51.745524 'fill_value' not set in pp_options, Setting to default value: [1.0]
+2025-08-25 18:09:51.745524 'lower_limit' not set in pp_options, Setting to default value: [1e-30]
+2025-08-25 18:09:51.745524 'upper_limit' not set in pp_options, Setting to default value: [1e+30]
+2025-08-25 18:09:51.746028 WARNING: `use_ppu` requested but failed to import
 falling back to pyemu pp methods
-2025-08-22 14:06:37.538168 No spatial reference (containing cell spacing) passed.
-2025-08-22 14:06:37.538168 OK - using spatial reference in parent object.
-2025-08-22 14:06:37.701205 100 pilot point parameters created
-2025-08-22 14:06:37.702161 pilot point 'pargp':n,p,f,k,l,a,y,e,r,2,p,p
-2025-08-22 14:06:37.702161 finished: setting up pilot point parameters took: 0:00:00.164941
-2025-08-22 14:06:37.716122 reusing factors
-2025-08-22 14:06:37.716122 starting: writing array-based template file 'models\local2\pest\local2_template\npfklayer2pp_inst0pp.dat.tpl'
-2025-08-22 14:06:37.716122 saving zone array models\local2\pest\local2_template\npfklayer2pp_inst0pp.dat.zone for tpl file models\local2\pest\local2_template\npfklayer2pp_inst0pp.dat.tpl
-2025-08-22 14:06:37.728152 finished: adding pilotpoints type m style parameters for file(s) ['local2.npf_k_layer2.txt'] took: 0:00:00.206316
-2025-08-22 14:06:37.728152 transform was not passed, setting default tranform to 'log'
-2025-08-22 14:06:37.728152 starting: adding constant type m style parameters for file(s) ['local2.npf_k_layer2.txt']
-2025-08-22 14:06:37.728152 finished: using geostruct:name:struct1,nugget:0.0,structures:
+2025-08-25 18:09:51.746028 No spatial reference (containing cell spacing) passed.
+2025-08-25 18:09:51.746028 OK - using spatial reference in parent object.
+2025-08-25 18:09:51.916607 100 pilot point parameters created
+2025-08-25 18:09:51.917611 pilot point 'pargp':n,p,f,k,l,a,y,e,r,2,p,p
+2025-08-25 18:09:51.917611 finished: setting up pilot point parameters took: 0:00:00.172648
+2025-08-25 18:09:51.931517 reusing factors
+2025-08-25 18:09:51.931517 starting: writing array-based template file 'models\local2\pest\local2_template\npfklayer2pp_inst0pp.dat.tpl'
+2025-08-25 18:09:51.931517 saving zone array models\local2\pest\local2_template\npfklayer2pp_inst0pp.dat.zone for tpl file models\local2\pest\local2_template\npfklayer2pp_inst0pp.dat.tpl
+2025-08-25 18:09:51.938865 finished: adding pilotpoints type m style parameters for file(s) ['local2.npf_k_layer2.txt'] took: 0:00:00.209053
+2025-08-25 18:09:51.938865 transform was not passed, setting default tranform to 'log'
+2025-08-25 18:09:51.938865 starting: adding constant type m style parameters for file(s) ['local2.npf_k_layer2.txt']
+2025-08-25 18:09:51.938865 finished: using geostruct:name:struct1,nugget:0.0,structures:
 name:var1,contribution:1.0,a:1000.0,anisotropy:1.0,bearing:0.0
- took: 0:00:00.206316
-2025-08-22 14:06:37.728152 starting: loading array models\local2\pest\local2_template\local2.npf_k_layer2.txt
-2025-08-22 14:06:37.735725 finished: loading array models\local2\pest\local2_template\local2.npf_k_layer2.txt took: 0:00:00.007573
-2025-08-22 14:06:37.735725 loaded array 'models\local2\pest\local2\local2.npf_k_layer2.txt' of shape (121, 151)
-2025-08-22 14:06:37.789798 starting: writing array-style template file 'models\local2\pest\local2_template\npfklayer2cn_inst0_constant.csv.tpl'
-2025-08-22 14:06:37.789798 starting: writing template file models\local2\pest\local2_template\npfklayer2cn_inst0_constant.csv.tpl for ['npfklayer2cn_inst:0']
-2025-08-22 14:06:37.840299 finished: writing template file models\local2\pest\local2_template\npfklayer2cn_inst0_constant.csv.tpl for ['npfklayer2cn_inst:0'] took: 0:00:00.050501
-2025-08-22 14:06:37.840299 starting: writing array-based template file 'models\local2\pest\local2_template\npfklayer2cn_inst0_constant.csv.tpl'
-2025-08-22 14:06:37.840299 saving zone array models\local2\pest\local2_template\npfklayer2cn_inst0_constant.csv.zone for tpl file models\local2\pest\local2_template\npfklayer2cn_inst0_constant.csv.tpl
-2025-08-22 14:06:37.854293 finished: adding constant type m style parameters for file(s) ['local2.npf_k_layer2.txt'] took: 0:00:00.126141
-2025-08-22 14:06:37.854293 transform was not passed, setting default tranform to 'log'
-2025-08-22 14:06:37.854293 starting: adding pilotpoints type m style parameters for file(s) ['local2.npf_k_layer3.txt']
-2025-08-22 14:06:37.854293 starting: using geostruct:name:struct1,nugget:0.0,structures:
+ took: 0:00:00.209053
+2025-08-25 18:09:51.938865 starting: loading array models\local2\pest\local2_template\local2.npf_k_layer2.txt
+2025-08-25 18:09:51.947851 finished: loading array models\local2\pest\local2_template\local2.npf_k_layer2.txt took: 0:00:00.008986
+2025-08-25 18:09:51.947851 loaded array 'models\local2\pest\local2\local2.npf_k_layer2.txt' of shape (121, 151)
+2025-08-25 18:09:51.957470 starting: writing array-style template file 'models\local2\pest\local2_template\npfklayer2cn_inst0_constant.csv.tpl'
+2025-08-25 18:09:51.957470 starting: writing template file models\local2\pest\local2_template\npfklayer2cn_inst0_constant.csv.tpl for ['npfklayer2cn_inst:0']
+2025-08-25 18:09:52.002405 finished: writing template file models\local2\pest\local2_template\npfklayer2cn_inst0_constant.csv.tpl for ['npfklayer2cn_inst:0'] took: 0:00:00.044935
+2025-08-25 18:09:52.002405 starting: writing array-based template file 'models\local2\pest\local2_template\npfklayer2cn_inst0_constant.csv.tpl'
+2025-08-25 18:09:52.002405 saving zone array models\local2\pest\local2_template\npfklayer2cn_inst0_constant.csv.zone for tpl file models\local2\pest\local2_template\npfklayer2cn_inst0_constant.csv.tpl
+2025-08-25 18:09:52.014148 finished: adding constant type m style parameters for file(s) ['local2.npf_k_layer2.txt'] took: 0:00:00.075283
+2025-08-25 18:09:52.015148 transform was not passed, setting default tranform to 'log'
+2025-08-25 18:09:52.015148 starting: adding pilotpoints type m style parameters for file(s) ['local2.npf_k_layer3.txt']
+2025-08-25 18:09:52.015148 starting: using geostruct:name:struct1,nugget:0.0,structures:
 name:var1,contribution:1.0,a:1000.0,anisotropy:1.0,bearing:0.0
 
-2025-08-22 14:06:37.855294 starting: loading array models\local2\pest\local2_template\local2.npf_k_layer3.txt
-2025-08-22 14:06:37.863300 finished: loading array models\local2\pest\local2_template\local2.npf_k_layer3.txt took: 0:00:00.008006
-2025-08-22 14:06:37.863300 loaded array 'models\local2\pest\local2\local2.npf_k_layer3.txt' of shape (121, 151)
-2025-08-22 14:06:37.878834 starting: writing array-style template file 'models\local2\pest\local2_template\npfklayer3pp_inst0_pilotpoints.csv.tpl'
-2025-08-22 14:06:37.878834 starting: setting up pilot point parameters
-2025-08-22 14:06:37.878834 'use_pp_zones' not set in pp_options, Setting to default value: [False]
-2025-08-22 14:06:37.878834 'spatial_reference' not set in pp_options, Setting to default value: [None]
-2025-08-22 14:06:37.878834 'try_use_ppu' not set in pp_options, Setting to default value: [True]
-2025-08-22 14:06:37.878834 'num_threads' not set in pp_options, Setting to default value: [10]
-2025-08-22 14:06:37.878834 'minpts_interp' not set in pp_options, Setting to default value: [1]
-2025-08-22 14:06:37.878834 'maxpts_interp' not set in pp_options, Setting to default value: [20]
-2025-08-22 14:06:37.878834 'search_radius' not set in pp_options, Setting to default value: [10000000000.0]
-2025-08-22 14:06:37.878834 'fill_value' not set in pp_options, Setting to default value: [1.0]
-2025-08-22 14:06:37.878834 'lower_limit' not set in pp_options, Setting to default value: [1e-30]
-2025-08-22 14:06:37.878834 'upper_limit' not set in pp_options, Setting to default value: [1e+30]
-2025-08-22 14:06:37.879913 WARNING: `use_ppu` requested but failed to import
+2025-08-25 18:09:52.015148 starting: loading array models\local2\pest\local2_template\local2.npf_k_layer3.txt
+2025-08-25 18:09:52.021690 finished: loading array models\local2\pest\local2_template\local2.npf_k_layer3.txt took: 0:00:00.006542
+2025-08-25 18:09:52.021690 loaded array 'models\local2\pest\local2\local2.npf_k_layer3.txt' of shape (121, 151)
+2025-08-25 18:09:52.029091 starting: writing array-style template file 'models\local2\pest\local2_template\npfklayer3pp_inst0_pilotpoints.csv.tpl'
+2025-08-25 18:09:52.029091 starting: setting up pilot point parameters
+2025-08-25 18:09:52.029091 'use_pp_zones' not set in pp_options, Setting to default value: [False]
+2025-08-25 18:09:52.029091 'spatial_reference' not set in pp_options, Setting to default value: [None]
+2025-08-25 18:09:52.029091 'try_use_ppu' not set in pp_options, Setting to default value: [True]
+2025-08-25 18:09:52.029091 'num_threads' not set in pp_options, Setting to default value: [10]
+2025-08-25 18:09:52.029091 'minpts_interp' not set in pp_options, Setting to default value: [1]
+2025-08-25 18:09:52.029091 'maxpts_interp' not set in pp_options, Setting to default value: [20]
+2025-08-25 18:09:52.029091 'search_radius' not set in pp_options, Setting to default value: [10000000000.0]
+2025-08-25 18:09:52.029091 'fill_value' not set in pp_options, Setting to default value: [1.0]
+2025-08-25 18:09:52.029091 'lower_limit' not set in pp_options, Setting to default value: [1e-30]
+2025-08-25 18:09:52.029091 'upper_limit' not set in pp_options, Setting to default value: [1e+30]
+2025-08-25 18:09:52.029091 WARNING: `use_ppu` requested but failed to import
 falling back to pyemu pp methods
-2025-08-22 14:06:37.879913 No spatial reference (containing cell spacing) passed.
-2025-08-22 14:06:37.879913 OK - using spatial reference in parent object.
-2025-08-22 14:06:38.044857 100 pilot point parameters created
-2025-08-22 14:06:38.044857 pilot point 'pargp':n,p,f,k,l,a,y,e,r,3,p,p
-2025-08-22 14:06:38.044857 finished: setting up pilot point parameters took: 0:00:00.166023
-2025-08-22 14:06:38.058592 reusing factors
-2025-08-22 14:06:38.058592 starting: writing array-based template file 'models\local2\pest\local2_template\npfklayer3pp_inst0pp.dat.tpl'
-2025-08-22 14:06:38.058592 saving zone array models\local2\pest\local2_template\npfklayer3pp_inst0pp.dat.zone for tpl file models\local2\pest\local2_template\npfklayer3pp_inst0pp.dat.tpl
-2025-08-22 14:06:38.068604 finished: adding pilotpoints type m style parameters for file(s) ['local2.npf_k_layer3.txt'] took: 0:00:00.214311
-2025-08-22 14:06:38.068604 transform was not passed, setting default tranform to 'log'
-2025-08-22 14:06:38.068604 starting: adding constant type m style parameters for file(s) ['local2.npf_k_layer3.txt']
-2025-08-22 14:06:38.068604 finished: using geostruct:name:struct1,nugget:0.0,structures:
+2025-08-25 18:09:52.029091 No spatial reference (containing cell spacing) passed.
+2025-08-25 18:09:52.029091 OK - using spatial reference in parent object.
+2025-08-25 18:09:52.187494 100 pilot point parameters created
+2025-08-25 18:09:52.187494 pilot point 'pargp':n,p,f,k,l,a,y,e,r,3,p,p
+2025-08-25 18:09:52.187494 finished: setting up pilot point parameters took: 0:00:00.158403
+2025-08-25 18:09:52.198779 reusing factors
+2025-08-25 18:09:52.198779 starting: writing array-based template file 'models\local2\pest\local2_template\npfklayer3pp_inst0pp.dat.tpl'
+2025-08-25 18:09:52.198779 saving zone array models\local2\pest\local2_template\npfklayer3pp_inst0pp.dat.zone for tpl file models\local2\pest\local2_template\npfklayer3pp_inst0pp.dat.tpl
+2025-08-25 18:09:52.215817 finished: adding pilotpoints type m style parameters for file(s) ['local2.npf_k_layer3.txt'] took: 0:00:00.200669
+2025-08-25 18:09:52.215817 transform was not passed, setting default tranform to 'log'
+2025-08-25 18:09:52.216638 starting: adding constant type m style parameters for file(s) ['local2.npf_k_layer3.txt']
+2025-08-25 18:09:52.216638 finished: using geostruct:name:struct1,nugget:0.0,structures:
 name:var1,contribution:1.0,a:1000.0,anisotropy:1.0,bearing:0.0
- took: 0:00:00.214311
-2025-08-22 14:06:38.069593 starting: loading array models\local2\pest\local2_template\local2.npf_k_layer3.txt
-2025-08-22 14:06:38.076099 finished: loading array models\local2\pest\local2_template\local2.npf_k_layer3.txt took: 0:00:00.006506
-2025-08-22 14:06:38.076099 loaded array 'models\local2\pest\local2\local2.npf_k_layer3.txt' of shape (121, 151)
-2025-08-22 14:06:38.093160 starting: writing array-style template file 'models\local2\pest\local2_template\npfklayer3cn_inst0_constant.csv.tpl'
-2025-08-22 14:06:38.093160 starting: writing template file models\local2\pest\local2_template\npfklayer3cn_inst0_constant.csv.tpl for ['npfklayer3cn_inst:0']
-2025-08-22 14:06:38.138886 finished: writing template file models\local2\pest\local2_template\npfklayer3cn_inst0_constant.csv.tpl for ['npfklayer3cn_inst:0'] took: 0:00:00.045726
-2025-08-22 14:06:38.138886 starting: writing array-based template file 'models\local2\pest\local2_template\npfklayer3cn_inst0_constant.csv.tpl'
-2025-08-22 14:06:38.138886 saving zone array models\local2\pest\local2_template\npfklayer3cn_inst0_constant.csv.zone for tpl file models\local2\pest\local2_template\npfklayer3cn_inst0_constant.csv.tpl
-2025-08-22 14:06:38.149879 finished: adding constant type m style parameters for file(s) ['local2.npf_k_layer3.txt'] took: 0:00:00.081275
-2025-08-22 14:06:38.149879 transform was not passed, setting default tranform to 'log'
-2025-08-22 14:06:38.150900 starting: adding pilotpoints type m style parameters for file(s) ['local2.npf_k_layer4.txt']
-2025-08-22 14:06:38.150900 starting: using geostruct:name:struct1,nugget:0.0,structures:
+ took: 0:00:00.201490
+2025-08-25 18:09:52.216638 starting: loading array models\local2\pest\local2_template\local2.npf_k_layer3.txt
+2025-08-25 18:09:52.221699 finished: loading array models\local2\pest\local2_template\local2.npf_k_layer3.txt took: 0:00:00.005061
+2025-08-25 18:09:52.221699 loaded array 'models\local2\pest\local2\local2.npf_k_layer3.txt' of shape (121, 151)
+2025-08-25 18:09:52.237671 starting: writing array-style template file 'models\local2\pest\local2_template\npfklayer3cn_inst0_constant.csv.tpl'
+2025-08-25 18:09:52.237671 starting: writing template file models\local2\pest\local2_template\npfklayer3cn_inst0_constant.csv.tpl for ['npfklayer3cn_inst:0']
+2025-08-25 18:09:52.282480 finished: writing template file models\local2\pest\local2_template\npfklayer3cn_inst0_constant.csv.tpl for ['npfklayer3cn_inst:0'] took: 0:00:00.044809
+2025-08-25 18:09:52.282480 starting: writing array-based template file 'models\local2\pest\local2_template\npfklayer3cn_inst0_constant.csv.tpl'
+2025-08-25 18:09:52.282480 saving zone array models\local2\pest\local2_template\npfklayer3cn_inst0_constant.csv.zone for tpl file models\local2\pest\local2_template\npfklayer3cn_inst0_constant.csv.tpl
+2025-08-25 18:09:52.293635 finished: adding constant type m style parameters for file(s) ['local2.npf_k_layer3.txt'] took: 0:00:00.076997
+2025-08-25 18:09:52.293635 transform was not passed, setting default tranform to 'log'
+2025-08-25 18:09:52.293635 starting: adding pilotpoints type m style parameters for file(s) ['local2.npf_k_layer4.txt']
+2025-08-25 18:09:52.293635 starting: using geostruct:name:struct1,nugget:0.0,structures:
 name:var1,contribution:1.0,a:1000.0,anisotropy:1.0,bearing:0.0
 
-2025-08-22 14:06:38.150900 starting: loading array models\local2\pest\local2_template\local2.npf_k_layer4.txt
-2025-08-22 14:06:38.154875 finished: loading array models\local2\pest\local2_template\local2.npf_k_layer4.txt took: 0:00:00.003975
-2025-08-22 14:06:38.154875 loaded array 'models\local2\pest\local2\local2.npf_k_layer4.txt' of shape (121, 151)
-2025-08-22 14:06:38.165886 starting: writing array-style template file 'models\local2\pest\local2_template\npfklayer4pp_inst0_pilotpoints.csv.tpl'
-2025-08-22 14:06:38.165886 starting: setting up pilot point parameters
-2025-08-22 14:06:38.165886 'use_pp_zones' not set in pp_options, Setting to default value: [False]
-2025-08-22 14:06:38.165886 'spatial_reference' not set in pp_options, Setting to default value: [None]
-2025-08-22 14:06:38.165886 'try_use_ppu' not set in pp_options, Setting to default value: [True]
-2025-08-22 14:06:38.165886 'num_threads' not set in pp_options, Setting to default value: [10]
-2025-08-22 14:06:38.165886 'minpts_interp' not set in pp_options, Setting to default value: [1]
-2025-08-22 14:06:38.165886 'maxpts_interp' not set in pp_options, Setting to default value: [20]
-2025-08-22 14:06:38.165886 'search_radius' not set in pp_options, Setting to default value: [10000000000.0]
-2025-08-22 14:06:38.165886 'fill_value' not set in pp_options, Setting to default value: [1.0]
-2025-08-22 14:06:38.165886 'lower_limit' not set in pp_options, Setting to default value: [1e-30]
-2025-08-22 14:06:38.165886 'upper_limit' not set in pp_options, Setting to default value: [1e+30]
-2025-08-22 14:06:38.165886 WARNING: `use_ppu` requested but failed to import
+2025-08-25 18:09:52.293635 starting: loading array models\local2\pest\local2_template\local2.npf_k_layer4.txt
+2025-08-25 18:09:52.299187 finished: loading array models\local2\pest\local2_template\local2.npf_k_layer4.txt took: 0:00:00.005552
+2025-08-25 18:09:52.299187 loaded array 'models\local2\pest\local2\local2.npf_k_layer4.txt' of shape (121, 151)
+2025-08-25 18:09:52.307713 starting: writing array-style template file 'models\local2\pest\local2_template\npfklayer4pp_inst0_pilotpoints.csv.tpl'
+2025-08-25 18:09:52.307713 starting: setting up pilot point parameters
+2025-08-25 18:09:52.307713 'use_pp_zones' not set in pp_options, Setting to default value: [False]
+2025-08-25 18:09:52.307713 'spatial_reference' not set in pp_options, Setting to default value: [None]
+2025-08-25 18:09:52.307713 'try_use_ppu' not set in pp_options, Setting to default value: [True]
+2025-08-25 18:09:52.307713 'num_threads' not set in pp_options, Setting to default value: [10]
+2025-08-25 18:09:52.307713 'minpts_interp' not set in pp_options, Setting to default value: [1]
+2025-08-25 18:09:52.307713 'maxpts_interp' not set in pp_options, Setting to default value: [20]
+2025-08-25 18:09:52.307713 'search_radius' not set in pp_options, Setting to default value: [10000000000.0]
+2025-08-25 18:09:52.307713 'fill_value' not set in pp_options, Setting to default value: [1.0]
+2025-08-25 18:09:52.308866 'lower_limit' not set in pp_options, Setting to default value: [1e-30]
+2025-08-25 18:09:52.308866 'upper_limit' not set in pp_options, Setting to default value: [1e+30]
+2025-08-25 18:09:52.308866 WARNING: `use_ppu` requested but failed to import
 falling back to pyemu pp methods
-2025-08-22 14:06:38.166992 No spatial reference (containing cell spacing) passed.
-2025-08-22 14:06:38.166992 OK - using spatial reference in parent object.
-2025-08-22 14:06:38.331975 100 pilot point parameters created
-2025-08-22 14:06:38.331975 pilot point 'pargp':n,p,f,k,l,a,y,e,r,4,p,p
-2025-08-22 14:06:38.331975 finished: setting up pilot point parameters took: 0:00:00.166089
-2025-08-22 14:06:38.344973 reusing factors
-2025-08-22 14:06:38.344973 starting: writing array-based template file 'models\local2\pest\local2_template\npfklayer4pp_inst0pp.dat.tpl'
-2025-08-22 14:06:38.344973 saving zone array models\local2\pest\local2_template\npfklayer4pp_inst0pp.dat.zone for tpl file models\local2\pest\local2_template\npfklayer4pp_inst0pp.dat.tpl
-2025-08-22 14:06:38.359590 finished: adding pilotpoints type m style parameters for file(s) ['local2.npf_k_layer4.txt'] took: 0:00:00.208690
-2025-08-22 14:06:38.359590 transform was not passed, setting default tranform to 'log'
-2025-08-22 14:06:38.359590 starting: adding constant type m style parameters for file(s) ['local2.npf_k_layer4.txt']
-2025-08-22 14:06:38.359590 finished: using geostruct:name:struct1,nugget:0.0,structures:
+2025-08-25 18:09:52.309871 No spatial reference (containing cell spacing) passed.
+2025-08-25 18:09:52.309871 OK - using spatial reference in parent object.
+2025-08-25 18:09:52.468963 100 pilot point parameters created
+2025-08-25 18:09:52.468963 pilot point 'pargp':n,p,f,k,l,a,y,e,r,4,p,p
+2025-08-25 18:09:52.468963 finished: setting up pilot point parameters took: 0:00:00.161250
+2025-08-25 18:09:52.482657 reusing factors
+2025-08-25 18:09:52.482657 starting: writing array-based template file 'models\local2\pest\local2_template\npfklayer4pp_inst0pp.dat.tpl'
+2025-08-25 18:09:52.482657 saving zone array models\local2\pest\local2_template\npfklayer4pp_inst0pp.dat.zone for tpl file models\local2\pest\local2_template\npfklayer4pp_inst0pp.dat.tpl
+2025-08-25 18:09:52.490967 finished: adding pilotpoints type m style parameters for file(s) ['local2.npf_k_layer4.txt'] took: 0:00:00.197332
+2025-08-25 18:09:52.490967 transform was not passed, setting default tranform to 'log'
+2025-08-25 18:09:52.491967 starting: adding constant type m style parameters for file(s) ['local2.npf_k_layer4.txt']
+2025-08-25 18:09:52.491967 finished: using geostruct:name:struct1,nugget:0.0,structures:
 name:var1,contribution:1.0,a:1000.0,anisotropy:1.0,bearing:0.0
- took: 0:00:00.208690
-2025-08-22 14:06:38.359590 starting: loading array models\local2\pest\local2_template\local2.npf_k_layer4.txt
-2025-08-22 14:06:38.364588 finished: loading array models\local2\pest\local2_template\local2.npf_k_layer4.txt took: 0:00:00.004998
-2025-08-22 14:06:38.364588 loaded array 'models\local2\pest\local2\local2.npf_k_layer4.txt' of shape (121, 151)
-2025-08-22 14:06:38.374645 starting: writing array-style template file 'models\local2\pest\local2_template\npfklayer4cn_inst0_constant.csv.tpl'
-2025-08-22 14:06:38.374645 starting: writing template file models\local2\pest\local2_template\npfklayer4cn_inst0_constant.csv.tpl for ['npfklayer4cn_inst:0']
-2025-08-22 14:06:38.418935 finished: writing template file models\local2\pest\local2_template\npfklayer4cn_inst0_constant.csv.tpl for ['npfklayer4cn_inst:0'] took: 0:00:00.044290
-2025-08-22 14:06:38.418935 starting: writing array-based template file 'models\local2\pest\local2_template\npfklayer4cn_inst0_constant.csv.tpl'
-2025-08-22 14:06:38.418935 saving zone array models\local2\pest\local2_template\npfklayer4cn_inst0_constant.csv.zone for tpl file models\local2\pest\local2_template\npfklayer4cn_inst0_constant.csv.tpl
-2025-08-22 14:06:38.430023 finished: adding constant type m style parameters for file(s) ['local2.npf_k_layer4.txt'] took: 0:00:00.070433
-2025-08-22 14:06:38.430023 transform was not passed, setting default tranform to 'log'
-2025-08-22 14:06:38.430023 starting: adding pilotpoints type m style parameters for file(s) ['local2.npf_k_layer5.txt']
-2025-08-22 14:06:38.430023 starting: using geostruct:name:struct1,nugget:0.0,structures:
+ took: 0:00:00.198332
+2025-08-25 18:09:52.491967 starting: loading array models\local2\pest\local2_template\local2.npf_k_layer4.txt
+2025-08-25 18:09:52.496759 finished: loading array models\local2\pest\local2_template\local2.npf_k_layer4.txt took: 0:00:00.004792
+2025-08-25 18:09:52.496759 loaded array 'models\local2\pest\local2\local2.npf_k_layer4.txt' of shape (121, 151)
+2025-08-25 18:09:52.506640 starting: writing array-style template file 'models\local2\pest\local2_template\npfklayer4cn_inst0_constant.csv.tpl'
+2025-08-25 18:09:52.506640 starting: writing template file models\local2\pest\local2_template\npfklayer4cn_inst0_constant.csv.tpl for ['npfklayer4cn_inst:0']
+2025-08-25 18:09:52.547586 finished: writing template file models\local2\pest\local2_template\npfklayer4cn_inst0_constant.csv.tpl for ['npfklayer4cn_inst:0'] took: 0:00:00.040946
+2025-08-25 18:09:52.547586 starting: writing array-based template file 'models\local2\pest\local2_template\npfklayer4cn_inst0_constant.csv.tpl'
+2025-08-25 18:09:52.547586 saving zone array models\local2\pest\local2_template\npfklayer4cn_inst0_constant.csv.zone for tpl file models\local2\pest\local2_template\npfklayer4cn_inst0_constant.csv.tpl
+2025-08-25 18:09:52.565061 finished: adding constant type m style parameters for file(s) ['local2.npf_k_layer4.txt'] took: 0:00:00.073094
+2025-08-25 18:09:52.565061 transform was not passed, setting default tranform to 'log'
+2025-08-25 18:09:52.565061 starting: adding pilotpoints type m style parameters for file(s) ['local2.npf_k_layer5.txt']
+2025-08-25 18:09:52.565061 starting: using geostruct:name:struct1,nugget:0.0,structures:
 name:var1,contribution:1.0,a:1000.0,anisotropy:1.0,bearing:0.0
 
-2025-08-22 14:06:38.430970 starting: loading array models\local2\pest\local2_template\local2.npf_k_layer5.txt
-2025-08-22 14:06:38.435009 finished: loading array models\local2\pest\local2_template\local2.npf_k_layer5.txt took: 0:00:00.004039
-2025-08-22 14:06:38.435009 loaded array 'models\local2\pest\local2\local2.npf_k_layer5.txt' of shape (121, 151)
-2025-08-22 14:06:38.445926 starting: writing array-style template file 'models\local2\pest\local2_template\npfklayer5pp_inst0_pilotpoints.csv.tpl'
-2025-08-22 14:06:38.447036 starting: setting up pilot point parameters
-2025-08-22 14:06:38.447036 'use_pp_zones' not set in pp_options, Setting to default value: [False]
-2025-08-22 14:06:38.447036 'spatial_reference' not set in pp_options, Setting to default value: [None]
-2025-08-22 14:06:38.447036 'try_use_ppu' not set in pp_options, Setting to default value: [True]
-2025-08-22 14:06:38.447036 'num_threads' not set in pp_options, Setting to default value: [10]
-2025-08-22 14:06:38.447036 'minpts_interp' not set in pp_options, Setting to default value: [1]
-2025-08-22 14:06:38.447036 'maxpts_interp' not set in pp_options, Setting to default value: [20]
-2025-08-22 14:06:38.447036 'search_radius' not set in pp_options, Setting to default value: [10000000000.0]
-2025-08-22 14:06:38.447036 'fill_value' not set in pp_options, Setting to default value: [1.0]
-2025-08-22 14:06:38.447036 'lower_limit' not set in pp_options, Setting to default value: [1e-30]
-2025-08-22 14:06:38.447036 'upper_limit' not set in pp_options, Setting to default value: [1e+30]
-2025-08-22 14:06:38.447036 WARNING: `use_ppu` requested but failed to import
+2025-08-25 18:09:52.565061 starting: loading array models\local2\pest\local2_template\local2.npf_k_layer5.txt
+2025-08-25 18:09:52.570308 finished: loading array models\local2\pest\local2_template\local2.npf_k_layer5.txt took: 0:00:00.005247
+2025-08-25 18:09:52.570308 loaded array 'models\local2\pest\local2\local2.npf_k_layer5.txt' of shape (121, 151)
+2025-08-25 18:09:52.585203 starting: writing array-style template file 'models\local2\pest\local2_template\npfklayer5pp_inst0_pilotpoints.csv.tpl'
+2025-08-25 18:09:52.585203 starting: setting up pilot point parameters
+2025-08-25 18:09:52.585203 'use_pp_zones' not set in pp_options, Setting to default value: [False]
+2025-08-25 18:09:52.585203 'spatial_reference' not set in pp_options, Setting to default value: [None]
+2025-08-25 18:09:52.585203 'try_use_ppu' not set in pp_options, Setting to default value: [True]
+2025-08-25 18:09:52.585203 'num_threads' not set in pp_options, Setting to default value: [10]
+2025-08-25 18:09:52.585203 'minpts_interp' not set in pp_options, Setting to default value: [1]
+2025-08-25 18:09:52.585203 'maxpts_interp' not set in pp_options, Setting to default value: [20]
+2025-08-25 18:09:52.585203 'search_radius' not set in pp_options, Setting to default value: [10000000000.0]
+2025-08-25 18:09:52.585203 'fill_value' not set in pp_options, Setting to default value: [1.0]
+2025-08-25 18:09:52.585203 'lower_limit' not set in pp_options, Setting to default value: [1e-30]
+2025-08-25 18:09:52.585203 'upper_limit' not set in pp_options, Setting to default value: [1e+30]
+2025-08-25 18:09:52.585203 WARNING: `use_ppu` requested but failed to import
 falling back to pyemu pp methods
-2025-08-22 14:06:38.447929 No spatial reference (containing cell spacing) passed.
-2025-08-22 14:06:38.447929 OK - using spatial reference in parent object.
-2025-08-22 14:06:38.607195 100 pilot point parameters created
-2025-08-22 14:06:38.607195 pilot point 'pargp':n,p,f,k,l,a,y,e,r,5,p,p
-2025-08-22 14:06:38.607195 finished: setting up pilot point parameters took: 0:00:00.160159
-2025-08-22 14:06:38.622155 reusing factors
-2025-08-22 14:06:38.622155 starting: writing array-based template file 'models\local2\pest\local2_template\npfklayer5pp_inst0pp.dat.tpl'
-2025-08-22 14:06:38.622155 saving zone array models\local2\pest\local2_template\npfklayer5pp_inst0pp.dat.zone for tpl file models\local2\pest\local2_template\npfklayer5pp_inst0pp.dat.tpl
-2025-08-22 14:06:38.635234 finished: adding pilotpoints type m style parameters for file(s) ['local2.npf_k_layer5.txt'] took: 0:00:00.205211
-2025-08-22 14:06:38.635234 transform was not passed, setting default tranform to 'log'
-2025-08-22 14:06:38.635234 starting: adding constant type m style parameters for file(s) ['local2.npf_k_layer5.txt']
-2025-08-22 14:06:38.635234 finished: using geostruct:name:struct1,nugget:0.0,structures:
+2025-08-25 18:09:52.585203 No spatial reference (containing cell spacing) passed.
+2025-08-25 18:09:52.586716 OK - using spatial reference in parent object.
+2025-08-25 18:09:52.760107 100 pilot point parameters created
+2025-08-25 18:09:52.760107 pilot point 'pargp':n,p,f,k,l,a,y,e,r,5,p,p
+2025-08-25 18:09:52.760107 finished: setting up pilot point parameters took: 0:00:00.174904
+2025-08-25 18:09:52.773883 reusing factors
+2025-08-25 18:09:52.773883 starting: writing array-based template file 'models\local2\pest\local2_template\npfklayer5pp_inst0pp.dat.tpl'
+2025-08-25 18:09:52.773883 saving zone array models\local2\pest\local2_template\npfklayer5pp_inst0pp.dat.zone for tpl file models\local2\pest\local2_template\npfklayer5pp_inst0pp.dat.tpl
+2025-08-25 18:09:52.784335 finished: adding pilotpoints type m style parameters for file(s) ['local2.npf_k_layer5.txt'] took: 0:00:00.219274
+2025-08-25 18:09:52.784335 transform was not passed, setting default tranform to 'log'
+2025-08-25 18:09:52.785331 starting: adding constant type m style parameters for file(s) ['local2.npf_k_layer5.txt']
+2025-08-25 18:09:52.785331 finished: using geostruct:name:struct1,nugget:0.0,structures:
 name:var1,contribution:1.0,a:1000.0,anisotropy:1.0,bearing:0.0
- took: 0:00:00.205211
-2025-08-22 14:06:38.636325 starting: loading array models\local2\pest\local2_template\local2.npf_k_layer5.txt
-2025-08-22 14:06:38.641207 finished: loading array models\local2\pest\local2_template\local2.npf_k_layer5.txt took: 0:00:00.004882
-2025-08-22 14:06:38.641207 loaded array 'models\local2\pest\local2\local2.npf_k_layer5.txt' of shape (121, 151)
-2025-08-22 14:06:38.654094 starting: writing array-style template file 'models\local2\pest\local2_template\npfklayer5cn_inst0_constant.csv.tpl'
-2025-08-22 14:06:38.654094 starting: writing template file models\local2\pest\local2_template\npfklayer5cn_inst0_constant.csv.tpl for ['npfklayer5cn_inst:0']
-2025-08-22 14:06:38.700805 finished: writing template file models\local2\pest\local2_template\npfklayer5cn_inst0_constant.csv.tpl for ['npfklayer5cn_inst:0'] took: 0:00:00.046711
-2025-08-22 14:06:38.700805 starting: writing array-based template file 'models\local2\pest\local2_template\npfklayer5cn_inst0_constant.csv.tpl'
-2025-08-22 14:06:38.700805 saving zone array models\local2\pest\local2_template\npfklayer5cn_inst0_constant.csv.zone for tpl file models\local2\pest\local2_template\npfklayer5cn_inst0_constant.csv.tpl
-2025-08-22 14:06:38.711808 finished: adding constant type m style parameters for file(s) ['local2.npf_k_layer5.txt'] took: 0:00:00.076574
-2025-08-22 14:06:38.711808 transform was not passed, setting default tranform to 'log'
-2025-08-22 14:06:38.711808 starting: adding pilotpoints type m style parameters for file(s) ['local2.npf_k_layer6.txt']
-2025-08-22 14:06:38.711808 starting: using geostruct:name:struct1,nugget:0.0,structures:
+ took: 0:00:00.220270
+2025-08-25 18:09:52.785331 starting: loading array models\local2\pest\local2_template\local2.npf_k_layer5.txt
+2025-08-25 18:09:52.790007 finished: loading array models\local2\pest\local2_template\local2.npf_k_layer5.txt took: 0:00:00.004676
+2025-08-25 18:09:52.790007 loaded array 'models\local2\pest\local2\local2.npf_k_layer5.txt' of shape (121, 151)
+2025-08-25 18:09:52.803350 starting: writing array-style template file 'models\local2\pest\local2_template\npfklayer5cn_inst0_constant.csv.tpl'
+2025-08-25 18:09:52.803350 starting: writing template file models\local2\pest\local2_template\npfklayer5cn_inst0_constant.csv.tpl for ['npfklayer5cn_inst:0']
+2025-08-25 18:09:52.850830 finished: writing template file models\local2\pest\local2_template\npfklayer5cn_inst0_constant.csv.tpl for ['npfklayer5cn_inst:0'] took: 0:00:00.047480
+2025-08-25 18:09:52.850830 starting: writing array-based template file 'models\local2\pest\local2_template\npfklayer5cn_inst0_constant.csv.tpl'
+2025-08-25 18:09:52.850830 saving zone array models\local2\pest\local2_template\npfklayer5cn_inst0_constant.csv.zone for tpl file models\local2\pest\local2_template\npfklayer5cn_inst0_constant.csv.tpl
+2025-08-25 18:09:52.879183 finished: adding constant type m style parameters for file(s) ['local2.npf_k_layer5.txt'] took: 0:00:00.093852
+2025-08-25 18:09:52.879183 transform was not passed, setting default tranform to 'log'
+2025-08-25 18:09:52.879720 starting: adding pilotpoints type m style parameters for file(s) ['local2.npf_k_layer6.txt']
+2025-08-25 18:09:52.879720 starting: using geostruct:name:struct1,nugget:0.0,structures:
 name:var1,contribution:1.0,a:1000.0,anisotropy:1.0,bearing:0.0
 
-2025-08-22 14:06:38.711808 starting: loading array models\local2\pest\local2_template\local2.npf_k_layer6.txt
-2025-08-22 14:06:38.716804 finished: loading array models\local2\pest\local2_template\local2.npf_k_layer6.txt took: 0:00:00.004996
-2025-08-22 14:06:38.716804 loaded array 'models\local2\pest\local2\local2.npf_k_layer6.txt' of shape (121, 151)
-2025-08-22 14:06:38.726731 starting: writing array-style template file 'models\local2\pest\local2_template\npfklayer6pp_inst0_pilotpoints.csv.tpl'
-2025-08-22 14:06:38.726731 starting: setting up pilot point parameters
-2025-08-22 14:06:38.726731 'use_pp_zones' not set in pp_options, Setting to default value: [False]
-2025-08-22 14:06:38.726731 'spatial_reference' not set in pp_options, Setting to default value: [None]
-2025-08-22 14:06:38.726731 'try_use_ppu' not set in pp_options, Setting to default value: [True]
-2025-08-22 14:06:38.726731 'num_threads' not set in pp_options, Setting to default value: [10]
-2025-08-22 14:06:38.726731 'minpts_interp' not set in pp_options, Setting to default value: [1]
-2025-08-22 14:06:38.726731 'maxpts_interp' not set in pp_options, Setting to default value: [20]
-2025-08-22 14:06:38.726731 'search_radius' not set in pp_options, Setting to default value: [10000000000.0]
-2025-08-22 14:06:38.726731 'fill_value' not set in pp_options, Setting to default value: [1.0]
-2025-08-22 14:06:38.726731 'lower_limit' not set in pp_options, Setting to default value: [1e-30]
-2025-08-22 14:06:38.726731 'upper_limit' not set in pp_options, Setting to default value: [1e+30]
-2025-08-22 14:06:38.727825 WARNING: `use_ppu` requested but failed to import
+2025-08-25 18:09:52.879720 starting: loading array models\local2\pest\local2_template\local2.npf_k_layer6.txt
+2025-08-25 18:09:52.885222 finished: loading array models\local2\pest\local2_template\local2.npf_k_layer6.txt took: 0:00:00.005502
+2025-08-25 18:09:52.885222 loaded array 'models\local2\pest\local2\local2.npf_k_layer6.txt' of shape (121, 151)
+2025-08-25 18:09:52.897630 starting: writing array-style template file 'models\local2\pest\local2_template\npfklayer6pp_inst0_pilotpoints.csv.tpl'
+2025-08-25 18:09:52.897630 starting: setting up pilot point parameters
+2025-08-25 18:09:52.897630 'use_pp_zones' not set in pp_options, Setting to default value: [False]
+2025-08-25 18:09:52.897630 'spatial_reference' not set in pp_options, Setting to default value: [None]
+2025-08-25 18:09:52.897630 'try_use_ppu' not set in pp_options, Setting to default value: [True]
+2025-08-25 18:09:52.897630 'num_threads' not set in pp_options, Setting to default value: [10]
+2025-08-25 18:09:52.898134 'minpts_interp' not set in pp_options, Setting to default value: [1]
+2025-08-25 18:09:52.898134 'maxpts_interp' not set in pp_options, Setting to default value: [20]
+2025-08-25 18:09:52.898134 'search_radius' not set in pp_options, Setting to default value: [10000000000.0]
+2025-08-25 18:09:52.898134 'fill_value' not set in pp_options, Setting to default value: [1.0]
+2025-08-25 18:09:52.898134 'lower_limit' not set in pp_options, Setting to default value: [1e-30]
+2025-08-25 18:09:52.898134 'upper_limit' not set in pp_options, Setting to default value: [1e+30]
+2025-08-25 18:09:52.898958 WARNING: `use_ppu` requested but failed to import
 falling back to pyemu pp methods
-2025-08-22 14:06:38.727825 No spatial reference (containing cell spacing) passed.
-2025-08-22 14:06:38.727825 OK - using spatial reference in parent object.
-2025-08-22 14:06:38.889391 100 pilot point parameters created
-2025-08-22 14:06:38.889391 pilot point 'pargp':n,p,f,k,l,a,y,e,r,6,p,p
-2025-08-22 14:06:38.889391 finished: setting up pilot point parameters took: 0:00:00.162660
-2025-08-22 14:06:38.903301 reusing factors
-2025-08-22 14:06:38.903301 starting: writing array-based template file 'models\local2\pest\local2_template\npfklayer6pp_inst0pp.dat.tpl'
-2025-08-22 14:06:38.904379 saving zone array models\local2\pest\local2_template\npfklayer6pp_inst0pp.dat.zone for tpl file models\local2\pest\local2_template\npfklayer6pp_inst0pp.dat.tpl
-2025-08-22 14:06:38.912389 finished: adding pilotpoints type m style parameters for file(s) ['local2.npf_k_layer6.txt'] took: 0:00:00.200581
-2025-08-22 14:06:38.912389 transform was not passed, setting default tranform to 'log'
-2025-08-22 14:06:38.912389 starting: adding constant type m style parameters for file(s) ['local2.npf_k_layer6.txt']
-2025-08-22 14:06:38.912389 finished: using geostruct:name:struct1,nugget:0.0,structures:
+2025-08-25 18:09:52.898958 No spatial reference (containing cell spacing) passed.
+2025-08-25 18:09:52.898958 OK - using spatial reference in parent object.
+2025-08-25 18:09:53.087474 100 pilot point parameters created
+2025-08-25 18:09:53.087474 pilot point 'pargp':n,p,f,k,l,a,y,e,r,6,p,p
+2025-08-25 18:09:53.087474 finished: setting up pilot point parameters took: 0:00:00.189844
+2025-08-25 18:09:53.103544 reusing factors
+2025-08-25 18:09:53.104539 starting: writing array-based template file 'models\local2\pest\local2_template\npfklayer6pp_inst0pp.dat.tpl'
+2025-08-25 18:09:53.104539 saving zone array models\local2\pest\local2_template\npfklayer6pp_inst0pp.dat.zone for tpl file models\local2\pest\local2_template\npfklayer6pp_inst0pp.dat.tpl
+2025-08-25 18:09:53.114058 finished: adding pilotpoints type m style parameters for file(s) ['local2.npf_k_layer6.txt'] took: 0:00:00.234338
+2025-08-25 18:09:53.114058 transform was not passed, setting default tranform to 'log'
+2025-08-25 18:09:53.114058 starting: adding constant type m style parameters for file(s) ['local2.npf_k_layer6.txt']
+2025-08-25 18:09:53.114058 finished: using geostruct:name:struct1,nugget:0.0,structures:
 name:var1,contribution:1.0,a:1000.0,anisotropy:1.0,bearing:0.0
- took: 0:00:00.200581
-2025-08-22 14:06:38.912389 starting: loading array models\local2\pest\local2_template\local2.npf_k_layer6.txt
-2025-08-22 14:06:38.919502 finished: loading array models\local2\pest\local2_template\local2.npf_k_layer6.txt took: 0:00:00.007113
-2025-08-22 14:06:38.919502 loaded array 'models\local2\pest\local2\local2.npf_k_layer6.txt' of shape (121, 151)
-2025-08-22 14:06:38.929387 starting: writing array-style template file 'models\local2\pest\local2_template\npfklayer6cn_inst0_constant.csv.tpl'
-2025-08-22 14:06:38.929387 starting: writing template file models\local2\pest\local2_template\npfklayer6cn_inst0_constant.csv.tpl for ['npfklayer6cn_inst:0']
-2025-08-22 14:06:38.977235 finished: writing template file models\local2\pest\local2_template\npfklayer6cn_inst0_constant.csv.tpl for ['npfklayer6cn_inst:0'] took: 0:00:00.047848
-2025-08-22 14:06:38.978252 starting: writing array-based template file 'models\local2\pest\local2_template\npfklayer6cn_inst0_constant.csv.tpl'
-2025-08-22 14:06:38.978252 saving zone array models\local2\pest\local2_template\npfklayer6cn_inst0_constant.csv.zone for tpl file models\local2\pest\local2_template\npfklayer6cn_inst0_constant.csv.tpl
-2025-08-22 14:06:38.990104 finished: adding constant type m style parameters for file(s) ['local2.npf_k_layer6.txt'] took: 0:00:00.077715
-2025-08-22 14:06:38.991104 transform was not passed, setting default tranform to 'log'
-2025-08-22 14:06:38.991104 starting: adding pilotpoints type m style parameters for file(s) ['local2.npf_k_layer7.txt']
-2025-08-22 14:06:38.991104 starting: using geostruct:name:struct1,nugget:0.0,structures:
+ took: 0:00:00.234338
+2025-08-25 18:09:53.115058 starting: loading array models\local2\pest\local2_template\local2.npf_k_layer6.txt
+2025-08-25 18:09:53.120096 finished: loading array models\local2\pest\local2_template\local2.npf_k_layer6.txt took: 0:00:00.005038
+2025-08-25 18:09:53.120096 loaded array 'models\local2\pest\local2\local2.npf_k_layer6.txt' of shape (121, 151)
+2025-08-25 18:09:53.131460 starting: writing array-style template file 'models\local2\pest\local2_template\npfklayer6cn_inst0_constant.csv.tpl'
+2025-08-25 18:09:53.131460 starting: writing template file models\local2\pest\local2_template\npfklayer6cn_inst0_constant.csv.tpl for ['npfklayer6cn_inst:0']
+2025-08-25 18:09:53.183765 finished: writing template file models\local2\pest\local2_template\npfklayer6cn_inst0_constant.csv.tpl for ['npfklayer6cn_inst:0'] took: 0:00:00.052305
+2025-08-25 18:09:53.183765 starting: writing array-based template file 'models\local2\pest\local2_template\npfklayer6cn_inst0_constant.csv.tpl'
+2025-08-25 18:09:53.183765 saving zone array models\local2\pest\local2_template\npfklayer6cn_inst0_constant.csv.zone for tpl file models\local2\pest\local2_template\npfklayer6cn_inst0_constant.csv.tpl
+2025-08-25 18:09:53.196612 finished: adding constant type m style parameters for file(s) ['local2.npf_k_layer6.txt'] took: 0:00:00.082554
+2025-08-25 18:09:53.197740 transform was not passed, setting default tranform to 'log'
+2025-08-25 18:09:53.197740 starting: adding pilotpoints type m style parameters for file(s) ['local2.npf_k_layer7.txt']
+2025-08-25 18:09:53.197740 starting: using geostruct:name:struct1,nugget:0.0,structures:
 name:var1,contribution:1.0,a:1000.0,anisotropy:1.0,bearing:0.0
 
-2025-08-22 14:06:38.991104 starting: loading array models\local2\pest\local2_template\local2.npf_k_layer7.txt
-2025-08-22 14:06:38.998014 finished: loading array models\local2\pest\local2_template\local2.npf_k_layer7.txt took: 0:00:00.006910
-2025-08-22 14:06:38.998014 loaded array 'models\local2\pest\local2\local2.npf_k_layer7.txt' of shape (121, 151)
-2025-08-22 14:06:39.012012 starting: writing array-style template file 'models\local2\pest\local2_template\npfklayer7pp_inst0_pilotpoints.csv.tpl'
-2025-08-22 14:06:39.012012 starting: setting up pilot point parameters
-2025-08-22 14:06:39.012012 'use_pp_zones' not set in pp_options, Setting to default value: [False]
-2025-08-22 14:06:39.012012 'spatial_reference' not set in pp_options, Setting to default value: [None]
-2025-08-22 14:06:39.012012 'try_use_ppu' not set in pp_options, Setting to default value: [True]
-2025-08-22 14:06:39.012012 'num_threads' not set in pp_options, Setting to default value: [10]
-2025-08-22 14:06:39.012012 'minpts_interp' not set in pp_options, Setting to default value: [1]
-2025-08-22 14:06:39.012012 'maxpts_interp' not set in pp_options, Setting to default value: [20]
-2025-08-22 14:06:39.012012 'search_radius' not set in pp_options, Setting to default value: [10000000000.0]
-2025-08-22 14:06:39.012012 'fill_value' not set in pp_options, Setting to default value: [1.0]
-2025-08-22 14:06:39.012012 'lower_limit' not set in pp_options, Setting to default value: [1e-30]
-2025-08-22 14:06:39.012012 'upper_limit' not set in pp_options, Setting to default value: [1e+30]
-2025-08-22 14:06:39.012012 WARNING: `use_ppu` requested but failed to import
+2025-08-25 18:09:53.197740 starting: loading array models\local2\pest\local2_template\local2.npf_k_layer7.txt
+2025-08-25 18:09:53.206548 finished: loading array models\local2\pest\local2_template\local2.npf_k_layer7.txt took: 0:00:00.008808
+2025-08-25 18:09:53.206548 loaded array 'models\local2\pest\local2\local2.npf_k_layer7.txt' of shape (121, 151)
+2025-08-25 18:09:53.223866 starting: writing array-style template file 'models\local2\pest\local2_template\npfklayer7pp_inst0_pilotpoints.csv.tpl'
+2025-08-25 18:09:53.223866 starting: setting up pilot point parameters
+2025-08-25 18:09:53.223866 'use_pp_zones' not set in pp_options, Setting to default value: [False]
+2025-08-25 18:09:53.223866 'spatial_reference' not set in pp_options, Setting to default value: [None]
+2025-08-25 18:09:53.223866 'try_use_ppu' not set in pp_options, Setting to default value: [True]
+2025-08-25 18:09:53.223866 'num_threads' not set in pp_options, Setting to default value: [10]
+2025-08-25 18:09:53.223866 'minpts_interp' not set in pp_options, Setting to default value: [1]
+2025-08-25 18:09:53.223866 'maxpts_interp' not set in pp_options, Setting to default value: [20]
+2025-08-25 18:09:53.223866 'search_radius' not set in pp_options, Setting to default value: [10000000000.0]
+2025-08-25 18:09:53.223866 'fill_value' not set in pp_options, Setting to default value: [1.0]
+2025-08-25 18:09:53.223866 'lower_limit' not set in pp_options, Setting to default value: [1e-30]
+2025-08-25 18:09:53.223866 'upper_limit' not set in pp_options, Setting to default value: [1e+30]
+2025-08-25 18:09:53.224863 WARNING: `use_ppu` requested but failed to import
 falling back to pyemu pp methods
-2025-08-22 14:06:39.013108 No spatial reference (containing cell spacing) passed.
-2025-08-22 14:06:39.013108 OK - using spatial reference in parent object.
-2025-08-22 14:06:39.168349 92 pilot point parameters created
-2025-08-22 14:06:39.168349 pilot point 'pargp':n,p,f,k,l,a,y,e,r,7,p,p
-2025-08-22 14:06:39.168349 finished: setting up pilot point parameters took: 0:00:00.156337
-2025-08-22 14:06:39.180235 starting: calculating factors for pargp=npfklayer7pp
-2025-08-22 14:06:39.181218 saving krige variance file:models\local2\pest\local2_template\npfklayer7pp_inst0pp.var.dat
-2025-08-22 14:06:39.181218 saving krige factors file:models\local2\pest\local2_template\npfklayer7pp_inst0pp.fac
-2025-08-22 14:07:13.569168 finished: calculating factors for pargp=npfklayer7pp took: 0:00:34.388933
-2025-08-22 14:07:13.569168 starting: writing array-based template file 'models\local2\pest\local2_template\npfklayer7pp_inst0pp.dat.tpl'
-2025-08-22 14:07:13.569168 saving zone array models\local2\pest\local2_template\npfklayer7pp_inst0pp.dat.zone for tpl file models\local2\pest\local2_template\npfklayer7pp_inst0pp.dat.tpl
-2025-08-22 14:07:13.578256 finished: adding pilotpoints type m style parameters for file(s) ['local2.npf_k_layer7.txt'] took: 0:00:34.587152
-2025-08-22 14:07:13.579276 transform was not passed, setting default tranform to 'log'
-2025-08-22 14:07:13.584270 starting: adding constant type m style parameters for file(s) ['local2.npf_k_layer7.txt']
-2025-08-22 14:07:13.584270 finished: using geostruct:name:struct1,nugget:0.0,structures:
+2025-08-25 18:09:53.224863 No spatial reference (containing cell spacing) passed.
+2025-08-25 18:09:53.224863 OK - using spatial reference in parent object.
+2025-08-25 18:09:53.390699 92 pilot point parameters created
+2025-08-25 18:09:53.390699 pilot point 'pargp':n,p,f,k,l,a,y,e,r,7,p,p
+2025-08-25 18:09:53.390699 finished: setting up pilot point parameters took: 0:00:00.166833
+2025-08-25 18:09:53.409094 starting: calculating factors for pargp=npfklayer7pp
+2025-08-25 18:09:53.409094 saving krige variance file:models\local2\pest\local2_template\npfklayer7pp_inst0pp.var.dat
+2025-08-25 18:09:53.409094 saving krige factors file:models\local2\pest\local2_template\npfklayer7pp_inst0pp.fac
+2025-08-25 18:10:38.173256 finished: calculating factors for pargp=npfklayer7pp took: 0:00:44.764162
+2025-08-25 18:10:38.173256 starting: writing array-based template file 'models\local2\pest\local2_template\npfklayer7pp_inst0pp.dat.tpl'
+2025-08-25 18:10:38.173256 saving zone array models\local2\pest\local2_template\npfklayer7pp_inst0pp.dat.zone for tpl file models\local2\pest\local2_template\npfklayer7pp_inst0pp.dat.tpl
+2025-08-25 18:10:38.186637 finished: adding pilotpoints type m style parameters for file(s) ['local2.npf_k_layer7.txt'] took: 0:00:44.988897
+2025-08-25 18:10:38.186637 transform was not passed, setting default tranform to 'log'
+2025-08-25 18:10:38.188922 starting: adding constant type m style parameters for file(s) ['local2.npf_k_layer7.txt']
+2025-08-25 18:10:38.188922 finished: using geostruct:name:struct1,nugget:0.0,structures:
 name:var1,contribution:1.0,a:1000.0,anisotropy:1.0,bearing:0.0
- took: 0:00:34.593166
-2025-08-22 14:07:13.584270 starting: loading array models\local2\pest\local2_template\local2.npf_k_layer7.txt
-2025-08-22 14:07:13.591177 finished: loading array models\local2\pest\local2_template\local2.npf_k_layer7.txt took: 0:00:00.006907
-2025-08-22 14:07:13.591177 loaded array 'models\local2\pest\local2\local2.npf_k_layer7.txt' of shape (121, 151)
-2025-08-22 14:07:13.603180 starting: writing array-style template file 'models\local2\pest\local2_template\npfklayer7cn_inst0_constant.csv.tpl'
-2025-08-22 14:07:13.603180 starting: writing template file models\local2\pest\local2_template\npfklayer7cn_inst0_constant.csv.tpl for ['npfklayer7cn_inst:0']
-2025-08-22 14:07:13.645889 finished: writing template file models\local2\pest\local2_template\npfklayer7cn_inst0_constant.csv.tpl for ['npfklayer7cn_inst:0'] took: 0:00:00.042709
-2025-08-22 14:07:13.645889 starting: writing array-based template file 'models\local2\pest\local2_template\npfklayer7cn_inst0_constant.csv.tpl'
-2025-08-22 14:07:13.646889 saving zone array models\local2\pest\local2_template\npfklayer7cn_inst0_constant.csv.zone for tpl file models\local2\pest\local2_template\npfklayer7cn_inst0_constant.csv.tpl
-2025-08-22 14:07:13.657970 finished: adding constant type m style parameters for file(s) ['local2.npf_k_layer7.txt'] took: 0:00:00.073700
-2025-08-22 14:07:13.658999 transform was not passed, setting default tranform to 'log'
-2025-08-22 14:07:13.658999 starting: adding pilotpoints type m style parameters for file(s) ['local2.npf_k_layer8.txt']
-2025-08-22 14:07:13.658999 starting: using geostruct:name:struct1,nugget:0.0,structures:
+ took: 0:00:44.991182
+2025-08-25 18:10:38.188922 starting: loading array models\local2\pest\local2_template\local2.npf_k_layer7.txt
+2025-08-25 18:10:38.197463 finished: loading array models\local2\pest\local2_template\local2.npf_k_layer7.txt took: 0:00:00.008541
+2025-08-25 18:10:38.197463 loaded array 'models\local2\pest\local2\local2.npf_k_layer7.txt' of shape (121, 151)
+2025-08-25 18:10:38.208736 starting: writing array-style template file 'models\local2\pest\local2_template\npfklayer7cn_inst0_constant.csv.tpl'
+2025-08-25 18:10:38.208736 starting: writing template file models\local2\pest\local2_template\npfklayer7cn_inst0_constant.csv.tpl for ['npfklayer7cn_inst:0']
+2025-08-25 18:10:38.251191 finished: writing template file models\local2\pest\local2_template\npfklayer7cn_inst0_constant.csv.tpl for ['npfklayer7cn_inst:0'] took: 0:00:00.042455
+2025-08-25 18:10:38.251191 starting: writing array-based template file 'models\local2\pest\local2_template\npfklayer7cn_inst0_constant.csv.tpl'
+2025-08-25 18:10:38.251191 saving zone array models\local2\pest\local2_template\npfklayer7cn_inst0_constant.csv.zone for tpl file models\local2\pest\local2_template\npfklayer7cn_inst0_constant.csv.tpl
+2025-08-25 18:10:38.267548 finished: adding constant type m style parameters for file(s) ['local2.npf_k_layer7.txt'] took: 0:00:00.078626
+2025-08-25 18:10:38.267548 transform was not passed, setting default tranform to 'log'
+2025-08-25 18:10:38.267548 starting: adding pilotpoints type m style parameters for file(s) ['local2.npf_k_layer8.txt']
+2025-08-25 18:10:38.267548 starting: using geostruct:name:struct1,nugget:0.0,structures:
 name:var1,contribution:1.0,a:1000.0,anisotropy:1.0,bearing:0.0
 
-2025-08-22 14:07:13.660002 starting: loading array models\local2\pest\local2_template\local2.npf_k_layer8.txt
-2025-08-22 14:07:13.663984 finished: loading array models\local2\pest\local2_template\local2.npf_k_layer8.txt took: 0:00:00.003982
-2025-08-22 14:07:13.663984 loaded array 'models\local2\pest\local2\local2.npf_k_layer8.txt' of shape (121, 151)
-2025-08-22 14:07:13.675889 starting: writing array-style template file 'models\local2\pest\local2_template\npfklayer8pp_inst0_pilotpoints.csv.tpl'
-2025-08-22 14:07:13.675889 starting: setting up pilot point parameters
-2025-08-22 14:07:13.675889 'use_pp_zones' not set in pp_options, Setting to default value: [False]
-2025-08-22 14:07:13.675889 'spatial_reference' not set in pp_options, Setting to default value: [None]
-2025-08-22 14:07:13.675889 'try_use_ppu' not set in pp_options, Setting to default value: [True]
-2025-08-22 14:07:13.675889 'num_threads' not set in pp_options, Setting to default value: [10]
-2025-08-22 14:07:13.675889 'minpts_interp' not set in pp_options, Setting to default value: [1]
-2025-08-22 14:07:13.675889 'maxpts_interp' not set in pp_options, Setting to default value: [20]
-2025-08-22 14:07:13.675889 'search_radius' not set in pp_options, Setting to default value: [10000000000.0]
-2025-08-22 14:07:13.675889 'fill_value' not set in pp_options, Setting to default value: [1.0]
-2025-08-22 14:07:13.675889 'lower_limit' not set in pp_options, Setting to default value: [1e-30]
-2025-08-22 14:07:13.675889 'upper_limit' not set in pp_options, Setting to default value: [1e+30]
-2025-08-22 14:07:13.676897 WARNING: `use_ppu` requested but failed to import
+2025-08-25 18:10:38.267548 starting: loading array models\local2\pest\local2_template\local2.npf_k_layer8.txt
+2025-08-25 18:10:38.267548 finished: loading array models\local2\pest\local2_template\local2.npf_k_layer8.txt took: 0:00:00
+2025-08-25 18:10:38.267548 loaded array 'models\local2\pest\local2\local2.npf_k_layer8.txt' of shape (121, 151)
+2025-08-25 18:10:38.282904 starting: writing array-style template file 'models\local2\pest\local2_template\npfklayer8pp_inst0_pilotpoints.csv.tpl'
+2025-08-25 18:10:38.282904 starting: setting up pilot point parameters
+2025-08-25 18:10:38.282904 'use_pp_zones' not set in pp_options, Setting to default value: [False]
+2025-08-25 18:10:38.282904 'spatial_reference' not set in pp_options, Setting to default value: [None]
+2025-08-25 18:10:38.282904 'try_use_ppu' not set in pp_options, Setting to default value: [True]
+2025-08-25 18:10:38.282904 'num_threads' not set in pp_options, Setting to default value: [10]
+2025-08-25 18:10:38.282904 'minpts_interp' not set in pp_options, Setting to default value: [1]
+2025-08-25 18:10:38.282904 'maxpts_interp' not set in pp_options, Setting to default value: [20]
+2025-08-25 18:10:38.282904 'search_radius' not set in pp_options, Setting to default value: [10000000000.0]
+2025-08-25 18:10:38.282904 'fill_value' not set in pp_options, Setting to default value: [1.0]
+2025-08-25 18:10:38.282904 'lower_limit' not set in pp_options, Setting to default value: [1e-30]
+2025-08-25 18:10:38.282904 'upper_limit' not set in pp_options, Setting to default value: [1e+30]
+2025-08-25 18:10:38.282904 WARNING: `use_ppu` requested but failed to import
 falling back to pyemu pp methods
-2025-08-22 14:07:13.676897 No spatial reference (containing cell spacing) passed.
-2025-08-22 14:07:13.676897 OK - using spatial reference in parent object.
-2025-08-22 14:07:13.818357 79 pilot point parameters created
-2025-08-22 14:07:13.819366 pilot point 'pargp':n,p,f,k,l,a,y,e,r,8,p,p
-2025-08-22 14:07:13.819366 finished: setting up pilot point parameters took: 0:00:00.143477
-2025-08-22 14:07:13.829443 starting: calculating factors for pargp=npfklayer8pp
-2025-08-22 14:07:13.829443 saving krige variance file:models\local2\pest\local2_template\npfklayer8pp_inst0pp.var.dat
-2025-08-22 14:07:13.829443 saving krige factors file:models\local2\pest\local2_template\npfklayer8pp_inst0pp.fac
-2025-08-22 14:07:47.001115 finished: calculating factors for pargp=npfklayer8pp took: 0:00:33.171672
-2025-08-22 14:07:47.001115 starting: writing array-based template file 'models\local2\pest\local2_template\npfklayer8pp_inst0pp.dat.tpl'
-2025-08-22 14:07:47.001115 saving zone array models\local2\pest\local2_template\npfklayer8pp_inst0pp.dat.zone for tpl file models\local2\pest\local2_template\npfklayer8pp_inst0pp.dat.tpl
-2025-08-22 14:07:47.011111 finished: adding pilotpoints type m style parameters for file(s) ['local2.npf_k_layer8.txt'] took: 0:00:33.352112
-2025-08-22 14:07:47.011111 transform was not passed, setting default tranform to 'log'
-2025-08-22 14:07:47.015190 starting: adding constant type m style parameters for file(s) ['local2.npf_k_layer8.txt']
-2025-08-22 14:07:47.016108 finished: using geostruct:name:struct1,nugget:0.0,structures:
+2025-08-25 18:10:38.282904 No spatial reference (containing cell spacing) passed.
+2025-08-25 18:10:38.282904 OK - using spatial reference in parent object.
+2025-08-25 18:10:38.410726 79 pilot point parameters created
+2025-08-25 18:10:38.410726 pilot point 'pargp':n,p,f,k,l,a,y,e,r,8,p,p
+2025-08-25 18:10:38.410726 finished: setting up pilot point parameters took: 0:00:00.127822
+2025-08-25 18:10:38.417240 starting: calculating factors for pargp=npfklayer8pp
+2025-08-25 18:10:38.417240 saving krige variance file:models\local2\pest\local2_template\npfklayer8pp_inst0pp.var.dat
+2025-08-25 18:10:38.417240 saving krige factors file:models\local2\pest\local2_template\npfklayer8pp_inst0pp.fac
+2025-08-25 18:11:20.807917 finished: calculating factors for pargp=npfklayer8pp took: 0:00:42.390677
+2025-08-25 18:11:20.807917 starting: writing array-based template file 'models\local2\pest\local2_template\npfklayer8pp_inst0pp.dat.tpl'
+2025-08-25 18:11:20.807917 saving zone array models\local2\pest\local2_template\npfklayer8pp_inst0pp.dat.zone for tpl file models\local2\pest\local2_template\npfklayer8pp_inst0pp.dat.tpl
+2025-08-25 18:11:20.816436 finished: adding pilotpoints type m style parameters for file(s) ['local2.npf_k_layer8.txt'] took: 0:00:42.548888
+2025-08-25 18:11:20.816436 transform was not passed, setting default tranform to 'log'
+2025-08-25 18:11:20.820480 starting: adding constant type m style parameters for file(s) ['local2.npf_k_layer8.txt']
+2025-08-25 18:11:20.820480 finished: using geostruct:name:struct1,nugget:0.0,structures:
 name:var1,contribution:1.0,a:1000.0,anisotropy:1.0,bearing:0.0
- took: 0:00:33.357109
-2025-08-22 14:07:47.016108 starting: loading array models\local2\pest\local2_template\local2.npf_k_layer8.txt
-2025-08-22 14:07:47.020188 finished: loading array models\local2\pest\local2_template\local2.npf_k_layer8.txt took: 0:00:00.004080
-2025-08-22 14:07:47.020188 loaded array 'models\local2\pest\local2\local2.npf_k_layer8.txt' of shape (121, 151)
-2025-08-22 14:07:47.030133 starting: writing array-style template file 'models\local2\pest\local2_template\npfklayer8cn_inst0_constant.csv.tpl'
-2025-08-22 14:07:47.031112 starting: writing template file models\local2\pest\local2_template\npfklayer8cn_inst0_constant.csv.tpl for ['npfklayer8cn_inst:0']
-2025-08-22 14:07:47.069431 finished: writing template file models\local2\pest\local2_template\npfklayer8cn_inst0_constant.csv.tpl for ['npfklayer8cn_inst:0'] took: 0:00:00.038319
-2025-08-22 14:07:47.069431 starting: writing array-based template file 'models\local2\pest\local2_template\npfklayer8cn_inst0_constant.csv.tpl'
-2025-08-22 14:07:47.069431 saving zone array models\local2\pest\local2_template\npfklayer8cn_inst0_constant.csv.zone for tpl file models\local2\pest\local2_template\npfklayer8cn_inst0_constant.csv.tpl
-2025-08-22 14:07:47.080463 finished: adding constant type m style parameters for file(s) ['local2.npf_k_layer8.txt'] took: 0:00:00.065273
-2025-08-22 14:07:47.081463 transform was not passed, setting default tranform to 'log'
-2025-08-22 14:07:47.082471 starting: adding pilotpoints type m style parameters for file(s) ['local2.rcha_recharge.txt']
-2025-08-22 14:07:47.082471 starting: using geostruct:name:struct1,nugget:0.0,structures:
+ took: 0:00:42.552932
+2025-08-25 18:11:20.820480 starting: loading array models\local2\pest\local2_template\local2.npf_k_layer8.txt
+2025-08-25 18:11:20.826227 finished: loading array models\local2\pest\local2_template\local2.npf_k_layer8.txt took: 0:00:00.005747
+2025-08-25 18:11:20.826731 loaded array 'models\local2\pest\local2\local2.npf_k_layer8.txt' of shape (121, 151)
+2025-08-25 18:11:20.836269 starting: writing array-style template file 'models\local2\pest\local2_template\npfklayer8cn_inst0_constant.csv.tpl'
+2025-08-25 18:11:20.836269 starting: writing template file models\local2\pest\local2_template\npfklayer8cn_inst0_constant.csv.tpl for ['npfklayer8cn_inst:0']
+2025-08-25 18:11:20.876488 finished: writing template file models\local2\pest\local2_template\npfklayer8cn_inst0_constant.csv.tpl for ['npfklayer8cn_inst:0'] took: 0:00:00.040219
+2025-08-25 18:11:20.876488 starting: writing array-based template file 'models\local2\pest\local2_template\npfklayer8cn_inst0_constant.csv.tpl'
+2025-08-25 18:11:20.876999 saving zone array models\local2\pest\local2_template\npfklayer8cn_inst0_constant.csv.zone for tpl file models\local2\pest\local2_template\npfklayer8cn_inst0_constant.csv.tpl
+2025-08-25 18:11:20.887028 finished: adding constant type m style parameters for file(s) ['local2.npf_k_layer8.txt'] took: 0:00:00.066548
+2025-08-25 18:11:20.888539 transform was not passed, setting default tranform to 'log'
+2025-08-25 18:11:20.888539 starting: adding pilotpoints type m style parameters for file(s) ['local2.rcha_recharge.txt']
+2025-08-25 18:11:20.888539 starting: using geostruct:name:struct1,nugget:0.0,structures:
 name:var1,contribution:1.0,a:1000.0,anisotropy:1.0,bearing:0.0
 
-2025-08-22 14:07:47.082471 starting: loading array models\local2\pest\local2_template\local2.rcha_recharge.txt
-2025-08-22 14:07:47.087467 finished: loading array models\local2\pest\local2_template\local2.rcha_recharge.txt took: 0:00:00.004996
-2025-08-22 14:07:47.087467 loaded array 'models\local2\pest\local2\local2.rcha_recharge.txt' of shape (121, 151)
-2025-08-22 14:07:47.101466 starting: writing array-style template file 'models\local2\pest\local2_template\rcharechargepp_inst0_pilotpoints.csv.tpl'
-2025-08-22 14:07:47.101466 starting: setting up pilot point parameters
-2025-08-22 14:07:47.101466 'use_pp_zones' not set in pp_options, Setting to default value: [False]
-2025-08-22 14:07:47.101466 'spatial_reference' not set in pp_options, Setting to default value: [None]
-2025-08-22 14:07:47.101466 'try_use_ppu' not set in pp_options, Setting to default value: [True]
-2025-08-22 14:07:47.101466 'num_threads' not set in pp_options, Setting to default value: [10]
-2025-08-22 14:07:47.101466 'minpts_interp' not set in pp_options, Setting to default value: [1]
-2025-08-22 14:07:47.101466 'maxpts_interp' not set in pp_options, Setting to default value: [20]
-2025-08-22 14:07:47.101466 'search_radius' not set in pp_options, Setting to default value: [10000000000.0]
-2025-08-22 14:07:47.101466 'fill_value' not set in pp_options, Setting to default value: [1.0]
-2025-08-22 14:07:47.101466 'lower_limit' not set in pp_options, Setting to default value: [1e-30]
-2025-08-22 14:07:47.101466 'upper_limit' not set in pp_options, Setting to default value: [1e+30]
-2025-08-22 14:07:47.102479 WARNING: `use_ppu` requested but failed to import
+2025-08-25 18:11:20.888539 starting: loading array models\local2\pest\local2_template\local2.rcha_recharge.txt
+2025-08-25 18:11:20.888539 finished: loading array models\local2\pest\local2_template\local2.rcha_recharge.txt took: 0:00:00
+2025-08-25 18:11:20.888539 loaded array 'models\local2\pest\local2\local2.rcha_recharge.txt' of shape (121, 151)
+2025-08-25 18:11:20.906353 starting: writing array-style template file 'models\local2\pest\local2_template\rcharechargepp_inst0_pilotpoints.csv.tpl'
+2025-08-25 18:11:20.906353 starting: setting up pilot point parameters
+2025-08-25 18:11:20.907371 'use_pp_zones' not set in pp_options, Setting to default value: [False]
+2025-08-25 18:11:20.907371 'spatial_reference' not set in pp_options, Setting to default value: [None]
+2025-08-25 18:11:20.907371 'try_use_ppu' not set in pp_options, Setting to default value: [True]
+2025-08-25 18:11:20.907371 'num_threads' not set in pp_options, Setting to default value: [10]
+2025-08-25 18:11:20.907371 'minpts_interp' not set in pp_options, Setting to default value: [1]
+2025-08-25 18:11:20.907371 'maxpts_interp' not set in pp_options, Setting to default value: [20]
+2025-08-25 18:11:20.907371 'search_radius' not set in pp_options, Setting to default value: [10000000000.0]
+2025-08-25 18:11:20.907371 'fill_value' not set in pp_options, Setting to default value: [1.0]
+2025-08-25 18:11:20.907371 'lower_limit' not set in pp_options, Setting to default value: [1e-30]
+2025-08-25 18:11:20.907371 'upper_limit' not set in pp_options, Setting to default value: [1e+30]
+2025-08-25 18:11:20.907371 WARNING: `use_ppu` requested but failed to import
 falling back to pyemu pp methods
-2025-08-22 14:07:47.102479 No spatial reference (containing cell spacing) passed.
-2025-08-22 14:07:47.102479 OK - using spatial reference in parent object.
-2025-08-22 14:07:47.266558 100 pilot point parameters created
-2025-08-22 14:07:47.267559 pilot point 'pargp':r,c,h,a,r,e,c,h,a,r,g,e,p,p
-2025-08-22 14:07:47.267559 finished: setting up pilot point parameters took: 0:00:00.166093
-2025-08-22 14:07:47.281661 reusing factors
-2025-08-22 14:07:47.281661 starting: writing array-based template file 'models\local2\pest\local2_template\rcharechargepp_inst0pp.dat.tpl'
-2025-08-22 14:07:47.281661 saving zone array models\local2\pest\local2_template\rcharechargepp_inst0pp.dat.zone for tpl file models\local2\pest\local2_template\rcharechargepp_inst0pp.dat.tpl
-2025-08-22 14:07:47.291560 finished: adding pilotpoints type m style parameters for file(s) ['local2.rcha_recharge.txt'] took: 0:00:00.209089
-2025-08-22 14:07:47.291560 transform was not passed, setting default tranform to 'log'
-2025-08-22 14:07:47.292560 starting: adding constant type m style parameters for file(s) ['local2.rcha_recharge.txt']
-2025-08-22 14:07:47.292560 finished: using geostruct:name:struct1,nugget:0.0,structures:
+2025-08-25 18:11:20.907371 No spatial reference (containing cell spacing) passed.
+2025-08-25 18:11:20.907371 OK - using spatial reference in parent object.
+2025-08-25 18:11:21.058681 100 pilot point parameters created
+2025-08-25 18:11:21.058681 pilot point 'pargp':r,c,h,a,r,e,c,h,a,r,g,e,p,p
+2025-08-25 18:11:21.058681 finished: setting up pilot point parameters took: 0:00:00.152328
+2025-08-25 18:11:21.079860 reusing factors
+2025-08-25 18:11:21.079860 starting: writing array-based template file 'models\local2\pest\local2_template\rcharechargepp_inst0pp.dat.tpl'
+2025-08-25 18:11:21.079860 saving zone array models\local2\pest\local2_template\rcharechargepp_inst0pp.dat.zone for tpl file models\local2\pest\local2_template\rcharechargepp_inst0pp.dat.tpl
+2025-08-25 18:11:21.088658 finished: adding pilotpoints type m style parameters for file(s) ['local2.rcha_recharge.txt'] took: 0:00:00.200119
+2025-08-25 18:11:21.088658 transform was not passed, setting default tranform to 'log'
+2025-08-25 18:11:21.088658 starting: adding constant type m style parameters for file(s) ['local2.rcha_recharge.txt']
+2025-08-25 18:11:21.088658 finished: using geostruct:name:struct1,nugget:0.0,structures:
 name:var1,contribution:1.0,a:1000.0,anisotropy:1.0,bearing:0.0
- took: 0:00:00.210089
-2025-08-22 14:07:47.292560 starting: loading array models\local2\pest\local2_template\local2.rcha_recharge.txt
-2025-08-22 14:07:47.299651 finished: loading array models\local2\pest\local2_template\local2.rcha_recharge.txt took: 0:00:00.007091
-2025-08-22 14:07:47.299651 loaded array 'models\local2\pest\local2\local2.rcha_recharge.txt' of shape (121, 151)
-2025-08-22 14:07:47.317765 starting: writing array-style template file 'models\local2\pest\local2_template\rcharechargecn_inst0_constant.csv.tpl'
-2025-08-22 14:07:47.317765 starting: writing template file models\local2\pest\local2_template\rcharechargecn_inst0_constant.csv.tpl for ['rcharechargecn_inst:0']
-2025-08-22 14:07:47.365539 finished: writing template file models\local2\pest\local2_template\rcharechargecn_inst0_constant.csv.tpl for ['rcharechargecn_inst:0'] took: 0:00:00.047774
-2025-08-22 14:07:47.365539 starting: writing array-based template file 'models\local2\pest\local2_template\rcharechargecn_inst0_constant.csv.tpl'
-2025-08-22 14:07:47.365539 saving zone array models\local2\pest\local2_template\rcharechargecn_inst0_constant.csv.zone for tpl file models\local2\pest\local2_template\rcharechargecn_inst0_constant.csv.tpl
-2025-08-22 14:07:47.377772 finished: adding constant type m style parameters for file(s) ['local2.rcha_recharge.txt'] took: 0:00:00.085212
-2025-08-22 14:07:47.378778 transform was not passed, setting default tranform to 'log'
-2025-08-22 14:07:47.378778 starting: adding grid type m style parameters for file(s) ['local2.wel_mbr_stress_period_data.txt']
-2025-08-22 14:07:47.378778 starting: using geostruct:name:struct1,nugget:0.0,structures:
-name:var1,contribution:1.0,a:1000.0,anisotropy:1.0,bearing:0.0
-
-2025-08-22 14:07:47.378778 starting: loading list-style models\local2\pest\local2_template\local2.wel_mbr_stress_period_data.txt
-2025-08-22 14:07:47.378778 starting: reading list-style file: models\local2\pest\local2_template\local2.wel_mbr_stress_period_data.txt
-2025-08-22 14:07:47.400255 finished: reading list-style file: models\local2\pest\local2_template\local2.wel_mbr_stress_period_data.txt took: 0:00:00.021477
-2025-08-22 14:07:47.400255 loaded list-style 'models\local2\pest\local2_template\local2.wel_mbr_stress_period_data.txt' of shape (1162, 4)
-2025-08-22 14:07:47.408176 finished: loading list-style models\local2\pest\local2_template\local2.wel_mbr_stress_period_data.txt took: 0:00:00.029398
-2025-08-22 14:07:47.408176 starting: writing list-style template file 'models\local2\pest\local2_template\mbr_cond_condgr_inst0_grid.csv.tpl'
-2025-08-22 14:07:47.414293 WARNING: get_xy() warning: position of i and j in index_cols not specified, assume (i,j) are final two entries in index_cols.
-2025-08-22 14:07:47.427209 WARNING: Coincidently located pars in list-style file, attempting to separate pars based on `index_cols` passed - using index_col[0] for third dimension
-2025-08-22 14:07:47.464877 finished: writing list-style template file 'models\local2\pest\local2_template\mbr_cond_condgr_inst0_grid.csv.tpl' took: 0:00:00.056701
-2025-08-22 14:07:47.471423 finished: adding grid type m style parameters for file(s) ['local2.wel_mbr_stress_period_data.txt'] took: 0:00:00.092645
-2025-08-22 14:07:47.471423 transform was not passed, setting default tranform to 'log'
-2025-08-22 14:07:47.472407 starting: adding constant type m style parameters for file(s) ['local2.wel_mbr_stress_period_data.txt']
-2025-08-22 14:07:47.472407 finished: using geostruct:name:struct1,nugget:0.0,structures:
-name:var1,contribution:1.0,a:1000.0,anisotropy:1.0,bearing:0.0
- took: 0:00:00.093629
-2025-08-22 14:07:47.472407 starting: loading list-style models\local2\pest\local2_template\local2.wel_mbr_stress_period_data.txt
-2025-08-22 14:07:47.472407 starting: reading list-style file: models\local2\pest\local2_template\local2.wel_mbr_stress_period_data.txt
-2025-08-22 14:07:47.481494 finished: reading list-style file: models\local2\pest\local2_template\local2.wel_mbr_stress_period_data.txt took: 0:00:00.009087
-2025-08-22 14:07:47.481494 loaded list-style 'models\local2\pest\local2_template\local2.wel_mbr_stress_period_data.txt' of shape (1162, 4)
-2025-08-22 14:07:47.487073 finished: loading list-style models\local2\pest\local2_template\local2.wel_mbr_stress_period_data.txt took: 0:00:00.014666
-2025-08-22 14:07:47.487073 starting: writing list-style template file 'models\local2\pest\local2_template\mbr_cond_condcn_inst0_constant.csv.tpl'
-2025-08-22 14:07:47.514149 finished: writing list-style template file 'models\local2\pest\local2_template\mbr_cond_condcn_inst0_constant.csv.tpl' took: 0:00:00.027076
-2025-08-22 14:07:47.517156 finished: adding constant type m style parameters for file(s) ['local2.wel_mbr_stress_period_data.txt'] took: 0:00:00.044749
-2025-08-22 14:07:47.518192 transform was not passed, setting default tranform to 'log'
-2025-08-22 14:07:47.519156 starting: adding grid type m style parameters for file(s) ['local2.wel_influx_stress_period_data.txt']
-2025-08-22 14:07:47.519156 starting: using geostruct:name:struct1,nugget:0.0,structures:
+ took: 0:00:00.200119
+2025-08-25 18:11:21.088658 starting: loading array models\local2\pest\local2_template\local2.rcha_recharge.txt
+2025-08-25 18:11:21.098622 finished: loading array models\local2\pest\local2_template\local2.rcha_recharge.txt took: 0:00:00.009964
+2025-08-25 18:11:21.098622 loaded array 'models\local2\pest\local2\local2.rcha_recharge.txt' of shape (121, 151)
+2025-08-25 18:11:21.110834 starting: writing array-style template file 'models\local2\pest\local2_template\rcharechargecn_inst0_constant.csv.tpl'
+2025-08-25 18:11:21.110834 starting: writing template file models\local2\pest\local2_template\rcharechargecn_inst0_constant.csv.tpl for ['rcharechargecn_inst:0']
+2025-08-25 18:11:21.156238 finished: writing template file models\local2\pest\local2_template\rcharechargecn_inst0_constant.csv.tpl for ['rcharechargecn_inst:0'] took: 0:00:00.045404
+2025-08-25 18:11:21.156238 starting: writing array-based template file 'models\local2\pest\local2_template\rcharechargecn_inst0_constant.csv.tpl'
+2025-08-25 18:11:21.156238 saving zone array models\local2\pest\local2_template\rcharechargecn_inst0_constant.csv.zone for tpl file models\local2\pest\local2_template\rcharechargecn_inst0_constant.csv.tpl
+2025-08-25 18:11:21.168268 finished: adding constant type m style parameters for file(s) ['local2.rcha_recharge.txt'] took: 0:00:00.079610
+2025-08-25 18:11:21.169270 transform was not passed, setting default tranform to 'log'
+2025-08-25 18:11:21.169270 starting: adding grid type m style parameters for file(s) ['local2.wel_mbr_stress_period_data.txt']
+2025-08-25 18:11:21.169270 starting: using geostruct:name:struct1,nugget:0.0,structures:
 name:var1,contribution:1.0,a:1000.0,anisotropy:1.0,bearing:0.0
 
-2025-08-22 14:07:47.519156 starting: loading list-style models\local2\pest\local2_template\local2.wel_influx_stress_period_data.txt
-2025-08-22 14:07:47.519156 starting: reading list-style file: models\local2\pest\local2_template\local2.wel_influx_stress_period_data.txt
-2025-08-22 14:07:47.536148 finished: reading list-style file: models\local2\pest\local2_template\local2.wel_influx_stress_period_data.txt took: 0:00:00.016992
-2025-08-22 14:07:47.537184 loaded list-style 'models\local2\pest\local2_template\local2.wel_influx_stress_period_data.txt' of shape (846, 4)
-2025-08-22 14:07:47.541078 finished: loading list-style models\local2\pest\local2_template\local2.wel_influx_stress_period_data.txt took: 0:00:00.021922
-2025-08-22 14:07:47.541078 starting: writing list-style template file 'models\local2\pest\local2_template\influx_cond_condgr_inst0_grid.csv.tpl'
-2025-08-22 14:07:47.546174 WARNING: get_xy() warning: position of i and j in index_cols not specified, assume (i,j) are final two entries in index_cols.
-2025-08-22 14:07:47.554184 WARNING: Coincidently located pars in list-style file, attempting to separate pars based on `index_cols` passed - using index_col[0] for third dimension
-2025-08-22 14:07:47.587491 finished: writing list-style template file 'models\local2\pest\local2_template\influx_cond_condgr_inst0_grid.csv.tpl' took: 0:00:00.046413
-2025-08-22 14:07:47.594468 finished: adding grid type m style parameters for file(s) ['local2.wel_influx_stress_period_data.txt'] took: 0:00:00.075312
-2025-08-22 14:07:47.594468 transform was not passed, setting default tranform to 'log'
-2025-08-22 14:07:47.594468 starting: adding constant type m style parameters for file(s) ['local2.wel_influx_stress_period_data.txt']
-2025-08-22 14:07:47.594468 finished: using geostruct:name:struct1,nugget:0.0,structures:
+2025-08-25 18:11:21.169270 starting: loading list-style models\local2\pest\local2_template\local2.wel_mbr_stress_period_data.txt
+2025-08-25 18:11:21.170269 starting: reading list-style file: models\local2\pest\local2_template\local2.wel_mbr_stress_period_data.txt
+2025-08-25 18:11:21.198796 finished: reading list-style file: models\local2\pest\local2_template\local2.wel_mbr_stress_period_data.txt took: 0:00:00.028527
+2025-08-25 18:11:21.198796 loaded list-style 'models\local2\pest\local2_template\local2.wel_mbr_stress_period_data.txt' of shape (1162, 4)
+2025-08-25 18:11:21.209439 finished: loading list-style models\local2\pest\local2_template\local2.wel_mbr_stress_period_data.txt took: 0:00:00.040169
+2025-08-25 18:11:21.209439 starting: writing list-style template file 'models\local2\pest\local2_template\mbr_cond_condgr_inst0_grid.csv.tpl'
+2025-08-25 18:11:21.218380 WARNING: get_xy() warning: position of i and j in index_cols not specified, assume (i,j) are final two entries in index_cols.
+2025-08-25 18:11:21.231519 WARNING: Coincidently located pars in list-style file, attempting to separate pars based on `index_cols` passed - using index_col[0] for third dimension
+2025-08-25 18:11:21.267328 finished: writing list-style template file 'models\local2\pest\local2_template\mbr_cond_condgr_inst0_grid.csv.tpl' took: 0:00:00.057889
+2025-08-25 18:11:21.276358 finished: adding grid type m style parameters for file(s) ['local2.wel_mbr_stress_period_data.txt'] took: 0:00:00.107088
+2025-08-25 18:11:21.276358 transform was not passed, setting default tranform to 'log'
+2025-08-25 18:11:21.277492 starting: adding constant type m style parameters for file(s) ['local2.wel_mbr_stress_period_data.txt']
+2025-08-25 18:11:21.277492 finished: using geostruct:name:struct1,nugget:0.0,structures:
 name:var1,contribution:1.0,a:1000.0,anisotropy:1.0,bearing:0.0
- took: 0:00:00.075312
-2025-08-22 14:07:47.595443 starting: loading list-style models\local2\pest\local2_template\local2.wel_influx_stress_period_data.txt
-2025-08-22 14:07:47.595443 starting: reading list-style file: models\local2\pest\local2_template\local2.wel_influx_stress_period_data.txt
-2025-08-22 14:07:47.604144 finished: reading list-style file: models\local2\pest\local2_template\local2.wel_influx_stress_period_data.txt took: 0:00:00.008701
-2025-08-22 14:07:47.604144 loaded list-style 'models\local2\pest\local2_template\local2.wel_influx_stress_period_data.txt' of shape (846, 4)
-2025-08-22 14:07:47.609261 finished: loading list-style models\local2\pest\local2_template\local2.wel_influx_stress_period_data.txt took: 0:00:00.013818
-2025-08-22 14:07:47.609261 starting: writing list-style template file 'models\local2\pest\local2_template\influx_cond_condcn_inst0_constant.csv.tpl'
-2025-08-22 14:07:47.631926 finished: writing list-style template file 'models\local2\pest\local2_template\influx_cond_condcn_inst0_constant.csv.tpl' took: 0:00:00.022665
-2025-08-22 14:07:47.635925 finished: adding constant type m style parameters for file(s) ['local2.wel_influx_stress_period_data.txt'] took: 0:00:00.041457
-2025-08-22 14:07:47.636871 transform was not passed, setting default tranform to 'log'
-2025-08-22 14:07:47.636871 starting: adding grid type m style parameters for file(s) ['local2.wel_outflux_stress_period_data.txt']
-2025-08-22 14:07:47.636871 starting: using geostruct:name:struct1,nugget:0.0,structures:
-name:var1,contribution:1.0,a:1000.0,anisotropy:1.0,bearing:0.0
-
-2025-08-22 14:07:47.636871 starting: loading list-style models\local2\pest\local2_template\local2.wel_outflux_stress_period_data.txt
-2025-08-22 14:07:47.636871 starting: reading list-style file: models\local2\pest\local2_template\local2.wel_outflux_stress_period_data.txt
-2025-08-22 14:07:47.654038 finished: reading list-style file: models\local2\pest\local2_template\local2.wel_outflux_stress_period_data.txt took: 0:00:00.017167
-2025-08-22 14:07:47.655067 loaded list-style 'models\local2\pest\local2_template\local2.wel_outflux_stress_period_data.txt' of shape (684, 4)
-2025-08-22 14:07:47.658987 finished: loading list-style models\local2\pest\local2_template\local2.wel_outflux_stress_period_data.txt took: 0:00:00.022116
-2025-08-22 14:07:47.658987 starting: writing list-style template file 'models\local2\pest\local2_template\outflux_cond_condgr_inst0_grid.csv.tpl'
-2025-08-22 14:07:47.663749 WARNING: get_xy() warning: position of i and j in index_cols not specified, assume (i,j) are final two entries in index_cols.
-2025-08-22 14:07:47.670652 WARNING: Coincidently located pars in list-style file, attempting to separate pars based on `index_cols` passed - using index_col[0] for third dimension
-2025-08-22 14:07:47.756759 finished: writing list-style template file 'models\local2\pest\local2_template\outflux_cond_condgr_inst0_grid.csv.tpl' took: 0:00:00.097772
-2025-08-22 14:07:47.762971 finished: adding grid type m style parameters for file(s) ['local2.wel_outflux_stress_period_data.txt'] took: 0:00:00.126100
-2025-08-22 14:07:47.762971 transform was not passed, setting default tranform to 'log'
-2025-08-22 14:07:47.762971 starting: adding constant type m style parameters for file(s) ['local2.wel_outflux_stress_period_data.txt']
-2025-08-22 14:07:47.762971 finished: using geostruct:name:struct1,nugget:0.0,structures:
-name:var1,contribution:1.0,a:1000.0,anisotropy:1.0,bearing:0.0
- took: 0:00:00.126100
-2025-08-22 14:07:47.762971 starting: loading list-style models\local2\pest\local2_template\local2.wel_outflux_stress_period_data.txt
-2025-08-22 14:07:47.762971 starting: reading list-style file: models\local2\pest\local2_template\local2.wel_outflux_stress_period_data.txt
-2025-08-22 14:07:47.770976 finished: reading list-style file: models\local2\pest\local2_template\local2.wel_outflux_stress_period_data.txt took: 0:00:00.008005
-2025-08-22 14:07:47.770976 loaded list-style 'models\local2\pest\local2_template\local2.wel_outflux_stress_period_data.txt' of shape (684, 4)
-2025-08-22 14:07:47.774980 finished: loading list-style models\local2\pest\local2_template\local2.wel_outflux_stress_period_data.txt took: 0:00:00.012009
-2025-08-22 14:07:47.774980 starting: writing list-style template file 'models\local2\pest\local2_template\outflux_cond_condcn_inst0_constant.csv.tpl'
-2025-08-22 14:07:47.796999 finished: writing list-style template file 'models\local2\pest\local2_template\outflux_cond_condcn_inst0_constant.csv.tpl' took: 0:00:00.022019
-2025-08-22 14:07:47.801017 finished: adding constant type m style parameters for file(s) ['local2.wel_outflux_stress_period_data.txt'] took: 0:00:00.038046
-2025-08-22 14:07:47.802067 transform was not passed, setting default tranform to 'log'
-2025-08-22 14:07:47.802067 starting: adding grid type m style parameters for file(s) ['local2.drn_riv_stress_period_data.txt']
-2025-08-22 14:07:47.802067 starting: using geostruct:name:struct1,nugget:0.0,structures:
+ took: 0:00:00.108222
+2025-08-25 18:11:21.277492 starting: loading list-style models\local2\pest\local2_template\local2.wel_mbr_stress_period_data.txt
+2025-08-25 18:11:21.277492 starting: reading list-style file: models\local2\pest\local2_template\local2.wel_mbr_stress_period_data.txt
+2025-08-25 18:11:21.287050 finished: reading list-style file: models\local2\pest\local2_template\local2.wel_mbr_stress_period_data.txt took: 0:00:00.009558
+2025-08-25 18:11:21.287050 loaded list-style 'models\local2\pest\local2_template\local2.wel_mbr_stress_period_data.txt' of shape (1162, 4)
+2025-08-25 18:11:21.288418 finished: loading list-style models\local2\pest\local2_template\local2.wel_mbr_stress_period_data.txt took: 0:00:00.010926
+2025-08-25 18:11:21.288418 starting: writing list-style template file 'models\local2\pest\local2_template\mbr_cond_condcn_inst0_constant.csv.tpl'
+2025-08-25 18:11:21.317575 finished: writing list-style template file 'models\local2\pest\local2_template\mbr_cond_condcn_inst0_constant.csv.tpl' took: 0:00:00.029157
+2025-08-25 18:11:21.322140 finished: adding constant type m style parameters for file(s) ['local2.wel_mbr_stress_period_data.txt'] took: 0:00:00.044648
+2025-08-25 18:11:21.323145 transform was not passed, setting default tranform to 'log'
+2025-08-25 18:11:21.323145 starting: adding grid type m style parameters for file(s) ['local2.wel_influx_stress_period_data.txt']
+2025-08-25 18:11:21.323145 starting: using geostruct:name:struct1,nugget:0.0,structures:
 name:var1,contribution:1.0,a:1000.0,anisotropy:1.0,bearing:0.0
 
-2025-08-22 14:07:47.802067 starting: loading list-style models\local2\pest\local2_template\local2.drn_riv_stress_period_data.txt
-2025-08-22 14:07:47.802067 starting: reading list-style file: models\local2\pest\local2_template\local2.drn_riv_stress_period_data.txt
-2025-08-22 14:07:47.830064 finished: reading list-style file: models\local2\pest\local2_template\local2.drn_riv_stress_period_data.txt took: 0:00:00.027997
-2025-08-22 14:07:47.830064 loaded list-style 'models\local2\pest\local2_template\local2.drn_riv_stress_period_data.txt' of shape (323, 5)
-2025-08-22 14:07:47.833013 finished: loading list-style models\local2\pest\local2_template\local2.drn_riv_stress_period_data.txt took: 0:00:00.030946
-2025-08-22 14:07:47.833978 starting: writing list-style template file 'models\local2\pest\local2_template\drn_riv_condgr_inst0_grid.csv.tpl'
-2025-08-22 14:07:47.838074 WARNING: get_xy() warning: position of i and j in index_cols not specified, assume (i,j) are final two entries in index_cols.
-2025-08-22 14:07:47.864515 finished: writing list-style template file 'models\local2\pest\local2_template\drn_riv_condgr_inst0_grid.csv.tpl' took: 0:00:00.030537
-2025-08-22 14:07:47.869206 finished: adding grid type m style parameters for file(s) ['local2.drn_riv_stress_period_data.txt'] took: 0:00:00.067139
-2025-08-22 14:07:47.869206 transform was not passed, setting default tranform to 'log'
-2025-08-22 14:07:47.869206 starting: adding constant type m style parameters for file(s) ['local2.drn_riv_stress_period_data.txt']
-2025-08-22 14:07:47.869206 finished: using geostruct:name:struct1,nugget:0.0,structures:
+2025-08-25 18:11:21.323145 starting: loading list-style models\local2\pest\local2_template\local2.wel_influx_stress_period_data.txt
+2025-08-25 18:11:21.323145 starting: reading list-style file: models\local2\pest\local2_template\local2.wel_influx_stress_period_data.txt
+2025-08-25 18:11:21.343102 finished: reading list-style file: models\local2\pest\local2_template\local2.wel_influx_stress_period_data.txt took: 0:00:00.019957
+2025-08-25 18:11:21.343102 loaded list-style 'models\local2\pest\local2_template\local2.wel_influx_stress_period_data.txt' of shape (846, 4)
+2025-08-25 18:11:21.348302 finished: loading list-style models\local2\pest\local2_template\local2.wel_influx_stress_period_data.txt took: 0:00:00.025157
+2025-08-25 18:11:21.348302 starting: writing list-style template file 'models\local2\pest\local2_template\influx_cond_condgr_inst0_grid.csv.tpl'
+2025-08-25 18:11:21.348302 WARNING: get_xy() warning: position of i and j in index_cols not specified, assume (i,j) are final two entries in index_cols.
+2025-08-25 18:11:21.359142 WARNING: Coincidently located pars in list-style file, attempting to separate pars based on `index_cols` passed - using index_col[0] for third dimension
+2025-08-25 18:11:21.395041 finished: writing list-style template file 'models\local2\pest\local2_template\influx_cond_condgr_inst0_grid.csv.tpl' took: 0:00:00.046739
+2025-08-25 18:11:21.397521 finished: adding grid type m style parameters for file(s) ['local2.wel_influx_stress_period_data.txt'] took: 0:00:00.074376
+2025-08-25 18:11:21.397521 transform was not passed, setting default tranform to 'log'
+2025-08-25 18:11:21.397521 starting: adding constant type m style parameters for file(s) ['local2.wel_influx_stress_period_data.txt']
+2025-08-25 18:11:21.397521 finished: using geostruct:name:struct1,nugget:0.0,structures:
 name:var1,contribution:1.0,a:1000.0,anisotropy:1.0,bearing:0.0
- took: 0:00:00.067139
-2025-08-22 14:07:47.869206 starting: loading list-style models\local2\pest\local2_template\local2.drn_riv_stress_period_data.txt
-2025-08-22 14:07:47.869206 starting: reading list-style file: models\local2\pest\local2_template\local2.drn_riv_stress_period_data.txt
-2025-08-22 14:07:47.880737 finished: reading list-style file: models\local2\pest\local2_template\local2.drn_riv_stress_period_data.txt took: 0:00:00.011531
-2025-08-22 14:07:47.880737 loaded list-style 'models\local2\pest\local2_template\local2.drn_riv_stress_period_data.txt' of shape (323, 5)
-2025-08-22 14:07:47.884263 finished: loading list-style models\local2\pest\local2_template\local2.drn_riv_stress_period_data.txt took: 0:00:00.015057
-2025-08-22 14:07:47.884263 starting: writing list-style template file 'models\local2\pest\local2_template\drn_riv_condcn_inst0_constant.csv.tpl'
-2025-08-22 14:07:47.902186 finished: writing list-style template file 'models\local2\pest\local2_template\drn_riv_condcn_inst0_constant.csv.tpl' took: 0:00:00.017923
-2025-08-22 14:07:47.906178 finished: adding constant type m style parameters for file(s) ['local2.drn_riv_stress_period_data.txt'] took: 0:00:00.036972
-2025-08-22 14:07:47.907214 starting: adding grid type a style parameters for file(s) ['local2.drn_riv_stress_period_data.txt']
-2025-08-22 14:07:47.907214 starting: using geostruct:name:struct1,nugget:0.0,structures:
+ took: 0:00:00.074376
+2025-08-25 18:11:21.397521 starting: loading list-style models\local2\pest\local2_template\local2.wel_influx_stress_period_data.txt
+2025-08-25 18:11:21.397521 starting: reading list-style file: models\local2\pest\local2_template\local2.wel_influx_stress_period_data.txt
+2025-08-25 18:11:21.408572 finished: reading list-style file: models\local2\pest\local2_template\local2.wel_influx_stress_period_data.txt took: 0:00:00.011051
+2025-08-25 18:11:21.408572 loaded list-style 'models\local2\pest\local2_template\local2.wel_influx_stress_period_data.txt' of shape (846, 4)
+2025-08-25 18:11:21.411016 finished: loading list-style models\local2\pest\local2_template\local2.wel_influx_stress_period_data.txt took: 0:00:00.013495
+2025-08-25 18:11:21.411016 starting: writing list-style template file 'models\local2\pest\local2_template\influx_cond_condcn_inst0_constant.csv.tpl'
+2025-08-25 18:11:21.438345 finished: writing list-style template file 'models\local2\pest\local2_template\influx_cond_condcn_inst0_constant.csv.tpl' took: 0:00:00.027329
+2025-08-25 18:11:21.443163 finished: adding constant type m style parameters for file(s) ['local2.wel_influx_stress_period_data.txt'] took: 0:00:00.045642
+2025-08-25 18:11:21.444237 transform was not passed, setting default tranform to 'log'
+2025-08-25 18:11:21.444237 starting: adding grid type m style parameters for file(s) ['local2.wel_outflux_stress_period_data.txt']
+2025-08-25 18:11:21.444237 starting: using geostruct:name:struct1,nugget:0.0,structures:
 name:var1,contribution:1.0,a:1000.0,anisotropy:1.0,bearing:0.0
 
-2025-08-22 14:07:47.907214 WARNING: 0) Inconsistency between geostruct transform and partrans.
-2025-08-22 14:07:47.907214 WARNING: 1) Setting geostruct transform to none
-2025-08-22 14:07:47.907214 WARNING: 2) This will create a new copy of geostruct
-2025-08-22 14:07:47.907214 WARNING: -) Better to pass an appropriately transformed geostruct
-2025-08-22 14:07:47.908434 starting: loading list-style models\local2\pest\local2_template\local2.drn_riv_stress_period_data.txt
-2025-08-22 14:07:47.908434 starting: reading list-style file: models\local2\pest\local2_template\local2.drn_riv_stress_period_data.txt
-2025-08-22 14:07:47.918574 finished: reading list-style file: models\local2\pest\local2_template\local2.drn_riv_stress_period_data.txt took: 0:00:00.010140
-2025-08-22 14:07:47.918574 loaded list-style 'models\local2\pest\local2_template\local2.drn_riv_stress_period_data.txt' of shape (323, 5)
-2025-08-22 14:07:47.921546 finished: loading list-style models\local2\pest\local2_template\local2.drn_riv_stress_period_data.txt took: 0:00:00.013112
-2025-08-22 14:07:47.921546 starting: writing list-style template file 'models\local2\pest\local2_template\drn_riv_cond_headgr_inst0_grid.csv.tpl'
-2025-08-22 14:07:47.927448 WARNING: get_xy() warning: position of i and j in index_cols not specified, assume (i,j) are final two entries in index_cols.
-2025-08-22 14:07:47.955287 finished: writing list-style template file 'models\local2\pest\local2_template\drn_riv_cond_headgr_inst0_grid.csv.tpl' took: 0:00:00.033741
-2025-08-22 14:07:47.960337 finished: adding grid type a style parameters for file(s) ['local2.drn_riv_stress_period_data.txt'] took: 0:00:00.053123
-2025-08-22 14:07:47.961343 starting: adding constant type a style parameters for file(s) ['local2.drn_riv_stress_period_data.txt']
-2025-08-22 14:07:47.961343 finished: using geostruct:name:struct1,nugget:0.0,structures:
+2025-08-25 18:11:21.444237 starting: loading list-style models\local2\pest\local2_template\local2.wel_outflux_stress_period_data.txt
+2025-08-25 18:11:21.445224 starting: reading list-style file: models\local2\pest\local2_template\local2.wel_outflux_stress_period_data.txt
+2025-08-25 18:11:21.461040 finished: reading list-style file: models\local2\pest\local2_template\local2.wel_outflux_stress_period_data.txt took: 0:00:00.015816
+2025-08-25 18:11:21.461040 loaded list-style 'models\local2\pest\local2_template\local2.wel_outflux_stress_period_data.txt' of shape (684, 4)
+2025-08-25 18:11:21.467244 finished: loading list-style models\local2\pest\local2_template\local2.wel_outflux_stress_period_data.txt took: 0:00:00.023007
+2025-08-25 18:11:21.467244 starting: writing list-style template file 'models\local2\pest\local2_template\outflux_cond_condgr_inst0_grid.csv.tpl'
+2025-08-25 18:11:21.467244 WARNING: get_xy() warning: position of i and j in index_cols not specified, assume (i,j) are final two entries in index_cols.
+2025-08-25 18:11:21.478368 WARNING: Coincidently located pars in list-style file, attempting to separate pars based on `index_cols` passed - using index_col[0] for third dimension
+2025-08-25 18:11:21.507467 finished: writing list-style template file 'models\local2\pest\local2_template\outflux_cond_condgr_inst0_grid.csv.tpl' took: 0:00:00.040223
+2025-08-25 18:11:21.512757 finished: adding grid type m style parameters for file(s) ['local2.wel_outflux_stress_period_data.txt'] took: 0:00:00.068520
+2025-08-25 18:11:21.512757 transform was not passed, setting default tranform to 'log'
+2025-08-25 18:11:21.512757 starting: adding constant type m style parameters for file(s) ['local2.wel_outflux_stress_period_data.txt']
+2025-08-25 18:11:21.516300 finished: using geostruct:name:struct1,nugget:0.0,structures:
 name:var1,contribution:1.0,a:1000.0,anisotropy:1.0,bearing:0.0
- took: 0:00:00.054129
-2025-08-22 14:07:47.961343 WARNING: 0) Inconsistency between geostruct transform and partrans.
-2025-08-22 14:07:47.961343 WARNING: 1) Setting geostruct transform to none
-2025-08-22 14:07:47.961343 WARNING: 2) This will create a new copy of geostruct
-2025-08-22 14:07:47.961343 WARNING: -) Better to pass an appropriately transformed geostruct
-2025-08-22 14:07:47.961343 starting: loading list-style models\local2\pest\local2_template\local2.drn_riv_stress_period_data.txt
-2025-08-22 14:07:47.962886 starting: reading list-style file: models\local2\pest\local2_template\local2.drn_riv_stress_period_data.txt
-2025-08-22 14:07:47.974554 finished: reading list-style file: models\local2\pest\local2_template\local2.drn_riv_stress_period_data.txt took: 0:00:00.011668
-2025-08-22 14:07:47.975552 loaded list-style 'models\local2\pest\local2_template\local2.drn_riv_stress_period_data.txt' of shape (323, 5)
-2025-08-22 14:07:47.981070 finished: loading list-style models\local2\pest\local2_template\local2.drn_riv_stress_period_data.txt took: 0:00:00.019727
-2025-08-22 14:07:47.982068 starting: writing list-style template file 'models\local2\pest\local2_template\drn_riv_cond_headcn_inst0_constant.csv.tpl'
-2025-08-22 14:07:48.005617 finished: writing list-style template file 'models\local2\pest\local2_template\drn_riv_cond_headcn_inst0_constant.csv.tpl' took: 0:00:00.023549
-2025-08-22 14:07:48.014935 finished: adding constant type a style parameters for file(s) ['local2.drn_riv_stress_period_data.txt'] took: 0:00:00.053592
-2025-08-22 14:07:48.016442 starting: adding grid type a style parameters for file(s) ['local2.chd_pw_stress_period_data.txt']
-2025-08-22 14:07:48.017575 starting: loading list-style models\local2\pest\local2_template\local2.chd_pw_stress_period_data.txt
-2025-08-22 14:07:48.017575 starting: reading list-style file: models\local2\pest\local2_template\local2.chd_pw_stress_period_data.txt
-2025-08-22 14:07:48.026555 finished: reading list-style file: models\local2\pest\local2_template\local2.chd_pw_stress_period_data.txt took: 0:00:00.008980
-2025-08-22 14:07:48.026555 loaded list-style 'models\local2\pest\local2_template\local2.chd_pw_stress_period_data.txt' of shape (83, 4)
-2025-08-22 14:07:48.029459 finished: loading list-style models\local2\pest\local2_template\local2.chd_pw_stress_period_data.txt took: 0:00:00.011884
-2025-08-22 14:07:48.029459 starting: writing list-style template file 'models\local2\pest\local2_template\chd_pw_headgr_inst0_grid.csv.tpl'
-2025-08-22 14:07:48.044578 finished: writing list-style template file 'models\local2\pest\local2_template\chd_pw_headgr_inst0_grid.csv.tpl' took: 0:00:00.015119
-2025-08-22 14:07:48.048772 finished: adding grid type a style parameters for file(s) ['local2.chd_pw_stress_period_data.txt'] took: 0:00:00.032330
-2025-08-22 14:07:48.048772 starting: adding constant type a style parameters for file(s) ['local2.chd_pw_stress_period_data.txt']
-2025-08-22 14:07:48.048772 starting: loading list-style models\local2\pest\local2_template\local2.chd_pw_stress_period_data.txt
-2025-08-22 14:07:48.049775 starting: reading list-style file: models\local2\pest\local2_template\local2.chd_pw_stress_period_data.txt
-2025-08-22 14:07:48.056767 finished: reading list-style file: models\local2\pest\local2_template\local2.chd_pw_stress_period_data.txt took: 0:00:00.006992
-2025-08-22 14:07:48.056767 loaded list-style 'models\local2\pest\local2_template\local2.chd_pw_stress_period_data.txt' of shape (83, 4)
-2025-08-22 14:07:48.059780 finished: loading list-style models\local2\pest\local2_template\local2.chd_pw_stress_period_data.txt took: 0:00:00.011008
-2025-08-22 14:07:48.059780 starting: writing list-style template file 'models\local2\pest\local2_template\chd_pw_headcn_inst0_constant.csv.tpl'
-2025-08-22 14:07:48.072870 finished: writing list-style template file 'models\local2\pest\local2_template\chd_pw_headcn_inst0_constant.csv.tpl' took: 0:00:00.013090
-2025-08-22 14:07:48.077946 finished: adding constant type a style parameters for file(s) ['local2.chd_pw_stress_period_data.txt'] took: 0:00:00.029174
-2025-08-22 14:07:48.078869 starting: adding grid type a style parameters for file(s) ['local2.chd_conf_stress_period_data.txt']
-2025-08-22 14:07:48.078869 starting: loading list-style models\local2\pest\local2_template\local2.chd_conf_stress_period_data.txt
-2025-08-22 14:07:48.078869 starting: reading list-style file: models\local2\pest\local2_template\local2.chd_conf_stress_period_data.txt
-2025-08-22 14:07:48.099977 finished: reading list-style file: models\local2\pest\local2_template\local2.chd_conf_stress_period_data.txt took: 0:00:00.021108
-2025-08-22 14:07:48.099977 loaded list-style 'models\local2\pest\local2_template\local2.chd_conf_stress_period_data.txt' of shape (8015, 4)
-2025-08-22 14:07:48.118964 finished: loading list-style models\local2\pest\local2_template\local2.chd_conf_stress_period_data.txt took: 0:00:00.040095
-2025-08-22 14:07:48.118964 starting: writing list-style template file 'models\local2\pest\local2_template\chd_conf_headgr_inst0_grid.csv.tpl'
-2025-08-22 14:07:48.217744 finished: writing list-style template file 'models\local2\pest\local2_template\chd_conf_headgr_inst0_grid.csv.tpl' took: 0:00:00.098780
-2025-08-22 14:07:48.229733 finished: adding grid type a style parameters for file(s) ['local2.chd_conf_stress_period_data.txt'] took: 0:00:00.150864
-2025-08-22 14:07:48.229733 starting: adding constant type a style parameters for file(s) ['local2.chd_conf_stress_period_data.txt']
-2025-08-22 14:07:48.229733 starting: loading list-style models\local2\pest\local2_template\local2.chd_conf_stress_period_data.txt
-2025-08-22 14:07:48.230747 starting: reading list-style file: models\local2\pest\local2_template\local2.chd_conf_stress_period_data.txt
-2025-08-22 14:07:48.241654 finished: reading list-style file: models\local2\pest\local2_template\local2.chd_conf_stress_period_data.txt took: 0:00:00.010907
-2025-08-22 14:07:48.241654 loaded list-style 'models\local2\pest\local2_template\local2.chd_conf_stress_period_data.txt' of shape (8015, 4)
-2025-08-22 14:07:48.259795 finished: loading list-style models\local2\pest\local2_template\local2.chd_conf_stress_period_data.txt took: 0:00:00.030062
-2025-08-22 14:07:48.259795 starting: writing list-style template file 'models\local2\pest\local2_template\chd_conf_headcn_inst0_constant.csv.tpl'
-2025-08-22 14:07:48.358959 finished: writing list-style template file 'models\local2\pest\local2_template\chd_conf_headcn_inst0_constant.csv.tpl' took: 0:00:00.099164
-2025-08-22 14:07:48.366640 finished: adding constant type a style parameters for file(s) ['local2.chd_conf_stress_period_data.txt'] took: 0:00:00.136907
-2025-08-22 14:07:48.806731 starting: adding observations from output file cum.csv
-2025-08-22 14:07:48.806731 starting: adding observations from tabular output file '['cum.csv']'
-2025-08-22 14:07:48.806731 starting: reading list-style file: models\local2\pest\local2_template\cum.csv
-2025-08-22 14:07:48.820730 finished: reading list-style file: models\local2\pest\local2_template\cum.csv took: 0:00:00.013999
-2025-08-22 14:07:48.822732 starting: building insfile for tabular output file cum.csv
-2025-08-22 14:07:48.827753 finished: building insfile for tabular output file cum.csv took: 0:00:00.005021
-2025-08-22 14:07:48.827753 starting: adding observation from instruction file 'models\local2\pest\local2_template\cum.csv.ins'
-2025-08-22 14:07:48.836735 finished: adding observation from instruction file 'models\local2\pest\local2_template\cum.csv.ins' took: 0:00:00.008982
-2025-08-22 14:07:48.836735 finished: adding observations from tabular output file '['cum.csv']' took: 0:00:00.030004
-2025-08-22 14:07:48.837729 finished: adding observations from output file cum.csv took: 0:00:00.030998
-2025-08-22 14:07:48.839733 starting: adding observations from output file obs_results.csv
-2025-08-22 14:07:48.839733 starting: adding observations from tabular output file '['obs_results.csv']'
-2025-08-22 14:07:48.839733 starting: reading list-style file: models\local2\pest\local2_template\obs_results.csv
-2025-08-22 14:07:48.851813 finished: reading list-style file: models\local2\pest\local2_template\obs_results.csv took: 0:00:00.012080
-2025-08-22 14:07:48.853794 starting: building insfile for tabular output file obs_results.csv
-2025-08-22 14:07:48.858888 finished: building insfile for tabular output file obs_results.csv took: 0:00:00.005094
-2025-08-22 14:07:48.858888 starting: adding observation from instruction file 'models\local2\pest\local2_template\obs_results.csv.ins'
-2025-08-22 14:07:48.868519 finished: adding observation from instruction file 'models\local2\pest\local2_template\obs_results.csv.ins' took: 0:00:00.009631
-2025-08-22 14:07:48.869580 finished: adding observations from tabular output file '['obs_results.csv']' took: 0:00:00.029847
-2025-08-22 14:07:48.869580 finished: adding observations from output file obs_results.csv took: 0:00:00.029847
-2025-08-22 14:07:49.291742 forward_run line:pyemu.os_utils.run(r'mf6')
+ took: 0:00:00.072063
+2025-08-25 18:11:21.516300 starting: loading list-style models\local2\pest\local2_template\local2.wel_outflux_stress_period_data.txt
+2025-08-25 18:11:21.516300 starting: reading list-style file: models\local2\pest\local2_template\local2.wel_outflux_stress_period_data.txt
+2025-08-25 18:11:21.518671 finished: reading list-style file: models\local2\pest\local2_template\local2.wel_outflux_stress_period_data.txt took: 0:00:00.002371
+2025-08-25 18:11:21.518671 loaded list-style 'models\local2\pest\local2_template\local2.wel_outflux_stress_period_data.txt' of shape (684, 4)
+2025-08-25 18:11:21.527821 finished: loading list-style models\local2\pest\local2_template\local2.wel_outflux_stress_period_data.txt took: 0:00:00.011521
+2025-08-25 18:11:21.527821 starting: writing list-style template file 'models\local2\pest\local2_template\outflux_cond_condcn_inst0_constant.csv.tpl'
+2025-08-25 18:11:21.552199 finished: writing list-style template file 'models\local2\pest\local2_template\outflux_cond_condcn_inst0_constant.csv.tpl' took: 0:00:00.024378
+2025-08-25 18:11:21.556702 finished: adding constant type m style parameters for file(s) ['local2.wel_outflux_stress_period_data.txt'] took: 0:00:00.043945
+2025-08-25 18:11:21.557205 transform was not passed, setting default tranform to 'log'
+2025-08-25 18:11:21.558215 starting: adding grid type m style parameters for file(s) ['local2.drn_riv_stress_period_data.txt']
+2025-08-25 18:11:21.558471 starting: using geostruct:name:struct1,nugget:0.0,structures:
+name:var1,contribution:1.0,a:1000.0,anisotropy:1.0,bearing:0.0
+
+2025-08-25 18:11:21.558471 starting: loading list-style models\local2\pest\local2_template\local2.drn_riv_stress_period_data.txt
+2025-08-25 18:11:21.558471 starting: reading list-style file: models\local2\pest\local2_template\local2.drn_riv_stress_period_data.txt
+2025-08-25 18:11:21.578319 finished: reading list-style file: models\local2\pest\local2_template\local2.drn_riv_stress_period_data.txt took: 0:00:00.019848
+2025-08-25 18:11:21.578319 loaded list-style 'models\local2\pest\local2_template\local2.drn_riv_stress_period_data.txt' of shape (323, 5)
+2025-08-25 18:11:21.578319 finished: loading list-style models\local2\pest\local2_template\local2.drn_riv_stress_period_data.txt took: 0:00:00.019848
+2025-08-25 18:11:21.578319 starting: writing list-style template file 'models\local2\pest\local2_template\drn_riv_condgr_inst0_grid.csv.tpl'
+2025-08-25 18:11:21.578319 WARNING: get_xy() warning: position of i and j in index_cols not specified, assume (i,j) are final two entries in index_cols.
+2025-08-25 18:11:21.607048 finished: writing list-style template file 'models\local2\pest\local2_template\drn_riv_condgr_inst0_grid.csv.tpl' took: 0:00:00.028729
+2025-08-25 18:11:21.612775 finished: adding grid type m style parameters for file(s) ['local2.drn_riv_stress_period_data.txt'] took: 0:00:00.054560
+2025-08-25 18:11:21.613868 transform was not passed, setting default tranform to 'log'
+2025-08-25 18:11:21.613868 starting: adding constant type m style parameters for file(s) ['local2.drn_riv_stress_period_data.txt']
+2025-08-25 18:11:21.613868 finished: using geostruct:name:struct1,nugget:0.0,structures:
+name:var1,contribution:1.0,a:1000.0,anisotropy:1.0,bearing:0.0
+ took: 0:00:00.055397
+2025-08-25 18:11:21.613868 starting: loading list-style models\local2\pest\local2_template\local2.drn_riv_stress_period_data.txt
+2025-08-25 18:11:21.613868 starting: reading list-style file: models\local2\pest\local2_template\local2.drn_riv_stress_period_data.txt
+2025-08-25 18:11:21.617769 finished: reading list-style file: models\local2\pest\local2_template\local2.drn_riv_stress_period_data.txt took: 0:00:00.003901
+2025-08-25 18:11:21.617769 loaded list-style 'models\local2\pest\local2_template\local2.drn_riv_stress_period_data.txt' of shape (323, 5)
+2025-08-25 18:11:21.627890 finished: loading list-style models\local2\pest\local2_template\local2.drn_riv_stress_period_data.txt took: 0:00:00.014022
+2025-08-25 18:11:21.627890 starting: writing list-style template file 'models\local2\pest\local2_template\drn_riv_condcn_inst0_constant.csv.tpl'
+2025-08-25 18:11:21.647057 finished: writing list-style template file 'models\local2\pest\local2_template\drn_riv_condcn_inst0_constant.csv.tpl' took: 0:00:00.019167
+2025-08-25 18:11:21.648428 finished: adding constant type m style parameters for file(s) ['local2.drn_riv_stress_period_data.txt'] took: 0:00:00.034560
+2025-08-25 18:11:21.648428 starting: adding grid type a style parameters for file(s) ['local2.drn_riv_stress_period_data.txt']
+2025-08-25 18:11:21.648428 starting: using geostruct:name:struct1,nugget:0.0,structures:
+name:var1,contribution:1.0,a:1000.0,anisotropy:1.0,bearing:0.0
+
+2025-08-25 18:11:21.648428 WARNING: 0) Inconsistency between geostruct transform and partrans.
+2025-08-25 18:11:21.648428 WARNING: 1) Setting geostruct transform to none
+2025-08-25 18:11:21.648428 WARNING: 2) This will create a new copy of geostruct
+2025-08-25 18:11:21.648428 WARNING: -) Better to pass an appropriately transformed geostruct
+2025-08-25 18:11:21.648428 starting: loading list-style models\local2\pest\local2_template\local2.drn_riv_stress_period_data.txt
+2025-08-25 18:11:21.648428 starting: reading list-style file: models\local2\pest\local2_template\local2.drn_riv_stress_period_data.txt
+2025-08-25 18:11:21.663695 finished: reading list-style file: models\local2\pest\local2_template\local2.drn_riv_stress_period_data.txt took: 0:00:00.015267
+2025-08-25 18:11:21.664700 loaded list-style 'models\local2\pest\local2_template\local2.drn_riv_stress_period_data.txt' of shape (323, 5)
+2025-08-25 18:11:21.668505 finished: loading list-style models\local2\pest\local2_template\local2.drn_riv_stress_period_data.txt took: 0:00:00.020077
+2025-08-25 18:11:21.668505 starting: writing list-style template file 'models\local2\pest\local2_template\drn_riv_cond_headgr_inst0_grid.csv.tpl'
+2025-08-25 18:11:21.668505 WARNING: get_xy() warning: position of i and j in index_cols not specified, assume (i,j) are final two entries in index_cols.
+2025-08-25 18:11:21.694251 finished: writing list-style template file 'models\local2\pest\local2_template\drn_riv_cond_headgr_inst0_grid.csv.tpl' took: 0:00:00.025746
+2025-08-25 18:11:21.699279 finished: adding grid type a style parameters for file(s) ['local2.drn_riv_stress_period_data.txt'] took: 0:00:00.050851
+2025-08-25 18:11:21.699279 starting: adding constant type a style parameters for file(s) ['local2.drn_riv_stress_period_data.txt']
+2025-08-25 18:11:21.699279 finished: using geostruct:name:struct1,nugget:0.0,structures:
+name:var1,contribution:1.0,a:1000.0,anisotropy:1.0,bearing:0.0
+ took: 0:00:00.050851
+2025-08-25 18:11:21.699279 WARNING: 0) Inconsistency between geostruct transform and partrans.
+2025-08-25 18:11:21.699279 WARNING: 1) Setting geostruct transform to none
+2025-08-25 18:11:21.699279 WARNING: 2) This will create a new copy of geostruct
+2025-08-25 18:11:21.699279 WARNING: -) Better to pass an appropriately transformed geostruct
+2025-08-25 18:11:21.699279 starting: loading list-style models\local2\pest\local2_template\local2.drn_riv_stress_period_data.txt
+2025-08-25 18:11:21.699279 starting: reading list-style file: models\local2\pest\local2_template\local2.drn_riv_stress_period_data.txt
+2025-08-25 18:11:21.713204 finished: reading list-style file: models\local2\pest\local2_template\local2.drn_riv_stress_period_data.txt took: 0:00:00.013925
+2025-08-25 18:11:21.713204 loaded list-style 'models\local2\pest\local2_template\local2.drn_riv_stress_period_data.txt' of shape (323, 5)
+2025-08-25 18:11:21.716340 finished: loading list-style models\local2\pest\local2_template\local2.drn_riv_stress_period_data.txt took: 0:00:00.017061
+2025-08-25 18:11:21.716340 starting: writing list-style template file 'models\local2\pest\local2_template\drn_riv_cond_headcn_inst0_constant.csv.tpl'
+2025-08-25 18:11:21.737115 finished: writing list-style template file 'models\local2\pest\local2_template\drn_riv_cond_headcn_inst0_constant.csv.tpl' took: 0:00:00.020775
+2025-08-25 18:11:21.741404 finished: adding constant type a style parameters for file(s) ['local2.drn_riv_stress_period_data.txt'] took: 0:00:00.042125
+2025-08-25 18:11:21.742952 starting: adding grid type a style parameters for file(s) ['local2.chd_pw_stress_period_data.txt']
+2025-08-25 18:11:21.742952 starting: loading list-style models\local2\pest\local2_template\local2.chd_pw_stress_period_data.txt
+2025-08-25 18:11:21.742952 starting: reading list-style file: models\local2\pest\local2_template\local2.chd_pw_stress_period_data.txt
+2025-08-25 18:11:21.748731 finished: reading list-style file: models\local2\pest\local2_template\local2.chd_pw_stress_period_data.txt took: 0:00:00.005779
+2025-08-25 18:11:21.748731 loaded list-style 'models\local2\pest\local2_template\local2.chd_pw_stress_period_data.txt' of shape (83, 4)
+2025-08-25 18:11:21.748731 finished: loading list-style models\local2\pest\local2_template\local2.chd_pw_stress_period_data.txt took: 0:00:00.005779
+2025-08-25 18:11:21.748731 starting: writing list-style template file 'models\local2\pest\local2_template\chd_pw_headgr_inst0_grid.csv.tpl'
+2025-08-25 18:11:21.767486 finished: writing list-style template file 'models\local2\pest\local2_template\chd_pw_headgr_inst0_grid.csv.tpl' took: 0:00:00.018755
+2025-08-25 18:11:21.771605 finished: adding grid type a style parameters for file(s) ['local2.chd_pw_stress_period_data.txt'] took: 0:00:00.028653
+2025-08-25 18:11:21.771605 starting: adding constant type a style parameters for file(s) ['local2.chd_pw_stress_period_data.txt']
+2025-08-25 18:11:21.771605 starting: loading list-style models\local2\pest\local2_template\local2.chd_pw_stress_period_data.txt
+2025-08-25 18:11:21.771605 starting: reading list-style file: models\local2\pest\local2_template\local2.chd_pw_stress_period_data.txt
+2025-08-25 18:11:21.780448 finished: reading list-style file: models\local2\pest\local2_template\local2.chd_pw_stress_period_data.txt took: 0:00:00.008843
+2025-08-25 18:11:21.780448 loaded list-style 'models\local2\pest\local2_template\local2.chd_pw_stress_period_data.txt' of shape (83, 4)
+2025-08-25 18:11:21.783458 finished: loading list-style models\local2\pest\local2_template\local2.chd_pw_stress_period_data.txt took: 0:00:00.011853
+2025-08-25 18:11:21.783458 starting: writing list-style template file 'models\local2\pest\local2_template\chd_pw_headcn_inst0_constant.csv.tpl'
+2025-08-25 18:11:21.796995 finished: writing list-style template file 'models\local2\pest\local2_template\chd_pw_headcn_inst0_constant.csv.tpl' took: 0:00:00.013537
+2025-08-25 18:11:21.800438 finished: adding constant type a style parameters for file(s) ['local2.chd_pw_stress_period_data.txt'] took: 0:00:00.028833
+2025-08-25 18:11:21.802439 starting: adding grid type a style parameters for file(s) ['local2.chd_conf_stress_period_data.txt']
+2025-08-25 18:11:21.802439 starting: loading list-style models\local2\pest\local2_template\local2.chd_conf_stress_period_data.txt
+2025-08-25 18:11:21.802439 starting: reading list-style file: models\local2\pest\local2_template\local2.chd_conf_stress_period_data.txt
+2025-08-25 18:11:21.831502 finished: reading list-style file: models\local2\pest\local2_template\local2.chd_conf_stress_period_data.txt took: 0:00:00.029063
+2025-08-25 18:11:21.831502 loaded list-style 'models\local2\pest\local2_template\local2.chd_conf_stress_period_data.txt' of shape (8015, 4)
+2025-08-25 18:11:21.847029 finished: loading list-style models\local2\pest\local2_template\local2.chd_conf_stress_period_data.txt took: 0:00:00.044590
+2025-08-25 18:11:21.847029 starting: writing list-style template file 'models\local2\pest\local2_template\chd_conf_headgr_inst0_grid.csv.tpl'
+2025-08-25 18:11:21.948080 finished: writing list-style template file 'models\local2\pest\local2_template\chd_conf_headgr_inst0_grid.csv.tpl' took: 0:00:00.101051
+2025-08-25 18:11:21.957121 finished: adding grid type a style parameters for file(s) ['local2.chd_conf_stress_period_data.txt'] took: 0:00:00.154682
+2025-08-25 18:11:21.957121 starting: adding constant type a style parameters for file(s) ['local2.chd_conf_stress_period_data.txt']
+2025-08-25 18:11:21.957121 starting: loading list-style models\local2\pest\local2_template\local2.chd_conf_stress_period_data.txt
+2025-08-25 18:11:21.957121 starting: reading list-style file: models\local2\pest\local2_template\local2.chd_conf_stress_period_data.txt
+2025-08-25 18:11:21.976272 finished: reading list-style file: models\local2\pest\local2_template\local2.chd_conf_stress_period_data.txt took: 0:00:00.019151
+2025-08-25 18:11:21.976272 loaded list-style 'models\local2\pest\local2_template\local2.chd_conf_stress_period_data.txt' of shape (8015, 4)
+2025-08-25 18:11:21.988357 finished: loading list-style models\local2\pest\local2_template\local2.chd_conf_stress_period_data.txt took: 0:00:00.031236
+2025-08-25 18:11:21.988357 starting: writing list-style template file 'models\local2\pest\local2_template\chd_conf_headcn_inst0_constant.csv.tpl'
+2025-08-25 18:11:22.086987 finished: writing list-style template file 'models\local2\pest\local2_template\chd_conf_headcn_inst0_constant.csv.tpl' took: 0:00:00.098630
+2025-08-25 18:11:22.098452 finished: adding constant type a style parameters for file(s) ['local2.chd_conf_stress_period_data.txt'] took: 0:00:00.141331
+2025-08-25 18:11:22.538686 starting: adding observations from output file cum.csv
+2025-08-25 18:11:22.538686 starting: adding observations from tabular output file '['cum.csv']'
+2025-08-25 18:11:22.538686 starting: reading list-style file: models\local2\pest\local2_template\cum.csv
+2025-08-25 18:11:22.559598 finished: reading list-style file: models\local2\pest\local2_template\cum.csv took: 0:00:00.020912
+2025-08-25 18:11:22.559598 starting: building insfile for tabular output file cum.csv
+2025-08-25 18:11:22.567239 finished: building insfile for tabular output file cum.csv took: 0:00:00.007641
+2025-08-25 18:11:22.567239 starting: adding observation from instruction file 'models\local2\pest\local2_template\cum.csv.ins'
+2025-08-25 18:11:22.577031 finished: adding observation from instruction file 'models\local2\pest\local2_template\cum.csv.ins' took: 0:00:00.009792
+2025-08-25 18:11:22.577031 finished: adding observations from tabular output file '['cum.csv']' took: 0:00:00.038345
+2025-08-25 18:11:22.577031 finished: adding observations from output file cum.csv took: 0:00:00.038345
+2025-08-25 18:11:22.580545 starting: adding observations from output file obs_results.csv
+2025-08-25 18:11:22.580545 starting: adding observations from tabular output file '['obs_results.csv']'
+2025-08-25 18:11:22.580545 starting: reading list-style file: models\local2\pest\local2_template\obs_results.csv
+2025-08-25 18:11:22.588335 finished: reading list-style file: models\local2\pest\local2_template\obs_results.csv took: 0:00:00.007790
+2025-08-25 18:11:22.596355 starting: building insfile for tabular output file obs_results.csv
+2025-08-25 18:11:22.597402 finished: building insfile for tabular output file obs_results.csv took: 0:00:00.001047
+2025-08-25 18:11:22.597402 starting: adding observation from instruction file 'models\local2\pest\local2_template\obs_results.csv.ins'
+2025-08-25 18:11:22.608382 finished: adding observation from instruction file 'models\local2\pest\local2_template\obs_results.csv.ins' took: 0:00:00.010980
+2025-08-25 18:11:22.608382 finished: adding observations from tabular output file '['obs_results.csv']' took: 0:00:00.027837
+2025-08-25 18:11:22.612404 finished: adding observations from output file obs_results.csv took: 0:00:00.031859
+2025-08-25 18:11:23.127454 forward_run line:pyemu.os_utils.run(r'mf6')
 

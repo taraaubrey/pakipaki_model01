@@ -177,8 +177,8 @@ def main():
             f,
             index_cols=list(df.columns.values)[0],
             use_cols=list(df.columns.values)[1:],
-            prefix=f.split('.')[0],
-            obsgp=f.split(".")[0])
+            prefix='flux',
+            obsgp='flux')
 
 
     spring_f = os.path.join(TEMP_DIR, 'obs_results.csv')
@@ -187,17 +187,9 @@ def main():
         'obs_results.csv',
         index_cols=[list(spring_obs.columns.values)[0]],
         use_cols=list(spring_obs.columns.values)[1:], # skip the index column
-        prefix='springobs',
-        obsgp='springobs',
+        prefix='heads',
+        obsgp='heads',
     )
-
-    # add the heads and budget observations
-    # files = [f for f in os.listdir(TEMP_DIR) if f.startswith(f"{MODEL_NAME}_hdslay")]
-    # for f in files:
-    #     pf.add_observations(
-    #         f,
-    #         prefix=f.split(".")[0],
-    #         obsgp=f.split(".")[0])
 
     # FORWARD RUN SCRIPT --------------------------------------------------
     # pst = pf.build_pst()
@@ -234,18 +226,18 @@ def main():
 
     pst.observation_data.loc[:, 'weight'] = 0
 
-    tspringdf = pd.read_csv(os.path.join(TRUTH_DIR, 'obs_results.csv'))
+    tspringdf = pd.read_csv(os.path.join(TRUTH_DIR, 'obs_results.csv'), index_col=0)
     tcumdf = pd.read_csv(os.path.join(TRUTH_DIR, 'cum.csv'), index_col=0)
 
-    for col in tspringdf.columns[2:]:
+    for col in tspringdf.columns[1:-1]:
         new_col = col.replace('-', '_')
-        pst.observation_data.loc[f'oname:springobs_otype:lst_usecol:{new_col}_kper:0','obsval'] = tspringdf[col].iloc[0]
-        pst.observation_data.loc[f'oname:springobs_otype:lst_usecol:{new_col}_kper:0','weight'] = 1/(0.3*tspringdf[col].iloc[0])
+        pst.observation_data.loc[f'oname:heads_otype:lst_usecol:{new_col}_kper:0','obsval'] = tspringdf[col].iloc[0]
+        pst.observation_data.loc[f'oname:heads_otype:lst_usecol:{new_col}_kper:0','weight'] = tspringdf[col].iloc[2]
 
-    for col in tcumdf.columns:
+    for col in tcumdf.columns[2:]:
         new_col = col.replace('-', '_')  # replace spaces with underscores
-        pst.observation_data.loc[f'oname:cum_otype:lst_usecol:{new_col}_totim:1','obsval'] = tcumdf[col].iloc[0]
-        pst.observation_data.loc[f'oname:cum_otype:lst_usecol:{new_col}_totim:1','weight'] = tcumdf[col].iloc[2]
+        pst.observation_data.loc[f'oname:flux_otype:lst_usecol:{new_col}_totim:1','obsval'] = tcumdf[col].iloc[0]
+        pst.observation_data.loc[f'oname:flux_otype:lst_usecol:{new_col}_totim:1','weight'] = tcumdf[col].iloc[2]
 
     print("Updating observation weights...")
 

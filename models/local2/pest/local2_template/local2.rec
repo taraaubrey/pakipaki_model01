@@ -13,7 +13,7 @@ binary compiled on Aug 15 2023 at 14:55:58
 using control file: "local2.pst"
 in directory: "C:\Users\tfo46\e_Python\e_projects\pakipaki_01\models\local2\pest\local2_template"
 on host: "L161LU"
-started at 08/22/25 14:08:00
+started at 08/25/25 18:15:11
 
 ...reading external file 'local2.pargp_data.csv'
 ...header line: PARGPNME,INCTYP,DERINC,DERINCLB,FORCEN,DERINCMUL,DERMTHD,SPLITTHRESH,SPLITRELDIFF,SPLITACTION
@@ -53,7 +53,7 @@ Case dimensions:-
     Number of parameters = 12323
     Number of adjustable parameters = 12323
     Number of observations = 17
-    Number of non-zero weighted observations = 8
+    Number of non-zero weighted observations = 9
     Number of prior estimates = 0
 
 PEST Control Information
@@ -12729,24 +12729,24 @@ pname:chd_conf_headcn_inst:0_ptype:cn_usecol:3_pstyle:a                         
 
 
 Observation information
-NAME                                                                   VALUE                                            GROUP              WEIGHT
-oname:cum_otype:lst_usecol:chd2_totim:1                              184.776                  oname:cum_otype:lst_usecol:chd2                   0
-oname:cum_otype:lst_usecol:chd_totim:1                              -392.822                                              cum                   0
-oname:cum_otype:lst_usecol:drn_totim:1                               -127000                   oname:cum_otype:lst_usecol:drn            2.62e-05
-oname:cum_otype:lst_usecol:in-out_totim:1                           -258.443                oname:cum_otype:lst_usecol:in-out                   0
-oname:cum_otype:lst_usecol:percent-discrepancy_totim:1                 -5.97   oname:cum_otype:lst_usecol:percent-discrepancy                   0
-oname:cum_otype:lst_usecol:rcha_totim:1                                  233                  oname:cum_otype:lst_usecol:rcha              0.0143
-oname:cum_otype:lst_usecol:total_totim:1                            -258.443                 oname:cum_otype:lst_usecol:total                   0
-oname:cum_otype:lst_usecol:wel2_totim:1                                 2760                  oname:cum_otype:lst_usecol:wel2             0.00121
-oname:cum_otype:lst_usecol:wel3_totim:1                                 -684                  oname:cum_otype:lst_usecol:wel3                   0
-oname:cum_otype:lst_usecol:wel_totim:1                                   137                   oname:cum_otype:lst_usecol:wel              0.0122
-oname:springobs_otype:lst_usecol:pk2_head_kper:0                         7.6        oname:springobs_otype:lst_usecol:pk2_head            0.438596
-oname:springobs_otype:lst_usecol:pk4_head_kper:0                         7.8        oname:springobs_otype:lst_usecol:pk4_head             0.42735
-oname:springobs_otype:lst_usecol:pk4_pk2_diff_kper:0                    -0.2    oname:springobs_otype:lst_usecol:pk4_pk2_diff            -16.6667
-oname:springobs_otype:lst_usecol:spring_flux_kper:0                       -3     oname:springobs_otype:lst_usecol:spring_flux            -1.11111
-oname:springobs_otype:lst_usecol:spring_head_kper:0                     7.65                                        springobs             0.43573
-oname:springobs_otype:lst_usecol:spring_pk2_diff_kper:0                 0.05 oname:springobs_otype:lst_usecol:spring_pk2_diff             66.6667
-oname:springobs_otype:lst_usecol:spring_pk4_diff_kper:0                -0.15 oname:springobs_otype:lst_usecol:spring_pk4_diff            -22.2222
+NAME                                                                   VALUE                                           GROUP              WEIGHT
+oname:flux_otype:lst_usecol:chd2_totim:1                             184.776                oname:flux_otype:lst_usecol:chd2                   0
+oname:flux_otype:lst_usecol:chd_totim:1                             -392.822                                            flux                   0
+oname:flux_otype:lst_usecol:drn_totim:1                             -2636.27                 oname:flux_otype:lst_usecol:drn                   0
+oname:flux_otype:lst_usecol:in-out_totim:1                          -258.443              oname:flux_otype:lst_usecol:in-out                   0
+oname:flux_otype:lst_usecol:percent-discrepancy_totim:1                -5.97 oname:flux_otype:lst_usecol:percent-discrepancy                   0
+oname:flux_otype:lst_usecol:rcha_totim:1                                 233                oname:flux_otype:lst_usecol:rcha          0.00537339
+oname:flux_otype:lst_usecol:total_totim:1                           -258.443               oname:flux_otype:lst_usecol:total                   0
+oname:flux_otype:lst_usecol:wel2_totim:1                             2761.12                oname:flux_otype:lst_usecol:wel2          0.00724345
+oname:flux_otype:lst_usecol:wel3_totim:1                                -684                oname:flux_otype:lst_usecol:wel3                   0
+oname:flux_otype:lst_usecol:wel_totim:1                              137.237                 oname:flux_otype:lst_usecol:wel          0.00910835
+oname:heads_otype:lst_usecol:pk2_head_kper:0                             7.6           oname:heads_otype:lst_usecol:pk2_head                   2
+oname:heads_otype:lst_usecol:pk4_head_kper:0                             7.8           oname:heads_otype:lst_usecol:pk4_head                   2
+oname:heads_otype:lst_usecol:pk4_pk2_diff_kper:0                        -0.2       oname:heads_otype:lst_usecol:pk4_pk2_diff                  20
+oname:heads_otype:lst_usecol:spring_flux_kper:0                     -3.99473        oname:heads_otype:lst_usecol:spring_flux                   0
+oname:heads_otype:lst_usecol:spring_head_kper:0                         7.65                                           heads                   2
+oname:heads_otype:lst_usecol:spring_pk2_diff_kper:0                     0.05    oname:heads_otype:lst_usecol:spring_pk2_diff                  20
+oname:heads_otype:lst_usecol:spring_pk4_diff_kper:0                    -0.15    oname:heads_otype:lst_usecol:spring_pk4_diff                  20
 
 
 
@@ -12779,23 +12779,24 @@ PEST SVD Information
 
   ---  control file parameter phi report:  ---  
        phi type           mean            std            min            max
-       measured        38711.2              0        38711.2        38711.2
-         actual        38711.2              0        38711.2        38711.2
+       measured        6701.49              0        6701.49        6701.49
+         actual        6701.49              0        6701.49        6701.49
      note: 'measured' phi reported above includes 
            realizations of measurement noise, 
            'actual' phi does not.
   ---  observation group phi summary ---  
        (computed using 'actual' phi)
            (sorted by mean phi)
-group                                                  mean       std       min       max   percent       std
-oname:springobs_otype:lst_usecol:spring_pk2_diff    3.8e+04         0   3.8e+04   3.8e+04      98.1         0
-oname:cum_otype:lst_usecol:wel                          712         0       712       712      1.84         0
-oname:cum_otype:lst_usecol:drn                         10.5         0      10.5      10.5    0.0272         0
-oname:cum_otype:lst_usecol:wel2                        5.36         0      5.36      5.36    0.0139         0
-oname:cum_otype:lst_usecol:rcha                        3.62         0      3.62      3.62   0.00936         0
-oname:springobs_otype:lst_usecol:pk2_head               1.8         0       1.8       1.8   0.00464         0
-oname:springobs_otype:lst_usecol:pk4_head              1.33         0      1.33      1.33   0.00343         0
-springobs                                           0.00339         0   0.00339   0.00339  8.76e-06         0
+group                                              mean       std       min       max   percent       std
+oname:heads_otype:lst_usecol:spring_pk2_diff   3.42e+03         0  3.42e+03  3.42e+03        51         0
+oname:heads_otype:lst_usecol:spring_pk4_diff   2.63e+03         0  2.63e+03  2.63e+03      39.2         0
+oname:flux_otype:lst_usecol:wel                     397         0       397       397      5.92         0
+oname:flux_otype:lst_usecol:wel2                    192         0       192       192      2.87         0
+oname:heads_otype:lst_usecol:pk2_head              37.4         0      37.4      37.4     0.558         0
+oname:heads_otype:lst_usecol:pk4_head              29.1         0      29.1      29.1     0.434         0
+oname:heads_otype:lst_usecol:pk4_pk2_diff         0.623         0     0.623     0.623    0.0093         0
+oname:flux_otype:lst_usecol:rcha                  0.512         0     0.512     0.512   0.00764         0
+heads                                            0.0714         0    0.0714    0.0714   0.00107         0
     Note: 'percent' is the percentage of the actual phi for each realization.
 
 
@@ -12803,6 +12804,6 @@ springobs                                           0.00339         0   0.00339 
 
 
 pestpp-ies analysis complete...
-started at 08/22/25 14:08:00
-finished at 08/22/25 14:08:10
-took 0.15 minutes
+started at 08/25/25 18:15:11
+finished at 08/25/25 18:15:21
+took 0.166667 minutes
