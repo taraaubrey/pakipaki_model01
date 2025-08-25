@@ -102,10 +102,10 @@ def main():
     botm = []
     b0 = top.copy()
     for i in range(NLAY):
-        if i < 6:
-            b = np.where(thickness_shallow/6 < min_b, min_b, thickness_shallow/6)
+        if i < (NLAY-2):
+            b = np.where(thickness_shallow/(NLAY-2) < min_b, min_b, thickness_shallow/(NLAY-2))
             ibotm = b0 - b  # calculate the bottom elevation for each layer
-        elif i == 6:
+        elif i == (NLAY-2):
             b = np.where(b0 - conf_bottom < min_b, min_b, b0 - conf_bottom)  # set the thickness of the confining layer
             ibotm = b0 - b  # calculate the bottom elevation for each layer
         else:   

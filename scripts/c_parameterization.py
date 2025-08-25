@@ -2,6 +2,7 @@ import os
 import stat
 import shutil
 import pyemu
+import numpy as np
 import flopy as fp
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -95,7 +96,7 @@ def main():
             grid_gs=grid_gs,
             lb=0.01, ub=100, ulb=1e-4, uub=1e3,
             add_coarse=True,
-            lays=[0, 1, 2, 3, 4, 5])
+            lays=np.arange(NLAY-2).tolist())
     pst = define_mult_array(pf, TEMP_DIR,
             tag=f'{MODEL_NAME}.npf_k_layer',
             sr=sr,
@@ -103,7 +104,7 @@ def main():
             grid_gs=grid_gs,
             lb=0.01, ub=100, ulb=1e-6, uub=1e2,
             add_coarse=True,
-            lays=[6])
+            lays=[NLAY-1])
     pst = define_mult_array(pf, TEMP_DIR,
             tag=f'{MODEL_NAME}.npf_k_layer',
             sr=sr,
@@ -111,7 +112,7 @@ def main():
             grid_gs=grid_gs,
             lb=0.01, ub=100, ulb=1e2, uub=1e5,
             add_coarse=True,
-            lays=[7])
+            lays=[NLAY])
 
     # RECHARGE ------------------------------------------------------
     define_mult_array(pf, TEMP_DIR,

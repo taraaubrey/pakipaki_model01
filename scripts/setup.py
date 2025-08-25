@@ -1,7 +1,7 @@
 MODEL_NAME = 'local2'  # name of the model
 # model domain
 RES = 10
-NLAY = 8
+NLAY = 10
 NLAY_THICKNESS = 10  # thickness of each layer in meters
 
 #% paths
