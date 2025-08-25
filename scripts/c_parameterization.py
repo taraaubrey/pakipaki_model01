@@ -19,10 +19,10 @@ def main():
     # copy all the contents of bin into model directory
     if os.path.exists(BIN_DIR):
         if os.name == 'nt':  # if on Windows, copy files
-            os_bin = os.path.join(BIN_DIR, 'windows', 'pestpp')
+            os_bin = os.path.join(BIN_DIR, 'windows')
 
         elif os.name == 'posix':  # if on Linux or MacOS, copy files
-            os_bin = os.path.join(BIN_DIR, 'linux', 'pestpp')
+            os_bin = os.path.join(BIN_DIR, 'linux')
         else:
             raise ValueError(f'Unsupported OS: {os.name}. Please check the BIN_DIR path.')
 

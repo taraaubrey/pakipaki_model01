@@ -23,7 +23,7 @@ def main():
 
     pyemu.os_utils.start_workers(
         worker_dir=TEMP_DIR, # the folder which contains the "template" PEST dataset
-        exe_rel_path=f'{exe_path}/pestpp-swp.exe', #the PEST software version we want to run
+        exe_rel_path=f'pestpp-swp', #the PEST software version we want to run
         pst_rel_path=pst_name, # the control file to use with PEST
         num_workers=num_workers, #how many agents to deploy
         worker_root= os.path.join(TEMP_DIR, '..'),
