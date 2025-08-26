@@ -276,14 +276,16 @@ def main():
     final_pst = os.path.join(TEMP_DIR, pst_file)
     pst.write(final_pst, version=2)
     
-    # TEST RUN PESTPP-IES --------------------------------------------------
-    test_pst = os.path.join(TEMP_DIR,"test.pst")
-    # grab the first realization from the ensemble
-    pst.parameter_data.loc[:,"parval1"] = pe.loc[pe.index[20],pst.par_names].values
-    pst.control_data.noptmax = 0
-    pst.write(test_pst, version=2)
     
-    pyemu.os_utils.run("pestpp-glm test.pst", cwd=TEMP_DIR)
+    
+    # TEST RUN PESTPP-IES --------------------------------------------------
+    # test_pst = os.path.join(TEMP_DIR,"test.pst")
+    # # grab the first realization from the ensemble
+    # pst.parameter_data.loc[:,"parval1"] = pe.loc[pe.index[20],pst.par_names].values
+    # pst.control_data.noptmax = 0
+    # pst.write(test_pst, version=2)
+    
+    # pyemu.os_utils.run("pestpp-glm test.pst", cwd=TEMP_DIR)
     
     # PLOT TEST REALIZATION --------------------------------------------------
     # df = pd.read_csv(os.path.join(TEMP_DIR,"mult2model_info.csv"))
@@ -308,16 +310,16 @@ def main():
     # plt.tight_layout()
 
     # RUN TEST IES ------------------------------------------------------
-    print("Running PESTPP-IES test...")
-    pst = pyemu.Pst(final_pst)
-    pst_ies = os.path.join(TEMP_DIR,"test_ies.pst")
-    pst.pestpp_options["ies_num_reals"] = 30  # starting with a real small ensemble!
-    pst.pestpp_options['ies_parameter_ensemble'] = 'prior_pe.jcb'
-    pst.pestpp_options["ies_bad_phi_sigma"] = 2.0 #middle ground value
-    pst.control_data.noptmax = -2
+    # print("Running PESTPP-IES test...")
+    # pst = pyemu.Pst(final_pst)
+    # pst_ies = os.path.join(TEMP_DIR,"test_ies.pst")
+    # pst.pestpp_options["ies_num_reals"] = 30  # starting with a real small ensemble!
+    # pst.pestpp_options['ies_parameter_ensemble'] = 'prior_pe.jcb'
+    # pst.pestpp_options["ies_bad_phi_sigma"] = 2.0 #middle ground value
+    # pst.control_data.noptmax = -2
     
-    pst.write(pst_ies, version=2)
-    pyemu.os_utils.run(f"pestpp-ies test_ies.pst", cwd=TEMP_DIR)
+    # pst.write(pst_ies, version=2)
+    # pyemu.os_utils.run(f"pestpp-ies test_ies.pst", cwd=TEMP_DIR)
 
     # # load and check phi
     # pst = pyemu.Pst(pst_ies)
