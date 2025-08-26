@@ -70,13 +70,14 @@ def main():
 
     # PARAMETERIZATION --------------------------------------------------
     # exponential variogram for spatially varying parameters
-    v_space = pyemu.geostats.ExpVario(contribution=1.0, #sill
-                                        a=1000, # range of correlation; length units of the model. In our case 'meters'
-                                        anisotropy=1.0, #name says it all
-                                        bearing=0.0 #angle in degrees East of North corresponding to anisotropy ellipse
-                                        )
+    v_space = pyemu.geostats.ExpVario(
+        name='main_gs', contribution=1.0, a=1000, anisotropy=1.0, bearing=0.0)
+
+    v_fine = pyemu.geostats.ExpVario(
+        name='fine_gs', contribution=1.0, a=100, anisotropy=1.0, bearing=0.0)
 
     # geostatistical structure for spatially varying parameters
+    fine_gs = pyemu.geostats.GeoStruct(variograms=v_fine, transform='log')
     grid_gs = pyemu.geostats.GeoStruct(variograms=v_space, transform='log')
 
     # plot the gs if you like:
@@ -89,30 +90,43 @@ def main():
 
     # # set up pst file
     # K ----------------------------------------------
-    pst = define_mult_array(pf, TEMP_DIR,
-            tag=f'{MODEL_NAME}.npf_k_layer',
-            sr=sr,
-            ib=ib,
-            grid_gs=grid_gs,
-            lb=0.01, ub=100, ulb=1e-4, uub=1e3,
-            add_coarse=True,
-            lays=np.arange(NLAY-2).tolist())
-    pst = define_mult_array(pf, TEMP_DIR,
-            tag=f'{MODEL_NAME}.npf_k_layer',
-            sr=sr,
-            ib=ib,
-            grid_gs=grid_gs,
-            lb=0.01, ub=100, ulb=1e-6, uub=1e2,
-            add_coarse=True,
-            lays=[NLAY-1])
-    pst = define_mult_array(pf, TEMP_DIR,
-            tag=f'{MODEL_NAME}.npf_k_layer',
-            sr=sr,
-            ib=ib,
-            grid_gs=grid_gs,
-            lb=0.01, ub=100, ulb=1e2, uub=1e5,
-            add_coarse=True,
-            lays=[NLAY])
+    # shallow aquifer
+    pst = define_mult_array(
+        pf, TEMP_DIR,
+        tag=f'{MODEL_NAME}.npf_k_layer',
+        sr=sr,
+        ib=ib,
+        grid_gs=grid_gs,
+        fine_gs=fine_gs,
+        lb=0.001, ub=100, ulb=1e-4, uub=1e3,
+        add_coarse=True,
+        pp_space=10,
+        lays=np.arange(NLAY-2).tolist()
+        )
+    # confining layer
+    pst = define_mult_array(
+        pf, TEMP_DIR,
+        tag=f'{MODEL_NAME}.npf_k_layer',
+        sr=sr,
+        ib=ib,
+        grid_gs=grid_gs,
+        fine_gs=fine_gs,
+        lb=0.01, ub=100, ulb=1e-6, uub=1e2,
+        add_coarse=True,
+        pp_space=10,
+        lays=[NLAY-1]
+        )
+    #bottom layer
+    pst = define_mult_array(
+        pf, TEMP_DIR,
+        tag=f'{MODEL_NAME}.npf_k_layer',
+        sr=sr,
+        ib=ib,
+        grid_gs=grid_gs,
+        fine_gs=fine_gs,
+        lb=0.01, ub=100, ulb=1e2, uub=1e5,
+        add_coarse=True,
+        lays=[NLAY])
 
     # RECHARGE ------------------------------------------------------
     define_mult_array(pf, TEMP_DIR,
@@ -168,7 +182,7 @@ def main():
         head_ultbounds=[11, 15])
 
     # check
-    # [f for f in os.listdir(template_ws) if f.endswith(".tpl")]
+    # [f for f in os.listdir(TEMP_DIR) if f.endswith(".tpl")]
     pst = pf.build_pst()
     
     # OBSERVATIONS ------------------------------------------------------
@@ -224,38 +238,98 @@ def main():
     pyemu.os_utils.run("pestpp-ies {0}".format(pst_file), cwd=TEMP_DIR)
 
     # UPDATE OBSERVATIONS ------------------------------------------------------
-
+    print("Updating observation weights...")
     pst.observation_data.loc[:, 'weight'] = 0
 
     tspringdf = pd.read_csv(os.path.join(TRUTH_DIR, 'obs_results.csv'), index_col=0)
     tcumdf = pd.read_csv(os.path.join(TRUTH_DIR, 'cum.csv'), index_col=0)
 
-    for col in tspringdf.columns[1:-1]:
-        new_col = col.replace('-', '_')
-        pst.observation_data.loc[f'oname:heads_otype:lst_usecol:{new_col}_kper:0','obsval'] = tspringdf[col].iloc[0]
-        pst.observation_data.loc[f'oname:heads_otype:lst_usecol:{new_col}_kper:0','weight'] = tspringdf[col].iloc[2]
+    for col in tspringdf.columns:
+        if col in ['spring-head', 'pk2-head', 'pk4-head', 'spring-pk4-diff','spring-pk2-diff','pk4-pk2-diff']:
+            new_col = col.replace('-', '_')
+            pst.observation_data.loc[f'oname:heads_otype:lst_usecol:{new_col}_kper:0','obsval'] = tspringdf[col].iloc[0]
+            pst.observation_data.loc[f'oname:heads_otype:lst_usecol:{new_col}_kper:0','weight'] = tspringdf[col].iloc[2]
 
-    for col in tcumdf.columns[2:]:
-        new_col = col.replace('-', '_')  # replace spaces with underscores
-        pst.observation_data.loc[f'oname:flux_otype:lst_usecol:{new_col}_totim:1','obsval'] = tcumdf[col].iloc[0]
-        pst.observation_data.loc[f'oname:flux_otype:lst_usecol:{new_col}_totim:1','weight'] = tcumdf[col].iloc[2]
+    for col in tcumdf.columns:
+        if col in ['drn']:
+            new_col = col.replace('-', '_')  # replace spaces with underscores
+            pst.observation_data.loc[f'oname:flux_otype:lst_usecol:{new_col}_totim:1','obsval'] = tcumdf[col].iloc[0]
+            pst.observation_data.loc[f'oname:flux_otype:lst_usecol:{new_col}_totim:1','weight'] = tcumdf[col].iloc[2]
 
-    print("Updating observation weights...")
-
-    pst.write(os.path.join(TEMP_DIR, pst_file),version=2)
-
-    # RUN PESTPP-IES --------------------------------------------------
-
-    pyemu.os_utils.run("pestpp-ies {0}".format(pst_file), cwd=TEMP_DIR)
+    
+    ## ADD FORECASTS ------------------------------------------------------
+    forecasts = [
+        'oname:heads_otype:lst_usecol:spring_flux_kper:0',
+        'oname:heads_otype:lst_usecol:spring_pk4_diff_kper:0',
+    ]
+    pst.pestpp_options['forecasts'] = forecasts
     
     
+    # PRIOR PARAMETER COVARIANCE --------------------------------------------------
+    print("Adding parameter covariance...")
+    pe_f = os.path.join(TEMP_DIR, 'prior_pe.jcb')
+
+    pe = pf.draw(num_reals=NREALS, use_specsim=True)
+    pe.enforce() # enforces parameter bounds
+    pe.to_binary(pe_f) #writes the parameter ensemble to binary file
+    
+    final_pst = os.path.join(TEMP_DIR, pst_file)
+    pst.write(final_pst, version=2)
+    
+    # TEST RUN PESTPP-IES --------------------------------------------------
+    test_pst = os.path.join(TEMP_DIR,"test.pst")
+    # grab the first realization from the ensemble
+    pst.parameter_data.loc[:,"parval1"] = pe.loc[pe.index[20],pst.par_names].values
+    pst.control_data.noptmax = 0
+    pst.write(test_pst, version=2)
+    
+    pyemu.os_utils.run("pestpp-glm test.pst", cwd=TEMP_DIR)
+    
+    # PLOT TEST REALIZATION --------------------------------------------------
+    # df = pd.read_csv(os.path.join(TEMP_DIR,"mult2model_info.csv"))
+    # kh1_df = df.loc[df.model_file.str.contains("npf_k_layer4"),:]
+
+    # org_arr = np.loadtxt(os.path.join(TEMP_DIR,kh1_df.org_file.iloc[0]))
+    # inp_arr = np.loadtxt(os.path.join(TEMP_DIR,kh1_df.model_file.iloc[0]))
+    # mlt_arrs = [np.loadtxt(os.path.join(TEMP_DIR,afile)) for afile in kh1_df.mlt_file]
+    # arrs = [org_arr]
+    # arrs.extend(mlt_arrs)
+    # arrs.append(inp_arr)
+    # names = ["org"]
+    # names.extend([mf.split('.')[0].split('_')[-1] for mf in kh1_df.mlt_file])
+    # names.append("MF6 input")
+    # fig,axes = plt.subplots(1,kh1_df.shape[0]+2,figsize=(5*kh1_df.shape[0]+2,5))
+    # for i,ax in enumerate(axes.flatten()):
+    #     arr = np.log10(arrs[i])
+    #     arr[ib[0]==0] = np.nan
+    #     cb = ax.imshow(arr)
+    #     plt.colorbar(cb,ax=ax)
+    #     ax.set_title(names[i],loc="left")
+    # plt.tight_layout()
+
+    # RUN TEST IES ------------------------------------------------------
+    print("Running PESTPP-IES test...")
+    pst = pyemu.Pst(final_pst)
+    pst_ies = os.path.join(TEMP_DIR,"test_ies.pst")
+    pst.pestpp_options["ies_num_reals"] = 30  # starting with a real small ensemble!
+    pst.pestpp_options['ies_parameter_ensemble'] = 'prior_pe.jcb'
+    pst.pestpp_options["ies_bad_phi_sigma"] = 2.0 #middle ground value
+    pst.control_data.noptmax = -2
+    
+    pst.write(pst_ies, version=2)
+    pyemu.os_utils.run(f"pestpp-ies test_ies.pst", cwd=TEMP_DIR)
+
+    # # load and check phi
+    # pst = pyemu.Pst(pst_ies)
+    # pst.phi
+
     # EVAL --------------------------------------------------------------------------
 
     # pst = pyemu.Pst(os.path.join(TEMP_DIR, pst_file))
     # pst.phi
     # pst.phi_components
 
-    # nnz_phi_components = {k:pst.phi_components[k] for k in pst.nnz_obs_groups} # that's a dictionary comprehension there y'all
+    # nnz_phi_components = {k:pst.phi_components[k] for k in pst.nnz_obs_groups} 
     # nnz_phi_components
 
     # phicomp = pd.Series(nnz_phi_components)

@@ -32,3 +32,7 @@ TRUTH_DIR = r'truth'
 
 # Particle locations
 SAMPLES = r"data/sample_locations.shp"
+
+# Pest options
+NREALS = 500  # number of realizations for parameterization
+NOPTMAX = 3  # number of optimization iterations
