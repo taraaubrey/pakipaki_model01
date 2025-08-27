@@ -125,9 +125,30 @@ def get_indices(arr, layer=None, value=False):
 
     return result
 
+def tomf6tsinput(fn, data):
+    return {
+        'filename': os.path.basename(fn)[:-3] +'ts',
+        'time_series_namerecord': data.columns.to_list(),
+        'timeseries': {'filename': os.path.basename(fn)},
+    }
+
+def tomf6input(fn, list=False):
+    if list:
+        return {'filename': os.path.basename(fn)}
+    return {'filename': os.path.basename(fn), 'factor': 1, 'iprn': 1}
 
 
-def savedf2txt(df, filename):
+def extract_mf6_indexes(df, col_order):
+    df['k'] = df['index'].apply(lambda x: int(x[0] + 1))
+    df['i'] = df['index'].apply(lambda x: int(x[1] + 1))
+    df['j'] = df['index'].apply(lambda x: int(x[2] + 1))
+    # delete df['index']  # remove index column if not needed
+    df = df.drop(columns=['index'])
+    df = df[['k', 'i', 'j'] + col_order]
+    return df
+
+
+def savedf2txt(df, filename, col_order):
     """
     Save a DataFrame to a text file with specified separator.
     
@@ -136,14 +157,16 @@ def savedf2txt(df, filename):
         filename: Name of the output text file
         sim_ws: model workspace directory
     """
-    df['k'] = df['index'].apply(lambda x: int(x[0] + 1))
-    df['i'] = df['index'].apply(lambda x: int(x[1] + 1))
-    df['j'] = df['index'].apply(lambda x: int(x[2] + 1))
-    # delete df['index']  # remove index column if not needed
-    df = df.drop(columns=['index'])
-    df = df[['k', 'i', 'j'] + [col for col in df.columns if col not in ['k', 'i', 'j']]]
+    df = extract_mf6_indexes(df, col_order)
 
-    df.to_csv(filename, sep=' ', header=False, index=False)
+    # Ensure k,i,j are integers (MF6 expects 1-based integer cell indices)
+    for c in ['k', 'i', 'j']:
+        if c in df.columns:
+            df[c] = df[c].astype(int)
+
+    # Write with a space separator. Use a float format to avoid scientific
+    # notation for numeric fields so MF6/Flopy can parse them reliably.
+    df.to_csv(str(filename), sep=' ', header=False, index=False, float_format='%.6f')
 
 # plot layers
 import matplotlib.pyplot as plt

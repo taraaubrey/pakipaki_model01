@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import os
+from pathlib import Path
 import shutil
 import gridit as gi
 import numpy as np
@@ -31,9 +32,9 @@ def main():
     # copy all the contents of bin into model directory
     if os.path.exists(BIN_DIR):
         if os.name == 'nt':  # if on Windows, copy files
-            os_bin = os.path.join(BIN_DIR, 'windows')
+            os_bin = Path(BIN_DIR, 'windows')
         elif os.name == 'posix':  # if on Linux or MacOS, copy files
-            os_bin = os.path.join(BIN_DIR, 'linux')
+            os_bin = Path(BIN_DIR, 'linux')
         else:
             raise ValueError(f'Unsupported OS: {os.name}. Please check the BIN_DIR path.')
 
@@ -44,19 +45,27 @@ def main():
             for file in files:
                 # Make all files that could be executables executable
                 if file in ['mf6']:
-                    file_path = os.path.join(root, file)
+                    file_path = Path(root, file)
                     current_permissions = os.stat(file_path).st_mode
                     os.chmod(file_path, current_permissions | stat.S_IEXEC | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
                     print(f"Made executable: {file_path}")
     else:
         print(f'Bin directory {BIN_DIR} does not exist. Please check the path.')
 
+    fn_out = {}
+    # TDIS ####################################################################
+    start = pd.to_datetime(START_DATE)
+    end = pd.to_datetime(END_DATE)
+    period_days = (end - start).days
+    PERIOD_DAYS = period_days
+    NSTEPS = period_days  # number of time steps
+    print(f'Simulation period: {PERIOD_DAYS} days with {NSTEPS} time steps.')
+    
 
+    # DIS ####################################################################
     grid = gi.Grid.from_vector(DOMAIN, RES)
-
-    # save grid
-    grid_gpd = grid.cell_geodataframe()
-    # grid_gpd.to_file(os.path.join(SPATIAL_DIR, f'{MODEL_NAME}_grid.shp'), driver='ESRI Shapefile')
+    # grid_gpd = grid.cell_geodataframe()
+    # # grid_gpd.to_file(Path(SPATIAL_DIR, f'{MODEL_NAME}_grid.shp'), driver='ESRI Shapefile')
 
     # top & bottom
     top = grid.array_from_raster(TOP)
@@ -67,93 +76,206 @@ def main():
     # arr = np.where(top.data > 15, 0, arr)
 
     idomain = np.stack([arr] * NLAY, axis=0)
-    # confining layer active map
-    conf_area = ~grid.array_from_vector(CONF_AREA_ACTIVE).mask
-    idomain[-2] = np.where(conf_area.data == 0, 0, idomain[-2])  # set the confining layer active where the confining area is active
-    idomain[-1] = np.where(conf_area.data == 0, 0, idomain[-1])
-
-    #limeston_inactive
-    # limestone = grid.array_from_vector(LIMESTONE_INACTIVE)
-    # arr_limestone = np.where(limestone == 1, 0, arr)
-    # # add arr_limestone to idomain
-    # idomain = np.vstack([idomain, arr_limestone[np.newaxis, :, :], arr_limestone[np.newaxis, :, :]])
 
     nrow = grid.shape[0]
     ncol = grid.shape[1]
     delr = np.ones(ncol) * RES
     delc = np.ones(nrow) * RES
 
-
     # dis
-    shallow_elevation = 0 # top of clay /confining layer
+    shallow_bottom = -5 # top of clay /confining layer
     top = top.data  # use the top elevation for the first layer, only where idomain is active
-    bottom_shallow = np.where(bottom.data < shallow_elevation, shallow_elevation, bottom.data)  # set bottom elevation to top elevation where it is higher
-    thickness_shallow = top.data - bottom_shallow  # calculate the thickness of the layers
-    # thickness_deeper = np.ones_like(thickness_shallow) * 10  # set the thickness of the deeper layers
+    bottom = np.where(bottom.data < shallow_bottom, shallow_bottom, bottom.data)  # set bottom elevation to top elevation where it is higher
+    model_thickness = top.data - bottom  # calculate the thickness of the layers
 
-    conf_elev = -10
-    grav_elev = -20
-    conf_bottom = np.where(bottom.data < conf_elev, conf_elev, bottom.data)  # set bottom elevation to conf_elev where it is higher
-    grav_bottom = np.where(bottom.data < grav_elev, grav_elev, bottom.data)  # set bottom elevation to conf_elev where it is higher
+    if np.any(model_thickness <= 0):
+        bottom = np.where(model_thickness <= 0, top - 1, bottom)  # ensure bottom is always below top
+        model_thickness = top.data - bottom  # calculate the thickness of the layers
 
-    min_b = 1 # min thickness
+    botm = [bottom]
+    # min_b = 1 # min thickness
 
-    thicknesses = []
-    botm = []
-    b0 = top.copy()
+    # thicknesses = []
+    # botm = []
+    # b0 = top.copy()
+    # for i in range(NLAY):
+    #     if i in [0, 1, 2]:  # upper 3 layers with equal thickness
+    #         b = 1
+    #         ibotm = b0 - b  # calculate the bottom elevation for each layer
+    #     else:   
+    #         b = np.where(b0 - model_thickness < min_b, min_b, b0 - model_thickness)  # set the thickness of the confining layer
+    #         ibotm = b0 - b  # calculate the bottom elevation for each layer
+    #     thicknesses.append(b)
+    #     botm.append(ibotm)
+    #     b0 = ibotm.copy()  # update the bottom elevation for the next layer
+
+    # botm = np.array(botm)
+
+    # save
+    fn_out['dis'] = {}
+    top_fn = Path(MODEL_DIR, f'{MODEL_NAME}.dis_top.txt').as_posix()
+    fn_out['dis']['top'] = tomf6input(top_fn)
+    np.savetxt(top_fn, top)  # save top elevation
+
+    fn_out['dis']['btm'] = []
+    fn_out['dis']['idomain'] = []
     for i in range(NLAY):
-        if i < (NLAY-2):
-            b = np.where(thickness_shallow/(NLAY-2) < min_b, min_b, thickness_shallow/(NLAY-2))
-            ibotm = b0 - b  # calculate the bottom elevation for each layer
-        elif i == (NLAY-2):
-            b = np.where(b0 - conf_bottom < min_b, min_b, b0 - conf_bottom)  # set the thickness of the confining layer
-            ibotm = b0 - b  # calculate the bottom elevation for each layer
-        else:   
-            b = np.where(b0 - grav_bottom < min_b, min_b, b0 - grav_bottom)  # set the thickness of the confining layer
-            ibotm = b0 - b  # calculate the bottom elevation for each layer
-        thicknesses.append(b)
-        botm.append(ibotm)
-        b0 = ibotm.copy()  # update the bottom elevation for the next layer
+        ilay = i + 1
+        idomain_fn = Path(MODEL_DIR, f'{MODEL_NAME}.dis_idomain_layer{ilay}.txt').as_posix()
+        btm_fn = Path(MODEL_DIR, f'{MODEL_NAME}.dis_botm_layer{ilay}.txt').as_posix()
+        fn_out['dis']['btm'].append(tomf6input(btm_fn))
+        fn_out['dis']['idomain'].append(tomf6input(idomain_fn))
+        np.savetxt(btm_fn, botm[i])
+        # save idomain as int
+        idomain = idomain.astype(int)
+        np.savetxt(idomain_fn, idomain[i], fmt='%d')
 
-    botm = np.array(botm)
-    b_arr = np.array(thicknesses)
-    # plot_array_layers(b_arr, figsize=(15, 5), cmap='viridis', titles=None)
 
-    # update idomain to 0 where layer 7 and 8 have min thickness
-    idomain[-2] = np.where(b_arr[-2] <= min_b, 0, idomain[-2])  # layer 7
-    idomain[-1] = np.where(b_arr[-1] <= min_b, 0, idomain[-1])  # layer 8
+    # RIV #################################################################################
+    riv_mask = ~grid.array_from_vector(DRAINS).mask * idomain[0]
+    zones = grid.array_from_vector(DRAIN_ZONES, attribute='elev_ss_0')
+    riv_stage_zones = ~zones.mask * riv_mask
+    riv_rbot = grid.array_from_raster(TOP, resampling='min').data * riv_mask
 
-    # drains
-    drain_mask = ~grid.array_from_vector(DRAINS).mask
-    spring_mask = ~grid.array_from_vector(SPRING).mask  # get the spring array
-    drain_arr = np.where(spring_mask, True, drain_mask) * idomain[0]
+    # adjust riv elevations absed on survey data
+    riv_stage_arr = np.where(riv_stage_zones, zones.data, riv_rbot + 0.3)
+    riv_rbot_arr = np.where(riv_rbot < riv_stage_arr, riv_rbot, riv_stage_arr - 0.3)
     
-    drain_elev = grid.array_from_raster(TOP, resampling='min').data * drain_arr  # use the top elevation for drains, only where idomain is active
-    drain_input = extract_value_with_indices(drain_elev, layer=0, val_col='elev', mask_value=0)  # extract non-NaN values from the drain elevation array
+    # extract non-NaN values from the riv elevation array
+    riv_stage = extract_value_with_indices(
+        riv_stage_arr, layer=0, val_col='stage', mask_value=0
+        )
+    riv_rbot = extract_value_with_indices(
+        riv_rbot_arr, layer=0, val_col='rbot', mask_value=0
+        )
+    riv_kper0 = pd.merge(riv_stage, riv_rbot, on='index', how='inner')  # merge the two dataframes on the index column
+    riv_kper0['cond'] = RES**2 * 1
 
-    # add top drains
+    # # where rbot > stage, set rbot to stage - 0.1
+    # riv_kper0['rbot'].clip(lower=riv_kper0['stage']-0.1, inplace=True)
+
+    # time series for riv elevations ###########################################################
+    riv_ts = pd.read_csv(AWANUI_TS)
+    riv_ts['DateTime'] = riv_ts['Awanui Stream at Flume (x)'].apply(pd.to_datetime, format = "%Y-%m-%d %H:%M:%S", dayfirst=True)
+    riv_ts['level_mRL'] = (riv_ts['Awanui Stream at Flume (y)'] * 0.001) - 10
+
+    riv_ts['sm_level_mRL'] = riv_ts['level_mRL'].rolling(window=21, center=True, min_periods=1).mean()
+
+    # get specific dates
+    riv_ts = riv_ts[(riv_ts['DateTime'] >= start) & (riv_ts['DateTime'] <= end)].reset_index(drop=True)
+    assert len(riv_ts) == NSTEPS, f"riv time series length {len(riv_ts)} does not match number of time steps {NSTEPS}."
+    riv_ts['abs_val'] = riv_ts['level_mRL'] - riv_ts['level_mRL'].iloc[0]
+    riv_ts['sm_abs_val'] = riv_ts['abs_val'].rolling(window=21, center=True, min_periods=1).mean()
+
+    # riv absolute values during recession
+    riv_ts_values = riv_ts['sm_abs_val'].values
+
+    rivstage_dat = {}
+    for row in range(len(riv_kper0)):
+        index = riv_kper0.at[row, 'index']
+        col = f's_1_{index[1]+1}_{index[2]+1}'
+        base_elev = riv_kper0.at[row, 'stage']
+        rivstage_dat[col] = (base_elev + riv_ts_values).tolist()
+    # convert to dataframe
+    rivstage_ts = pd.DataFrame(
+        rivstage_dat, 
+        index=np.arange(1, NSTEPS + 1)
+        )
+
+    riv_kper1 = riv_kper0[['index']].copy()
+    riv_kper1['stage'] = riv_kper1['index'].apply(lambda x: f's_1_{x[1]+1}_{x[2]+1}')
+    riv_kper1['cond'] = riv_kper0['cond']
+    riv_kper1['rbot'] = riv_kper0['rbot']
+
+    # manual adjustment to rbot where rbot > stage
+    for i, row in riv_kper1.iterrows():
+        if np.any(row['rbot'] >= rivstage_ts[row['stage']]):
+            riv_kper1.at[i, 'old_rbot'] = riv_kper1.at[i, 'rbot']
+            riv_kper1.at[i, 'rbot'] = rivstage_ts[row['stage']].min() - 0.1
+
+    # save
+    fn_out['riv_aw'] = {}
+    for i, dat in enumerate([riv_kper0, riv_kper1]):
+        fn = Path(MODEL_DIR, f'{MODEL_NAME}.riv_stress_period_data_{i}.txt')
+        fn_out['riv_aw'][i] = tomf6input(fn, list=True)
+        savedf2txt(dat, filename=fn, col_order=['stage', 'cond', 'rbot'])
+    # save ts file
+    riv_ts_fn = Path(MODEL_DIR, f'{MODEL_NAME}.riv_stage.csv')
+    rivstage_ts.to_csv(riv_ts_fn, header=False)
+    fn_out['riv_aw_ts'] = tomf6tsinput(riv_ts_fn, rivstage_ts)
     
-    drain_top = top * np.where(drain_elev > 0, 0, 1) * idomain[0]
-    drn_top_input = extract_value_with_indices(drain_top, layer=0, val_col='elev', mask_value=0)  # extract non-NaN values
+    # CHD (POUKAWA) ##########################################################################
+    top_min = grid.array_from_raster(TOP, resampling='min')
+    chd_pw_arr = ~grid.array_from_vector(POUKAWA_BOUNDARY).mask
+    in_idomarr, idom_i = get_interior_indices(idomain[0], layer=0)  # idomainget interior indices of the mbr area
+    chd_pw_active = np.logical_and(chd_pw_arr.data, in_idomarr)  # mbr area that is active in the model domain
+    chd_pw_active = chd_pw_active * top_min.data
+    chd_pw_indices = get_indices(chd_pw_active, layer=0, value=True)
 
-    # mbr
+    chd_pw_kper0 = pd.DataFrame({'index': [i[0] for i in chd_pw_indices]})
+    chd_pw_kper0['head'] = [i[1] for i in chd_pw_indices]  # head for Poukawa boundary
+
+    # TS ##########################
+    pw_ts = pd.read_csv(POUKAWA_TS)
+    pw_ts['DateTime'] = pw_ts['Poukawa Stream at Douglas Road (x)'].apply(pd.to_datetime, format = "%Y-%m-%d %H:%M:%S", dayfirst=True)
+    pw_ts['level_mRL'] = (pw_ts['Poukawa Stream at Douglas Road (y)'] * 0.001) - 10
+
+    pw_ts['sm_level_mRL'] = pw_ts['level_mRL'].rolling(window=21, center=True, min_periods=1).mean()
+
+    # get specific dates
+    pw_ts = pw_ts[(pw_ts['DateTime'] >= start) & (pw_ts['DateTime'] <= end)].reset_index(drop=True)
+    assert len(pw_ts) == NSTEPS, f"riv time series length {len(pw_ts)} does not match number of time steps {NSTEPS}."
+    pw_ts['abs_val'] = pw_ts['level_mRL'] - pw_ts['level_mRL'].iloc[0]
+    pw_ts['sm_abs_val'] = pw_ts['abs_val'].rolling(window=5, center=True, min_periods=1).mean()
+
+    # riv absolute values during recession
+    pw_ts_values = pw_ts['sm_abs_val'].values
+
+    pwelev_dat = {}
+    for row in range(len(chd_pw_kper0)):
+        index = chd_pw_kper0.at[row, 'index'] 
+        col = f'h_1_{index[1]+1}_{index[2]+1}'
+        base_elev = chd_pw_kper0.at[row, 'head']
+        pwelev_dat[col] = (base_elev + pw_ts_values).tolist()
+    # convert to dataframe
+    pwelev_ts = pd.DataFrame(pwelev_dat, index=np.arange(1, NSTEPS + 1))
+
+    chd_pw_kper1 = chd_pw_kper0[['index']].copy()
+    chd_pw_kper1['head'] = chd_pw_kper1['index'].apply(lambda x: f'h_1_{x[1]+1}_{x[2]+1}')
+
+    #save
+    fn_out['chd_pw'] = {}
+    for i, dat in enumerate([chd_pw_kper0, chd_pw_kper1]):
+        fn = Path(MODEL_DIR, f'{MODEL_NAME}.chd_pw_stress_period_data_{i}.txt')
+        fn_out['chd_pw'][i] = tomf6input(fn ,list=True)
+        savedf2txt(dat, filename=fn, col_order=['head'])
+    
+    # save ts file
+    pwelev_ts_fn = Path(MODEL_DIR, f'{MODEL_NAME}.chd_heads.csv')
+    pwelev_ts.to_csv(pwelev_ts_fn, header=False)
+    fn_out['chd_pw_ts'] = tomf6tsinput(pwelev_ts_fn, pwelev_ts)
+
+    
+    # WEL (MBR) ##########################################################################
     mbr_arr = ~grid.array_from_vector(MBR).mask
     mbr_indices = []
     for i in range(NLAY-2):  # remove mbr from bottom 2 layers
         in_idomarr, idom_i = get_interior_indices(idomain[i], layer=i)  # idomainget interior indices of the mbr area
         mbr_active = np.logical_and(mbr_arr.data, in_idomarr)  # mbr area that is active in the model domain
         mbr_indices.extend(get_indices(mbr_active, layer=i))
+    
     mbr_df = pd.DataFrame({'index': mbr_indices})
+    mbr_df['q'] = 2 # m3/d
+    mbr_df = mbr_df[~mbr_df['index'].isin(chd_pw_kper0['index'])]  # remove chd indices from mbr
+    
+    # save
+    fn_out['wel_mbr'] = {}
+    for i in range(NPER):
+        mbr_fn = Path(MODEL_DIR, f'{MODEL_NAME}.wel_mbr_stress_period_data_{i}.txt')
+        fn_out['wel_mbr'][0] = tomf6input(mbr_fn, list=True)
+        savedf2txt(mbr_df, filename=mbr_fn, col_order=['q'])
 
-    # chd - Poukawa boundary
-    top_min = grid.array_from_raster(TOP, resampling='min')
-    chd_pw_arr = ~grid.array_from_vector(POUKAWA_BOUNDARY).mask
-    chd_pw_active = np.logical_and(chd_pw_arr.data, in_idomarr)  # mbr area that is active in the model domain
-    chd_pw_active = chd_pw_active * top_min.data
-    chd_pw_indices = get_indices(chd_pw_active, layer=0, value=True)
-
-    chd_pw_df = pd.DataFrame({'index': [i[0] for i in chd_pw_indices]})
-
+    # WEL (INFLUX/OUTFLUX) ###################################################################
 
     # influx boundaries
     influx_arr = ~grid.array_from_vector(INFLUX_BOUNDARY).mask
@@ -173,185 +295,184 @@ def main():
         outflux_indices.extend(get_indices(outflux_active, layer=i))
     outflux_df = pd.DataFrame({'index': outflux_indices})
 
-    # chd - confined boundary inflow
-    chd_conf_arr = idomain[-1]
-    chd_conf_indices = get_indices(chd_conf_arr, layer=NLAY-1)
-    chd_conf_df = pd.DataFrame({'index': chd_conf_indices})
-    # chd_conf_in = influx_df.copy()
-    # chd_conf_out = outflux_df.copy()
+    # influx/outfluc
+    influx_df['q'] = 1  # m3/d
+    outflux_df['q'] = -1  # m3/d
 
-    # k
+    # remove where mbr is active
+    influx_df = influx_df[~influx_df['index'].isin(mbr_df['index'])]
+    outflux_df = outflux_df[~outflux_df['index'].isin(mbr_df['index'])]
+
+    # save
+    fn_out['wel_influx'] = {}
+    fn_out['wel_outflux'] = {}
+    for i in range(NPER):
+        influx_fn = Path(MODEL_DIR, f'{MODEL_NAME}.wel_influx_stress_period_data_{i}.txt')
+        outflux_fn = Path(MODEL_DIR, f'{MODEL_NAME}.wel_outflux_stress_period_data_{i}.txt')
+        fn_out['wel_influx'][0] = tomf6input(influx_fn, list=True)
+        fn_out['wel_outflux'][0] = tomf6input(outflux_fn, list=True)
+        savedf2txt(influx_df, filename=influx_fn, col_order=['q'])
+        savedf2txt(outflux_df, filename=outflux_fn, col_order=['q'])
+
+    # NPF: K ###################################################################
     all_k = []
     for i in range(NLAY):
-        if i == 2:
+        if i == 1:
             k = np.ones((nrow, ncol)) * 0.001  # horizontal hydraulic conductivity in m/day
-        elif i < 6:
-            k = np.ones((nrow, ncol)) * 10
-        elif i == 6:
-            k = np.ones((nrow, ncol)) * 0.001
         else:
-            k = np.ones((nrow, ncol)) * 1000  # horizontal hydraulic conductivity in m/day
+            k = np.ones((nrow, ncol)) * 100  # horizontal hydraulic conductivity in m/day
         all_k.append(k)
     k_hor = np.array(all_k)  # horizontal hydraulic conductivity
 
-    # --------------------------------------------------------------------------
-    # other model parameters
-    init_h = np.stack([top] * NLAY)  # initial head, based on average drain elevation
-
-    #drn
-    drain_input['cond'] = RES**2 * 1
-    drn_top_input['cond'] = 1
-
-    # chd
-    chd_pw_df['head'] = [i[1] for i in chd_pw_indices]  # head for Poukawa boundary
-    chd_conf_df['head'] = 13  # head for confined boundary inflow
-    # chd_conf_in['head'] = 13  # head for confined boundary
-    # chd_conf_out['head'] = 12  # head for confined boundary
-
-    # mbr
-    mbr_df['flux'] = 2 # m3/d
-    mbr_df = mbr_df[~mbr_df['index'].isin(chd_pw_df['index'])]  # remove chd indices from mbr
-
-    # influx/outfluc
-    influx_df['flux'] = 1  # m3/d
-    outflux_df['flux'] = -1  # m3/d
-
-    # remove where mbr is active
-    influx_df = influx_df[~influx_df['index'].isin(mbr_df['index'])]  # remove mbr indices from influx
-    outflux_df = outflux_df[~outflux_df['index'].isin(mbr_df['index'])]  # remove mbr indices from outflux
-
-    # recharge
-    recharge = np.ones_like(idomain[0]) * 0.0001 * idomain[0]
-
-    icell_type = np.zeros((NLAY, nrow, ncol), dtype=int)  # cell type for each layer
-
-    # SAVE MODEL PARAMETERS ---------------------------------------------
-    k_fn = os.path.join(MODEL_DIR, f'{MODEL_NAME}.npf_k_layer')
-    rch_fn = os.path.join(MODEL_DIR, f'{MODEL_NAME}.rcha_recharge.txt')
-    drn_fn = os.path.join(MODEL_DIR, f'{MODEL_NAME}.drn_riv_stress_period_data.txt')
-    chdpw_fn = os.path.join(MODEL_DIR, f'{MODEL_NAME}.chd_pw_stress_period_data.txt')
-    chdconf_fn = os.path.join(MODEL_DIR, f'{MODEL_NAME}.chd_conf_stress_period_data.txt')
-    mbr_fn = os.path.join(MODEL_DIR, f'{MODEL_NAME}.wel_mbr_stress_period_data.txt')
-    influx_fn = os.path.join(MODEL_DIR, f'{MODEL_NAME}.wel_influx_stress_period_data.txt')
-    outflux_fn = os.path.join(MODEL_DIR, f'{MODEL_NAME}.wel_outflux_stress_period_data.txt')
-
+    # save
+    fn_out['npf_k'] = []
     for i in range(NLAY):
         ilay = i + 1  # layer number starts from 1
-        np.savetxt(k_fn + f'{ilay}.txt', k_hor[i])
-        # np.savetxt(os.path.join(MODEL_DIR, f'{MODEL_NAME}.npf_icelltype_layer{ilay}.txt'), icell_type[i])  # save cell type for each layer
+        fn = Path(MODEL_DIR, f'{MODEL_NAME}.npf_k_layer{ilay}.txt').as_posix()
+        fn_out['npf_k'].append(tomf6input(fn))
+        np.savetxt(fn, k_hor[i])
 
-    np.savetxt(rch_fn, recharge)  # save bottom elevation for each layer
-    savedf2txt(drain_input, filename=drn_fn)
-    savedf2txt(chd_pw_df, filename=chdpw_fn)
-    savedf2txt(chd_conf_df, filename=chdconf_fn)
-    savedf2txt(mbr_df, filename=mbr_fn)
-    savedf2txt(influx_df, filename=influx_fn)
-    savedf2txt(outflux_df, filename=outflux_fn)
+    # STO: SS ###################################################################
+    sto_ss = np.ones_like(idomain) * 1e-4
+
+    # save
+    fn_out['sto_ss'] = []
+    for i in range(NLAY):
+        ilay = i + 1  # layer number starts from 1
+        fn = Path(MODEL_DIR, f'{MODEL_NAME}.sto_ss_layer{ilay}.txt').as_posix()
+        fn_out['sto_ss'].append(tomf6input(fn))
+        np.savetxt(fn, sto_ss[i])
+    
+    # RCH: Rainfall ################################################################
+    fn_out['rch'] = {}
+    for i in range(NPER):
+        if i == 0:
+            recharge = np.ones_like(idomain[0]) * 0.0001 * idomain[0]
+        else:
+            recharge = np.zeros_like(idomain[0])
+        rch_fn = Path(MODEL_DIR, f'{MODEL_NAME}.rcha_recharge_{i}.txt').as_posix()
+        fn_out['rch'][i] = tomf6input(rch_fn)
+        np.savetxt(rch_fn, recharge)  # save bottom elevation for each layer
+
+    # --------------------------------------------------------------------------
+    # other model parameters
+    init_h = np.stack([top] * NLAY)  # initial head, based on average riv elevation
 
     # 2 BUILD A MODEL -------------------------------------------------------
 
-    sim = fp.mf6.MFSimulation(sim_name=MODEL_NAME, # name of simulation
-                            version='mf6', # version of MODFLOW
-                            exe_name=f'{MODEL_DIR}/mf6',
-                            sim_ws=MODEL_DIR, # path to workspace where all files are stored
-                            )
+    sim = fp.mf6.MFSimulation(
+        sim_name=MODEL_NAME, # name of simulation
+        version='mf6', # version of MODFLOW
+        exe_name=f'{MODEL_DIR}/mf6',
+        sim_ws=MODEL_DIR, # path to workspace where all files are stored
+        )
 
-    tdis = fp.mf6.ModflowTdis(simulation=sim, # add to the simulation called sim (defined in prevous code cell)
-                            time_units='DAYS', 
-                            nper=1, # number of stress periods
-                            perioddata=[(1, 1, 1)], # period length, number of steps, timestep multiplier
-                            )
+    tdis = fp.mf6.ModflowTdis(
+        simulation=sim, # add to the simulation called sim (defined in prevous code cell)
+        time_units='DAYS', 
+        nper=NPER, # number of stress periods
+        perioddata=[
+            (1, 1, 1),
+            (PERIOD_DAYS, NSTEPS, 1),
+            ], # period length, number of steps, timestep multiplier
+        )
 
-    ims = fp.mf6.ModflowIms(simulation=sim, 
-                            complexity='COMPLEX',
-                            print_option='ALL'
-                        )
+    ims = fp.mf6.ModflowIms(
+        simulation=sim, 
+        complexity='COMPLEX',
+        print_option='ALL'
+        )
 
-    gwf = fp.mf6.ModflowGwf(simulation=sim, 
-                            modelname=MODEL_NAME, # model name
-                            model_nam_file=f"{MODEL_NAME}.nam", # name of nam file
-                            save_flows=True, # make sure all flows are stored in binary output file
-                        )
+    gwf = fp.mf6.ModflowGwf(
+        simulation=sim, 
+        modelname=MODEL_NAME,
+        model_nam_file=f"{MODEL_NAME}.nam",
+        save_flows=True,
+        )
 
-    dis = fp.mf6.ModflowGwfdis(model=gwf, # add to groundwater flow model called gwf
-                            length_units='METERS', 
-                            nlay=NLAY, 
-                            nrow=nrow, 
-                            ncol=ncol,
-                            delr=delr, 
-                            delc=delc, 
-                            top=top, 
-                            botm=botm,
-                            idomain=idomain, # 3D array of active cells 
-                            xorigin=grid.bounds[0],
-                            yorigin=grid.bounds[1],
-                            )
+    dis = fp.mf6.ModflowGwfdis(
+        model=gwf, # add to groundwater flow model called gwf
+        length_units='METERS', 
+        nlay=NLAY, 
+        nrow=nrow, 
+        ncol=ncol,
+        delr=delr, 
+        delc=delc, 
+        top=fn_out['dis']['top'],
+        botm=fn_out['dis']['btm'],
+        idomain=fn_out['dis']['idomain'],
+        xorigin=grid.bounds[0],
+        yorigin=grid.bounds[1],
+        )
+    
+    sto = fp.mf6.ModflowGwfsto(
+        model=gwf,
+        ss=fn_out['sto_ss'], 
+        steady_state={0: True},
+        transient={1: True},
+        )
 
-    npf = fp.mf6.ModflowGwfnpf(model=gwf, #node property flow package
-                            save_specific_discharge=True, # save the specific discharge for every cell
-                            #    icelltype=icell_type, # cell type for each layer
-                            icelltype=0, # 0 means constant saturated thickness
-                            #    k = k_hor
-                            k=k_hor, # horizontal k value
-                            )
+    npf = fp.mf6.ModflowGwfnpf(
+        model=gwf, #node property flow package
+        save_specific_discharge=True, # save the specific discharge for every cell
+        icelltype=0, # 0 means constant saturated thickness
+        k=fn_out['npf_k'], # horizontal k value
+        )
 
-    ic = fp.mf6.ModflowGwfic(model=gwf, 
-                            strt=init_h, # initial head, only used for iterative solution in steady model (arbitrary)
-                            )
+    ic = fp.mf6.ModflowGwfic(
+        model=gwf, 
+        strt=init_h, # initial head, only used for iterative solution in steady model (arbitrary)
+        )
 
-    rch = fp.mf6.ModflowGwfrcha(model=gwf,
-                                # recharge=recharge, # recharge array for each cell
-                                recharge={0: {'filename': os.path.basename(rch_fn)}}, # recharge for each cell
-                                pname='rch' # package name
-                            )
+    rch = fp.mf6.ModflowGwfrcha(
+        model=gwf,
+        recharge=fn_out['rch'], # recharge file names for each layer
+        pname='rch' # package name
+    )
 
-    drn_riv = fp.mf6.ModflowGwfdrn(model=gwf, # add drain package to model gwf (created in previous code cell)
-                                #    stress_period_data={0: drain_input.values.tolist()},
-                            stress_period_data={0: {'filename': os.path.basename(drn_fn)}},
-                                pname='drn_r', # package name
-                                )
+    riv_aw = fp.mf6.ModflowGwfriv(
+        model=gwf, # add riv package to model gwf (created in previous code cell)
+        timeseries=fn_out['riv_aw_ts'], # time series file for riv stages
+        stress_period_data=fn_out['riv_aw'],
+        pname='riv_aw', # package name
+        save_flows=True,
+        )
 
-    chd_pw = fp.mf6.ModflowGwfchd(model=gwf, # add chd package to model gwf (created in previous code cell)
-                                stress_period_data={0: chd_pw_df[['index', 'head']].values.tolist()},
-                                # stress_period_data={0: {'filename': os.path.basename(chdpw_fn)}},
-                                pname='chd_pw', # package name
-                                save_flows=True, # save flows for this package 
-                            )
+    chd_pw = fp.mf6.ModflowGwfchd(
+        model=gwf,
+        timeseries=fn_out['chd_pw_ts'], # time series file for chd heads
+        stress_period_data=fn_out['chd_pw'],
+        pname='chd_pw', # package name
+        save_flows=True, # save flows for this package 
+        )
 
-    chd_conf = fp.mf6.ModflowGwfchd(model=gwf, # add chd package to model gwf (created in previous code cell)
-                                # stress_period_data={0: chd_conf_df.values.tolist()},
-                                stress_period_data={0: {'filename': os.path.basename(chdconf_fn)}},
-                                pname='chd_conf', # package name
-                                save_flows=True, # save flows for this package 
-                            )
+    wel_mbr = fp.mf6.ModflowGwfwel(
+        model=gwf,
+        stress_period_data=fn_out['wel_mbr'],
+        pname='wel_mbr' # package name
+        )
+    
+    influx = fp.mf6.ModflowGwfwel(
+        model=gwf,
+        stress_period_data=fn_out['wel_influx'],
+        pname='influx' # package name
+        )
+    outflux = fp.mf6.ModflowGwfwel(
+        model=gwf,
+        stress_period_data=fn_out['wel_outflux'],
+        pname='outflux' # package name
+        )
 
-    wel = fp.mf6.ModflowGwfwel(model=gwf,
-                            #    stress_period_data={0: mbr_df[['index', 'flux']].values.tolist()},
-                            stress_period_data={0: {'filename': os.path.basename(mbr_fn)}},
-                            pname='mbr' # package name
-                            )
-    influx = fp.mf6.ModflowGwfwel(model=gwf,
-                                #   stress_period_data={0: influx_df[['index', 'flux']].values.tolist()},
-                            stress_period_data={0: {'filename': os.path.basename(influx_fn)}},
-                            pname='influx' # package name
-                            )
-    outflux = fp.mf6.ModflowGwfwel(model=gwf,
-                                # stress_period_data={0: outflux_df[['index', 'flux']].values.tolist()},
-                            stress_period_data={0: {'filename': os.path.basename(outflux_fn)}},
-                            pname='outflux' # package name
-                            )
-
-
-    oc = fp.mf6.ModflowGwfoc(model=gwf, # add output control to model gwf (created in previous code cell)
-                            budget_filerecord=f"{MODEL_NAME}.cbc", # file name where all budget output is stored
-                            head_filerecord=f"{MODEL_NAME}.hds", # file name where all head output is stored
-                            saverecord=[("HEAD", "ALL"), ("BUDGET", "ALL")],
-                            )
+    oc = fp.mf6.ModflowGwfoc(
+        model=gwf, # add output control to model gwf (created in previous code cell)
+        budget_filerecord=f"{MODEL_NAME}.cbc", # file name where all budget output is stored
+        head_filerecord=f"{MODEL_NAME}.hds", # file name where all head output is stored
+        saverecord=[("HEAD", "ALL"), ("BUDGET", "ALL")],
+        )
 
     # --------------------------------------------------------
 
     print('Writing model files...')
-    # sim.set_all_data_external()
     sim.write_simulation()  # write all model files to disk
     print('Running model...')
     success, _ = sim.run_simulation()  # run the model
@@ -364,18 +485,16 @@ def main():
     pmv = fp.plot.PlotMapView(model=gwf, layer=0) # create view of layer 0
     pmv.plot_array(top *idomain[0], masked_values=[1e30], alpha=0.5, cmap='viridis') # plot top elevation
 
-    pmv.plot_bc(name='chd_pw', color='purple') # add 'chd' cells
-    pmv.plot_bc(name='mbr', color='orange') # add 'wells' cells
-    pmv.plot_bc(name='drn_r', color='blue') # add 'wells' cells
-    pmv.plot_bc(name='chd_conf', color='orange') # add 'chd' cells
-    # pmv.plot_bc(name='chd_conf_out', color='gold') # add 'chd' cells
+    pmv.plot_bc(name='chd_pw', color='lightblue') # add 'chd' cells
+    # pmv.plot_bc(name='mbr', color='orange') # add 'wells' cells
+    pmv.plot_bc(name='riv_aw', color='blue') # add 'wells' cells
     pmv.plot_bc(name='influx', color='green') # add 'influx' cells
     pmv.plot_bc(name='outflux', color='red') # add 'outflux' cells
     # pmv.plot_inactive(color='lightgray', alpha=0.5) # plot inactive cells
     # pmv.plot_grid(colors='silver', lw=0.01); # add grid
 
     # save to figures
-    plt.savefig(os.path.join(FIG_DIR, f'{MODEL_NAME}_domain.png'), dpi=300, bbox_inches='tight') # save figure
+    plt.savefig(Path(FIG_DIR, f'{MODEL_NAME}_domain.png'), dpi=300, bbox_inches='tight') # save figure
 
     # --------------------------------------------------------------
 
@@ -401,7 +520,7 @@ def main():
         plt.clabel(cs, fmt='%1.1f'); # add contour labels with one decimal place
 
         # save to figures
-        plt.savefig(os.path.join(FIG_DIR, f'{MODEL_NAME}_heads{i}.png'), dpi=300, bbox_inches='tight') # save figure
+        plt.savefig(Path(FIG_DIR, f'{MODEL_NAME}_heads{i}.png'), dpi=300, bbox_inches='tight') # save figure
         plt.close()
 
     # -------------------------------------------------------------
@@ -414,7 +533,7 @@ def main():
     crossview.plot_inactive(color='lightgray') # plot inactive cells
     cb = plt.colorbar(strtArray, shrink=0.5) # add color bar
     # strtArray = crossview.plot_array(head, masked_values=[1e30], alpha = 0.5) # plot the array of heads in cross section
-    plt.savefig(os.path.join(FIG_DIR, f'{MODEL_NAME}_xsection_col{cross_col}.png'), dpi=300, bbox_inches='tight') # save figure
+    plt.savefig(Path(FIG_DIR, f'{MODEL_NAME}_xsection_col{cross_col}.png'), dpi=300, bbox_inches='tight') # save figure
     plt.close()  # close the figure to avoid memory issues
 
     # TEST OBS ------------------------------------------------------------

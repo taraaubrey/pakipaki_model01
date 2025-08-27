@@ -1,14 +1,18 @@
 MODEL_NAME = 'local2'  # name of the model
 # model domain
 RES = 10
-NLAY = 10
+NLAY = 1
 NLAY_THICKNESS = 10  # thickness of each layer in meters
+
+# TDIS
+NPER = 2  # number of stress periods
 
 #% paths
 DOMAIN = r"data/model2_domain.shp"
 TOP = r"data/model2_dem.tif"
 BOTTOM = r"data/basement_z.tif"
-DRAINS = r"data/model2_drains.shp"
+DRAINS = r"data/drains.shp"
+DRAIN_ZONES = r"data/drain_zones.shp"
 MBR = r"data/model2_mbr.shp"
 LIMESTONE_INACTIVE = r"data/model2_limestone_inactive_bottom.shp"
 CONF_AREA_ACTIVE = r"data/confining_area.shp"
@@ -19,6 +23,15 @@ POUKAWA_BOUNDARY = r"data/model2_chd.shp"
 INFLUX_BOUNDARY = r"data/model2_influx.shp"
 OUTFLUX_BOUNDARY = r"data/model2_outflux.shp"
 
+# TS FILES
+START_DATE = '2023-12-7'  # start date for the simulation
+END_DATE = '2024-1-28'  # end date for the simulation
+AWANUI_TS = r"data/river-level-for-awanui-s.csv" #mm
+POUKAWA_TS = r"data/river-level-for-poukawa.csv" #mRL
+SPRING_TS = r"data/spring_LEVEL_D_clean.csv" #mRL
+PK4_TS = r"data/PK4_LEVEL_D_clean.csv" #mRL
+PK2_TS = r"data/PK2_LEVEL_D_clean.csv" #mRL
+CONF_TS = r"data/1501_Harrisons.csv" # mabgl
 
 # Directories / paths
 BIN_DIR = f'bin/' # relative from model_dir
