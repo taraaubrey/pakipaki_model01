@@ -6,6 +6,7 @@ NLAY_THICKNESS = 10  # thickness of each layer in meters
 
 # TDIS
 NPER = 2  # number of stress periods
+NSTEPS = 10
 
 #% paths
 DOMAIN = r"data/model2_domain.shp"

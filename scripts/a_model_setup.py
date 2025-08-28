@@ -58,7 +58,8 @@ def main():
     end = pd.to_datetime(END_DATE)
     period_days = (end - start).days
     PERIOD_DAYS = period_days
-    NSTEPS = period_days  # number of time steps
+    # NSTEPS = period_days  # number of time steps
+    DAYS_P_STEP = int(PERIOD_DAYS / NSTEPS)  # days per time step
     print(f'Simulation period: {PERIOD_DAYS} days with {NSTEPS} time steps.')
     
 
@@ -134,47 +135,42 @@ def main():
     # RIV #################################################################################
     riv_mask = ~grid.array_from_vector(DRAINS).mask * idomain[0]
     zones = grid.array_from_vector(DRAIN_ZONES, attribute='elev_ss_0')
-    riv_stage_zones = ~zones.mask * riv_mask
-    riv_rbot = grid.array_from_raster(TOP, resampling='min').data * riv_mask
-
+    riv_stage_zones = ~zones.mask
+    riv_rbot = grid.array_from_raster(TOP, resampling='min').data
     # adjust riv elevations absed on survey data
-    riv_stage_arr = np.where(riv_stage_zones, zones.data, riv_rbot + 0.3)
-    riv_rbot_arr = np.where(riv_rbot < riv_stage_arr, riv_rbot, riv_stage_arr - 0.3)
+    riv_stage_arr = np.where(riv_stage_zones, zones.data, riv_rbot + 0.3) * riv_mask
     
-    # extract non-NaN values from the riv elevation array
-    riv_stage = extract_value_with_indices(
-        riv_stage_arr, layer=0, val_col='stage', mask_value=0
+    # to dataframe
+    riv_kper0 = extract_value_with_indices(
+        riv_stage_arr, layer=0, val_col='head', mask_value=0
         )
-    riv_rbot = extract_value_with_indices(
-        riv_rbot_arr, layer=0, val_col='rbot', mask_value=0
-        )
-    riv_kper0 = pd.merge(riv_stage, riv_rbot, on='index', how='inner')  # merge the two dataframes on the index column
     riv_kper0['cond'] = RES**2 * 1
-
-    # # where rbot > stage, set rbot to stage - 0.1
-    # riv_kper0['rbot'].clip(lower=riv_kper0['stage']-0.1, inplace=True)
 
     # time series for riv elevations ###########################################################
     riv_ts = pd.read_csv(AWANUI_TS)
     riv_ts['DateTime'] = riv_ts['Awanui Stream at Flume (x)'].apply(pd.to_datetime, format = "%Y-%m-%d %H:%M:%S", dayfirst=True)
+    riv_ts.set_index('DateTime', inplace=True)
     riv_ts['level_mRL'] = (riv_ts['Awanui Stream at Flume (y)'] * 0.001) - 10
 
     riv_ts['sm_level_mRL'] = riv_ts['level_mRL'].rolling(window=21, center=True, min_periods=1).mean()
 
     # get specific dates
-    riv_ts = riv_ts[(riv_ts['DateTime'] >= start) & (riv_ts['DateTime'] <= end)].reset_index(drop=True)
+    riv_ts = riv_ts[(riv_ts.index >= start) & (riv_ts.index <= end)].reset_index(drop=True)
     assert len(riv_ts) == NSTEPS, f"riv time series length {len(riv_ts)} does not match number of time steps {NSTEPS}."
     riv_ts['abs_val'] = riv_ts['level_mRL'] - riv_ts['level_mRL'].iloc[0]
     riv_ts['sm_abs_val'] = riv_ts['abs_val'].rolling(window=21, center=True, min_periods=1).mean()
 
+    # resample to match number of time steps
+    riv_ts_resampled = riv_ts.resample(f'{DAYS_P_STEP}D', origin=start).first()
+
     # riv absolute values during recession
-    riv_ts_values = riv_ts['sm_abs_val'].values
+    riv_ts_values = riv_ts_resampled['sm_abs_val'].values
 
     rivstage_dat = {}
     for row in range(len(riv_kper0)):
         index = riv_kper0.at[row, 'index']
         col = f's_1_{index[1]+1}_{index[2]+1}'
-        base_elev = riv_kper0.at[row, 'stage']
+        base_elev = riv_kper0.at[row, 'head']
         rivstage_dat[col] = (base_elev + riv_ts_values).tolist()
     # convert to dataframe
     rivstage_ts = pd.DataFrame(
@@ -183,28 +179,21 @@ def main():
         )
 
     riv_kper1 = riv_kper0[['index']].copy()
-    riv_kper1['stage'] = riv_kper1['index'].apply(lambda x: f's_1_{x[1]+1}_{x[2]+1}')
+    riv_kper1['head'] = riv_kper1['index'].apply(lambda x: f's_1_{x[1]+1}_{x[2]+1}')
     riv_kper1['cond'] = riv_kper0['cond']
-    riv_kper1['rbot'] = riv_kper0['rbot']
-
-    # manual adjustment to rbot where rbot > stage
-    for i, row in riv_kper1.iterrows():
-        if np.any(row['rbot'] >= rivstage_ts[row['stage']]):
-            riv_kper1.at[i, 'old_rbot'] = riv_kper1.at[i, 'rbot']
-            riv_kper1.at[i, 'rbot'] = rivstage_ts[row['stage']].min() - 0.1
 
     # save
-    fn_out['riv_aw'] = {}
+    fn_out['ghb_aw'] = {}
     for i, dat in enumerate([riv_kper0, riv_kper1]):
         fn = Path(MODEL_DIR, f'{MODEL_NAME}.riv_stress_period_data_{i}.txt')
-        fn_out['riv_aw'][i] = tomf6input(fn, list=True)
-        savedf2txt(dat, filename=fn, col_order=['stage', 'cond', 'rbot'])
+        fn_out['ghb_aw'][i] = tomf6input(fn, list=True)
+        savedf2txt(dat, filename=fn, col_order=['head', 'cond'])
     # save ts file
     riv_ts_fn = Path(MODEL_DIR, f'{MODEL_NAME}.riv_stage.csv')
     rivstage_ts.to_csv(riv_ts_fn, header=False)
-    fn_out['riv_aw_ts'] = tomf6tsinput(riv_ts_fn, rivstage_ts)
+    fn_out['ghb_aw_ts'] = tomf6tsinput(riv_ts_fn, rivstage_ts, interpolation_method="linear")
     
-    # CHD (POUKAWA) ##########################################################################
+    # GHB (POUKAWA) ##########################################################################
     top_min = grid.array_from_raster(TOP, resampling='min')
     chd_pw_arr = ~grid.array_from_vector(POUKAWA_BOUNDARY).mask
     in_idomarr, idom_i = get_interior_indices(idomain[0], layer=0)  # idomainget interior indices of the mbr area
@@ -214,6 +203,7 @@ def main():
 
     chd_pw_kper0 = pd.DataFrame({'index': [i[0] for i in chd_pw_indices]})
     chd_pw_kper0['head'] = [i[1] for i in chd_pw_indices]  # head for Poukawa boundary
+    chd_pw_kper0['cond'] = RES**2 * 1
 
     # TS ##########################
     pw_ts = pd.read_csv(POUKAWA_TS)
@@ -242,18 +232,19 @@ def main():
 
     chd_pw_kper1 = chd_pw_kper0[['index']].copy()
     chd_pw_kper1['head'] = chd_pw_kper1['index'].apply(lambda x: f'h_1_{x[1]+1}_{x[2]+1}')
-
+    chd_pw_kper1['cond'] = chd_pw_kper0['cond']
+    
     #save
-    fn_out['chd_pw'] = {}
+    fn_out['ghb_pw'] = {}
     for i, dat in enumerate([chd_pw_kper0, chd_pw_kper1]):
         fn = Path(MODEL_DIR, f'{MODEL_NAME}.chd_pw_stress_period_data_{i}.txt')
-        fn_out['chd_pw'][i] = tomf6input(fn ,list=True)
-        savedf2txt(dat, filename=fn, col_order=['head'])
+        fn_out['ghb_pw'][i] = tomf6input(fn ,list=True)
+        savedf2txt(dat, filename=fn, col_order=['head', 'cond'])
     
     # save ts file
-    pwelev_ts_fn = Path(MODEL_DIR, f'{MODEL_NAME}.chd_heads.csv')
+    pwelev_ts_fn = Path(MODEL_DIR, f'{MODEL_NAME}.ghb_pw_heads.csv')
     pwelev_ts.to_csv(pwelev_ts_fn, header=False)
-    fn_out['chd_pw_ts'] = tomf6tsinput(pwelev_ts_fn, pwelev_ts)
+    fn_out['ghb_pw_ts'] = tomf6tsinput(pwelev_ts_fn, pwelev_ts)
 
     
     # WEL (MBR) ##########################################################################
@@ -430,19 +421,19 @@ def main():
         pname='rch' # package name
     )
 
-    riv_aw = fp.mf6.ModflowGwfriv(
+    ghb_aw = fp.mf6.ModflowGwfghb(
         model=gwf, # add riv package to model gwf (created in previous code cell)
-        timeseries=fn_out['riv_aw_ts'], # time series file for riv stages
-        stress_period_data=fn_out['riv_aw'],
-        pname='riv_aw', # package name
+        timeseries=fn_out['ghb_aw_ts'], # time series file for riv stages
+        stress_period_data=fn_out['ghb_aw'],
+        pname='ghb_aw', # package name
         save_flows=True,
         )
 
-    chd_pw = fp.mf6.ModflowGwfchd(
+    ghb_pw = fp.mf6.ModflowGwfghb(
         model=gwf,
-        timeseries=fn_out['chd_pw_ts'], # time series file for chd heads
-        stress_period_data=fn_out['chd_pw'],
-        pname='chd_pw', # package name
+        timeseries=fn_out['ghb_pw_ts'], # time series file for chd heads
+        stress_period_data=fn_out['ghb_pw'],
+        pname='ghb_pw', # package name
         save_flows=True, # save flows for this package 
         )
 
@@ -487,7 +478,7 @@ def main():
 
     pmv.plot_bc(name='chd_pw', color='lightblue') # add 'chd' cells
     # pmv.plot_bc(name='mbr', color='orange') # add 'wells' cells
-    pmv.plot_bc(name='riv_aw', color='blue') # add 'wells' cells
+    pmv.plot_bc(name='ghb_aw', color='blue') # add 'wells' cells
     pmv.plot_bc(name='influx', color='green') # add 'influx' cells
     pmv.plot_bc(name='outflux', color='red') # add 'outflux' cells
     # pmv.plot_inactive(color='lightgray', alpha=0.5) # plot inactive cells
