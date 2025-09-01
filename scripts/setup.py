@@ -5,18 +5,23 @@ NLAY = 1
 NLAY_THICKNESS = 10  # thickness of each layer in meters
 
 # TDIS
-NPER = 2  # number of stress periods
-NSTEPS = 10
+NPER = 4  # number of stress periods
+NSTEPS = 5
 
 #% paths
 DOMAIN = r"data/model2_domain.shp"
 TOP = r"data/model2_dem.tif"
 BOTTOM = r"data/basement_z.tif"
 DRAINS = r"data/drains.shp"
+SPRING_DRAIN = r"data/spring_drain.shp"
 DRAIN_ZONES = r"data/drain_zones.shp"
 MBR = r"data/model2_mbr.shp"
 LIMESTONE_INACTIVE = r"data/model2_limestone_inactive_bottom.shp"
 CONF_AREA_ACTIVE = r"data/confining_area.shp"
+#past
+PW_PAST = r"data/poukawa_past.shp"
+DRAINS_PAST = r"data/drains_past.shp"
+WETLANDA_PAST = r"data/wetlandA_past.shp"
 
 SPRING = r"data/spring.shp"
 

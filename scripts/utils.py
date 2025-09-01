@@ -126,11 +126,17 @@ def get_indices(arr, layer=None, value=False):
     return result
 
 def tomf6tsinput(fn, data, interpolation_method="linear"):
+    import pandas as pd
+    if isinstance(data, pd.Series):
+        col_names = [data.name]
+    else:
+        col_names = data.columns.to_list()
+
     return {
         'filename': os.path.basename(fn)[:-3] +'ts',
-        'time_series_namerecord': data.columns.to_list(),
+        'time_series_namerecord': col_names,
         'timeseries': {'filename': os.path.basename(fn)},
-        "interpolation_methodrecord": interpolation_method,
+        # "interpolation_methodrecord": interpolation_method,
     }
 
 def tomf6input(fn, list=False):
@@ -140,6 +146,8 @@ def tomf6input(fn, list=False):
 
 
 def extract_mf6_indexes(df, col_order):
+    if df.empty:
+        return df
     df['k'] = df['index'].apply(lambda x: int(x[0] + 1))
     df['i'] = df['index'].apply(lambda x: int(x[1] + 1))
     df['j'] = df['index'].apply(lambda x: int(x[2] + 1))
