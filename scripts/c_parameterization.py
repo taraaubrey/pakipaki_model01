@@ -333,7 +333,7 @@ def main():
 
     # WRITE PEST -------------------------------------------------------
     print("Writing PEST template file...")
-    pst.control_data.noptmax = 0
+    pst.control_data.noptmax = 0 # just run parameter values in the file
     pst_file = f'{MODEL_NAME}.pst'
     pst.write(os.path.join(TEMP_DIR, pst_file), version=2)
 
