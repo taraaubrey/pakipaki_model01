@@ -37,8 +37,8 @@ AWANUI_Q = r"data/river-flow-for-awanui-st.csv" #m3/d
 POUKAWA_TS = r"data/river-level-for-poukawa.csv" #mRL
 POUKAWA_Q = r"data/river-flow-for-poukawa-s.csv" #m3/d
 SPRING_TS = r"data/spring_LEVEL_D_clean.csv" #mRL
-PK4_TS = r"data/PK4_LEVEL_D_clean.csv" #mRL
-PK2_TS = r"data/PK2_LEVEL_D_clean.csv" #mRL
+PK4_TS = r"data/pk4_LEVEL_D_clean.csv" #mRL
+PK2_TS = r"data/pk2_LEVEL_D_clean.csv" #mRL
 CONF_TS = r"data/1501_Harrisons.csv" # mabgl
 
 # Directories / paths
