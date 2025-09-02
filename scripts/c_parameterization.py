@@ -229,7 +229,7 @@ def main():
     index_cols = ['kper', 'kstp']
     use_cols = list(obs_results.columns.values)[5:]
     pf.add_observations(
-        'obs_results.csv',
+        'obs_results.csv', # this is being read from the template file not the above truth file
         index_cols=index_cols,
         use_cols=use_cols, # skip the index column
         prefix='ts',
@@ -258,21 +258,35 @@ def main():
     ###############################################################################
 
     # build weights from standard deviations
-    values = std_obs_results.set_index(['kper', 'kstp']).to_dict(orient='index')
+    init_values = obs_results.set_index(['kper', 'kstp']).to_dict(orient='index')
+    std_values = std_obs_results.set_index(['kper', 'kstp']).to_dict(orient='index')
     for col in use_cols:
-        for kper_kstp in list(values.keys()):
+        for kper_kstp in list(std_values.keys()):
             kper = int(kper_kstp[0])
             kstp = int(kper_kstp[1])
-            if col in values[kper_kstp].keys():
-                std = float(values[kper_kstp][col])
+            if col in std_values[kper_kstp].keys():
+                initial_val = float(init_values[kper_kstp][col])
+                std = float(std_values[kper_kstp][col])
                 if std > 0:
                     weight = 1.0 / std
+                    pst.observation_data.loc[
+                        f'oname:ts_otype:lst_usecol:{col}_kper:{kper}_kstp:{kstp}','obsval'] = initial_val
+                    pst.observation_data.loc[
+                        f'oname:ts_otype:lst_usecol:{col}_kper:{kper}_kstp:{kstp}','standard_deviation'] = std
                     pst.observation_data.loc[
                         f'oname:ts_otype:lst_usecol:{col}_kper:{kper}_kstp:{kstp}','weight'] = weight
                 else:
                     pst.observation_data.loc[
+                        f'oname:ts_otype:lst_usecol:{col}_kper:{kper}_kstp:{kstp}','obsval'] = initial_val
+                    pst.observation_data.loc[
+                        f'oname:ts_otype:lst_usecol:{col}_kper:{kper}_kstp:{kstp}','standard_deviation'] = std
+                    pst.observation_data.loc[
                         f'oname:ts_otype:lst_usecol:{col}_kper:{kper}_kstp:{kstp}','weight'] = 0
             else:
+                pst.observation_data.loc[
+                        f'oname:ts_otype:lst_usecol:{col}_kper:{kper}_kstp:{kstp}','obsval'] = initial_val
+                pst.observation_data.loc[
+                        f'oname:ts_otype:lst_usecol:{col}_kper:{kper}_kstp:{kstp}','standard_deviation'] = std
                 pst.observation_data.loc[
                     f'oname:ts_otype:lst_usecol:{col}_kper:{kper}_kstp:{kstp}','weight'] = 0
 
@@ -319,7 +333,7 @@ def main():
 
     # WRITE PEST -------------------------------------------------------
     print("Writing PEST template file...")
-
+    pst.control_data.noptmax = 0
     pst_file = f'{MODEL_NAME}.pst'
     pst.write(os.path.join(TEMP_DIR, pst_file), version=2)
 

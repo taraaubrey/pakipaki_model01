@@ -140,6 +140,12 @@ def ghb_aw_setup(grid, idomain, start, end, fn_out):
     # same as kper2 (for parameterization)
     riv_kper3 = riv_kper2.copy()
 
+    # # add kper0,2,3
+    # rivstage_ts.loc[1] = riv_kper0['head'].values
+    # rivstage_ts.loc[len(riv_ts_values) + 2] = riv_kper2['head'].values
+    # rivstage_ts.loc[len(riv_ts_values)*2 + 2] = riv_kper3['head'].values
+    # rivstage_ts = rivstage_ts.sort_index()
+
     # save
     fn_out['ghb_aw'] = {}
     for i, dat in enumerate([riv_kper0, riv_kper1, riv_kper2, riv_kper3]):

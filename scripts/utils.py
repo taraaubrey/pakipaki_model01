@@ -125,7 +125,7 @@ def get_indices(arr, layer=None, value=False):
 
     return result
 
-def tomf6tsinput(fn, data, interpolation_method="linear"):
+def tomf6tsinput(fn, data, interpolation_method="LINEAR"):
     import pandas as pd
     if isinstance(data, pd.Series):
         col_names = [data.name]
@@ -136,7 +136,7 @@ def tomf6tsinput(fn, data, interpolation_method="linear"):
         'filename': os.path.basename(fn)[:-3] +'ts',
         'time_series_namerecord': col_names,
         'timeseries': {'filename': os.path.basename(fn)},
-        'interpolation_method': interpolation_method,
+        # 'interpolation_methodrecord': [interpolation_method] * len(col_names),
     }
 
 def tomf6input(fn, list=False):
