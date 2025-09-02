@@ -1,2 +1,4 @@
-models/*
+models/*/figures/*
+models/*/spatial/*
+models/*/pest/*
 *.xlsx
