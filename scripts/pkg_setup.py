@@ -116,7 +116,7 @@ def ghb_aw_setup(grid, idomain, start, end, fn_out):
     # convert to dataframe
     rivstage_ts = pd.DataFrame(
         rivstage_dat, 
-        index=np.arange(1, len(riv_ts_values) + 1)
+        index=np.arange(2, len(riv_ts_values) + 2)
         )
 
     riv_kper1 = riv_kper0[['index']].copy()
@@ -194,7 +194,7 @@ def ghb_spring_setup(grid, idomain, start, end, fn_out):
     # convert to dataframe
     spring_h_ts = pd.DataFrame(
         spring_dat, 
-        index=np.arange(1, len(spring_ts_values) + 1)
+        index=np.arange(2, len(spring_ts_values) + 2)
         )
     # make sure spring heads are like those observed
     spring_arr = grid.array_from_vector(SPRING).data
@@ -209,9 +209,11 @@ def ghb_spring_setup(grid, idomain, start, end, fn_out):
     spring_kper1['head'] = spring_kper1['index'].apply(lambda x: f's_1_{x[1]+1}_{x[2]+1}')
     spring_kper1['cond'] = spring_kper0['cond']
 
-    # make empty kper2 and kper3 (for parameterization)
-    spring_kper2 = pd.DataFrame()
-    spring_kper3 = pd.DataFrame()
+    # make 'empty' kper2 and kper3 (for parameterization)
+    spring_kper2 = spring_kper0.copy()
+    spring_kper3 = spring_kper1.copy()
+    spring_kper2['cond'] = 0
+    spring_kper3['cond'] = 0
 
     # save
     fn_out['ghb_sp'] = {}
@@ -267,7 +269,7 @@ def ghb_pw_setup(grid, idomain, start, end, fn_out):
     # convert to dataframe
     pwelev_ts = pd.DataFrame(
         pwelev_dat,
-        index=np.arange(1, len(pw_ts_values) + 1),
+        index=np.arange(2, len(pw_ts_values) + 2),
         )
 
     ghb_pw_kper1 = ghb_pw_kper0[['index']].copy()
@@ -317,7 +319,7 @@ def ghb_conf_setup(grid, idomain, start, end, fn_out):
     conf_ts.set_index('DateTime', inplace=True)
     conf_ts['level_mRL'] = conf_ts['LEVEL'] + 10.755
     #resample to daily
-    conf_ts = conf_ts[(conf_ts.index <= end)]
+    conf_ts.loc[(conf_ts.index >= end), :] = np.nan
     conf_ts = conf_ts[['level_mRL']].resample('D').mean()
     conf_ts['level_mRL'] = conf_ts['level_mRL'].interpolate(method='time')
     conf_ts = conf_ts[(conf_ts.index >= start) & (conf_ts.index <= end)]
@@ -452,3 +454,57 @@ def rch_setup(idomain, fn_out):
         fn_out['rch'][i] = tomf6input(rch_fn)
         np.savetxt(rch_fn, recharge)  # save bottom elevation for each layer
     return fn_out
+
+def pk4_ts(start, end):
+    # time series for riv elevations ###########################################################
+    gw_ts = pd.read_csv(PK4_TS)
+    gw_ts['DateTime'] = gw_ts['DateTime'].apply(pd.to_datetime, format = "%Y-%m-%d")
+    gw_ts.set_index('DateTime', inplace=True)
+    gw_ts['level_mRL'] = gw_ts['LEVEL']
+    gw_ts['sm_level_mRL'] = gw_ts['level_mRL'].rolling(window=21, center=True, min_periods=1).mean()
+
+    # get specific dates
+    gw_ts = gw_ts[(gw_ts.index >= start) & (gw_ts.index <= end)]
+    gw_ts['abs_val'] = gw_ts['level_mRL'] - gw_ts['level_mRL'].iloc[0]
+    gw_ts['sm_abs_val'] = gw_ts['abs_val'].rolling(window=5, center=True, min_periods=1).mean()
+
+    gw_ts.index = np.arange(2, len(gw_ts['level_mRL']) + 2)
+
+    # save ts file
+    gw_ts_fn = Path(MODEL_DIR, f'{MODEL_NAME}.pk4_level.csv')
+    gw_ts.to_csv(gw_ts_fn)
+    return gw_ts
+
+def poukawa_ts(start, end):
+    # time series for riv elevations ###########################################################
+    sw_ts = pd.read_csv(POUKAWA_Q)
+    sw_ts['DateTime'] = sw_ts['Poukawa Stream at Douglas Road (x)'].apply(pd.to_datetime, format = "%Y-%m-%d %H:%M:%S", dayfirst=True)
+    sw_ts.set_index('DateTime', inplace=True)
+    sw_ts['m3d'] = (sw_ts['Poukawa Stream at Douglas Road (y)'] * 84.6)
+
+    # get specific dates
+    sw_ts = sw_ts[(sw_ts.index >= start) & (sw_ts.index <= end)]
+    sw_ts['sm_m3d'] = sw_ts['m3d'].rolling(window=5, center=True, min_periods=1).mean()
+    sw_ts.index = np.arange(2, len(sw_ts['m3d']) + 2)
+
+    # save ts file
+    sw_ts_fn = Path(MODEL_DIR, f'{MODEL_NAME}.poukawa_flow_m3d.csv')
+    sw_ts.to_csv(sw_ts_fn)
+    return sw_ts
+
+def awanui_ts(start, end):
+    # time series for riv elevations ###########################################################
+    sw_ts = pd.read_csv(AWANUI_Q)
+    sw_ts['DateTime'] = sw_ts['Awanui Stream at Flume (x)'].apply(pd.to_datetime, format = "%Y-%m-%d %H:%M:%S", dayfirst=True)
+    sw_ts.set_index('DateTime', inplace=True)
+    sw_ts['m3d'] = (sw_ts['Awanui Stream at Flume (y)'] * 84.6)
+
+    # get specific dates
+    sw_ts = sw_ts[(sw_ts.index >= start) & (sw_ts.index <= end)]
+    sw_ts['sm_m3d'] = sw_ts['m3d'].rolling(window=5, center=True, min_periods=1).mean()
+    sw_ts.index = np.arange(2, len(sw_ts['m3d']) + 2)
+
+    # save ts file
+    sw_ts_fn = Path(MODEL_DIR, f'{MODEL_NAME}.awanui_flow_m3d.csv')
+    sw_ts.to_csv(sw_ts_fn)
+    return sw_ts

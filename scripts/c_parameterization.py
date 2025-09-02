@@ -47,7 +47,7 @@ def main():
     gwf = sim.get_model()
 
     # run the model once to make sure it works
-    pyemu.os_utils.run("mf6", cwd=PEST_DIR)
+    # pyemu.os_utils.run("mf6", cwd=PEST_DIR)
     # run modpath7
     # pyemu.os_utils.run(f'mp7 {MODEL_NAME}.mpsim', cwd=PEST_DIR)
 
@@ -98,35 +98,35 @@ def main():
         ib=ib,
         grid_gs=grid_gs,
         fine_gs=fine_gs,
-        lb=0.001, ub=100, ulb=1e-4, uub=1e3,
+        lb=0.0001, ub=1000, ulb=1e-4, uub=1e3,
         add_coarse=True,
         pp_space=10,
-        lays=np.arange(NLAY-2).tolist()
+        lays=np.arange(NLAY).tolist()
         )
-    # confining layer
-    pst = define_mult_array(
-        pf, TEMP_DIR,
-        tag=f'{MODEL_NAME}.npf_k_layer',
-        sr=sr,
-        ib=ib,
-        grid_gs=grid_gs,
-        fine_gs=fine_gs,
-        lb=0.01, ub=100, ulb=1e-6, uub=1e2,
-        add_coarse=True,
-        pp_space=10,
-        lays=[NLAY-1]
-        )
-    #bottom layer
-    pst = define_mult_array(
-        pf, TEMP_DIR,
-        tag=f'{MODEL_NAME}.npf_k_layer',
-        sr=sr,
-        ib=ib,
-        grid_gs=grid_gs,
-        fine_gs=fine_gs,
-        lb=0.01, ub=100, ulb=1e2, uub=1e5,
-        add_coarse=True,
-        lays=[NLAY])
+    # # confining layer
+    # pst = define_mult_array(
+    #     pf, TEMP_DIR,
+    #     tag=f'{MODEL_NAME}.npf_k_layer',
+    #     sr=sr,
+    #     ib=ib,
+    #     grid_gs=grid_gs,
+    #     fine_gs=fine_gs,
+    #     lb=0.01, ub=100, ulb=1e-6, uub=1e2,
+    #     add_coarse=True,
+    #     pp_space=10,
+    #     lays=[NLAY-1]
+    #     )
+    # #bottom layer
+    # pst = define_mult_array(
+    #     pf, TEMP_DIR,
+    #     tag=f'{MODEL_NAME}.npf_k_layer',
+    #     sr=sr,
+    #     ib=ib,
+    #     grid_gs=grid_gs,
+    #     fine_gs=fine_gs,
+    #     lb=0.01, ub=100, ulb=1e2, uub=1e5,
+    #     add_coarse=True,
+    #     lays=[NLAY])
 
     # RECHARGE ------------------------------------------------------
     define_mult_array(pf, TEMP_DIR,
@@ -134,7 +134,7 @@ def main():
             sr=sr,
             ib=ib,
             grid_gs=grid_gs,
-            lb=0.1, ub=10, ulb=0, uub=1e-1,
+            lb=0.01, ub=1, ulb=0, uub=1e-1,
             add_coarse=True)
 
     wel(pf, TEMP_DIR,
@@ -158,52 +158,82 @@ def main():
         q_bounds=[0.01, 100],
         q_ultbounds=[0.01, 10])
 
-    drn(pf, TEMP_DIR,
-        name='drn_riv',
-        tag=f'{MODEL_NAME}.drn_riv_stress_period_data.txt',
-        grid_gs=grid_gs,
+    ghb(pf, TEMP_DIR,
+        name='ghb_aw',
+        tag=f'{MODEL_NAME}.ghbaw_stress_period_data_{NPER}.txt',
+        grid_gs=[fine_gs, grid_gs],
+        constant_gs=None,
         cond_bounds=[0.01, 100],
         cond_ultbounds=[0.01, 1000],
         head_bounds=[-2, 2],
         head_ultbounds=[5, 15])
-
-    chd(pf, TEMP_DIR,
-        name='chd_pw',
-        tag=f'{MODEL_NAME}.chd_pw_stress_period_data.txt',
-        grid_gs=None,
+    
+    ghb(pf, TEMP_DIR,
+        name='ghb_pw',
+        tag=f'{MODEL_NAME}.ghb_pw_stress_period_data_{NPER}.txt',
+        grid_gs=[fine_gs, grid_gs],
+        constant_gs=None,
+        cond_bounds=[0.01, 100],
+        cond_ultbounds=[0.01, 1000],
         head_bounds=[-2, 2],
         head_ultbounds=[5, 15])
-
-    chd(pf, TEMP_DIR,
-        name='chd_conf',
-        tag=f'{MODEL_NAME}.chd_conf_stress_period_data.txt',
-        grid_gs=None,
+    
+    ghb(pf, TEMP_DIR,
+        name='ghb_spring',
+        tag=f'{MODEL_NAME}.ghbspr_stress_period_data_{NPER}.txt',
+        grid_gs=[fine_gs, grid_gs],
+        constant_gs=None,
+        cond_bounds=[0.01, 100],
+        cond_ultbounds=[0.01, 1000],
         head_bounds=[-2, 2],
-        head_ultbounds=[11, 15])
-
-    # check
-    # [f for f in os.listdir(TEMP_DIR) if f.endswith(".tpl")]
-    pst = pf.build_pst()
+        head_ultbounds=[5, 15])
+    
+    ghb(pf, TEMP_DIR,
+        name='ghb_conf',
+        tag=f'{MODEL_NAME}.ghb_conf_stress_period_data_{NPER}.txt',
+        grid_gs=[fine_gs, grid_gs],
+        constant_gs=None,
+        cond_bounds=[0.01, 100],
+        cond_ultbounds=[0.01, 1000],
+        head_bounds=[-2, 2],
+        head_ultbounds=[5, 15])
     
     # OBSERVATIONS ------------------------------------------------------
-    for f in ["cum.csv"]:
-        df = pd.read_csv(os.path.join(TEMP_DIR, f))
-        pf.add_observations(
-            f,
-            index_cols=list(df.columns.values)[0],
-            use_cols=list(df.columns.values)[1:],
-            prefix='flux',
-            obsgp='flux')
+    # budget = pd.read_csv(os.path.join(TRUTH_DIR, "incremental_budget.csv"))
+    # index_cols = [list(budget.columns.values)[0]]
+    # use_cols = list(budget.columns.values)[1:]
+    # obsgp='budget'
+    # pf.add_observations(
+    #     'incremental_budget.csv',
+    #     index_cols=index_cols,
+    #     use_cols=use_cols,
+    #     prefix=obsgp,
+    #     obsgp=obsgp)
+    
+    # pst = pf.build_pst()
+
+    # budget.set_index('time', inplace=True)
+    # for col in use_cols:
+    #     for time in budget.index:
+    #         t = int(time)
+    #         pst.observation_data.loc[
+    #             f'oname:{obsgp}_otype:lst_usecol:{col}_tim:{t}','obsval'] = budget[col].iloc[t]
+            
+    #         pst.observation_data.loc[
+    #             f'oname:{obsgp}_otype:lst_usecol:{col}_totim:{t}','weight'] = budget[col].iloc[2]
 
 
-    spring_f = os.path.join(TEMP_DIR, 'obs_results.csv')
-    spring_obs = pd.read_csv(spring_f)
+    # add stress period head/fluxes observations ------------------------------
+    obs_results = pd.read_csv(os.path.join(TRUTH_DIR, 'obs_results_truth.csv'))
+    std_obs_results  = pd.read_csv(os.path.join(TRUTH_DIR, f'obs_results_std.csv'))
+    index_cols = ['kper', 'kstp']
+    use_cols = list(obs_results.columns.values)[5:]
     pf.add_observations(
         'obs_results.csv',
-        index_cols=[list(spring_obs.columns.values)[0]],
-        use_cols=list(spring_obs.columns.values)[1:], # skip the index column
-        prefix='heads',
-        obsgp='heads',
+        index_cols=index_cols,
+        use_cols=use_cols, # skip the index column
+        prefix='ts',
+        obsgp='ts',
     )
 
     # FORWARD RUN SCRIPT --------------------------------------------------
@@ -219,11 +249,72 @@ def main():
         f"extract_heads_and_budget(model_name='{MODEL_NAME}')", is_pre_cmd=False)
     pf.add_py_function(
         f"{SCRIPTS_DIR}/helpers.py",
-        f"extract_spring_obs(gwf=None, model_name='{MODEL_NAME}', samples_path=r'{sample_rel}')", is_pre_cmd=False)
+        f"extract_spring_obs(gwf=None, model_name='{MODEL_NAME}', samples_path=r'{sample_rel}', conf_h_path='{MODEL_NAME}.ghb_conf_heads.csv', aw_h_path='{MODEL_NAME}.awanui_stage.csv', pw_h_path='{MODEL_NAME}.ghb_pw_heads.csv', spring_h_path='{MODEL_NAME}.spring_stage.csv', pw_q_path='{MODEL_NAME}.poukawa_flow_m3d.csv')", is_pre_cmd=False)
 
     pst = pf.build_pst()
     # pst_file = f'{MODEL_NAME}.pst'
     # pst.write(os.path.join(TEMP_DIR, pst_file),version=2)
+
+    ###############################################################################
+
+    # build weights from standard deviations
+    values = std_obs_results.set_index(['kper', 'kstp']).to_dict(orient='index')
+    for col in use_cols:
+        for kper_kstp in list(values.keys()):
+            kper = int(kper_kstp[0])
+            kstp = int(kper_kstp[1])
+            if col in values[kper_kstp].keys():
+                std = float(values[kper_kstp][col])
+                if std > 0:
+                    weight = 1.0 / std
+                    pst.observation_data.loc[
+                        f'oname:ts_otype:lst_usecol:{col}_kper:{kper}_kstp:{kstp}','weight'] = weight
+                else:
+                    pst.observation_data.loc[
+                        f'oname:ts_otype:lst_usecol:{col}_kper:{kper}_kstp:{kstp}','weight'] = 0
+            else:
+                pst.observation_data.loc[
+                    f'oname:ts_otype:lst_usecol:{col}_kper:{kper}_kstp:{kstp}','weight'] = 0
+
+    # adjust the obs which are supposed to be greater than constraints
+    val = pst.observation_data.loc[
+                    f'oname:ts_otype:lst_usecol:awswgwdiff_kper:1_kstp:1','obgnme']
+    pst.observation_data.loc[
+                    f'oname:ts_otype:lst_usecol:awswgwdiff_kper:1_kstp:1','obgnme'] = 'greater_' + val
+    
+    val = pst.observation_data.loc[
+                    f'oname:ts_otype:lst_usecol:pwswgwdiff_kper:1_kstp:1','obgnme']
+    pst.observation_data.loc[
+                    f'oname:ts_otype:lst_usecol:pwswgwdiff_kper:1_kstp:1','obgnme'] = 'greater_' + val
+    
+    ## ADD FORECASTS ------------------------------------------------------
+    forecasts = [
+        'oname:ts_otype:lst_usecol:pk4head_kper:3_kstp:1',
+        'oname:ts_otype:lst_usecol:pk4head_kper:4_kstp:1',
+        'oname:ts_otype:lst_usecol:pk4head_kper:4_kstp:2',
+        'oname:ts_otype:lst_usecol:pk4head_kper:4_kstp:3',
+        'oname:ts_otype:lst_usecol:pk4head_kper:4_kstp:4',
+        'oname:ts_otype:lst_usecol:pk4head_kper:4_kstp:5',
+        'oname:ts_otype:lst_usecol:pk4springdiff_kper:3_kstp:1',
+        'oname:ts_otype:lst_usecol:pk4springdiff_kper:4_kstp:1',
+        'oname:ts_otype:lst_usecol:pk4springdiff_kper:4_kstp:2',
+        'oname:ts_otype:lst_usecol:pk4springdiff_kper:4_kstp:3',
+        'oname:ts_otype:lst_usecol:pk4springdiff_kper:4_kstp:4',
+        'oname:ts_otype:lst_usecol:pk4springdiff_kper:4_kstp:5',
+        'oname:ts_otype:lst_usecol:springq_kper:1_kstp:1',
+        'oname:ts_otype:lst_usecol:springq_kper:2_kstp:1',
+        'oname:ts_otype:lst_usecol:springq_kper:2_kstp:2',
+        'oname:ts_otype:lst_usecol:springq_kper:2_kstp:3',
+        'oname:ts_otype:lst_usecol:springq_kper:2_kstp:4',
+        'oname:ts_otype:lst_usecol:springq_kper:2_kstp:5',
+        'oname:ts_otype:lst_usecol:springq_kper:3_kstp:1',
+        'oname:ts_otype:lst_usecol:springq_kper:4_kstp:1',
+        'oname:ts_otype:lst_usecol:springq_kper:4_kstp:2',
+        'oname:ts_otype:lst_usecol:springq_kper:4_kstp:3',
+        'oname:ts_otype:lst_usecol:springq_kper:4_kstp:4',
+        'oname:ts_otype:lst_usecol:springq_kper:4_kstp:5',
+    ]
+    pst.pestpp_options['forecasts'] = forecasts
 
 
     # WRITE PEST -------------------------------------------------------
@@ -233,36 +324,7 @@ def main():
     pst.write(os.path.join(TEMP_DIR, pst_file), version=2)
 
     # RUN PESTPP-IES --------------------------------------------------
-    print("Running PESTPP-IES 2nd time...")
-
     pyemu.os_utils.run("pestpp-ies {0}".format(pst_file), cwd=TEMP_DIR)
-
-    # UPDATE OBSERVATIONS ------------------------------------------------------
-    print("Updating observation weights...")
-    pst.observation_data.loc[:, 'weight'] = 0
-
-    tspringdf = pd.read_csv(os.path.join(TRUTH_DIR, 'obs_results.csv'), index_col=0)
-    tcumdf = pd.read_csv(os.path.join(TRUTH_DIR, 'cum.csv'), index_col=0)
-
-    for col in tspringdf.columns:
-        if col in ['spring-head', 'pk2-head', 'pk4-head', 'spring-pk4-diff','spring-pk2-diff','pk4-pk2-diff']:
-            new_col = col.replace('-', '_')
-            pst.observation_data.loc[f'oname:heads_otype:lst_usecol:{new_col}_kper:0','obsval'] = tspringdf[col].iloc[0]
-            pst.observation_data.loc[f'oname:heads_otype:lst_usecol:{new_col}_kper:0','weight'] = tspringdf[col].iloc[2]
-
-    for col in tcumdf.columns:
-        if col in ['drn']:
-            new_col = col.replace('-', '_')  # replace spaces with underscores
-            pst.observation_data.loc[f'oname:flux_otype:lst_usecol:{new_col}_totim:1','obsval'] = tcumdf[col].iloc[0]
-            pst.observation_data.loc[f'oname:flux_otype:lst_usecol:{new_col}_totim:1','weight'] = tcumdf[col].iloc[2]
-
-    
-    ## ADD FORECASTS ------------------------------------------------------
-    forecasts = [
-        'oname:heads_otype:lst_usecol:spring_flux_kper:0',
-        'oname:heads_otype:lst_usecol:spring_pk4_diff_kper:0',
-    ]
-    pst.pestpp_options['forecasts'] = forecasts
     
     
     # PRIOR PARAMETER COVARIANCE --------------------------------------------------

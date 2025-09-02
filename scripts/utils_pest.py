@@ -31,7 +31,7 @@ def define_mult_array(pf, ws,
                 # grid (fine) scale parameters
                 pf.add_parameters(
                     f,
-                    zone_array=ib[i],
+                    zone_array=ib[0],
                     par_type="grid", #specify the type, these will be unique parameters for each cell
                     geostruct=fine_gs, # the gestatisical structure for spatial correlation 
                     par_name_base=base+"gr", #specify a parameter name base that allows us to easily identify the filename and parameter type. "_gr" for "grid", and so forth.
@@ -54,7 +54,7 @@ def define_mult_array(pf, ws,
             
             pf.add_parameters(
                 f,
-                zone_array=ib[i],
+                zone_array=ib[0],
                 par_type="pilotpoints", #specify the type, these will be unique parameters for each cell
                 geostruct=grid_gs, # the gestatisical structure for spatial correlation 
                 par_name_base=base+"pp", #specify a parameter name base that allows us to easily identify the filename and parameter type. "_gr" for "grid", and so forth.
@@ -74,7 +74,7 @@ def define_mult_array(pf, ws,
             if add_coarse==True:
                 # constant (coarse) scale parameters
                 pf.add_parameters(f,
-                                    zone_array=ib[i],
+                                    zone_array=ib[0],
                                     par_type="constant",
                                     geostruct=grid_gs,
                                     par_name_base=base+"cn",
@@ -114,61 +114,81 @@ def wel(pf, ws, name='wel', tag='local1.wel_stress_period_data', grid_gs=None,
                             ult_ubound=q_ultbounds[1])
     return
 
-def drn(pf, ws, name='drn', tag='local1.drn_stress_period_data', grid_gs=None, cond_bounds=[0.1, 10], cond_ultbounds=[0.01, 100], head_bounds=[32.5, 42], head_ultbounds=[None, None]):
+def ghb(
+        pf, ws, 
+        name='drn', 
+        tag='local1.drn_stress_period_data', 
+        grid_gs=None, 
+        constant_gs=None,
+        cond_bounds=[0.1, 10], 
+        cond_ultbounds=[0.01, 100], 
+        head_bounds=[32.5, 42], 
+        head_ultbounds=[None, None],
+        grid=True,
+        constant=True,
+        ):
     name = name + '_cond'
     files = [f for f in os.listdir(ws) if tag in f.lower() and f.endswith(".txt")]
     for f in files:
-        pf.add_parameters(f,
-                            par_type="grid",
-                            geostruct=grid_gs,
-                            par_name_base=name+"gr",
-                            pargp=name+"gr",
-                            index_cols=[0,1,2], #column containing lay,row,col
-                            use_cols=[4], #column containing conductance values
-                            lower_bound=cond_bounds[0],
-                            upper_bound=cond_bounds[1],
-                            ult_lbound=cond_ultbounds[0],
-                            ult_ubound=cond_ultbounds[1])
-        pf.add_parameters(f,
-                            par_type="constant",
-                            geostruct=grid_gs,
-                            par_name_base=name+"cn",
-                            pargp=name+"cn",
-                            index_cols=[0,1,2],
-                            use_cols=[4],  
-                            lower_bound=cond_bounds[0],
-                            upper_bound=cond_bounds[1],
-                            ult_lbound=cond_ultbounds[0],
-                            ult_ubound=cond_ultbounds[1])
+        if grid:
+            if isinstance(grid_gs, list):
+                for gs in grid_gs:
+                    pf.add_parameters(f,
+                                    par_type="grid",
+                                    geostruct=gs,
+                                    par_name_base=name+"gr",
+                                    pargp=name+"gr",
+                                    index_cols=[0,1,2], #column containing lay,row,col
+                                    use_cols=[4], #column containing conductance values
+                                    lower_bound=cond_bounds[0],
+                                    upper_bound=cond_bounds[1],
+                                    ult_lbound=cond_ultbounds[0],
+                                    ult_ubound=cond_ultbounds[1])
+        if constant:
+            pf.add_parameters(f,
+                                par_type="constant",
+                                geostruct=constant_gs,
+                                par_name_base=name+"cn",
+                                pargp=name+"cn",
+                                index_cols=[0,1,2],
+                                use_cols=[4],  
+                                lower_bound=cond_bounds[0],
+                                upper_bound=cond_bounds[1],
+                                ult_lbound=cond_ultbounds[0],
+                                ult_ubound=cond_ultbounds[1])
 
         # constant and grid scale additive head parameters
         name = name + '_head'
-        pf.add_parameters(f,
-                            par_type="grid",
-                            geostruct=grid_gs,
-                            par_name_base=name+"gr",
-                            pargp=name+"gr",
-                            index_cols=[0,1,2],
-                            use_cols=[3],   # column containing head values
-                            par_style="a", # specify additive parameter
-                            transform="none", # specify not log-transform
-                            lower_bound=head_bounds[0],
-                            upper_bound=head_bounds[1],
-                            ult_lbound=head_ultbounds[0],
-                            ult_ubound=head_ultbounds[1])
-        pf.add_parameters(f,
-                            par_type="constant",
-                            geostruct=grid_gs,
-                            par_name_base=name+"cn",
-                            pargp=name+"cn",
-                            index_cols=[0,1,2],
-                            use_cols=[3],
-                            par_style="a", 
-                            transform="none",
-                            lower_bound=head_bounds[0],
-                            upper_bound=head_bounds[1],
-                            ult_lbound=head_ultbounds[0],
-                            ult_ubound=head_ultbounds[1])
+        if grid:
+            if isinstance(grid_gs, list):
+                for gs in grid_gs:
+                    pf.add_parameters(f,
+                                        par_type="grid",
+                                        geostruct=gs,
+                                        par_name_base=name+"gr",
+                                        pargp=name+"gr",
+                                        index_cols=[0,1,2],
+                                        use_cols=[3],   # column containing head values
+                                        par_style="a", # specify additive parameter
+                                        transform="none", # specify not log-transform
+                                        lower_bound=head_bounds[0],
+                                        upper_bound=head_bounds[1],
+                                        ult_lbound=head_ultbounds[0],
+                                        ult_ubound=head_ultbounds[1])
+        if constant:
+            pf.add_parameters(f,
+                                par_type="constant",
+                                geostruct=constant_gs,
+                                par_name_base=name+"cn",
+                                pargp=name+"cn",
+                                index_cols=[0,1,2],
+                                use_cols=[3],
+                                par_style="a", 
+                                transform="none",
+                                lower_bound=head_bounds[0],
+                                upper_bound=head_bounds[1],
+                                ult_lbound=head_ultbounds[0],
+                                ult_ubound=head_ultbounds[1])
     return
 
 def chd(pf, ws, name='chd',

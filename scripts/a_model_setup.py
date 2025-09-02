@@ -61,7 +61,6 @@ def main():
 
     print(f'Simulation period: {PERLEN} days with {NSTEPS} time steps.')
     
-
     # dis
     grid, idomain, top, nrow, ncol, delr, delc, fn_out = dis_setup(fn_out)
     # ghbs
@@ -78,6 +77,11 @@ def main():
     fn_out = sto_ss_setup(idomain, fn_out)
     # rch
     fn_out = rch_setup(idomain, fn_out)
+    #obs - save file
+    pk4_h = pk4_ts(start, end)
+    aw_Q = awanui_ts(start, end)
+    pw_Q = poukawa_ts(start, end)
+
     
     # other model parameters
     init_h = np.stack([top] * NLAY)  # initial head, based on average riv elevation
@@ -286,7 +290,7 @@ def main():
     # # strtArray = crossview.plot_array(head, masked_values=[1e30], alpha = 0.5) # plot the array of heads in cross section
     # plt.savefig(Path(FIG_DIR, f'{MODEL_NAME}_xsection_col{cross_col}.png'), dpi=300, bbox_inches='tight') # save figure
     # plt.close()  # close the figure to avoid memory issues
-
+    TRUTHREL_DIR = os.path.abspath(TRUTH_DIR)
     # TEST OBS ------------------------------------------------------------
     os.chdir(MODEL_DIR)  # change directory to model directory
     sample_path = os.path.relpath(SAMPLES, MODEL_DIR)
@@ -296,8 +300,60 @@ def main():
         model_name=f'{MODEL_NAME}', 
         samples_path=f'{sample_path}',
         conf_h_path=f'{fn_out['ghb_conf_ts']['timeseries']['filename']}',
+        aw_h_path=f'{fn_out['ghb_aw_ts']['timeseries']['filename']}',
+        pw_h_path=f'{fn_out['ghb_pw_ts']['timeseries']['filename']}',
         spring_h_path=f'{fn_out['ghb_sp_ts']['timeseries']['filename']}',
+        pw_q_path=f'{MODEL_NAME}.poukawa_flow_m3d.csv',
         )  # extract spring 
+
+    # CREATE TRUTH -------------------------------------------------------
+    # copy file to truth directory
+    obs_results  = pd.read_csv(f'obs_results.csv')
+    obs_results.loc[:, 'pk4head'] = 7.8  # set all to 7.8 initially
+    mask = (obs_results['time'] <= 53) & (obs_results['time'] > 1)
+    # pk4 head
+    obs_results.loc[mask, 'pk4head'] = (
+        obs_results.loc[mask, 'time']
+        .apply(lambda x: pk4_h.loc[int(x), 'level_mRL'])
+        .values
+    )
+    obs_results['pk4confdiff'] = obs_results['pk4head'] - obs_results['confhead']
+    obs_results['pk4springdiff'] = obs_results['pk4head'] - obs_results['springhead']
+    obs_results['awswgwdiff'] = 0 # known positive flux
+    obs_results['pwswgwdiff'] = 0 # known positive flux
+    
+    obs_results.loc[:, 'awtot'] = aw_Q['sm_m3d'].iloc[0] * -1  # mean monthly 10/11
+    obs_results.loc[mask, 'awtot'] = (
+        obs_results.loc[mask, 'time']
+        .apply(lambda x: aw_Q.loc[int(x), 'sm_m3d'] * -1)
+        .values
+    )
+    
+    # inflow from poukawa + local flow
+    # local flow assume 0.0013 m/d per m2 of catchment area
+    # poukawa area = 830m * 1m = 830m2
+    # local flow (pw_cum) = 830m2 * 0.0013m/d = 1.079 m3/d
+    # total inflow = poukawa + local flow
+    obs_results.loc[:, 'pwtot'] = pw_Q['sm_m3d'].iloc[0] * -1  # mean monthly 10/11
+    obs_results.loc[mask, 'pwtot'] = (
+        obs_results.loc[mask, 'time']
+        .apply(lambda x: pw_Q.loc[int(x), 'sm_m3d'] * -1)
+        .values
+    )
+
+    mask = (obs_results['pk4springdiff'] < 0)
+    obs_results['springq'] = -3
+    obs_results.loc[mask, 'springq'] = 0  # no spring flow if head diff is negative
+    obs_results['springcum'] = -150
+    obs_results.loc[mask, 'springcum'] = 0  # no spring flow if head diff is negative
+    obs_results['pwcum'] = obs_results['pwtot'] * 0.0002
+    obs_results['pwtot'] = obs_results['pwtot'] + obs_results['pwcum']
+    obs_results['awcum'] = obs_results['awtot'] - obs_results['pwtot'] - obs_results['springcum']
+    
+    # save to truth directory
+    obs_results.to_csv(Path(TRUTHREL_DIR, 'obs_results_truth.csv'), index=False)
+
+    
 
 if __name__ == "__main__":
     main()  # run the main function to build the model and extract observations

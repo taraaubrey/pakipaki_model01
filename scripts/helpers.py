@@ -28,19 +28,30 @@ def extract_heads_and_budget(model_name=None):
         'wel2': 'wel_in',
         'wel3': 'wel_out',
     }
-    cumulative.rename(columns=col_names, inplace=True)
-    # inc.index.name = "totim"
-    cumulative.index.name = "time"
+    incremental.rename(columns=col_names, inplace=True)
+    incremental.index.name = "time"
+
+    # in present day: awanui and spring seperate
+    incremental['aw_total'] = incremental['ghb_aw'] + incremental['ghb_spring']
     # inc.to_csv(f"{MODEL_DIR}/inc.csv")
-    cumulative.to_csv(f"cum.csv")
+    incremental.to_csv(f"incremental_budget.csv")
     return
 
 
-def extract_spring_obs(gwf=None, model_name=None, samples_path=None, conf_h_path=None, spring_h_path=None):
+def extract_spring_obs(
+        gwf=None, model_name=None, 
+        samples_path=None, 
+        conf_h_path=None,
+        aw_h_path=None,
+        pw_h_path=None,
+        spring_h_path=None, 
+        pw_q_path=None
+        ):
     import geopandas as gpd
     import pandas as pd
 
-    def extract_sample_heads(sample_locations, model_name, gwf=None, kstpkper=None, conf_ts=None, spring_ts=None):
+    def extract_sample_heads(sample_locations, model_name, gwf=None, kstpkper=None, 
+                             conf_ts=None, aw_ts=None, pw_ts=None, spring_ts=None):
         import pandas as pd
 
         xy_spring = gwf.modelgrid.intersect(
@@ -48,12 +59,16 @@ def extract_spring_obs(gwf=None, model_name=None, samples_path=None, conf_h_path
                 y=sample_locations.loc['spring']['y'],
                 local=False,
                 forgive=True)
-        # xyz_pk2 = gwf.modelgrid.intersect(
-        #         x=sample_locations.loc['pk2']['x'],
-        #         y=sample_locations.loc['pk2']['y'],
-        #         z=sample_locations.loc['pk2']['z'],
-        #         local=False,
-        #         forgive=True)
+        xy_aw = gwf.modelgrid.intersect(
+                x=sample_locations.loc['aw']['x'],
+                y=sample_locations.loc['aw']['y'],
+                local=False,
+                forgive=True)
+        xy_pw = gwf.modelgrid.intersect(
+                x=sample_locations.loc['pw']['x'],
+                y=sample_locations.loc['pw']['y'],
+                local=False,
+                forgive=True)
         xyz_pk4 = gwf.modelgrid.intersect(
                 x=sample_locations.loc['pk4']['x'],
                 y=sample_locations.loc['pk4']['y'],
@@ -62,32 +77,84 @@ def extract_spring_obs(gwf=None, model_name=None, samples_path=None, conf_h_path
                 forgive=True)
 
         pdata = {}
-        for n in kstpkper:
+        for i in range(len(kstpkper)):
+            n = kstpkper[i]
             kper = n[1]
             kstp = n[0]
             heads = gwf.output.head().get_data(kstpkper=n)
+            time = gwf.output.head().get_times()[i]
+            pk4_h = heads[xyz_pk4[0], xyz_pk4[1], xyz_pk4[2]]
+            aw_gw_h = heads[0, xy_aw[0], xy_aw[1]]
+            pw_gw_h = heads[0, xy_pw[0], xy_pw[1]]
             
-            pk4_head = heads[xyz_pk4[0], xyz_pk4[1], xyz_pk4[2]]
-            if kper == 1: #period
-                conf_h = conf_ts.loc[kstp+1].values[0]
-                spring_h = spring_ts.loc[kstp+1][-1]
-            else:
+            # ghb[0] = awanui
+            # ghb[1] = conf
+            # ghb[2] = poukawa
+            # ghb[3] = spring
+            if kper == 0:
                 conf_h = gwf.ghb[1].stress_period_data.get_data()[kper][kstp][1]
-                spring_df = pd.DataFrame(gwf.ghb[3].stress_period_data.get_data()[0])
+                aw_sw_h = gwf.ghb[0].stress_period_data.get_data()[kper][kstp][1]
+                pw_sw_h = gwf.ghb[2].stress_period_data.get_data()[kper][kstp][1]
+                
+                spring_df = pd.DataFrame(gwf.ghb[3].stress_period_data.get_data()[kper])
+                mask = spring_df['cellid'] == (0, xy_spring[0], xy_spring[1])
+                spring_h = spring_df[mask]['bhead'].values[0]
+            elif kper == 1:
+                conf_h = conf_ts.loc[int(time)].values[0]
+                spring_h = spring_ts.loc[int(time)][-1]
+                aw_sw_h = aw_ts.loc[int(time)][-1]
+                pw_sw_h = pw_ts.loc[int(time)][-1]
+            elif kper in [2, 3]:
+                conf_h = gwf.ghb[1].stress_period_data.get_data()[kper][kstp][1]
+                aw_sw_h = gwf.ghb[0].stress_period_data.get_data()[kper][kstp][1]
+                pw_sw_h = gwf.ghb[2].stress_period_data.get_data()[kper][kstp][1]
+                # spring head from awanui ghb
+                spring_df = pd.DataFrame(gwf.ghb[0].stress_period_data.get_data()[kper])
                 spring_h = spring_df[spring_df['cellid'] == (0, xy_spring[0], xy_spring[1])]['bhead'].values[0]
-            conf_diff = pk4_head - conf_h
-            spring_diff = pk4_head - spring_h
+        
+            conf_diff = pk4_h - conf_h
+            spring_diff = pk4_h - spring_h
+            aw_gw_diff = pk4_h - aw_gw_h
+            pw_gw_diff = pk4_h - pw_gw_h
+            aw_sw_diff = pk4_h - aw_sw_h
+            pw_sw_diff = pk4_h - pw_sw_h
+            aw_swgw_diff = aw_sw_h - aw_gw_h
+            pw_swgw_diff = pw_sw_h - pw_gw_h
 
-            pdata[n] = [pk4_head, conf_h, spring_h, conf_diff, spring_diff]
+            pdata[n] = [
+                time, 
+                pk4_h, 
+                conf_h, 
+                aw_sw_h, pw_sw_h, 
+                spring_h, 
+                aw_gw_h, pw_gw_h, 
+                conf_diff, 
+                spring_diff,  
+                aw_sw_diff, pw_sw_diff, 
+                aw_gw_diff, pw_gw_diff,
+                aw_swgw_diff, pw_swgw_diff
+                ]
         # create a DataFrame with the results
-        cols = ['pk4_head', 'conf_head', 'spring_head', 'pk4conf_diff', 'pk4spring_diff']
+        cols = [
+            'time', 
+            'pk4head', 
+            'confhead', 
+            'awswhead', 'pwswhead', 
+            'springhead', 
+            'awgwhead', 'pwgwhead',
+            'pk4confdiff', 
+            'pk4springdiff', 
+            'pk4awswdiff', 'pk4pwswdiff',
+            'pk4awgwdiff', 'pk4pwgwdiff',
+            'awswgwdiff', 'pwswgwdiff'
+        ]
         head_results = pd.DataFrame.from_dict(pdata, orient='index', columns=cols)
         head_results['kstp'] = [i[0]+1 for i in head_results.index]
         head_results['kper'] = [i[1]+1 for i in head_results.index]
 
-        return head_results[['kper', 'kstp'] + cols].reset_index(drop=True)
+        return head_results[['time', 'kper', 'kstp'] + cols].reset_index(drop=True)
 
-    def extract_sample_fluxes(sample_locations, model_name, gwf=None, kstpkper=None):
+    def extract_spring_flux(sample_locations, model_name, gwf=None, kstpkper=None):
         import geopandas as gpd
         import pandas as pd
 
@@ -115,12 +182,116 @@ def extract_spring_obs(gwf=None, model_name=None, samples_path=None, conf_h_path
                 df['kper'] = kper
                 df['kstp'] = kstp
                 df['package'] = package_name
-                df.rename(columns={'q': 'spring_q'}, inplace=True)
-                dfs.append(df[['package', 'kper', 'kstp', 'index', 'spring_q']])
+                df.rename(columns={'q': 'springcum'}, inplace=True)
+                if (kper in [1, 2]) and package_name == 'GHB_SP':
+                    dfs.append(df[['package', 'kper', 'kstp', 'index', 'springcum']])
+                elif (kper in [3, 4]) and package_name == 'GHB_AW':
+                    dfs.append(df[['package', 'kper', 'kstp', 'index', 'springcum']])
         
         # combine all dataframes
         ghb_df = pd.concat(dfs, ignore_index=True)
-        return ghb_df[ghb_df['index'] == (0, xy_spring[0], xy_spring[1])]
+        mask = ghb_df['package'] == 'GHB_SP'
+        spring_cum = ghb_df[mask][['kper', 'kstp', 'springcum']].groupby(['kper', 'kstp']).sum().reset_index()
+        spring_q = ghb_df[ghb_df['index'] == (0, xy_spring[0], xy_spring[1])]
+        spring_q.rename(columns={'springcum': 'springq'}, inplace=True)
+        merged = pd.merge(spring_q, spring_cum, on=['kper', 'kstp'], how='left').fillna(0)
+        return merged[['kper', 'kstp', 'springcum', 'springq']]
+        
+    
+    def extract_pw_flux(sample_locations, model_name, gwf=None, kstpkper=None, pw_ts=None):
+        import numpy as np
+        import pandas as pd
+
+        xy_pw = gwf.modelgrid.intersect(
+                x=sample_locations.loc['pw']['x'],
+                y=sample_locations.loc['pw']['y'],
+                local=False,
+                forgive=True)
+        
+        # spring_node = gwf.modelgrid.get_node((0, xy_spring[0], xy_spring[1]))
+        cbb = gwf.output.budget()
+        times = cbb.get_times()
+
+        dfs = []
+        for idx in range(cbb.get_nrecords()):
+            rec = cbb.recordarray[idx]
+            package_type = rec['text'].strip().decode()
+            package_name = rec['paknam2'].strip().decode()
+            kper = rec['kper']
+            kstp = rec['kstp']
+            data = cbb.get_record(idx)
+            if package_name in ['GHB_PW']:
+                df = pd.DataFrame(data)
+                kij = df['node'].apply(lambda x: gwf.modelgrid.get_lrc(x-1)[0])
+                df['index'] = kij
+                df['kper'] = kper
+                df['kstp'] = kstp
+                df['package'] = package_name
+                df.rename(columns={'q': 'pwcum'}, inplace=True)
+                dfs.append(df[['package', 'kper', 'kstp', 'index', 'pwcum']])
+        
+        pw_kper1 = []
+        for t in times:
+            if (t >= 2) & (t < 53):
+                pw_q = pw_ts.apply(lambda x: x.iloc[int(t)])['sm_m3d']
+                pw_kper1.append(pw_q)
+        pw_kper1 = pd.Series(pw_kper1) * -1
+        pw_kper1.index = np.arange(1, len(pw_kper1) + 1)
+        pw_kper1.name = 'pwinflow'
+
+        # combine all dataframes
+        ghb_df = pd.concat(dfs, ignore_index=True)
+
+        pw_cum = ghb_df[['kper', 'kstp', 'pwcum']].groupby(['kper', 'kstp']).sum().reset_index()
+        pw_cum = pd.merge(pw_cum, pw_kper1, left_index=True, right_index=True, how='left')
+        pw_cum.fillna(pw_ts.iloc[2]['sm_m3d'] * -1, inplace=True)
+
+        # real pw (inflow + actual local flow)
+        pw_cum['pwcum'] = pw_cum['pwcum'] + pw_cum['pwinflow']
+
+        pw_q = ghb_df[ghb_df['index'] == (0, xy_pw[0], xy_pw[1])]
+        pw_q.rename(columns={'pwcum': 'pwq'}, inplace=True)
+        merged = pd.merge(pw_cum, pw_q, on=['kper', 'kstp'], how='left').fillna(0)
+        return merged[['kper', 'kstp', 'pwcum', 'pwq']]
+    
+    def extract_aw_flux(sample_locations, model_name, gwf=None, kstpkper=None):
+        import geopandas as gpd
+        import pandas as pd
+
+        xy_aw = gwf.modelgrid.intersect(
+                x=sample_locations.loc['aw']['x'],
+                y=sample_locations.loc['aw']['y'],
+                local=False,
+                forgive=True)
+        
+        # spring_node = gwf.modelgrid.get_node((0, xy_spring[0], xy_spring[1]))
+        cbb = gwf.output.budget()
+
+        dfs = []
+        for idx in range(cbb.get_nrecords()):
+            rec = cbb.recordarray[idx]
+            package_type = rec['text'].strip().decode()
+            package_name = rec['paknam2'].strip().decode()
+            kper = rec['kper']
+            kstp = rec['kstp']
+            data = cbb.get_record(idx)
+            if package_name in ['GHB_AW']:
+                df = pd.DataFrame(data)
+                kij = df['node'].apply(lambda x: gwf.modelgrid.get_lrc(x-1)[0])
+                df['index'] = kij
+                df['kper'] = kper
+                df['kstp'] = kstp
+                df['package'] = package_name
+                df.rename(columns={'q': 'awcum'}, inplace=True)
+                dfs.append(df[['package', 'kper', 'kstp', 'index', 'awcum']])
+        
+        # combine all dataframes
+        ghb_df = pd.concat(dfs, ignore_index=True)
+        aw_cum = ghb_df[['kper', 'kstp', 'awcum']].groupby(['kper', 'kstp']).sum().reset_index()
+        aw_q = ghb_df[ghb_df['index'] == (0, xy_aw[0], xy_aw[1])]
+        aw_q.rename(columns={'awcum': 'awq'}, inplace=True)
+        merged = pd.merge(aw_cum, aw_q, on=['kper', 'kstp'], how='left').fillna(0)
+        return merged[['kper', 'kstp', 'awcum', 'awq']]
     
     if gwf is None:
         import flopy
@@ -133,15 +304,24 @@ def extract_spring_obs(gwf=None, model_name=None, samples_path=None, conf_h_path
 
     # open ts files
     conf_ts = pd.read_csv(conf_h_path, index_col=0)
+    awh_ts = pd.read_csv(aw_h_path, index_col=0)
+    pwh_ts = pd.read_csv(pw_h_path, index_col=0)
     spring_ts = pd.read_csv(spring_h_path, index_col=0)
+    pwq_ts = pd.read_csv(pw_q_path, index_col=0)
 
     kstpkper = gwf.output.head().get_kstpkper()
 
-    obs_results = extract_sample_heads(sample_locations, model_name, gwf, kstpkper, conf_ts, spring_ts)
-    spring_flux = extract_sample_fluxes(sample_locations, model_name, gwf, kstpkper)
+    obs_results = extract_sample_heads(sample_locations, model_name, gwf, kstpkper, conf_ts, awh_ts, pwh_ts, spring_ts)
+    spring_flux = extract_spring_flux(sample_locations, model_name, gwf, kstpkper)
+    pw_flux = extract_pw_flux(sample_locations, model_name, gwf, kstpkper, pwq_ts)
+    aw_flux = extract_aw_flux(sample_locations, model_name, gwf, kstpkper)
 
-    merged = pd.merge(obs_results, spring_flux[['kper', 'kstp', 'spring_q']], on=['kper', 'kstp'])
-
+    merged = pd.merge(obs_results, spring_flux, on=['kper', 'kstp'])
+    merged = pd.merge(merged, pw_flux, on=['kper', 'kstp'], how='left')
+    merged = pd.merge(merged, aw_flux, on=['kper', 'kstp'], how='left')
+    merged['pwtot'] = merged['pwcum']
+    merged['awtot'] = merged['awcum'] + merged['pwcum'] + merged['springcum']
+    merged.fillna(0, inplace=True)
     # save the results to a CSV file
     merged.to_csv(f"obs_results.csv", index=True)
     return
