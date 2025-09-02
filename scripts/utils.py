@@ -136,7 +136,7 @@ def tomf6tsinput(fn, data, interpolation_method="linear"):
         'filename': os.path.basename(fn)[:-3] +'ts',
         'time_series_namerecord': col_names,
         'timeseries': {'filename': os.path.basename(fn)},
-        # "interpolation_methodrecord": interpolation_method,
+        'interpolation_method': interpolation_method,
     }
 
 def tomf6input(fn, list=False):
