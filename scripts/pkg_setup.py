@@ -90,7 +90,7 @@ def ghb_aw_setup(grid, idomain, start, end, fn_out):
     riv_kper0 = extract_value_with_indices(
         riv_stage_arr, layer=0, val_col='head', mask_value=0
         )
-    riv_kper0['cond'] = RES**2 * 1
+    riv_kper0['cond'] = 1
 
     # time series for riv elevations ###########################################################
     riv_ts = pd.read_csv(AWANUI_TS)
@@ -136,13 +136,13 @@ def ghb_aw_setup(grid, idomain, start, end, fn_out):
     riv_kper2 = extract_value_with_indices(
         past_h, layer=0, val_col='head', mask_value=0
         )
-    riv_kper2['cond'] = RES**2 * 1
+    riv_kper2['cond'] = 1
     # same as kper2 (for parameterization)
     riv_kper3 = riv_kper2.copy()
 
-    # # add kper0,2,3
+    # add kper0,2,3
     # rivstage_ts.loc[1] = riv_kper0['head'].values
-    # rivstage_ts.loc[len(riv_ts_values) + 2] = riv_kper2['head'].values
+    # rivstage_ts.loc[len(riv_ts_values) + 1] = riv_kper2['head'].values
     # rivstage_ts.loc[len(riv_ts_values)*2 + 2] = riv_kper3['head'].values
     # rivstage_ts = rivstage_ts.sort_index()
 
@@ -172,7 +172,7 @@ def ghb_spring_setup(grid, idomain, start, end, fn_out):
     spring_kper0 = extract_value_with_indices(
         spring_stage_arr, layer=0, val_col='head', mask_value=0
         )
-    spring_kper0['cond'] = RES**2 * 1
+    spring_kper0['cond'] = 1
 
     # time series for riv elevations ###########################################################
     spring_ts = pd.read_csv(SPRING_TS)
@@ -217,7 +217,7 @@ def ghb_spring_setup(grid, idomain, start, end, fn_out):
 
     # make 'empty' kper2 and kper3 (for parameterization)
     spring_kper2 = spring_kper0.copy()
-    spring_kper3 = spring_kper1.copy()
+    spring_kper3 = spring_kper0.copy()
     spring_kper2['cond'] = 0
     spring_kper3['cond'] = 0
 
@@ -246,7 +246,7 @@ def ghb_pw_setup(grid, idomain, start, end, fn_out):
 
     ghb_pw_kper0 = pd.DataFrame({'index': [i[0] for i in ghb_pw_indices]})
     ghb_pw_kper0['head'] = [i[1] for i in ghb_pw_indices]  # head for Poukawa boundary
-    ghb_pw_kper0['cond'] = RES**2 * 1
+    ghb_pw_kper0['cond'] = 1
 
     # TS ##########################
     pw_ts = pd.read_csv(POUKAWA_TS)
@@ -292,7 +292,7 @@ def ghb_pw_setup(grid, idomain, start, end, fn_out):
 
     ghb_pw_kper2 = pd.DataFrame({'index': [i[0] for i in ghb_pw_indices]})
     ghb_pw_kper2['head'] = [i[1] for i in ghb_pw_indices]  # head for Poukawa boundary
-    ghb_pw_kper2['cond'] = RES**2 * 1
+    ghb_pw_kper2['cond'] = 1
 
     # kper4 - PAST TS (same: keep heads same as kper3)
     ghb_pw_kper3 = ghb_pw_kper2.copy()
@@ -317,7 +317,7 @@ def ghb_conf_setup(grid, idomain, start, end, fn_out):
         conf_arr, layer=0, val_col='head', mask_value=0
         )
     conf_kper0['head'] = 13.5  # head for confining layer
-    conf_kper0['cond'] = RES**2 * 1
+    conf_kper0['cond'] = 1
 
     # TS ##########################
     conf_ts = pd.read_csv(CONF_TS)
@@ -421,10 +421,11 @@ def wel_inout_setup(grid, idomain, mbr_df, fn_out):
 def npf_setup(idomain, fn_out):
     all_k = []
     for i in range(NLAY):
-        if i == 1:
-            k = np.ones_like(idomain[0]) * 0.001  # horizontal hydraulic conductivity in m/day
-        else:
-            k = np.ones_like(idomain[0]) * 100  # horizontal hydraulic conductivity in m/day
+        k = np.ones_like(idomain[0]) * 0.001  # horizontal hydraulic conductivity in m/day
+        # if i == 1:
+        #     k = np.ones_like(idomain[0]) * 0.001  # horizontal hydraulic conductivity in m/day
+        # else:
+        #     k = np.ones_like(idomain[0]) * 100  # horizontal hydraulic conductivity in m/day
         all_k.append(k)
     k_hor = np.array(all_k)  # horizontal hydraulic conductivity
 
@@ -438,7 +439,7 @@ def npf_setup(idomain, fn_out):
     return fn_out
 
 def sto_ss_setup(idomain, fn_out):
-    sto_ss = np.ones_like(idomain) * 1e-4
+    sto_ss = np.ones_like(idomain) * 1e-2
 
     # save
     fn_out['sto_ss'] = []

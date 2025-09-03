@@ -91,112 +91,127 @@ def main():
     # # set up pst file
     # K ----------------------------------------------
     # shallow aquifer
-    pst = define_mult_array(
+    define_mult_array(
         pf, TEMP_DIR,
         tag=f'{MODEL_NAME}.npf_k_layer',
         sr=sr,
         ib=ib,
         grid_gs=grid_gs,
         fine_gs=fine_gs,
-        lb=0.0001, ub=1000, ulb=1e-4, uub=1e3,
+        lb=0.01, ub=1e2, 
+        # ulb=1e-4, uub=1e3,
         add_coarse=True,
-        pp_space=10,
+        pp_space=5,
         lays=np.arange(NLAY).tolist()
         )
-    # # confining layer
-    # pst = define_mult_array(
-    #     pf, TEMP_DIR,
-    #     tag=f'{MODEL_NAME}.npf_k_layer',
-    #     sr=sr,
-    #     ib=ib,
-    #     grid_gs=grid_gs,
-    #     fine_gs=fine_gs,
-    #     lb=0.01, ub=100, ulb=1e-6, uub=1e2,
-    #     add_coarse=True,
-    #     pp_space=10,
-    #     lays=[NLAY-1]
-    #     )
-    # #bottom layer
-    # pst = define_mult_array(
-    #     pf, TEMP_DIR,
-    #     tag=f'{MODEL_NAME}.npf_k_layer',
-    #     sr=sr,
-    #     ib=ib,
-    #     grid_gs=grid_gs,
-    #     fine_gs=fine_gs,
-    #     lb=0.01, ub=100, ulb=1e2, uub=1e5,
-    #     add_coarse=True,
-    #     lays=[NLAY])
+    
+    define_mult_array(
+        pf, TEMP_DIR,
+        tag=f'{MODEL_NAME}.sto_ss_layer',
+        sr=sr,
+        ib=ib,
+        grid_gs=grid_gs,
+        fine_gs=fine_gs,
+        lb=1e-2, ub=1e2, 
+        # ulb=1e-4, uub=1e3,
+        add_coarse=True,
+        pp_space=5,
+        lays=np.arange(NLAY).tolist()
+        )
 
     # RECHARGE ------------------------------------------------------
-    define_mult_array(pf, TEMP_DIR,
-            tag=f'{MODEL_NAME}.rcha_recharge',
-            sr=sr,
-            ib=ib,
-            grid_gs=grid_gs,
-            lb=0.01, ub=1, ulb=0, uub=1e-1,
-            add_coarse=True)
+    # define_mult_array(pf, TEMP_DIR,
+    #         tag=f'{MODEL_NAME}.rcha_recharge',
+    #         sr=sr,
+    #         ib=ib,
+    #         grid_gs=grid_gs,
+    #         lb=0.01, ub=1, ulb=0, uub=1e-1,
+    #         add_coarse=True)
 
     wel(pf, TEMP_DIR,
         name='mbr',
         tag=f'{MODEL_NAME}.wel_mbr_stress_period_data',
+        fine_gs=fine_gs,
         grid_gs=grid_gs,
-        q_bounds=[0.01, 100],
-        q_ultbounds=[0.01, 10])
+        constant_gs=None,
+        q_bounds=[1e-2, 1e2],
+        # q_ultbounds=[0.01, 10]
+        )
 
     wel(pf, TEMP_DIR,
         name='influx',
-        tag=f'{MODEL_NAME}.wel_influx_stress_period_data.txt',
+        tag=f'{MODEL_NAME}.wel_influx_stress_period_data',
+        fine_gs=fine_gs,
         grid_gs=grid_gs,
-        q_bounds=[0.01, 100],
-        q_ultbounds=[0.01, 10])
+        constant_gs=None,
+        q_bounds=[0.1, 10],
+        # q_ultbounds=[0.01, 10]
+        )
 
     wel(pf, TEMP_DIR,
         name='outflux',
-        tag=f'{MODEL_NAME}.wel_outflux_stress_period_data.txt',
+        tag=f'{MODEL_NAME}.wel_outflux_stress_period_data',
+        fine_gs=fine_gs,
         grid_gs=grid_gs,
-        q_bounds=[0.01, 100],
-        q_ultbounds=[0.01, 10])
+        constant_gs=None,
+        q_bounds=[0.1, 10],
+        # q_ultbounds=[0.1, 90]
+        )
 
     ghb(pf, TEMP_DIR,
         name='ghb_aw',
-        tag=f'{MODEL_NAME}.ghbaw_stress_period_data_{NPER}.txt',
-        grid_gs=[fine_gs, grid_gs],
+        tag=f'{MODEL_NAME}.ghbaw_stress_period_data',
+        fine_gs=fine_gs,
+        grid_gs=grid_gs,
         constant_gs=None,
-        cond_bounds=[0.01, 100],
-        cond_ultbounds=[0.01, 1000],
+        cond_bounds=[1e-4, 1e4],
+        # cond_ultbounds=[1e-6, 1e6],
         head_bounds=[-2, 2],
-        head_ultbounds=[5, 15])
+        # head_ultbounds=[5, 20]
+        )
     
     ghb(pf, TEMP_DIR,
         name='ghb_pw',
-        tag=f'{MODEL_NAME}.ghb_pw_stress_period_data_{NPER}.txt',
-        grid_gs=[fine_gs, grid_gs],
+        tag=f'{MODEL_NAME}.ghb_pw_stress_period_data',
+        fine_gs=fine_gs,
+        grid_gs=grid_gs,
         constant_gs=None,
-        cond_bounds=[0.01, 100],
-        cond_ultbounds=[0.01, 1000],
+        cond_bounds=[1e-4, 1e4],
+        # cond_ultbounds=[1e-6, 1e6],
         head_bounds=[-2, 2],
-        head_ultbounds=[5, 15])
+        # head_ultbounds=[5, 20]
+        )
     
     ghb(pf, TEMP_DIR,
         name='ghb_spring',
-        tag=f'{MODEL_NAME}.ghbspr_stress_period_data_{NPER}.txt',
-        grid_gs=[fine_gs, grid_gs],
+        tag=f'{MODEL_NAME}.ghbspr_stress_period_data',
+        fine_gs=fine_gs,
+        grid_gs=grid_gs,
         constant_gs=None,
-        cond_bounds=[0.01, 100],
-        cond_ultbounds=[0.01, 1000],
+        cond_bounds=[1e-4, 1e4],
+        # cond_ultbounds=[1e-6, 1e6],
         head_bounds=[-2, 2],
-        head_ultbounds=[5, 15])
+        # head_ultbounds=[5, 15]
+        )
     
     ghb(pf, TEMP_DIR,
         name='ghb_conf',
-        tag=f'{MODEL_NAME}.ghb_conf_stress_period_data_{NPER}.txt',
-        grid_gs=[fine_gs, grid_gs],
+        tag=f'{MODEL_NAME}.ghb_conf_stress_period_data',
+        fine_gs=fine_gs,
+        grid_gs=grid_gs,
         constant_gs=None,
-        cond_bounds=[0.01, 100],
-        cond_ultbounds=[0.01, 1000],
+        cond_bounds=[1e-4, 1e4],
+        # cond_ultbounds=[1e-6, 1e6],
         head_bounds=[-2, 2],
-        head_ultbounds=[5, 15])
+        # head_ultbounds=[5, 20]
+        )
+    
+    # add ts data
+    # add_ts_parameters(pf, 'spring', TEMP_DIR, f'{MODEL_NAME}.spring_stage.csv', -1, 1)
+    # add_ts_parameters(pf, 'pw', TEMP_DIR, f'{MODEL_NAME}.ghb_pw_heads.csv', -1, 1)
+    # add_ts_parameters(pf, 'conf', TEMP_DIR, f'{MODEL_NAME}.ghb_conf_heads.csv', -1, 1)
+    # add_ts_parameters(pf, 'aw', TEMP_DIR, f'{MODEL_NAME}.awanui_stage.csv', -1, 1)
+    
     
     # OBSERVATIONS ------------------------------------------------------
     # budget = pd.read_csv(os.path.join(TRUTH_DIR, "incremental_budget.csv"))
@@ -340,12 +355,11 @@ def main():
     # RUN PESTPP-IES --------------------------------------------------
     pyemu.os_utils.run("pestpp-ies {0}".format(pst_file), cwd=TEMP_DIR)
     
-    
     # PRIOR PARAMETER COVARIANCE --------------------------------------------------
     print("Adding parameter covariance...")
     pe_f = os.path.join(TEMP_DIR, 'prior_pe.jcb')
 
-    pe = pf.draw(num_reals=NREALS, use_specsim=True)
+    pe = pf.draw(num_reals=NREALS_PRIOR, use_specsim=True)
     pe.enforce() # enforces parameter bounds
     pe.to_binary(pe_f) #writes the parameter ensemble to binary file
     
@@ -365,17 +379,20 @@ def main():
     
     # PLOT TEST REALIZATION --------------------------------------------------
     # df = pd.read_csv(os.path.join(TEMP_DIR,"mult2model_info.csv"))
-    # kh1_df = df.loc[df.model_file.str.contains("npf_k_layer4"),:]
+    # kh1_df = df.loc[df.model_file.str.contains("npf_k_layer1"),:]
 
     # org_arr = np.loadtxt(os.path.join(TEMP_DIR,kh1_df.org_file.iloc[0]))
-    # inp_arr = np.loadtxt(os.path.join(TEMP_DIR,kh1_df.model_file.iloc[0]))
+    # inp_arr = np.loadtxt(os.path.join(TEMP_DIR,kh1_df.model_file.iloc[1]))
     # mlt_arrs = [np.loadtxt(os.path.join(TEMP_DIR,afile)) for afile in kh1_df.mlt_file]
+    
     # arrs = [org_arr]
     # arrs.extend(mlt_arrs)
     # arrs.append(inp_arr)
+    
     # names = ["org"]
     # names.extend([mf.split('.')[0].split('_')[-1] for mf in kh1_df.mlt_file])
     # names.append("MF6 input")
+    
     # fig,axes = plt.subplots(1,kh1_df.shape[0]+2,figsize=(5*kh1_df.shape[0]+2,5))
     # for i,ax in enumerate(axes.flatten()):
     #     arr = np.log10(arrs[i])

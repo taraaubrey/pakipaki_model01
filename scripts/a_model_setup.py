@@ -76,7 +76,7 @@ def main():
     # sto
     fn_out = sto_ss_setup(idomain, fn_out)
     # rch
-    fn_out = rch_setup(idomain, fn_out)
+    # fn_out = rch_setup(idomain, fn_out)
     #obs - save file
     pk4_h = pk4_ts(start, end)
     aw_Q = awanui_ts(start, end)
@@ -160,12 +160,12 @@ def main():
         strt=init_h, # initial head, only used for iterative solution in steady model (arbitrary)
         )
 
-    rch = fp.mf6.ModflowGwfrcha(
-        model=gwf,
-        recharge=fn_out['rch'], # recharge file names for each layer
-        save_flows=True, # save flows for this package
-        pname='rch' # package name
-    )
+    # rch = fp.mf6.ModflowGwfrcha(
+    #     model=gwf,
+    #     recharge=fn_out['rch'], # recharge file names for each layer
+    #     save_flows=True, # save flows for this package
+    #     pname='rch' # package name
+    # )
 
     ghb_aw = fp.mf6.ModflowGwfghb(
         model=gwf, # add riv package to model gwf (created in previous code cell)

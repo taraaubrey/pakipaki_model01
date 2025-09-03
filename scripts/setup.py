@@ -55,5 +55,6 @@ TRUTH_DIR = r'truth'
 SAMPLES = r"data/sample_locations.shp"
 
 # Pest options
-NREALS = 500  # number of realizations for parameterization
+NREALS_PRIOR = 100  # number of realizations for parameterization
+NREALS = 500
 NOPTMAX = 3  # number of optimization iterations
