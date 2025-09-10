@@ -1,0 +1,151 @@
+2025-09-09 16:11:01.691097 starting: opening plot_pst_helper.log for logging
+2025-09-09 16:11:01.691097 plot_utils.pst_helper()
+2025-09-09 16:11:01.691680 starting: plot res_1to1
+2025-09-09 16:11:02.449457 starting: plotting 1to1 for budget
+2025-09-09 16:11:02.452195 using control file obsvals to calculate residuals
+2025-09-09 16:11:02.452195 no non-zero obs for group 'budget'
+2025-09-09 16:11:02.452195 finished: plotting 1to1 for budget took: 0:00:00.002738
+2025-09-09 16:11:02.452195 starting: plotting 1to1 for greater_oname:ts_otype:lst_usecol:awswgwdiff
+2025-09-09 16:11:02.452195 using control file obsvals to calculate residuals
+2025-09-09 16:11:02.515867 finished: plotting 1to1 for greater_oname:ts_otype:lst_usecol:awswgwdiff took: 0:00:00.063672
+2025-09-09 16:11:02.515867 starting: plotting 1to1 for greater_oname:ts_otype:lst_usecol:pwswgwdiff
+2025-09-09 16:11:02.515867 using control file obsvals to calculate residuals
+2025-09-09 16:11:02.518437 finished: plotting 1to1 for greater_oname:ts_otype:lst_usecol:pwswgwdiff took: 0:00:00.002570
+2025-09-09 16:11:02.518437 starting: plotting 1to1 for heads
+2025-09-09 16:11:02.597561 using control file obsvals to calculate residuals
+2025-09-09 16:11:02.597561 no non-zero obs for group 'heads'
+2025-09-09 16:11:02.597561 finished: plotting 1to1 for heads took: 0:00:00.079124
+2025-09-09 16:11:02.597561 starting: plotting 1to1 for oname:bgt_otype:lst_usecol:bawtotal
+2025-09-09 16:11:02.612663 using control file obsvals to calculate residuals
+2025-09-09 16:11:02.613742 no non-zero obs for group 'oname:bgt_otype:lst_usecol:bawtotal'
+2025-09-09 16:11:02.613742 finished: plotting 1to1 for oname:bgt_otype:lst_usecol:bawtotal took: 0:00:00.016181
+2025-09-09 16:11:02.613742 starting: plotting 1to1 for oname:bgt_otype:lst_usecol:bghbconf
+2025-09-09 16:11:02.613742 using control file obsvals to calculate residuals
+2025-09-09 16:11:02.613742 no non-zero obs for group 'oname:bgt_otype:lst_usecol:bghbconf'
+2025-09-09 16:11:02.613742 finished: plotting 1to1 for oname:bgt_otype:lst_usecol:bghbconf took: 0:00:00
+2025-09-09 16:11:02.613742 starting: plotting 1to1 for oname:bgt_otype:lst_usecol:bghbpw
+2025-09-09 16:11:02.613742 using control file obsvals to calculate residuals
+2025-09-09 16:11:02.613742 no non-zero obs for group 'oname:bgt_otype:lst_usecol:bghbpw'
+2025-09-09 16:11:02.613742 finished: plotting 1to1 for oname:bgt_otype:lst_usecol:bghbpw took: 0:00:00
+2025-09-09 16:11:02.613742 starting: plotting 1to1 for oname:bgt_otype:lst_usecol:bghbspring
+2025-09-09 16:11:02.613742 using control file obsvals to calculate residuals
+2025-09-09 16:11:02.613742 no non-zero obs for group 'oname:bgt_otype:lst_usecol:bghbspring'
+2025-09-09 16:11:02.613742 finished: plotting 1to1 for oname:bgt_otype:lst_usecol:bghbspring took: 0:00:00
+2025-09-09 16:11:02.613742 starting: plotting 1to1 for oname:bgt_otype:lst_usecol:bstoss
+2025-09-09 16:11:02.613742 using control file obsvals to calculate residuals
+2025-09-09 16:11:02.618836 no non-zero obs for group 'oname:bgt_otype:lst_usecol:bstoss'
+2025-09-09 16:11:02.618836 finished: plotting 1to1 for oname:bgt_otype:lst_usecol:bstoss took: 0:00:00.005094
+2025-09-09 16:11:02.618836 starting: plotting 1to1 for oname:bgt_otype:lst_usecol:btotal
+2025-09-09 16:11:02.618836 using control file obsvals to calculate residuals
+2025-09-09 16:11:02.618836 no non-zero obs for group 'oname:bgt_otype:lst_usecol:btotal'
+2025-09-09 16:11:02.618836 finished: plotting 1to1 for oname:bgt_otype:lst_usecol:btotal took: 0:00:00
+2025-09-09 16:11:02.618836 starting: plotting 1to1 for oname:bgt_otype:lst_usecol:bwelin
+2025-09-09 16:11:02.618836 using control file obsvals to calculate residuals
+2025-09-09 16:11:02.618836 no non-zero obs for group 'oname:bgt_otype:lst_usecol:bwelin'
+2025-09-09 16:11:02.618836 finished: plotting 1to1 for oname:bgt_otype:lst_usecol:bwelin took: 0:00:00
+2025-09-09 16:11:02.618836 starting: plotting 1to1 for oname:bgt_otype:lst_usecol:bwelmbr
+2025-09-09 16:11:02.618836 using control file obsvals to calculate residuals
+2025-09-09 16:11:02.618836 no non-zero obs for group 'oname:bgt_otype:lst_usecol:bwelmbr'
+2025-09-09 16:11:02.618836 finished: plotting 1to1 for oname:bgt_otype:lst_usecol:bwelmbr took: 0:00:00
+2025-09-09 16:11:02.618836 starting: plotting 1to1 for oname:bgt_otype:lst_usecol:bwelout
+2025-09-09 16:11:02.618836 using control file obsvals to calculate residuals
+2025-09-09 16:11:02.618836 no non-zero obs for group 'oname:bgt_otype:lst_usecol:bwelout'
+2025-09-09 16:11:02.618836 finished: plotting 1to1 for oname:bgt_otype:lst_usecol:bwelout took: 0:00:00
+2025-09-09 16:11:02.618836 starting: plotting 1to1 for oname:bgt_otype:lst_usecol:in-out
+2025-09-09 16:11:02.618836 using control file obsvals to calculate residuals
+2025-09-09 16:11:02.618836 no non-zero obs for group 'oname:bgt_otype:lst_usecol:in-out'
+2025-09-09 16:11:02.618836 finished: plotting 1to1 for oname:bgt_otype:lst_usecol:in-out took: 0:00:00
+2025-09-09 16:11:02.618836 starting: plotting 1to1 for oname:bgt_otype:lst_usecol:percentdiscrepancy
+2025-09-09 16:11:02.618836 using control file obsvals to calculate residuals
+2025-09-09 16:11:02.618836 no non-zero obs for group 'oname:bgt_otype:lst_usecol:percentdiscrepancy'
+2025-09-09 16:11:02.618836 finished: plotting 1to1 for oname:bgt_otype:lst_usecol:percentdiscrepancy took: 0:00:00
+2025-09-09 16:11:02.618836 starting: plotting 1to1 for oname:ts_otype:lst_usecol:awcum
+2025-09-09 16:11:02.618836 using control file obsvals to calculate residuals
+2025-09-09 16:11:02.618836 no non-zero obs for group 'oname:ts_otype:lst_usecol:awcum'
+2025-09-09 16:11:02.618836 finished: plotting 1to1 for oname:ts_otype:lst_usecol:awcum took: 0:00:00
+2025-09-09 16:11:02.618836 starting: plotting 1to1 for oname:ts_otype:lst_usecol:awgwhead
+2025-09-09 16:11:02.618836 using control file obsvals to calculate residuals
+2025-09-09 16:11:02.618836 no non-zero obs for group 'oname:ts_otype:lst_usecol:awgwhead'
+2025-09-09 16:11:02.618836 finished: plotting 1to1 for oname:ts_otype:lst_usecol:awgwhead took: 0:00:00
+2025-09-09 16:11:02.618836 starting: plotting 1to1 for oname:ts_otype:lst_usecol:awq
+2025-09-09 16:11:02.618836 using control file obsvals to calculate residuals
+2025-09-09 16:11:02.618836 no non-zero obs for group 'oname:ts_otype:lst_usecol:awq'
+2025-09-09 16:11:02.618836 finished: plotting 1to1 for oname:ts_otype:lst_usecol:awq took: 0:00:00
+2025-09-09 16:11:02.618836 starting: plotting 1to1 for oname:ts_otype:lst_usecol:awswgwdiff
+2025-09-09 16:11:02.618836 using control file obsvals to calculate residuals
+2025-09-09 16:11:02.630503 finished: plotting 1to1 for oname:ts_otype:lst_usecol:awswgwdiff took: 0:00:00.011667
+2025-09-09 16:11:02.630503 starting: plotting 1to1 for oname:ts_otype:lst_usecol:awswhead
+2025-09-09 16:11:02.630503 using control file obsvals to calculate residuals
+2025-09-09 16:11:02.630503 no non-zero obs for group 'oname:ts_otype:lst_usecol:awswhead'
+2025-09-09 16:11:02.630503 finished: plotting 1to1 for oname:ts_otype:lst_usecol:awswhead took: 0:00:00
+2025-09-09 16:11:02.630503 starting: plotting 1to1 for oname:ts_otype:lst_usecol:awtot
+2025-09-09 16:11:02.630503 using control file obsvals to calculate residuals
+2025-09-09 16:11:02.630503 no non-zero obs for group 'oname:ts_otype:lst_usecol:awtot'
+2025-09-09 16:11:02.630503 finished: plotting 1to1 for oname:ts_otype:lst_usecol:awtot took: 0:00:00
+2025-09-09 16:11:02.630503 starting: plotting 1to1 for oname:ts_otype:lst_usecol:confhead
+2025-09-09 16:11:02.630503 using control file obsvals to calculate residuals
+2025-09-09 16:11:02.630503 no non-zero obs for group 'oname:ts_otype:lst_usecol:confhead'
+2025-09-09 16:11:02.630503 finished: plotting 1to1 for oname:ts_otype:lst_usecol:confhead took: 0:00:00
+2025-09-09 16:11:02.630503 starting: plotting 1to1 for oname:ts_otype:lst_usecol:firstnegday
+2025-09-09 16:11:02.630503 using control file obsvals to calculate residuals
+2025-09-09 16:11:02.630503 finished: plotting 1to1 for oname:ts_otype:lst_usecol:firstnegday took: 0:00:00
+2025-09-09 16:11:02.630503 starting: plotting 1to1 for oname:ts_otype:lst_usecol:pk4awgwdiff
+2025-09-09 16:11:02.630503 using control file obsvals to calculate residuals
+2025-09-09 16:11:02.630503 no non-zero obs for group 'oname:ts_otype:lst_usecol:pk4awgwdiff'
+2025-09-09 16:11:02.630503 finished: plotting 1to1 for oname:ts_otype:lst_usecol:pk4awgwdiff took: 0:00:00
+2025-09-09 16:11:02.630503 starting: plotting 1to1 for oname:ts_otype:lst_usecol:pk4awswdiff
+2025-09-09 16:11:02.630503 using control file obsvals to calculate residuals
+2025-09-09 16:11:02.630503 no non-zero obs for group 'oname:ts_otype:lst_usecol:pk4awswdiff'
+2025-09-09 16:11:02.630503 finished: plotting 1to1 for oname:ts_otype:lst_usecol:pk4awswdiff took: 0:00:00
+2025-09-09 16:11:02.630503 starting: plotting 1to1 for oname:ts_otype:lst_usecol:pk4confdiff
+2025-09-09 16:11:02.630503 using control file obsvals to calculate residuals
+2025-09-09 16:11:02.645516 no non-zero obs for group 'oname:ts_otype:lst_usecol:pk4confdiff'
+2025-09-09 16:11:02.645516 finished: plotting 1to1 for oname:ts_otype:lst_usecol:pk4confdiff took: 0:00:00.015013
+2025-09-09 16:11:02.645516 starting: plotting 1to1 for oname:ts_otype:lst_usecol:pk4pwgwdiff
+2025-09-09 16:11:02.646325 using control file obsvals to calculate residuals
+2025-09-09 16:11:02.647284 no non-zero obs for group 'oname:ts_otype:lst_usecol:pk4pwgwdiff'
+2025-09-09 16:11:02.647284 finished: plotting 1to1 for oname:ts_otype:lst_usecol:pk4pwgwdiff took: 0:00:00.001768
+2025-09-09 16:11:02.647284 starting: plotting 1to1 for oname:ts_otype:lst_usecol:pk4pwswdiff
+2025-09-09 16:11:02.647284 using control file obsvals to calculate residuals
+2025-09-09 16:11:02.647284 no non-zero obs for group 'oname:ts_otype:lst_usecol:pk4pwswdiff'
+2025-09-09 16:11:02.647284 finished: plotting 1to1 for oname:ts_otype:lst_usecol:pk4pwswdiff took: 0:00:00
+2025-09-09 16:11:02.647284 starting: plotting 1to1 for oname:ts_otype:lst_usecol:pk4springdiff
+2025-09-09 16:11:02.647284 using control file obsvals to calculate residuals
+2025-09-09 16:11:03.080515 finished: plotting 1to1 for oname:ts_otype:lst_usecol:pk4springdiff took: 0:00:00.433231
+2025-09-09 16:11:03.080515 starting: plotting 1to1 for oname:ts_otype:lst_usecol:pwcum
+2025-09-09 16:11:03.080515 using control file obsvals to calculate residuals
+2025-09-09 16:11:03.080515 no non-zero obs for group 'oname:ts_otype:lst_usecol:pwcum'
+2025-09-09 16:11:03.080515 finished: plotting 1to1 for oname:ts_otype:lst_usecol:pwcum took: 0:00:00
+2025-09-09 16:11:03.080515 starting: plotting 1to1 for oname:ts_otype:lst_usecol:pwgwhead
+2025-09-09 16:11:03.080515 using control file obsvals to calculate residuals
+2025-09-09 16:11:03.080515 no non-zero obs for group 'oname:ts_otype:lst_usecol:pwgwhead'
+2025-09-09 16:11:03.080515 finished: plotting 1to1 for oname:ts_otype:lst_usecol:pwgwhead took: 0:00:00
+2025-09-09 16:11:03.080515 starting: plotting 1to1 for oname:ts_otype:lst_usecol:pwq
+2025-09-09 16:11:03.080515 using control file obsvals to calculate residuals
+2025-09-09 16:11:03.080515 no non-zero obs for group 'oname:ts_otype:lst_usecol:pwq'
+2025-09-09 16:11:03.080515 finished: plotting 1to1 for oname:ts_otype:lst_usecol:pwq took: 0:00:00
+2025-09-09 16:11:03.080515 starting: plotting 1to1 for oname:ts_otype:lst_usecol:pwswgwdiff
+2025-09-09 16:11:03.080515 using control file obsvals to calculate residuals
+2025-09-09 16:11:03.097179 finished: plotting 1to1 for oname:ts_otype:lst_usecol:pwswgwdiff took: 0:00:00.016664
+2025-09-09 16:11:03.097179 starting: plotting 1to1 for oname:ts_otype:lst_usecol:pwswhead
+2025-09-09 16:11:03.097179 using control file obsvals to calculate residuals
+2025-09-09 16:11:03.097179 no non-zero obs for group 'oname:ts_otype:lst_usecol:pwswhead'
+2025-09-09 16:11:03.097179 finished: plotting 1to1 for oname:ts_otype:lst_usecol:pwswhead took: 0:00:00
+2025-09-09 16:11:03.097179 starting: plotting 1to1 for oname:ts_otype:lst_usecol:pwtot
+2025-09-09 16:11:03.097179 using control file obsvals to calculate residuals
+2025-09-09 16:11:03.097179 no non-zero obs for group 'oname:ts_otype:lst_usecol:pwtot'
+2025-09-09 16:11:03.097179 finished: plotting 1to1 for oname:ts_otype:lst_usecol:pwtot took: 0:00:00
+2025-09-09 16:11:03.097179 starting: plotting 1to1 for oname:ts_otype:lst_usecol:springcum
+2025-09-09 16:11:03.097179 using control file obsvals to calculate residuals
+2025-09-09 16:11:03.097179 finished: plotting 1to1 for oname:ts_otype:lst_usecol:springcum took: 0:00:00
+2025-09-09 16:11:03.097179 starting: plotting 1to1 for oname:ts_otype:lst_usecol:springhead
+2025-09-09 16:11:03.112932 using control file obsvals to calculate residuals
+2025-09-09 16:11:03.114650 no non-zero obs for group 'oname:ts_otype:lst_usecol:springhead'
+2025-09-09 16:11:03.114650 finished: plotting 1to1 for oname:ts_otype:lst_usecol:springhead took: 0:00:00.017471
+2025-09-09 16:11:03.114650 starting: plotting 1to1 for oname:ts_otype:lst_usecol:springq
+2025-09-09 16:11:03.116166 using control file obsvals to calculate residuals
+2025-09-09 16:11:03.122775 finished: plotting 1to1 for oname:ts_otype:lst_usecol:springq took: 0:00:00.008125
+2025-09-09 16:11:03.122775 starting: plotting 1to1 for ts
+2025-09-09 16:11:03.129800 using control file obsvals to calculate residuals
+2025-09-09 16:11:03.383437 finished: plotting 1to1 for ts took: 0:00:00.260662
+2025-09-09 16:11:03.449931 finished: plot res_1to1 took: 0:00:01.758251

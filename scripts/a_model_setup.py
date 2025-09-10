@@ -58,11 +58,14 @@ def main():
     start = pd.to_datetime(START_DATE)
     end = pd.to_datetime(END_DATE)
     PERLEN = (end - start).days
+    NSTEPS = PERLEN  # 1 day time step
 
     print(f'Simulation period: {PERLEN} days with {NSTEPS} time steps.')
     
     # dis
     grid, idomain, top, nrow, ncol, delr, delc, fn_out = dis_setup(fn_out)
+    grid_gpd = grid.cell_geodataframe()
+    grid_gpd.to_file(Path(SPATIAL_DIR, f'{MODEL_NAME}_grid.shp'), driver='ESRI Shapefile')
     # ghbs
     fn_out = ghb_aw_setup(grid, idomain, start, end, fn_out)
     fn_out = ghb_spring_setup(grid, idomain, start, end, fn_out)
@@ -169,7 +172,7 @@ def main():
 
     ghb_aw = fp.mf6.ModflowGwfghb(
         model=gwf, # add riv package to model gwf (created in previous code cell)
-        timeseries=fn_out['ghb_aw_ts'], # time series file for riv stages
+        timeseries=fn_out['ghb_aw_ts'],
         stress_period_data=fn_out['ghb_aw'],
         pname='ghb_aw', # package name
         save_flows=True,
@@ -177,7 +180,7 @@ def main():
     
     ghb_conf = fp.mf6.ModflowGwfghb(
         model=gwf,
-        timeseries=fn_out['ghb_conf_ts'], # time series file for chd heads
+        timeseries=fn_out['ghb_conf_ts'],
         stress_period_data=fn_out['ghb_conf'],
         pname='ghb_conf', # package name
         save_flows=True, # save flows for this package 
@@ -185,7 +188,7 @@ def main():
 
     ghb_pw = fp.mf6.ModflowGwfghb(
         model=gwf,
-        timeseries=fn_out['ghb_pw_ts'], # time series file for chd heads
+        timeseries=fn_out['ghb_pw_ts'],
         stress_period_data=fn_out['ghb_pw'],
         pname='ghb_pw', # package name
         save_flows=True, # save flows for this package 
@@ -193,7 +196,7 @@ def main():
     
     ghb_sp = fp.mf6.ModflowGwfghb(
         model=gwf,
-        timeseries=fn_out['ghb_sp_ts'], # time series file for spring heads
+        timeseries=fn_out['ghb_sp_ts'],
         stress_period_data=fn_out['ghb_sp'],
         pname='ghb_sp', # package name
         save_flows=True, # save flows for this package 
@@ -305,6 +308,7 @@ def main():
         spring_h_path=f'{fn_out['ghb_sp_ts']['timeseries']['filename']}',
         pw_q_path=f'{MODEL_NAME}.poukawa_flow_m3d.csv',
         )  # extract spring 
+    helpers.extract_model_heads(model_name=f'{MODEL_NAME}')
 
     # CREATE TRUTH -------------------------------------------------------
     # copy file to truth directory
@@ -321,7 +325,13 @@ def main():
     obs_results['pk4springdiff'] = obs_results['pk4head'] - obs_results['springhead']
     obs_results['awswgwdiff'] = 0 # known positive flux
     obs_results['pwswgwdiff'] = 0 # known positive flux
-    
+
+    # first day to negative flux
+    obs_results['firstnegday'] = -1
+    obs_results.loc[1:PERLEN, 'firstnegday'] = obs_results.loc[1:PERLEN, 'pk4springdiff'].lt(0).idxmax()
+    obs_results.loc[PERLEN+2:, 'firstnegday'] = (PERLEN+2) - obs_results.loc[PERLEN+2:, 'pk4springdiff'].lt(0).idxmax()
+
+    # Awanui at Flume discharge estimate
     obs_results.loc[:, 'awtot'] = aw_Q['sm_m3d'].iloc[0] * -1  # mean monthly 10/11
     obs_results.loc[mask, 'awtot'] = (
         obs_results.loc[mask, 'time']
@@ -346,14 +356,36 @@ def main():
     obs_results.loc[mask, 'springq'] = 0  # no spring flow if head diff is negative
     obs_results['springcum'] = -150
     obs_results.loc[mask, 'springcum'] = 0  # no spring flow if head diff is negative
-    obs_results['pwcum'] = obs_results['pwtot'] * 0.0002
-    obs_results['pwtot'] = obs_results['pwtot'] + obs_results['pwcum']
+    # obs_results['pwcum'] = obs_results['pwtot'] * 0.0002
+    # obs_results['pwtot'] = obs_results['pwtot'] + obs_results['pwcum']
     obs_results['awcum'] = obs_results['awtot'] - obs_results['pwtot'] - obs_results['springcum']
     
     # save to truth directory
     obs_results.to_csv(Path(TRUTHREL_DIR, 'obs_results_truth.csv'), index=False)
 
+    ### SETUP STD FILE ##################################################################
+    std_obs = obs_results.copy()
+
+    # set all values except time, kper, kstp to 0
+    for col in std_obs.columns:
+        if col not in ['time', 'kstp', 'kper']:
+            std_obs.loc[:, col] = 0
     
+    mask = (std_obs['kper'] <= 2)
+    std_obs.loc[mask, 'pk4head'] = 0.05
+    std_obs.loc[mask, 'pk4springdiff'] = 0.05
+    std_obs.loc[mask, 'awswgwdiff'] = 2
+    std_obs.loc[mask, 'pwswgwdiff'] = 2
+    std_obs.loc[mask, 'springcum'] = 45 # approx 30% of total
+    std_obs.loc[mask, 'springq'] = 3
+    std_obs.loc[mask, 'pwcum'] = obs_results.loc[mask, 'pwcum'] * 0.3
+    std_obs.loc[mask, 'awcum'] = obs_results.loc[mask, 'awcum'] * 0.3
+    std_obs.loc[mask, 'awtot'] = obs_results.loc[mask, 'awtot'] * 0.3
+    std_obs.loc[mask, 'pwtot'] = obs_results.loc[mask, 'pwtot'] * 0.3
+    std_obs.loc[mask, 'firstnegday'] = 7
+
+    # save
+    std_obs.to_csv(Path(TRUTHREL_DIR, 'obs_results_std.csv'), index=False)
 
 if __name__ == "__main__":
     main()  # run the main function to build the model and extract observations

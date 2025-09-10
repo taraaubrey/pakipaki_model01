@@ -9,15 +9,9 @@ def main():
     pst = pyemu.Pst(os.path.join(TEMP_DIR, pst_name))
 
     # pest options
-    pst.pestpp_options["ies_num_reals"] = NREALS_PRIOR
-    pst.pestpp_options['ies_parameter_ensemble'] = 'prior_pe.jcb'
-    # pst.pestpp_options['ies_drop_conflicts'] = True
-    pst.pestpp_options['overdue_giveup_fac'] = 10
-    pst.pestpp_options['overdue_giveup_minutes'] = 15
-    # pst.pestpp_options['ies_save_binary'] = True
-    # pst.pestpp_options['ies_ordered_binary'] = False
+    pst.pestpp_options["tie_by_group"] = True
 
-    pst.control_data.noptmax = NOPTMAX
+    # pst.control_data.noptmax = -1 # run with parameter ensemble - no update
 
     # write a new pst file
     pst.write(os.path.join(TEMP_DIR, pst_name))
@@ -25,11 +19,11 @@ def main():
     num_workers = os.cpu_count()
 
     # the master directory
-    m_d=os.path.join(os.path.join(TEMP_DIR, '..'), 'master_ies')
+    m_d=os.path.join(os.path.join(TEMP_DIR, '..'), 'master_sen')
 
     pyemu.os_utils.start_workers(
         worker_dir=TEMP_DIR, # the folder which contains the "template" PEST dataset
-        exe_rel_path=f'pestpp-ies', #the PEST software version we want to run
+        exe_rel_path=f'pestpp-sen', #the PEST software version we want to run
         pst_rel_path=pst_name, # the control file to use with PEST
         num_workers=num_workers, #how many agents to deploy
         worker_root= os.path.join(TEMP_DIR, '..'),

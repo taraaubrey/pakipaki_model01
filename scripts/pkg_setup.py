@@ -103,6 +103,11 @@ def ghb_aw_setup(grid, idomain, start, end, fn_out):
     riv_ts = riv_ts[(riv_ts.index >= start) & (riv_ts.index <= end)]
     riv_ts['abs_val'] = riv_ts['level_mRL'] - riv_ts['level_mRL'].iloc[0]
     riv_ts['sm_abs_val'] = riv_ts['abs_val'].rolling(window=21, center=True, min_periods=1).mean()
+    
+    # save raw ts
+    riv_ts_raw_fn = Path(MODEL_DIR, f'ts_awanui_stream_raw.csv')
+    riv_ts.index.name = 'DateTime'
+    riv_ts.to_csv(riv_ts_raw_fn)
 
     # riv absolute values during recession
     riv_ts_values = riv_ts['sm_abs_val'].values
@@ -186,7 +191,10 @@ def ghb_spring_setup(grid, idomain, start, end, fn_out):
     spring_ts['abs_val'] = spring_ts['level_mRL'] - spring_ts['level_mRL'].iloc[0]
     spring_ts['sm_abs_val'] = spring_ts['abs_val'].rolling(window=5, center=True, min_periods=1).mean()
 
-    # assert len(riv_ts_resampled) == NSTEPS
+    # save raw ts
+    spring_ts_fn = Path(MODEL_DIR, f'ts_spring_raw.csv')
+    spring_ts.index.name = 'DateTime'
+    spring_ts.to_csv(spring_ts_fn)
 
     # riv absolute values during recession
     spring_ts_values = spring_ts['sm_abs_val'].values
@@ -325,9 +333,11 @@ def ghb_conf_setup(grid, idomain, start, end, fn_out):
     conf_ts.set_index('DateTime', inplace=True)
     conf_ts['level_mRL'] = conf_ts['LEVEL'] + 10.755
     #resample to daily
-    conf_ts.loc[(conf_ts.index >= end), :] = np.nan
+    conf_ts.loc[(conf_ts.index >= end), :] = 11.3  # set end value to 11.3
+
+    # fill missing with interpolation
     conf_ts = conf_ts[['level_mRL']].resample('D').mean()
-    conf_ts['level_mRL'] = conf_ts['level_mRL'].interpolate(method='time')
+    conf_ts['level_mRL'] = conf_ts['level_mRL'].interpolate(method='linear')
     conf_ts = conf_ts[(conf_ts.index >= start) & (conf_ts.index <= end)]
     # conf_ts['abs_val'] = conf_ts['level_mRL'] - conf_ts['level_mRL'].iloc[0]
     # conf_ts['sm_abs_val'] = conf_ts['abs_val'].rolling(window=5, center=True, min_periods=1).mean()
@@ -335,7 +345,7 @@ def ghb_conf_setup(grid, idomain, start, end, fn_out):
     # convert to dataframe
     conf_ts_df = conf_ts['level_mRL'].reset_index(drop=True)
     conf_ts_df.name = 'heads_ts'
-    conf_ts_df.index = conf_ts_df.index + 1
+    conf_ts_df.index = np.arange(2, len(conf_ts_df) + 2)
 
     conf_kper1 = conf_kper0[['index']].copy()
     conf_kper1['head'] = 'heads_ts'
@@ -368,7 +378,7 @@ def wel_mbr_setup(grid, idomain, fn_out, ghb_pw_kper0):
         mbr_indices.extend(get_indices(mbr_active, layer=i))
     
     mbr_df = pd.DataFrame({'index': mbr_indices})
-    mbr_df['q'] = 2 # m3/d
+    mbr_df['q'] = 138 / len(mbr_df) # m3/d
     mbr_df = mbr_df[~mbr_df['index'].isin(ghb_pw_kper0['index'])]  # remove chd indices from mbr
     
     # save
@@ -508,7 +518,7 @@ def awanui_ts(start, end):
 
     # get specific dates
     sw_ts = sw_ts[(sw_ts.index >= start) & (sw_ts.index <= end)]
-    sw_ts['sm_m3d'] = sw_ts['m3d'].rolling(window=5, center=True, min_periods=1).mean()
+    sw_ts['sm_m3d'] = sw_ts['m3d'].rolling(window=21, center=True, min_periods=1).mean()
     sw_ts.index = np.arange(2, len(sw_ts['m3d']) + 2)
 
     # save ts file

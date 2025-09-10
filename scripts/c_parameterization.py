@@ -144,7 +144,7 @@ def main():
         fine_gs=fine_gs,
         grid_gs=grid_gs,
         constant_gs=None,
-        q_bounds=[0.1, 10],
+        q_bounds=[1e-2, 1e2],
         # q_ultbounds=[0.01, 10]
         )
 
@@ -154,12 +154,12 @@ def main():
         fine_gs=fine_gs,
         grid_gs=grid_gs,
         constant_gs=None,
-        q_bounds=[0.1, 10],
+        q_bounds=[1e-2, 1e2],
         # q_ultbounds=[0.1, 90]
         )
 
     ghb(pf, TEMP_DIR,
-        name='ghb_aw',
+        name='ghb-aw',
         tag=f'{MODEL_NAME}.ghbaw_stress_period_data',
         fine_gs=fine_gs,
         grid_gs=grid_gs,
@@ -171,7 +171,7 @@ def main():
         )
     
     ghb(pf, TEMP_DIR,
-        name='ghb_pw',
+        name='ghb-pw',
         tag=f'{MODEL_NAME}.ghb_pw_stress_period_data',
         fine_gs=fine_gs,
         grid_gs=grid_gs,
@@ -183,7 +183,7 @@ def main():
         )
     
     ghb(pf, TEMP_DIR,
-        name='ghb_spring',
+        name='ghb-spring',
         tag=f'{MODEL_NAME}.ghbspr_stress_period_data',
         fine_gs=fine_gs,
         grid_gs=grid_gs,
@@ -195,7 +195,7 @@ def main():
         )
     
     ghb(pf, TEMP_DIR,
-        name='ghb_conf',
+        name='ghb-conf',
         tag=f'{MODEL_NAME}.ghb_conf_stress_period_data',
         fine_gs=fine_gs,
         grid_gs=grid_gs,
@@ -242,13 +242,37 @@ def main():
     obs_results = pd.read_csv(os.path.join(TRUTH_DIR, 'obs_results_truth.csv'))
     std_obs_results  = pd.read_csv(os.path.join(TRUTH_DIR, f'obs_results_std.csv'))
     index_cols = ['kper', 'kstp']
-    use_cols = list(obs_results.columns.values)[5:]
+    obs_use_cols = list(obs_results.columns.values)[5:]
     pf.add_observations(
         'obs_results.csv', # this is being read from the template file not the above truth file
         index_cols=index_cols,
-        use_cols=use_cols, # skip the index column
+        use_cols=obs_use_cols, # skip the index column
         prefix='ts',
         obsgp='ts',
+    )
+
+    # add budget
+    budget = pd.read_csv(os.path.join(TEMP_DIR, "incremental_budget.csv"))
+    index_cols = ['kper']
+    use_cols = list(budget.columns.values)[1:]
+    pf.add_observations(
+        'incremental_budget.csv', # this is being read from the template file not the above truth file
+        index_cols=index_cols,
+        use_cols=use_cols, # skip the index column
+        prefix='bgt',
+        obsgp='budget',
+    )
+
+    # add heads
+    # head = pd.read_csv(os.path.join(TEMP_DIR, f"{MODEL_NAME}_heads.csv"))
+    index_cols = ['kper', 'kstp', 'i', 'j']
+    use_cols = ['head']
+    pf.add_observations(
+        f"{MODEL_NAME}_heads.csv", # this is being read from the template file not the above truth file
+        index_cols=index_cols,
+        use_cols=use_cols,
+        prefix='h',
+        obsgp='heads',
     )
 
     # FORWARD RUN SCRIPT --------------------------------------------------
@@ -265,6 +289,9 @@ def main():
     pf.add_py_function(
         f"{SCRIPTS_DIR}/helpers.py",
         f"extract_spring_obs(gwf=None, model_name='{MODEL_NAME}', samples_path=r'{sample_rel}', conf_h_path='{MODEL_NAME}.ghb_conf_heads.csv', aw_h_path='{MODEL_NAME}.awanui_stage.csv', pw_h_path='{MODEL_NAME}.ghb_pw_heads.csv', spring_h_path='{MODEL_NAME}.spring_stage.csv', pw_q_path='{MODEL_NAME}.poukawa_flow_m3d.csv')", is_pre_cmd=False)
+    pf.add_py_function(
+        f"{SCRIPTS_DIR}/helpers.py",
+        f"extract_model_heads(model_name=f'{MODEL_NAME}')", is_pre_cmd=False)
 
     pst = pf.build_pst()
     # pst_file = f'{MODEL_NAME}.pst'
@@ -275,7 +302,8 @@ def main():
     # build weights from standard deviations
     init_values = obs_results.set_index(['kper', 'kstp']).to_dict(orient='index')
     std_values = std_obs_results.set_index(['kper', 'kstp']).to_dict(orient='index')
-    for col in use_cols:
+    pst.observation_data.loc[:, 'weight'] = 0.0
+    for col in obs_use_cols:
         for kper_kstp in list(std_values.keys()):
             kper = int(kper_kstp[0])
             kstp = int(kper_kstp[1])
@@ -357,14 +385,17 @@ def main():
     
     # PRIOR PARAMETER COVARIANCE --------------------------------------------------
     print("Adding parameter covariance...")
-    pe_f = os.path.join(TEMP_DIR, 'prior_pe.jcb')
-
+    
     pe = pf.draw(num_reals=NREALS_PRIOR, use_specsim=True)
     pe.enforce() # enforces parameter bounds
+    
+    pe_f = os.path.join(TEMP_DIR, 'prior_pe.jcb')
     pe.to_binary(pe_f) #writes the parameter ensemble to binary file
     
     final_pst = os.path.join(TEMP_DIR, pst_file)
     pst.write(final_pst, version=2)
+
+    print('done')
     
     
     

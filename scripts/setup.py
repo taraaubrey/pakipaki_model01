@@ -1,6 +1,6 @@
 MODEL_NAME = 'local2'  # name of the model
 # model domain
-RES = 50
+RES = 25
 NLAY = 1
 NLAY_THICKNESS = 10  # thickness of each layer in meters
 
@@ -30,8 +30,8 @@ INFLUX_BOUNDARY = r"data/model2_influx.shp"
 OUTFLUX_BOUNDARY = r"data/model2_outflux.shp"
 
 # TS FILES
-START_DATE = '2023-12-7'  # start date for the simulation
-END_DATE = '2024-1-28'  # end date for the simulation
+START_DATE = '2023-12-7 00:00'  # start date for the simulation
+END_DATE = '2024-1-27 23:59'  # end date for the simulation
 AWANUI_TS = r"data/river-level-for-awanui-s.csv" #mm
 AWANUI_Q = r"data/river-flow-for-awanui-st.csv" #m3/d
 POUKAWA_TS = r"data/river-level-for-poukawa.csv" #mRL

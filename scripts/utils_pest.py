@@ -47,7 +47,7 @@ def define_mult_array(pf, ws,
                 zone_array=ib[0],
                 par_type="pilotpoints", #specify the type, these will be unique parameters for each cell
                 geostruct=grid_gs, # the gestatisical structure for spatial correlation 
-                par_name_base=base+"_pp", #specify a parameter name base that allows us to easily identify the filename and parameter type. "_gr" for "grid", and so forth.
+                par_name_base=base+"-pp", #specify a parameter name base that allows us to easily identify the filename and parameter type. "_gr" for "grid", and so forth.
                 pargp=base+"pp", #likewise for the parameter group name
                 lower_bound=lb, upper_bound=ub, #parameter lower and upper bound
                 # ult_ubound=uub, ult_lbound=ulb,
@@ -67,7 +67,7 @@ def define_mult_array(pf, ws,
                                     zone_array=ib[0],
                                     par_type="constant",
                                     geostruct=grid_gs,
-                                    par_name_base=base+"_cn",
+                                    par_name_base=base+"-cn",
                                     pargp=base+"cn",
                                     lower_bound=lb, upper_bound=ub,
                                     # ult_ubound=uub, ult_lbound=ulb
@@ -87,45 +87,43 @@ def wel(
         constant=True,
         ):
     files = [f for f in os.listdir(ws) if tag in f.lower() and f.endswith(".txt")]
-    for f in files:
-        if grid:
-            if fine_gs:
-                iname = name + f'_fn'
-                pf.add_parameters(
-                    f,
-                    par_type="grid",
-                    geostruct=fine_gs,
-                    par_name_base=iname+"gr",
-                    pargp=iname+"gr",
-                    index_cols=[0,1,2],
-                    use_cols=[3],
-                    lower_bound=q_bounds[0],
-                    upper_bound=q_bounds[1],
-                    )
-            iname = name + f'_cr'
+    # for f in files:
+    if grid:
+        if fine_gs:
             pf.add_parameters(
-                f,
+                files,
                 par_type="grid",
-                geostruct=grid_gs,
-                par_name_base=iname+"gr",
-                pargp=iname+"gr",
+                geostruct=fine_gs,
+                par_name_base=name+"-fngr",
+                pargp=name+"fngr",
                 index_cols=[0,1,2],
                 use_cols=[3],
                 lower_bound=q_bounds[0],
                 upper_bound=q_bounds[1],
-            )
-        if constant:
-            pf.add_parameters(
-                f,
-                par_type="constant",
-                geostruct=constant_gs,
-                par_name_base=name+"cn",
-                pargp=name+"cn",
-                index_cols=[0,1,2],
-                use_cols=[3],  
-                lower_bound=q_bounds[0],
-                upper_bound=q_bounds[1],
-            )
+                )
+        pf.add_parameters(
+            files,
+            par_type="grid",
+            geostruct=grid_gs,
+            par_name_base=name+"-crgr",
+            pargp=name+"crgr",
+            index_cols=[0,1,2],
+            use_cols=[3],
+            lower_bound=q_bounds[0],
+            upper_bound=q_bounds[1],
+        )
+    if constant:
+        pf.add_parameters(
+            files,
+            par_type="constant",
+            geostruct=constant_gs,
+            par_name_base=name+"-cn",
+            pargp=name+"cn",
+            index_cols=[0,1,2],
+            use_cols=[3],  
+            lower_bound=q_bounds[0],
+            upper_bound=q_bounds[1],
+        )
     return
 
 def ghb(
@@ -140,87 +138,106 @@ def ghb(
         grid=True,
         constant=True,
         ):
-    kper_files = [f for f in os.listdir(ws) if tag in f.lower() and f.endswith(".txt")]
-    for f in kper_files:
-        kper = f.split(".")[1][-1]
-        if kper not in ['1']:
+    
+    if tag.split('.')[-1].startswith('ghbspr'):
+        kper_files = [f for f in os.listdir(ws) if tag in f.lower() and f.endswith(".txt")]
+        kper_files = kper_files[:-2]  # exclude last two stress periods (no ghb)
+    else:
+        kper_files = [f for f in os.listdir(ws) if tag in f.lower() and f.endswith(".txt")]
 
-            if grid:
-                if fine_gs:
-                    iname = name + f'_cond_fn'
-                    pf.add_parameters(f,
-                                    par_type="grid",
-                                    geostruct=grid_gs,
-                                    par_name_base=iname+"gr",
-                                    pargp=iname+"gr",
-                                    index_cols=[0,1,2],
-                                    use_cols=[4],
-                                    lower_bound=cond_bounds[0],
-                                    upper_bound=cond_bounds[1],
-                                    )
-                    iname = name + f'_head_fn'
-                    pf.add_parameters(f,
-                                        par_type="grid",
-                                        geostruct=grid_gs,
-                                        par_name_base=iname+"gr",
-                                        pargp=iname+"gr",
-                                        index_cols=[0,1,2],
-                                        use_cols=[3],   
-                                        par_style="a", 
-                                        transform="none",
-                                        lower_bound=head_bounds[0],
-                                        upper_bound=head_bounds[1],
-                                        )
-                iname = name + f'_cond_cr'
-                pf.add_parameters(f,
-                                par_type="grid",
-                                geostruct=grid_gs,
-                                par_name_base=iname+"gr",
-                                pargp=iname+"gr",
-                                index_cols=[0,1,2],
-                                use_cols=[4],
-                                lower_bound=cond_bounds[0],
-                                upper_bound=cond_bounds[1],
-                                )
-                iname = name + f'_head_cr'
-                pf.add_parameters(f,
-                                par_type="grid",
-                                geostruct=grid_gs,
-                                par_name_base=iname+"gr",
-                                pargp=iname+"gr",
-                                index_cols=[0,1,2],
-                                use_cols=[3],   
-                                par_style="a", 
-                                transform="none",
-                                lower_bound=head_bounds[0],
-                                upper_bound=head_bounds[1],
-                                )
+    # conductances all the same for each stress period
+    if grid:
+        if fine_gs:
+            iname = name + f'-cond-fngr'
+            # every cell scale (fine scale)
+            pf.add_parameters(
+                kper_files,
+                par_type="grid",
+                geostruct=fine_gs,
+                par_name_base=iname,
+                pargp=iname,
+                index_cols=[0,1,2],
+                use_cols=[4],
+                lower_bound=cond_bounds[0],
+                upper_bound=cond_bounds[1],
+                )
+        # every cell (larger scale)
+        iname = name + f'-cond-crgr'
+        pf.add_parameters(
+            kper_files,
+            par_type="grid",
+            geostruct=grid_gs,
+            par_name_base=iname,
+            pargp=iname,
+            index_cols=[0,1,2],
+            use_cols=[4],
+            lower_bound=cond_bounds[0],
+            upper_bound=cond_bounds[1],
+            )
+    if constant:
+        # constant and grid scale additive head parameters
+        pf.add_parameters(
+            kper_files,
+            par_type="constant",
+            geostruct=constant_gs,
+            par_name_base=name+"-cond-cn",
+            pargp=name+"-cond-cn",
+            index_cols=[0,1,2],
+            use_cols=[4],  
+            lower_bound=cond_bounds[0],
+            upper_bound=cond_bounds[1],
+            )
+
+
+    # for f in kper_files:
+    #     kper = f.split(".")[1][-1]
+    #     if kper not in ['1']:
+
+    #         if grid:
+    #             if fine_gs:
+    #                 iname = name + f'-head-fngr'
+    #                 pf.add_parameters(
+    #                     f,
+    #                     par_type="grid",
+    #                     geostruct=fine_gs,
+    #                     par_name_base=iname,
+    #                     pargp=iname,
+    #                     index_cols=[0,1,2],
+    #                     use_cols=[3],   
+    #                     par_style="a", 
+    #                     transform="none",
+    #                     lower_bound=head_bounds[0],
+    #                     upper_bound=head_bounds[1],
+    #                     )
+    #             iname = name + f'-head-crgr'
+    #             pf.add_parameters(
+    #                 f,
+    #                 par_type="grid",
+    #                 geostruct=grid_gs,
+    #                 par_name_base=iname,
+    #                 pargp=iname,
+    #                 index_cols=[0,1,2],
+    #                 use_cols=[3],   
+    #                 par_style="a", 
+    #                 transform="none",
+    #                 lower_bound=head_bounds[0],
+    #                 upper_bound=head_bounds[1],
+    #                 )
                 
-            if constant:
-                pf.add_parameters(f,
-                                    par_type="constant",
-                                    geostruct=constant_gs,
-                                    par_name_base=name+"_cond_cn",
-                                    pargp=name+"cn",
-                                    index_cols=[0,1,2],
-                                    use_cols=[4],  
-                                    lower_bound=cond_bounds[0],
-                                    upper_bound=cond_bounds[1],
-                                    )
-
-            # constant and grid scale additive head parameters
-                pf.add_parameters(f,
-                                    par_type="constant",
-                                    geostruct=constant_gs,
-                                    par_name_base=name+"_head_cn",
-                                    pargp=name+"cn",
-                                    index_cols=[0,1,2],
-                                    use_cols=[3],
-                                    par_style="a", 
-                                    transform="none",
-                                    lower_bound=head_bounds[0],
-                                    upper_bound=head_bounds[1],
-                                    )
+    #         if constant:
+    #         # constant and grid scale additive head parameters
+    #             pf.add_parameters(f,
+    #                                 par_type="constant",
+    #                                 geostruct=constant_gs,
+    #                                 par_name_base=name+"-head-cn",
+    #                                 pargp=name+"-head-cn",
+    #                                 index_cols=[0,1,2],
+    #                                 use_cols=[3],
+    #                                 par_style="a", 
+    #                                 transform="none",
+    #                                 lower_bound=head_bounds[0],
+    #                                 upper_bound=head_bounds[1],
+    #                                 )
     return
 
 
@@ -233,7 +250,7 @@ def add_ts_parameters(pf, name, TEMP_DIR, f, lb, ub):
         f,
         par_type="constant",
         par_name_base=df.columns.tolist()[1:],
-        pargp=name+'_cn',
+        pargp=name+'-cn',
         index_cols=[0],
         use_cols=np.arange(1, len(df.columns)).tolist(),
         par_style="a", 
