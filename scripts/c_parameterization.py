@@ -1,4 +1,6 @@
 import os
+import glob
+import re
 import stat
 import shutil
 import pyemu
@@ -120,42 +122,14 @@ def main():
         )
 
     # RECHARGE ------------------------------------------------------
-    # define_mult_array(pf, TEMP_DIR,
-    #         tag=f'{MODEL_NAME}.rcha_recharge',
-    #         sr=sr,
-    #         ib=ib,
-    #         grid_gs=grid_gs,
-    #         lb=0.01, ub=1, ulb=0, uub=1e-1,
-    #         add_coarse=True)
-
-    wel(pf, TEMP_DIR,
-        name='mbr',
-        tag=f'{MODEL_NAME}.wel_mbr_stress_period_data',
-        fine_gs=fine_gs,
+    rcha(
+        pf, TEMP_DIR, ib,
+        tag=f'{MODEL_NAME}.rcha_recharge',
         grid_gs=grid_gs,
-        constant_gs=None,
-        q_bounds=[1e-2, 1e2],
-        # q_ultbounds=[0.01, 10]
-        )
-
-    wel(pf, TEMP_DIR,
-        name='influx',
-        tag=f'{MODEL_NAME}.wel_influx_stress_period_data',
         fine_gs=fine_gs,
-        grid_gs=grid_gs,
         constant_gs=None,
-        q_bounds=[1e-2, 1e2],
-        # q_ultbounds=[0.01, 10]
-        )
-
-    wel(pf, TEMP_DIR,
-        name='outflux',
-        tag=f'{MODEL_NAME}.wel_outflux_stress_period_data',
-        fine_gs=fine_gs,
-        grid_gs=grid_gs,
-        constant_gs=None,
-        q_bounds=[1e-2, 1e2],
-        # q_ultbounds=[0.1, 90]
+        rch_bounds=[1e-2, 1e2],
+        pp_space=5,
         )
 
     ghb(pf, TEMP_DIR,
@@ -239,146 +213,196 @@ def main():
 
 
     # add stress period head/fluxes observations ------------------------------
-    obs_results = pd.read_csv(os.path.join(TRUTH_DIR, 'obs_results_truth.csv'))
-    std_obs_results  = pd.read_csv(os.path.join(TRUTH_DIR, f'obs_results_std.csv'))
-    index_cols = ['kper', 'kstp']
-    obs_use_cols = list(obs_results.columns.values)[5:]
+    # std_obs_results  = pd.read_csv(os.path.join(TRUTH_DIR, f'obs_results_std.csv'))
+    index_cols = ['time']
+    obs_use_cols = ['pk4', 'pk4-spr-diff', 'pk4-conf-diff']
     pf.add_observations(
-        'obs_results.csv', # this is being read from the template file not the above truth file
+        'output.sample_heads.csv', # this is being read from the template file not the above truth file
         index_cols=index_cols,
         use_cols=obs_use_cols, # skip the index column
-        prefix='ts',
-        obsgp='ts',
+        prefix='ts-heads',
+        obsgp='ts-heads',
+    )
+
+    # std_obs_results  = pd.read_csv(os.path.join(TRUTH_DIR, f'obs_results_std.csv'))
+    index_cols = ['time']
+    obs_use_cols = ['flux']
+    pf.add_observations(
+        'output.spring_fluxes.csv', # this is being read from the template file not the above truth file
+        index_cols=index_cols,
+        use_cols=obs_use_cols, # skip the index column
+        prefix='ts-flux',
+        obsgp='ts-flux',
     )
 
     # add budget
-    budget = pd.read_csv(os.path.join(TEMP_DIR, "incremental_budget.csv"))
-    index_cols = ['kper']
-    use_cols = list(budget.columns.values)[1:]
+    index_cols = ['kper', 'kstp', 'k', 'i', 'j']
+    use_cols = ['AWq']
     pf.add_observations(
-        'incremental_budget.csv', # this is being read from the template file not the above truth file
+        "output.GHB_AW_fluxes.csv", # this is being read from the template file not the above truth file
         index_cols=index_cols,
         use_cols=use_cols, # skip the index column
-        prefix='bgt',
+        prefix='AWq',
+        obsgp='AWq',
+    )
+
+    # add confined flux
+    index_cols = ['kper', 'kstp', 'k', 'i', 'j']
+    use_cols = ['CONFq']
+    pf.add_observations(
+        "output.GHB_CONF_fluxes.csv", # this is being read from the template file not the above truth file
+        index_cols=index_cols,
+        use_cols=use_cols, # skip the index column
+        prefix='CONFq',
+        obsgp='CONFq',
+    )
+
+    # add budget
+    budget = pd.read_csv(os.path.join(TEMP_DIR, "output.budget.csv"))
+    index_cols = ['kper']
+    use_cols = list(budget.iloc[:, 1:].columns)
+    pf.add_observations(
+        "output.budget.csv", # this is being read from the template file not the above truth file
+        index_cols=index_cols,
+        use_cols=use_cols, # skip the index column
+        prefix='budget',
         obsgp='budget',
     )
 
-    # add heads
-    # head = pd.read_csv(os.path.join(TEMP_DIR, f"{MODEL_NAME}_heads.csv"))
-    index_cols = ['kper', 'kstp', 'i', 'j']
-    use_cols = ['head']
-    pf.add_observations(
-        f"{MODEL_NAME}_heads.csv", # this is being read from the template file not the above truth file
-        index_cols=index_cols,
-        use_cols=use_cols,
-        prefix='h',
-        obsgp='heads',
-    )
+    # add head arrays
+    pattern = os.path.join(TEMP_DIR, "output.heads_lyr*.dat")
+    head_files = glob.glob(pattern)
+
+    # Extract layer, kper, kstp from filenames
+    file_info = []
+    for file_path in head_files:
+        filename = os.path.basename(file_path)
+        # Use regex to extract numbers
+        match = re.search(r'output\.heads_lyr(\d+)_kper(\d+)_kstp(\d+)\.dat', filename)
+        if match:
+            lyr = int(match.group(1))
+            kper = int(match.group(2))
+            kstp = int(match.group(3))
+            file_info.append({
+                'file_path': file_path,
+                'filename': filename,
+                'layer': lyr,
+                'kper': kper,
+                'kstp': kstp
+            })
+    for info in file_info:
+        file_path = info['file_path']
+        lyr = info['layer']
+        kper = info['kper']
+        kstp = info['kstp']
+        
+        # Add as observation to pyemu
+        pf.add_observations(
+            info['filename'],
+            prefix=f'h-lyr{lyr}-kper{kper}-kstp{kstp}',
+            obsgp=f'head-arr',
+            zone_array=ib[0,:,:], # assuming layer 1 for zone array
+        )
+
 
     # FORWARD RUN SCRIPT --------------------------------------------------
-    # pst = pf.build_pst()
     pf.mod_sys_cmds.append("mf6") #do this only once
-    # pf.mod_sys_cmds.append(f"mp7 {MODEL_NAME}.mpsim") #do this only once
-    # pst = pf.build_pst()
 
     sample_rel = os.path.relpath(SAMPLES, TEMP_DIR)
     # post-processing to get observations
     pf.add_py_function(
         f"{SCRIPTS_DIR}/helpers.py",
-        f"extract_heads_and_budget(model_name='{MODEL_NAME}')", is_pre_cmd=False)
+        f"extract_budget(model_name=f'{MODEL_NAME}')", is_pre_cmd=False)
     pf.add_py_function(
         f"{SCRIPTS_DIR}/helpers.py",
-        f"extract_spring_obs(gwf=None, model_name='{MODEL_NAME}', samples_path=r'{sample_rel}', conf_h_path='{MODEL_NAME}.ghb_conf_heads.csv', aw_h_path='{MODEL_NAME}.awanui_stage.csv', pw_h_path='{MODEL_NAME}.ghb_pw_heads.csv', spring_h_path='{MODEL_NAME}.spring_stage.csv', pw_q_path='{MODEL_NAME}.poukawa_flow_m3d.csv')", is_pre_cmd=False)
+        f"extract_model_heads(model_name=f'{MODEL_NAME}', sample_path='{sample_rel}')", is_pre_cmd=False)
     pf.add_py_function(
         f"{SCRIPTS_DIR}/helpers.py",
-        f"extract_model_heads(model_name=f'{MODEL_NAME}')", is_pre_cmd=False)
+        f"extract_ghb_fluxes(model_name=f'{MODEL_NAME}', sample_path='{sample_rel}')", is_pre_cmd=False)
 
     pst = pf.build_pst()
-    # pst_file = f'{MODEL_NAME}.pst'
-    # pst.write(os.path.join(TEMP_DIR, pst_file),version=2)
 
     ###############################################################################
+    ts_heads = pd.read_csv(os.path.join(TRUTH_DIR, 'output.sample_heads.truth.csv'), index_col=0)
+    AWq = pd.read_csv(os.path.join(TRUTH_DIR, "output.GHB_AW_fluxes.truth.csv"), index_col=[0, 1, 2, 3, 4])
+    heads = np.loadtxt(
+        os.path.join(TRUTH_DIR, "output.heads.truth.dat"))
+    heads_std = np.loadtxt(
+        os.path.join(TRUTH_DIR, "output.heads.std.dat"))
+    heads_weight = np.loadtxt(
+        os.path.join(TRUTH_DIR, "output.heads.weight.dat"))
 
-    # build weights from standard deviations
-    init_values = obs_results.set_index(['kper', 'kstp']).to_dict(orient='index')
-    std_values = std_obs_results.set_index(['kper', 'kstp']).to_dict(orient='index')
-    pst.observation_data.loc[:, 'weight'] = 0.0
-    for col in obs_use_cols:
-        for kper_kstp in list(std_values.keys()):
-            kper = int(kper_kstp[0])
-            kstp = int(kper_kstp[1])
-            if col in std_values[kper_kstp].keys():
-                initial_val = float(init_values[kper_kstp][col])
-                std = float(std_values[kper_kstp][col])
-                if std > 0:
-                    weight = 1.0 / std
-                    pst.observation_data.loc[
-                        f'oname:ts_otype:lst_usecol:{col}_kper:{kper}_kstp:{kstp}','obsval'] = initial_val
-                    pst.observation_data.loc[
-                        f'oname:ts_otype:lst_usecol:{col}_kper:{kper}_kstp:{kstp}','standard_deviation'] = std
-                    pst.observation_data.loc[
-                        f'oname:ts_otype:lst_usecol:{col}_kper:{kper}_kstp:{kstp}','weight'] = weight
-                else:
-                    pst.observation_data.loc[
-                        f'oname:ts_otype:lst_usecol:{col}_kper:{kper}_kstp:{kstp}','obsval'] = initial_val
-                    pst.observation_data.loc[
-                        f'oname:ts_otype:lst_usecol:{col}_kper:{kper}_kstp:{kstp}','standard_deviation'] = std
-                    pst.observation_data.loc[
-                        f'oname:ts_otype:lst_usecol:{col}_kper:{kper}_kstp:{kstp}','weight'] = 0
-            else:
-                pst.observation_data.loc[
-                        f'oname:ts_otype:lst_usecol:{col}_kper:{kper}_kstp:{kstp}','obsval'] = initial_val
-                pst.observation_data.loc[
-                        f'oname:ts_otype:lst_usecol:{col}_kper:{kper}_kstp:{kstp}','standard_deviation'] = std
-                pst.observation_data.loc[
-                    f'oname:ts_otype:lst_usecol:{col}_kper:{kper}_kstp:{kstp}','weight'] = 0
+    # adjust obgnme to main groups (for some reason not working above)
+    pst.observation_data['obgnme'] = pst.observation_data.apply(
+        lambda x: x['obgnme'].split('_')[0].split(':')[-1], axis=1)
+    pst.observation_data['standard_deviation'] = 0
+    pst.observation_data['weight'] = 0
 
-    # adjust the obs which are supposed to be greater than constraints
-    val = pst.observation_data.loc[
-                    f'oname:ts_otype:lst_usecol:awswgwdiff_kper:1_kstp:1','obgnme']
-    pst.observation_data.loc[
-                    f'oname:ts_otype:lst_usecol:awswgwdiff_kper:1_kstp:1','obgnme'] = 'greater_' + val
+    # add truth values for ts-heads
+    for _, row in pst.observation_data.iterrows():
+        obgnme = row['obgnme']
+
+        if obgnme == 'ts-heads':
+            time = int(row['time'])
+            col = row['usecol']
+            
+            try:
+                pst.observation_data.at[row.name, 'obsval'] = ts_heads.loc[time, col]
+                pst.observation_data.at[row.name, 'standard_deviation'] = ts_heads.loc[time, 'std']
+                pst.observation_data.at[row.name, 'weight'] = ts_heads.loc[time, 'weight']
+
+            except:
+                continue
+        
+        elif obgnme == 'AWq':
+            kper = int(row['kper'])
+            kstp = int(row['kstp'])
+            k = int(row['k'])
+            i = int(row['i'])
+            j = int(row['j'])
+            
+            pst.observation_data.at[row.name, 'obsval'] = AWq.loc[(kper, kstp, k, i, j), 'AWq']
+            pst.observation_data.at[row.name, 'standard_deviation'] = AWq.loc[(kper, kstp, k, i, j), 'std']
+            pst.observation_data.at[row.name, 'weight'] = AWq.loc[(kper, kstp, k, i, j), 'weight']
+        
+        elif obgnme == 'head-arr':
+            i = int(row['i'])
+            j = int(row['j'])
+            
+            pst.observation_data.at[row.name, 'obsval'] = heads[i, j]
+            pst.observation_data.at[row.name, 'standard_deviation'] = heads_std[i, j]
+            pst.observation_data.at[row.name, 'weight'] = heads_weight[i, j]
+            pst.observation_data.at[row.name, 'obgnme'] = 'less_' + row['obgnme']
     
-    val = pst.observation_data.loc[
-                    f'oname:ts_otype:lst_usecol:pwswgwdiff_kper:1_kstp:1','obgnme']
-    pst.observation_data.loc[
-                    f'oname:ts_otype:lst_usecol:pwswgwdiff_kper:1_kstp:1','obgnme'] = 'greater_' + val
+    # create phi factor file
+    phi_dict = {
+        'head-arr': 25,
+        'ts-heads': 50,
+        'AWq': 25,
+    }
+    # to dataframe with no column names or index
+    df = pd.DataFrame(list(phi_dict.items()))
+    df.to_csv(os.path.join(TEMP_DIR, 'phi_factors.csv'), index=False, header=False)
+    
     
     ## ADD FORECASTS ------------------------------------------------------
-    forecasts = [
-        'oname:ts_otype:lst_usecol:pk4head_kper:3_kstp:1',
-        'oname:ts_otype:lst_usecol:pk4head_kper:4_kstp:1',
-        'oname:ts_otype:lst_usecol:pk4head_kper:4_kstp:2',
-        'oname:ts_otype:lst_usecol:pk4head_kper:4_kstp:3',
-        'oname:ts_otype:lst_usecol:pk4head_kper:4_kstp:4',
-        'oname:ts_otype:lst_usecol:pk4head_kper:4_kstp:5',
-        'oname:ts_otype:lst_usecol:pk4springdiff_kper:3_kstp:1',
-        'oname:ts_otype:lst_usecol:pk4springdiff_kper:4_kstp:1',
-        'oname:ts_otype:lst_usecol:pk4springdiff_kper:4_kstp:2',
-        'oname:ts_otype:lst_usecol:pk4springdiff_kper:4_kstp:3',
-        'oname:ts_otype:lst_usecol:pk4springdiff_kper:4_kstp:4',
-        'oname:ts_otype:lst_usecol:pk4springdiff_kper:4_kstp:5',
-        'oname:ts_otype:lst_usecol:springq_kper:1_kstp:1',
-        'oname:ts_otype:lst_usecol:springq_kper:2_kstp:1',
-        'oname:ts_otype:lst_usecol:springq_kper:2_kstp:2',
-        'oname:ts_otype:lst_usecol:springq_kper:2_kstp:3',
-        'oname:ts_otype:lst_usecol:springq_kper:2_kstp:4',
-        'oname:ts_otype:lst_usecol:springq_kper:2_kstp:5',
-        'oname:ts_otype:lst_usecol:springq_kper:3_kstp:1',
-        'oname:ts_otype:lst_usecol:springq_kper:4_kstp:1',
-        'oname:ts_otype:lst_usecol:springq_kper:4_kstp:2',
-        'oname:ts_otype:lst_usecol:springq_kper:4_kstp:3',
-        'oname:ts_otype:lst_usecol:springq_kper:4_kstp:4',
-        'oname:ts_otype:lst_usecol:springq_kper:4_kstp:5',
-    ]
+    forecast_obgnme = ['ts-flux', 'budget']
+    
+    mask = pst.observation_data.loc[:,'obgnme'].isin(forecast_obgnme)
+    forecasts = pst.observation_data[mask].index.tolist()
+    
     pst.pestpp_options['forecasts'] = forecasts
 
 
     # WRITE PEST -------------------------------------------------------
+    
     print("Writing PEST template file...")
     pst.control_data.noptmax = 0 # just run parameter values in the file
+    pst.observation_data = pst.observation_data.fillna(0)
     pst_file = f'{MODEL_NAME}.pst'
-    pst.write(os.path.join(TEMP_DIR, pst_file), version=2)
+    final_pst = os.path.join(TEMP_DIR, pst_file)
+
+    pst.write(final_pst, version=2)
 
     # RUN PESTPP-IES --------------------------------------------------
     pyemu.os_utils.run("pestpp-ies {0}".format(pst_file), cwd=TEMP_DIR)
@@ -392,7 +416,7 @@ def main():
     pe_f = os.path.join(TEMP_DIR, 'prior_pe.jcb')
     pe.to_binary(pe_f) #writes the parameter ensemble to binary file
     
-    final_pst = os.path.join(TEMP_DIR, pst_file)
+    
     pst.write(final_pst, version=2)
 
     print('done')

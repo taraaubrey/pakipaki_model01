@@ -8,7 +8,6 @@ def define_mult_array(pf, ws,
           sr=None,
           grid_gs=None,
           lb=0.2, ub=5.0,
-          ulb=0.01, uub=100.,
           add_coarse=True,
           lays=[0, 1, 2, 3, 4],
           pp_space=10,
@@ -25,23 +24,6 @@ def define_mult_array(pf, ws,
             else:
                 base = f[0].split(".")[1]
             
-            # if fine:
-            #     if fine_gs is None:
-            #         fine_gs = copy.deepcopy(grid_gs)
-            #     # grid (fine) scale parameters
-            #     pf.add_parameters(
-            #         f,
-            #         zone_array=ib[0],
-            #         par_type="pilotpoints", #specify the type, these will be unique parameters for each cell
-            #         geostruct=fine_gs, # the gestatisical structure for spatial correlation 
-            #         par_name_base=base+"_fnpp", #specify a parameter name base that allows us to easily identify the filename and parameter type. "_gr" for "grid", and so forth.
-            #         pargp=base+"fnpp", #likewise for the parameter group name
-            #         lower_bound=lb, upper_bound=ub, #parameter lower and upper bound
-            #         pp_options= {
-            #             "pp_space": 5, # specify the spacing of the pilot points
-            #             }
-            #         )
-            
             pf.add_parameters(
                 f,
                 zone_array=ib[0],
@@ -55,11 +37,6 @@ def define_mult_array(pf, ws,
                     "pp_space": pp_space, # specify the spacing of the pilot points
                     }
                 )
-
-            # # write the pilot point file
-            # pst = pf.build_pst()
-            # par_pp = pst.add_parameters(pp_file+".tpl")
-            # pst.parameter_data.loc[par_pp.parnme, ['parval1','parlbnd','parubnd', 'pargp']] = parval1, lb, ub, pargp
             
             if add_coarse==True:
                 # constant (coarse) scale parameters
@@ -72,6 +49,59 @@ def define_mult_array(pf, ws,
                                     lower_bound=lb, upper_bound=ub,
                                     # ult_ubound=uub, ult_lbound=ulb
                                     )
+    return
+
+
+def rcha(
+        pf, ws, ib,
+        name='rch', 
+        tag='local1.wel_stress_period_data', 
+        fine_gs=None,
+        grid_gs=None,
+        constant_gs=None,
+        rch_bounds=[0.1, 10],
+        grid=True,
+        constant=True,
+        pp_space=10,
+        ):
+    files = [f for f in os.listdir(ws) if tag in f.lower() and f.endswith(".txt")]
+    # for f in files:
+    if grid:
+        if fine_gs:
+            pf.add_parameters(
+                files,
+                zone_array=ib[0],
+                par_type="grid",
+                geostruct=fine_gs,
+                par_name_base=name+"-fngr",
+                pargp=name+"fngr",
+                lower_bound=rch_bounds[0],
+                upper_bound=rch_bounds[1],
+                )
+        pf.add_parameters(
+            files,
+            zone_array=ib[0],
+            par_type="pilotpoints",
+            geostruct=grid_gs,
+            par_name_base=name+"-pp",
+            pargp=name+"pp",
+            lower_bound=rch_bounds[0],
+            upper_bound=rch_bounds[1],
+            pp_options= {
+                "pp_space": pp_space, # specify the spacing of the pilot points
+                }
+        )
+    if constant:
+        pf.add_parameters(
+            files,
+            zone_array=ib[0],
+            par_type="constant",
+            geostruct=constant_gs,
+            par_name_base=name+"-cn",
+            pargp=name+"cn",
+            lower_bound=rch_bounds[0],
+            upper_bound=rch_bounds[1],
+        )
     return
 
 

@@ -13,6 +13,7 @@ def main():
     pst.pestpp_options['ies_parameter_ensemble'] = 'prior_pe.jcb'
     pst.pestpp_options['overdue_giveup_fac'] = 10
     pst.pestpp_options['overdue_giveup_minutes'] = 15
+    pst.pestpp_options['ies_phi_factor_file'] = 'phi_factors.csv'
     # pst.pestpp_options['ies_drop_conflicts'] = True
     # pst.pestpp_options['ies_save_binary'] = True
     # pst.pestpp_options['ies_ordered_binary'] = False

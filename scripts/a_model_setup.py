@@ -2,11 +2,9 @@ import matplotlib.pyplot as plt
 import os
 from pathlib import Path
 import shutil
-import gridit as gi
 import numpy as np
 import flopy as fp
 import pandas as pd
-from scipy.ndimage import uniform_filter
 
 import helpers as helpers
 
@@ -53,33 +51,39 @@ def main():
     else:
         print(f'Bin directory {BIN_DIR} does not exist. Please check the path.')
 
+    # save the setup.py file as a text file in MODEL_DIR
+    setup_file_path = Path(__file__).parent / 'setup.py'
+    destination_path = Path(MODEL_DIR) / 'model_setup.txt'
+    shutil.copy2(setup_file_path, destination_path)
+    print(f'Setup file copied to: {destination_path}')
+
     fn_out = {}
     # TDIS ####################################################################
     start = pd.to_datetime(START_DATE)
     end = pd.to_datetime(END_DATE)
-    PERLEN = (end - start).days
+    PERLEN = (end - start).days + 1
     NSTEPS = PERLEN  # 1 day time step
 
     print(f'Simulation period: {PERLEN} days with {NSTEPS} time steps.')
     
     # dis
     grid, idomain, top, nrow, ncol, delr, delc, fn_out = dis_setup(fn_out)
-    grid_gpd = grid.cell_geodataframe()
-    grid_gpd.to_file(Path(SPATIAL_DIR, f'{MODEL_NAME}_grid.shp'), driver='ESRI Shapefile')
+    # grid_gpd = grid.cell_geodataframe()
+    # grid_gpd.to_file(Path(SPATIAL_DIR, f'{MODEL_NAME}_grid.shp'), driver='ESRI Shapefile')
     # ghbs
     fn_out = ghb_aw_setup(grid, idomain, start, end, fn_out)
     fn_out = ghb_spring_setup(grid, idomain, start, end, fn_out)
     fn_out, ghb_pw_kper0 = ghb_pw_setup(grid, idomain, start, end, fn_out)
     fn_out = ghb_conf_setup(grid, idomain, start, end, fn_out)
     # wel
-    fn_out, mbr_df = wel_mbr_setup(grid, idomain, fn_out, ghb_pw_kper0)
-    fn_out = wel_inout_setup(grid, idomain, mbr_df, fn_out)
+    # fn_out, mbr_df = wel_mbr_setup(grid, idomain, fn_out, ghb_pw_kper0)
+    # fn_out = wel_inout_setup(grid, idomain, mbr_df, fn_out)
     # npf
     fn_out = npf_setup(idomain, fn_out)
     # sto
     fn_out = sto_ss_setup(idomain, fn_out)
     # rch
-    # fn_out = rch_setup(idomain, fn_out)
+    fn_out = rch_setup(idomain, fn_out)
     #obs - save file
     pk4_h = pk4_ts(start, end)
     aw_Q = awanui_ts(start, end)
@@ -163,12 +167,12 @@ def main():
         strt=init_h, # initial head, only used for iterative solution in steady model (arbitrary)
         )
 
-    # rch = fp.mf6.ModflowGwfrcha(
-    #     model=gwf,
-    #     recharge=fn_out['rch'], # recharge file names for each layer
-    #     save_flows=True, # save flows for this package
-    #     pname='rch' # package name
-    # )
+    rch = fp.mf6.ModflowGwfrcha(
+        model=gwf,
+        recharge=fn_out['rch'], # recharge file names for each layer
+        save_flows=True, # save flows for this package
+        pname='rch' # package name
+    )
 
     ghb_aw = fp.mf6.ModflowGwfghb(
         model=gwf, # add riv package to model gwf (created in previous code cell)
@@ -202,25 +206,25 @@ def main():
         save_flows=True, # save flows for this package 
         )
 
-    wel_mbr = fp.mf6.ModflowGwfwel(
-        model=gwf,
-        stress_period_data=fn_out['wel_mbr'],
-        pname='wel_mbr', # package name
-        save_flows=True,
-        )
+    # wel_mbr = fp.mf6.ModflowGwfwel(
+    #     model=gwf,
+    #     stress_period_data=fn_out['wel_mbr'],
+    #     pname='wel_mbr', # package name
+    #     save_flows=True,
+    #     )
     
-    influx = fp.mf6.ModflowGwfwel(
-        model=gwf,
-        stress_period_data=fn_out['wel_influx'],
-        pname='influx', # package name
-        save_flows=True,
-        )
-    outflux = fp.mf6.ModflowGwfwel(
-        model=gwf,
-        stress_period_data=fn_out['wel_outflux'],
-        pname='outflux', # package name
-        save_flows=True,
-        )
+    # influx = fp.mf6.ModflowGwfwel(
+    #     model=gwf,
+    #     stress_period_data=fn_out['wel_influx'],
+    #     pname='influx', # package name
+    #     save_flows=True,
+    #     )
+    # outflux = fp.mf6.ModflowGwfwel(
+    #     model=gwf,
+    #     stress_period_data=fn_out['wel_outflux'],
+    #     pname='outflux', # package name
+    #     save_flows=True,
+    #     )
 
     oc = fp.mf6.ModflowGwfoc(
         model=gwf, # add output control to model gwf (created in previous code cell)
@@ -239,153 +243,104 @@ def main():
     if not success:
         raise Exception("Model did not run successfully. Please check the output files for errors.")
 
-    # OUTPUT PLOTS --------------------------------------------------------
-    # visual check
-    # pmv = fp.plot.PlotMapView(model=gwf, layer=0) # create view of layer 0
-    # pmv.plot_array(top *idomain[0], masked_values=[1e30], alpha=0.5, cmap='viridis') # plot top elevation
-
-    # pmv.plot_bc(name='chd_pw', color='lightblue') # add 'chd' cells
-    # # pmv.plot_bc(name='mbr', color='orange') # add 'wells' cells
-    # pmv.plot_bc(name='ghb_aw', color='blue') # add 'wells' cells
-    # pmv.plot_bc(name='influx', color='green') # add 'influx' cells
-    # pmv.plot_bc(name='outflux', color='red') # add 'outflux' cells
-    # # pmv.plot_inactive(color='lightgray', alpha=0.5) # plot inactive cells
-    # # pmv.plot_grid(colors='silver', lw=0.01); # add grid
-
-    # # save to figures
-    # plt.savefig(Path(FIG_DIR, f'{MODEL_NAME}_domain.png'), dpi=300, bbox_inches='tight') # save figure
-
-    # --------------------------------------------------------------
-
-    # plot heads
-    # idom_plt = np.where(idomain[0] == 1, np.nan, idomain[0])  # create a mask for the active domain
-    # head = gwf.output.head().get_data()
-    # for i in range(NLAY):
-        
-    #     pmv = fp.plot.PlotMapView(model=gwf, layer=i)
-
-    #     pmv.plot_bc(name='ghb_pw', color='purple') # add 'chd' cells
-    #     pmv.plot_bc(name='mbr', color='orange') # add 'wells' cells
-    #     pmv.plot_bc(name='drn_r', color='blue') # add 'wells' cells
-    #     # pmv.plot_bc(name='chd_conf_out', color='gold') # add 'chd' cells
-    #     pmv.plot_bc(name='influx', color='green') # add 'influx' cells
-    #     pmv.plot_bc(name='outflux', color='red') # add 'outflux' cells
-        
-    #     # pmv.plot_inactive(color='lightgray', alpha=0.5) # plot inactive cells
-    #     # pmv.plot_array(idom_plt, cmap='gray', alpha=0.2) # plot head array for layer 0
-    #     # pmv.plot_grid(colors='silver', lw=0.1); # add grid
-    #     cs = pmv.contour_array(head[i], linewidths=1, colors='k') # contour plot of heads
-    #     plt.clabel(cs, fmt='%1.1f'); # add contour labels with one decimal place
-
-    #     # save to figures
-    #     plt.savefig(Path(FIG_DIR, f'{MODEL_NAME}_heads{i}.png'), dpi=300, bbox_inches='tight') # save figure
-    #     plt.close()
-
-    # -------------------------------------------------------------
-    # create a cross section grid & plot heads
-
-    # cross_col = 15 #which row to show cross section
-    # crossview = fp.plot.PlotCrossSection(model=gwf, line={'column': cross_col})
-    # strtArray = crossview.plot_array(head, masked_values=[1e30], alpha=0.8) # plot the active domain
-    # crossview.plot_grid(colors='black', lw=1); # add grid
-    # crossview.plot_inactive(color='lightgray') # plot inactive cells
-    # cb = plt.colorbar(strtArray, shrink=0.5) # add color bar
-    # # strtArray = crossview.plot_array(head, masked_values=[1e30], alpha = 0.5) # plot the array of heads in cross section
-    # plt.savefig(Path(FIG_DIR, f'{MODEL_NAME}_xsection_col{cross_col}.png'), dpi=300, bbox_inches='tight') # save figure
-    # plt.close()  # close the figure to avoid memory issues
+    
     TRUTHREL_DIR = os.path.abspath(TRUTH_DIR)
     # TEST OBS ------------------------------------------------------------
     os.chdir(MODEL_DIR)  # change directory to model directory
     sample_path = os.path.relpath(SAMPLES, MODEL_DIR)
-    helpers.extract_heads_and_budget(model_name=f'{MODEL_NAME}')  # extract heads and budget from model output
-    helpers.extract_spring_obs(
-        gwf=None, 
-        model_name=f'{MODEL_NAME}', 
-        samples_path=f'{sample_path}',
-        conf_h_path=f'{fn_out['ghb_conf_ts']['timeseries']['filename']}',
-        aw_h_path=f'{fn_out['ghb_aw_ts']['timeseries']['filename']}',
-        pw_h_path=f'{fn_out['ghb_pw_ts']['timeseries']['filename']}',
-        spring_h_path=f'{fn_out['ghb_sp_ts']['timeseries']['filename']}',
-        pw_q_path=f'{MODEL_NAME}.poukawa_flow_m3d.csv',
-        )  # extract spring 
-    helpers.extract_model_heads(model_name=f'{MODEL_NAME}')
+    
+    helpers.extract_budget(model_name=f'{MODEL_NAME}')  # extract heads and budget from model output    
+    samples = helpers.extract_model_heads(model_name=f'{MODEL_NAME}', sample_path=sample_path)
+    ghb_dfs = helpers.extract_ghb_fluxes(model_name=f'{MODEL_NAME}', sample_path=sample_path)
 
     # CREATE TRUTH -------------------------------------------------------
-    # copy file to truth directory
-    obs_results  = pd.read_csv(f'obs_results.csv')
-    obs_results.loc[:, 'pk4head'] = 7.8  # set all to 7.8 initially
-    mask = (obs_results['time'] <= 53) & (obs_results['time'] > 1)
-    # pk4 head
-    obs_results.loc[mask, 'pk4head'] = (
-        obs_results.loc[mask, 'time']
-        .apply(lambda x: pk4_h.loc[int(x), 'level_mRL'])
-        .values
-    )
-    obs_results['pk4confdiff'] = obs_results['pk4head'] - obs_results['confhead']
-    obs_results['pk4springdiff'] = obs_results['pk4head'] - obs_results['springhead']
-    obs_results['awswgwdiff'] = 0 # known positive flux
-    obs_results['pwswgwdiff'] = 0 # known positive flux
-
-    # first day to negative flux
-    obs_results['firstnegday'] = -1
-    obs_results.loc[1:PERLEN, 'firstnegday'] = obs_results.loc[1:PERLEN, 'pk4springdiff'].lt(0).idxmax()
-    obs_results.loc[PERLEN+2:, 'firstnegday'] = (PERLEN+2) - obs_results.loc[PERLEN+2:, 'pk4springdiff'].lt(0).idxmax()
-
-    # Awanui at Flume discharge estimate
-    obs_results.loc[:, 'awtot'] = aw_Q['sm_m3d'].iloc[0] * -1  # mean monthly 10/11
-    obs_results.loc[mask, 'awtot'] = (
-        obs_results.loc[mask, 'time']
-        .apply(lambda x: aw_Q.loc[int(x), 'sm_m3d'] * -1)
-        .values
-    )
+    # tdis_data = sim.tdis.perioddata.get_data()
     
-    # inflow from poukawa + local flow
-    # local flow assume 0.0013 m/d per m2 of catchment area
-    # poukawa area = 830m * 1m = 830m2
-    # local flow (pw_cum) = 830m2 * 0.0013m/d = 1.079 m3/d
-    # total inflow = poukawa + local flow
-    obs_results.loc[:, 'pwtot'] = pw_Q['sm_m3d'].iloc[0] * -1  # mean monthly 10/11
-    obs_results.loc[mask, 'pwtot'] = (
-        obs_results.loc[mask, 'time']
-        .apply(lambda x: pw_Q.loc[int(x), 'sm_m3d'] * -1)
-        .values
-    )
-
-    mask = (obs_results['pk4springdiff'] < 0)
-    obs_results['springq'] = -3
-    obs_results.loc[mask, 'springq'] = 0  # no spring flow if head diff is negative
-    obs_results['springcum'] = -150
-    obs_results.loc[mask, 'springcum'] = 0  # no spring flow if head diff is negative
-    # obs_results['pwcum'] = obs_results['pwtot'] * 0.0002
-    # obs_results['pwtot'] = obs_results['pwtot'] + obs_results['pwcum']
-    obs_results['awcum'] = obs_results['awtot'] - obs_results['pwtot'] - obs_results['springcum']
+    # awanui flux truth
+    helpers.create_awghb_truth(ghb_dfs, TRUTHREL_DIR)
+    # top model constraints (head can't be greater than 1m above top)
+    helpers.create_head_truth(gwf.dis.top.get_data(), TRUTHREL_DIR)
+    # sample location truth
+    helpers.samples_truth(gwf, TRUTHREL_DIR)
     
-    # save to truth directory
-    obs_results.to_csv(Path(TRUTHREL_DIR, 'obs_results_truth.csv'), index=False)
-
-    ### SETUP STD FILE ##################################################################
-    std_obs = obs_results.copy()
-
-    # set all values except time, kper, kstp to 0
-    for col in std_obs.columns:
-        if col not in ['time', 'kstp', 'kper']:
-            std_obs.loc[:, col] = 0
     
-    mask = (std_obs['kper'] <= 2)
-    std_obs.loc[mask, 'pk4head'] = 0.05
-    std_obs.loc[mask, 'pk4springdiff'] = 0.05
-    std_obs.loc[mask, 'awswgwdiff'] = 2
-    std_obs.loc[mask, 'pwswgwdiff'] = 2
-    std_obs.loc[mask, 'springcum'] = 45 # approx 30% of total
-    std_obs.loc[mask, 'springq'] = 3
-    std_obs.loc[mask, 'pwcum'] = obs_results.loc[mask, 'pwcum'] * 0.3
-    std_obs.loc[mask, 'awcum'] = obs_results.loc[mask, 'awcum'] * 0.3
-    std_obs.loc[mask, 'awtot'] = obs_results.loc[mask, 'awtot'] * 0.3
-    std_obs.loc[mask, 'pwtot'] = obs_results.loc[mask, 'pwtot'] * 0.3
-    std_obs.loc[mask, 'firstnegday'] = 7
+    # # copy file to truth directory
+    # obs_results  = pd.read_csv(f'obs_results.csv')
+    # obs_results.loc[:, 'pk4head'] = 7.8  # set all to 7.8 initially
+    # mask = (obs_results['time'] <= 53) & (obs_results['time'] > 1)
+    # # pk4 head
+    # obs_results.loc[mask, 'pk4head'] = (
+    #     obs_results.loc[mask, 'time']
+    #     .apply(lambda x: pk4_h.loc[int(x), 'level_mRL'])
+    #     .values
+    # )
+    # obs_results['pk4confdiff'] = obs_results['pk4head'] - obs_results['confhead']
+    # obs_results['pk4springdiff'] = obs_results['pk4head'] - obs_results['springhead']
+    # obs_results['awswgwdiff'] = 0 # known positive flux
+    # obs_results['pwswgwdiff'] = 0 # known positive flux
 
-    # save
-    std_obs.to_csv(Path(TRUTHREL_DIR, 'obs_results_std.csv'), index=False)
+    # # first day to negative flux
+    # obs_results['firstnegday'] = -1
+    # obs_results.loc[1:PERLEN, 'firstnegday'] = obs_results.loc[1:PERLEN, 'pk4springdiff'].lt(0).idxmax()
+    # obs_results.loc[PERLEN+2:, 'firstnegday'] = (PERLEN+2) - obs_results.loc[PERLEN+2:, 'pk4springdiff'].lt(0).idxmax()
+
+    # # Awanui at Flume discharge estimate
+    # obs_results.loc[:, 'awtot'] = aw_Q['sm_m3d'].iloc[0] * -1  # mean monthly 10/11
+    # obs_results.loc[mask, 'awtot'] = (
+    #     obs_results.loc[mask, 'time']
+    #     .apply(lambda x: aw_Q.loc[int(x), 'sm_m3d'] * -1)
+    #     .values
+    # )
+    
+    # # inflow from poukawa + local flow
+    # # local flow assume 0.0013 m/d per m2 of catchment area
+    # # poukawa area = 830m * 1m = 830m2
+    # # local flow (pw_cum) = 830m2 * 0.0013m/d = 1.079 m3/d
+    # # total inflow = poukawa + local flow
+    # obs_results.loc[:, 'pwtot'] = pw_Q['sm_m3d'].iloc[0] * -1  # mean monthly 10/11
+    # obs_results.loc[mask, 'pwtot'] = (
+    #     obs_results.loc[mask, 'time']
+    #     .apply(lambda x: pw_Q.loc[int(x), 'sm_m3d'] * -1)
+    #     .values
+    # )
+
+    # mask = (obs_results['pk4springdiff'] < 0)
+    # obs_results['springq'] = -3
+    # obs_results.loc[mask, 'springq'] = 0  # no spring flow if head diff is negative
+    # obs_results['springcum'] = -150
+    # obs_results.loc[mask, 'springcum'] = 0  # no spring flow if head diff is negative
+    # # obs_results['pwcum'] = obs_results['pwtot'] * 0.0002
+    # # obs_results['pwtot'] = obs_results['pwtot'] + obs_results['pwcum']
+    # obs_results['awcum'] = obs_results['awtot'] - obs_results['pwtot'] - obs_results['springcum']
+    
+    # # save to truth directory
+    # obs_results.to_csv(Path(TRUTHREL_DIR, f'{MODEL_NAME}_obs_results_truth.csv'), index=False)
+
+    # ### SETUP STD FILE ##################################################################
+    # std_obs = obs_results.copy()
+
+    # # set all values except time, kper, kstp to 0
+    # for col in std_obs.columns:
+    #     if col not in ['time', 'kstp', 'kper']:
+    #         std_obs.loc[:, col] = 0
+    
+    # mask = (std_obs['kper'] <= 2)
+    # std_obs.loc[mask, 'pk4head'] = 0.05
+    # std_obs.loc[mask, 'pk4springdiff'] = 0.05
+    # std_obs.loc[mask, 'awswgwdiff'] = 2
+    # std_obs.loc[mask, 'pwswgwdiff'] = 2
+    # std_obs.loc[mask, 'springcum'] = 45 # approx 30% of total
+    # std_obs.loc[mask, 'springq'] = 3
+    # std_obs.loc[mask, 'pwcum'] = obs_results.loc[mask, 'pwcum'] * 0.3
+    # std_obs.loc[mask, 'awcum'] = obs_results.loc[mask, 'awcum'] * 0.3
+    # std_obs.loc[mask, 'awtot'] = obs_results.loc[mask, 'awtot'] * 0.3
+    # std_obs.loc[mask, 'pwtot'] = obs_results.loc[mask, 'pwtot'] * 0.3
+    # std_obs.loc[mask, 'firstnegday'] = 7
+
+    # # save
+    # std_obs.to_csv(Path(TRUTHREL_DIR, 'obs_results_std.csv'), index=False)
+
+    # helpers.extract_model_heads_truth(TRUTHREL_DIR, MODEL_NAME, gwf)
 
 if __name__ == "__main__":
     main()  # run the main function to build the model and extract observations

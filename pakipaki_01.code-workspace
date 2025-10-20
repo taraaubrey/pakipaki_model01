@@ -4,5 +4,17 @@
 			"path": "."
 		}
 	],
-	"settings": {}
+	"settings": {
+		"python.analysis.diagnosticSeverityOverrides": {
+            "reportGeneralTypeIssues": "none",
+            "reportUnknownMemberType": "none",
+            "reportUnknownVariableType": "none",
+            "reportAttributeAccessIssue": "none",
+            "reportOptionalMemberAccess": "none",
+            "reportOptionalSubscript": "none",
+            "reportOptionalCall": "none",
+            "reportUnknownArgumentType": "none",
+            "reportUnknownParameterType": "none"
+		}
+	}
 }
