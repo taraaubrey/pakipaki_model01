@@ -14,13 +14,13 @@ def dis_setup(fn_out):
     # # grid_gpd.to_file(Path(SPATIAL_DIR, f'{MODEL_NAME}_grid.shp'), driver='ESRI Shapefile')
 
     # top & bottom
-    # top = grid.array_from_raster(TOP)
+    elev = grid.array_from_raster(TOP)
     bottom = grid.array_from_raster(BOTTOM)  # get the bottom elevation
     top = np.ones_like(bottom) * 10  # flat top at 10mRL
     
     # open domain
     arr = ~grid.array_from_vector(DOMAIN).mask # want the binary version of the domain
-    # arr = np.where(top.data > 15, 0, arr)
+    arr = np.where(elev.data > 16, 0, arr) # remove areas where elev > 18mRL (mainly at boundaries)
 
     idomain = np.stack([arr] * NLAY, axis=0)
 
@@ -97,7 +97,7 @@ def ghb_aw_setup(grid, idomain, start, end, fn_out, save=True):
     riv_kper0 = extract_value_with_indices(
         riv_stage_arr, layer=0, val_col='head', mask_value=0
         )
-    riv_kper0['cond'] = 1
+    riv_kper0['cond'] = GHB_SW['initial_cond_aw']
 
     # time series for riv elevations ###########################################################
     # riv absolute values during recession
@@ -129,7 +129,7 @@ def ghb_aw_setup(grid, idomain, start, end, fn_out, save=True):
     riv_kper2 = extract_value_with_indices(
         past_h, layer=0, val_col='head', mask_value=0
         )
-    riv_kper2['cond'] = 0.1  # very low cond for past
+    riv_kper2['cond'] = GHB_SW['initial_cond_aw']
 
     ts_0 = river_stage(riv_kper0, [0], start_t = 1)
     ts_1 = river_stage(riv_kper0, riv_ts_values, start_t = ts_0.index[-1]+1)
@@ -152,9 +152,11 @@ def ghb_aw_setup(grid, idomain, start, end, fn_out, save=True):
         fn_out['ghb_aw'][i] = tomf6input(fn, list=True)
         savedf2txt(dat, filename=fn, col_order=['head', 'cond'])
     # save ts file
-    riv_ts_fn = Path(MODEL_DIR, f'{MODEL_NAME}.awanui_stage.csv')
+    riv_ts_fn = Path(MODEL_DIR, f'{MODEL_NAME}.ghb_aw_heads.csv')
     rivstage_ts.index.name = '#time'
-    rivstage_ts.to_csv(riv_ts_fn)
+    rivstage_ts.to_csv(riv_ts_fn, header=False)
+    #save headers to a csv
+    rivstage_ts.columns.to_series().to_csv(Path(MODEL_DIR, f'{MODEL_NAME}.ghb_aw_head_names.csv'), index=False, header=False)
     fn_out['ghb_aw_ts'] = tomf6tsinput(riv_ts_fn, rivstage_ts)
 
     return fn_out
@@ -168,7 +170,7 @@ def get_awanui_timeseries(start, end):
     riv_ts['sm_level_mRL'] = riv_ts['level_mRL'].rolling(window=21, center=True, min_periods=1).mean()
 
     # get specific dates
-    riv_ts = riv_ts[(riv_ts.index >= start) & (riv_ts.index <= end)]
+    riv_ts = riv_ts[(riv_ts.index > start) & (riv_ts.index <= end)]
     riv_ts['abs_val'] = riv_ts['level_mRL'] - riv_ts['level_mRL'].iloc[0]
     riv_ts['sm_abs_val'] = riv_ts['abs_val'].rolling(window=21, center=True, min_periods=1).mean()
     
@@ -188,7 +190,7 @@ def get_poukawa_timeseries(start, end):
     pw_ts.set_index('DateTime', inplace=True)
 
     # get specific dates
-    pw_ts = pw_ts[(pw_ts.index >= start) & (pw_ts.index <= end)]
+    pw_ts = pw_ts[(pw_ts.index > start) & (pw_ts.index <= end)]
     pw_ts['abs_val'] = pw_ts['level_mRL'] - pw_ts['level_mRL'].iloc[0]
     pw_ts['sm_abs_val'] = pw_ts['abs_val'].rolling(window=5, center=True, min_periods=1).mean()
     # riv absolute values during recession
@@ -234,7 +236,7 @@ def ghb_spring_setup(grid, idomain, start, end, fn_out, save=True):
     spring_kper0 = extract_value_with_indices(
         spring_stage_arr, layer=0, val_col='head', mask_value=0
         )
-    spring_kper0['cond'] = 1
+    spring_kper0['cond'] = GHB_SW['initial_cond_spr']
 
     # time series for riv elevations ###########################################################
     spring_ts = pd.read_csv(SPRING_TS)
@@ -244,7 +246,7 @@ def ghb_spring_setup(grid, idomain, start, end, fn_out, save=True):
     spring_ts['sm_level_mRL'] = spring_ts['level_mRL'].rolling(window=21, center=True, min_periods=1).mean()
 
     # get specific dates
-    spring_ts = spring_ts[(spring_ts.index >= start) & (spring_ts.index <= end)]
+    spring_ts = spring_ts[(spring_ts.index > start) & (spring_ts.index <= end)]
     spring_ts['abs_val'] = spring_ts['level_mRL'] - spring_ts['level_mRL'].iloc[0]
     spring_ts['sm_abs_val'] = spring_ts['abs_val'].rolling(window=5, center=True, min_periods=1).mean()
 
@@ -283,10 +285,11 @@ def ghb_spring_setup(grid, idomain, start, end, fn_out, save=True):
         fn_out['ghb_sp'][i] = tomf6input(fn, list=True)
         savedf2txt(dat, filename=fn, col_order=['head', 'cond'])
     # save ts file
-    spring_ts_fn = Path(MODEL_DIR, f'{MODEL_NAME}.spring_stage.csv')
+    spring_ts_fn = Path(MODEL_DIR, f'{MODEL_NAME}.ghb_spring_heads.csv')
     spring_h_ts.index.name = '#time'
-    spring_h_ts.to_csv(spring_ts_fn)
-    # spring_h_ts.to_csv(spring_ts_fn, header=False)
+    # spring_h_ts.to_csv(spring_ts_fn)
+    spring_h_ts.to_csv(spring_ts_fn, header=False)
+    spring_h_ts.columns.to_series().to_csv(Path(MODEL_DIR, f'{MODEL_NAME}.ghb_spring_head_names.csv'), index=False, header=False)
     fn_out['ghb_sp_ts'] = tomf6tsinput(spring_ts_fn, spring_h_ts)
 
     return fn_out
@@ -307,7 +310,7 @@ def ghb_pw_setup(grid, idomain, start, end, fn_out, save=True):
 
     ghb_pw_kper0 = pd.DataFrame({'index': [i[0] for i in ghb_pw_indices]})
     ghb_pw_kper0['head'] = [i[1] for i in ghb_pw_indices]  # head for Poukawa boundary
-    ghb_pw_kper0['cond'] = 1
+    ghb_pw_kper0['cond'] = GHB_SW['initial_cond_pw']
 
     # TS ##########################################################################
     pw_ts_values = get_poukawa_timeseries(start, end)
@@ -354,17 +357,24 @@ def ghb_pw_setup(grid, idomain, start, end, fn_out, save=True):
     # save ts file
     pwelev_ts_fn = Path(MODEL_DIR, f'{MODEL_NAME}.ghb_pw_heads.csv')
     pwelev_ts.index.name = '#time'
-    pwelev_ts.to_csv(pwelev_ts_fn)
+    pwelev_ts.to_csv(pwelev_ts_fn, header=False)
+    pwelev_ts.columns.to_series().to_csv(Path(MODEL_DIR, f'{MODEL_NAME}.ghb_pw_head_names.csv'), index=False, header=False)
     fn_out['ghb_pw_ts'] = tomf6tsinput(pwelev_ts_fn, pwelev_ts)
     return fn_out, ghb_pw_kper0
 
 def ghb_conf_setup(grid, idomain, start, end, fn_out):
     conf_arr = ~grid.array_from_vector(CONF_AREA_ACTIVE).mask * idomain[0]
+    elev_max = grid.array_from_raster(TOP).data
+    conf_h = elev_max + GHB_CONF['initial_head_offset']
+    conf_h = np.where(conf_h < GHB_CONF['initial_head_min'], GHB_CONF['initial_head_min'], conf_h)
+    conf_arr = conf_arr * conf_h
+    
+
     conf_kper0 = extract_value_with_indices(
         conf_arr, layer=0, val_col='head', mask_value=0
         )
-    conf_kper0['head'] = 13.5  # head for confining layer
-    conf_kper0['cond'] = 1
+    # conf_kper0['head'] = GHB_CONF['initial_head']
+    conf_kper0['cond'] = GHB_CONF['initial_cond']
 
     # TS ##########################
     conf_ts = pd.read_csv(CONF_TS)
@@ -377,7 +387,7 @@ def ghb_conf_setup(grid, idomain, start, end, fn_out):
     # fill missing with interpolation
     conf_ts = conf_ts[['level_mRL']].resample('D').mean()
     conf_ts['level_mRL'] = conf_ts['level_mRL'].interpolate(method='linear')
-    conf_ts = conf_ts[(conf_ts.index >= start) & (conf_ts.index <= end)]
+    conf_ts = conf_ts[(conf_ts.index > start) & (conf_ts.index <= end)]
     # conf_ts['abs_val'] = conf_ts['level_mRL'] - conf_ts['level_mRL'].iloc[0]
     # conf_ts['sm_abs_val'] = conf_ts['abs_val'].rolling(window=5, center=True, min_periods=1).mean()
 
@@ -418,7 +428,8 @@ def ghb_conf_setup(grid, idomain, start, end, fn_out):
     # save ts file
     conf_ts_fn = Path(MODEL_DIR, f'{MODEL_NAME}.ghb_conf_heads.csv')
     conf_ts.index.name = '#time'
-    conf_ts.to_csv(conf_ts_fn)
+    conf_ts.to_csv(conf_ts_fn, header=False)
+    # conf_ts.name.to_series().to_csv(Path(MODEL_DIR, f'{MODEL_NAME}.ghb_conf_head_names.csv'), index=False, header=False)
     fn_out['ghb_conf_ts'] = tomf6tsinput(conf_ts_fn, conf_ts)
     return fn_out
 
@@ -484,7 +495,7 @@ def wel_inout_setup(grid, idomain, mbr_df, fn_out):
 def npf_setup(idomain, fn_out):
     all_k = []
     for i in range(NLAY):
-        k = np.ones_like(idomain[0]) * 1000  # horizontal hydraulic conductivity in m/day
+        k = np.ones_like(idomain[0]) * KH_PRIOR['initial']  # horizontal hydraulic conductivity in m/day
         # if i == 1:
         #     k = np.ones_like(idomain[0]) * 0.001  # horizontal hydraulic conductivity in m/day
         # else:
@@ -502,7 +513,7 @@ def npf_setup(idomain, fn_out):
     return fn_out
 
 def sto_ss_setup(idomain, fn_out):
-    sto_ss = np.ones_like(idomain) * 1e-2
+    sto_ss = np.ones_like(idomain) * SS_PRIOR['initial']
 
     # save
     fn_out['sto_ss'] = []
@@ -517,9 +528,9 @@ def rch_setup(idomain, fn_out):
     fn_out['rch'] = {}
     for i in range(NPER):
         if i in [0, 2]:  # steady state periods
-            recharge_rate = RAINFALL_RECHARGE_RATE + MBR_RECHARGE_RATE
+            recharge_rate = RCH['initial_rf'] + RCH['initial_mbr']
         else:
-            recharge_rate = MBR_RECHARGE_RATE     
+            recharge_rate = RCH['initial_mbr']     
         recharge = np.ones_like(idomain[0]) * recharge_rate * idomain[0]
         rch_fn = Path(MODEL_DIR, f'{MODEL_NAME}.rcha_recharge_{i}.txt').as_posix()
         fn_out['rch'][i] = tomf6input(rch_fn)
@@ -537,7 +548,7 @@ def pk4_ts(start, end):
     gw_ts['sm_level_mRL'] = gw_ts['level_mRL'].rolling(window=21, center=True, min_periods=1).mean()
 
     # get specific dates
-    gw_ts = gw_ts[(gw_ts.index >= start) & (gw_ts.index <= end)]
+    gw_ts = gw_ts[(gw_ts.index > start) & (gw_ts.index <= end)]
     gw_ts['abs_val'] = gw_ts['level_mRL'] - gw_ts['level_mRL'].iloc[0]
     gw_ts['sm_abs_val'] = gw_ts['abs_val'].rolling(window=5, center=True, min_periods=1).mean()
 
@@ -556,7 +567,7 @@ def poukawa_ts(start, end):
     sw_ts['m3d'] = (sw_ts['Poukawa Stream at Douglas Road (y)'] * 84.6)
 
     # get specific dates
-    sw_ts = sw_ts[(sw_ts.index >= start) & (sw_ts.index <= end)]
+    sw_ts = sw_ts[(sw_ts.index > start) & (sw_ts.index <= end)]
     sw_ts['sm_m3d'] = sw_ts['m3d'].rolling(window=5, center=True, min_periods=1).mean()
     sw_ts.index = np.arange(2, len(sw_ts['m3d']) + 2)
 
@@ -573,7 +584,7 @@ def awanui_ts(start, end):
     sw_ts['m3d'] = (sw_ts['Awanui Stream at Flume (y)'] * 84.6)
 
     # get specific dates
-    sw_ts = sw_ts[(sw_ts.index >= start) & (sw_ts.index <= end)]
+    sw_ts = sw_ts[(sw_ts.index > start) & (sw_ts.index <= end)]
     sw_ts['sm_m3d'] = sw_ts['m3d'].rolling(window=21, center=True, min_periods=1).mean()
     sw_ts.index = np.arange(2, len(sw_ts['m3d']) + 2)
 

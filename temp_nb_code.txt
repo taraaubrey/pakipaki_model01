@@ -1,0 +1,381 @@
+### CELL 0 ###
+import os
+import pandas as pd
+from scipy import stats
+import numpy as np
+
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+import matplotlib.gridspec as gridspec
+
+import pyemu
+import flopy
+
+### CELL 1 ###
+run_name = 'local_run2'
+o_d = f'../models/{run_name}/{run_name}'
+temp_d = f'../models/{run_name}/{run_name}'
+m_d_pr = f'../models/{run_name}/pest/master_ies_prior'
+m_d = f'../models/{run_name}/pest/master_ies'
+output = f'../models/{run_name}/figures'
+
+# phi
+f_act = os.path.join(m_d, f"{run_name}.phi.actual.csv")
+f_meas = os.path.join(m_d, f"{run_name}.phi.meas.csv")
+
+# open pst file
+pst = pyemu.Pst(os.path.join(m_d, f"{run_name}.pst"))
+
+# observation filenames
+pr_oe_fn = os.path.join(m_d, f"{run_name}.0.obs.csv") # prior
+pt_oe_fn = os.path.join(m_d, f"{run_name}.{pst.control_data.noptmax}.obs.csv")
+noise_fn = os.path.join(m_d, f"{run_name}.obs+noise.csv")
+obs_data_fn = os.path.join(m_d, f"{run_name}.obs_data.csv")
+# parameters filenames
+par_data_fn = os.path.join(m_d, f"{run_name}.par_data.csv")
+pr_pe_fn = os.path.join(m_d, f"{run_name}.0.par.csv") # prior
+pt_pe_fn = os.path.join(m_d, f"{run_name}.{pst.control_data.noptmax}.par.csv")
+
+# input observation data
+obs_data = pd.read_csv(obs_data_fn)
+obs_data.set_index('obsnme',inplace=True)
+par_data = pd.read_csv(par_data_fn)
+headers = obs_data.index.to_list()
+
+# observation ensemble
+pr_oe = pyemu.ObservationEnsemble.from_csv(pst=pst,filename=pr_oe_fn)
+pt_oe = pyemu.ObservationEnsemble.from_csv(pst=pst,filename=pt_oe_fn)
+noise = pyemu.ObservationEnsemble.from_csv(pst=pst,filename=noise_fn)
+
+### CELL 2 ###
+extract_kper = lambda x: int([s for s in x.split('_') if s.startswith('kper:')][0].split(':')[1])
+extract_kstp = lambda x: int([s for s in x.split('_') if s.startswith('kstp:')][0].split(':')[1])
+extract_i = lambda x: int([s for s in x.split('_') if s.startswith('i:')][0].split(':')[1])
+extract_j = lambda x: int([s for s in x.split('_') if s.startswith('j:')][0].split(':')[1])
+extract_time = lambda x: int([s for s in x.split('_') if s.startswith('time:')][0].split(':')[1])
+extract_usecol = lambda x: [s for s in x.split('_') if s.startswith('usecol:')][0].split(':')[1]
+
+### CELL 3 ###
+run_name = 'local_run0'
+o_d = f'../models/{run_name}/{run_name}'
+temp_d = f'../models/{run_name}/{run_name}'
+m_d = f'../models/{run_name}/pest/master_ies'
+
+### CELL 4 ###
+# observations
+pr_oe_fn = os.path.join(m_d, f"{run_name}.0.obs.csv")
+noise_fn = os.path.join(m_d, f"{run_name}.obs+noise.csv")
+
+### CELL 5 ###
+# Read only the headers
+headers = pd.read_csv(pr_oe_fn, nrows=0).columns.tolist()
+
+### CELL 6 ###
+# observations
+pr_pe_fn = os.path.join(m_d, f"{run_name}.0.par.csv")
+# Read only the headers
+params_headers = pd.read_csv(pr_pe_fn, nrows=0).columns.tolist()
+
+### CELL 7 ###
+pst.plot('1to1')
+plt.show()
+
+### CELL 8 ###
+phi
+
+### CELL 9 ###
+fig, axes = plt.subplots(1, 2, sharey=True, figsize=(10,3.5))
+# left
+ax = axes[0]
+phi = pd.read_csv(f_act, index_col=0)
+phi.index = phi.total_runs
+phi.iloc[:,6:].apply(np.log10).plot(legend=False,lw=0.5,color='k', ax=ax)
+ax.set_title(r'Actual $\Phi$')
+ax.set_ylabel(r'log $\Phi$')
+# right
+ax = axes[-1]
+phi = pd.read_csv(f_meas,index_col=0)
+phi.index = phi.total_runs
+phi.iloc[:,6:].apply(np.log10).plot(legend=False,lw=0.2,color='r', ax=ax)
+ax.set_title(r'Measured+Noise $\Phi$')
+fig.tight_layout()
+
+# save
+fig_fn = os.path.join(output, 'output.phi_comparison.png')
+plt.savefig(fig_fn, dpi=300)
+
+plt.show()
+
+### CELL 10 ###
+# Read data (assuming phi_act is your dataframe)
+phi_act = pd.read_csv(f_act, index_col=0)
+
+# Prepare data for boxplot
+box_data = []
+x_labels = []
+
+# Get the columns we want (0-99 + base)
+value_columns = [str(i) for i in range(100)] + ['base']
+
+for total_runs in phi_act.index:
+    # Get values for this row across columns 0-99 + base
+    row_values = []
+    for col in value_columns:
+        if col in phi_act.columns:
+            row_values.append(phi_act.loc[total_runs, col])
+    
+    box_data.append(row_values)
+
+# Create the boxplot
+fig, ax = plt.subplots(figsize=(10, 6))
+bp = ax.boxplot(box_data, patch_artist=True)
+
+# Color the boxes
+colors = plt.cm.viridis(np.linspace(0, 1, len(box_data)))
+for patch, color in zip(bp['boxes'], colors):
+    patch.set_facecolor('lightblue')
+    patch.set_alpha(0.7)
+
+ax.set_xlabel('IES Iterations')
+ax.set_ylabel('Phi Values')
+ax.set_title('Distribution of Phi Values by Total Runs')
+ax.set_yscale('log')  # Use log scale since phi values vary greatly
+ax.grid(which='both', alpha=0.3)
+
+# Set custom x-axis labels
+ax.set_xticklabels(['0', '1', '2', '3'])
+
+plt.tight_layout()
+
+# save
+fig_fn = os.path.join(output, 'output.phi_by_total_runs_boxplot.png')
+plt.savefig(fig_fn, dpi=300, bbox_inches='tight')
+
+plt.show()
+
+### CELL 11 ###
+# Decide which columns you want to load
+desired_cols = [col for col in headers if col.startswith('oname:budget')]
+
+# heads
+pre_oe_budget = pd.read_csv(pr_oe_fn, usecols=desired_cols)
+noise = pd.read_csv(os.path.join(m_d,f"{run_name}.obs+noise.csv"), index_col=0)
+
+### CELL 12 ###
+params_headers
+
+### CELL 13 ###
+extract_kper =  lambda x: int(x.split('_')[0].split('-')[2].replace('kper', ''))
+extract_kstp = lambda x: int(x.split('_')[0].split('-')[3].replace('kstp', ''))
+extract_i = lambda x: int([s for s in x.split('_') if s.startswith('i:')][0].split(':')[1])
+extract_j = lambda x: int([s for s in x.split('_') if s.startswith('j:')][0].split(':')[1])
+extract_time = lambda x: int([s for s in x.split('_') if s.startswith('time:')][0].split(':')[1])
+extract_usecol = lambda x: [s for s in x.split('_') if s.startswith('usecol:')][0].split(':')[1]
+
+### CELL 14 ###
+# Decide which columns you want to load
+desired_cols = [col for col in headers if col.startswith('oname:h-')]
+
+# heads
+pre_oe_modelheads = pd.read_csv(pr_oe_fn, usecols=desired_cols)
+pt_oe_modelheads = pd.read_csv(pt_oe_fn, usecols=desired_cols)
+
+### CELL 15 ###
+pt_oe_modelheads = pd.read_csv(pt_oe_fn, usecols=desired_cols)
+
+### CELL 16 ###
+def to_modelhead_df(pre_oe_modelheads):
+    input_df = pre_oe_modelheads.transpose()
+    input_df['kper'] = input_df.index.map(extract_kper)
+    input_df['kstp'] = input_df.index.map(extract_kstp)
+    input_df['i'] = input_df.index.map(extract_i)
+    input_df['j'] = input_df.index.map(extract_j)
+    return input_df
+
+### CELL 17 ###
+input_df = to_modelhead_df(pre_oe_modelheads)
+input_pt_df = to_modelhead_df(pt_oe_modelheads)
+
+### CELL 18 ###
+nkper = input_df['kper'].unique()
+nstp = input_df['kstp'].unique()
+
+### CELL 19 ###
+# get all the heads into an array which we can now call to plot
+arrs = {}
+for i in set(zip(input_df['kper'], input_df['kstp'])):
+    kper, kstp = i
+    idf = input_df[(input_df['kper'] == kper) & (input_df['kstp'] == kstp)]
+    i_arrs = []
+    for real in idf.columns[:-4]:
+        arr = idf.pivot(index='i', columns='j', values=real).to_numpy()
+        max_nan = 1e+30
+        arr = np.where(arr == max_nan, np.nan, arr)
+        i_arrs.append(arr)
+    i_stack = np.stack(i_arrs)
+    arrs[i] = {
+        'i_stack': i_stack,
+        'mean': np.mean(i_stack, axis=0),
+        'min': np.min(i_stack, axis=0),
+        'max': np.max(i_stack, axis=0),
+        'std': np.std(i_stack, axis=0),
+    }
+
+### CELL 20 ###
+fig, axes = plt.subplots(nrows=4, ncols=4, figsize=(10, 10))
+
+# Calculate vmin/vmax for each row (stat type) across all kpers
+mean_arrays = [arrs[(kper, 1)]['mean'] for kper in range(1, 5)]
+min_arrays = [arrs[(kper, 1)]['min'] for kper in range(1, 5)]
+max_arrays = [arrs[(kper, 1)]['max'] for kper in range(1, 5)]
+std_arrays = [arrs[(kper, 1)]['std'] for kper in range(1, 5)]
+
+# Calculate shared vmin/vmax for each row
+mean_vmin, mean_vmax = np.nanmin(mean_arrays), np.nanmax(mean_arrays)
+min_vmin, min_vmax = np.nanmin(min_arrays), np.nanmax(min_arrays)
+max_vmin, max_vmax = np.nanmin(max_arrays), np.nanmax(max_arrays)
+std_vmin, std_vmax = np.nanmin(std_arrays), np.nanmax(std_arrays)
+
+for idx, kper in enumerate(range(1, 5)):
+    key = (kper, 1)
+    mean_arr = arrs[key]['mean']
+    std_arr = arrs[key]['std']
+    min_arr = arrs[key]['min']
+    max_arr = arrs[key]['max']
+    
+    # Row 0: Mean
+    im0 = axes[0, idx].imshow(mean_arr, cmap='viridis', vmin=mean_vmin, vmax=mean_vmax)
+    
+    # Row 1: Min
+    im1 = axes[1, idx].imshow(min_arr, cmap='magma', vmin=min_vmin, vmax=min_vmax)
+
+    # Row 2: Max
+    im2 = axes[2, idx].imshow(max_arr, cmap='magma', vmin=max_vmin, vmax=max_vmax)
+
+    # Row 3: Std
+    im3 = axes[3, idx].imshow(std_arr, cmap='magma', vmin=std_vmin, vmax=std_vmax)
+
+    if idx == 0:
+        axes[0, idx].set_title(f'kper={kper}, kstp=1 mean')
+        axes[1, idx].set_title(f'min')
+        axes[2, idx].set_title(f'max')
+        axes[3, idx].set_title(f'std')
+        plt.colorbar(im0, ax=axes[0, idx], fraction=0.046, pad=0.04)
+        plt.colorbar(im1, ax=axes[1, idx], fraction=0.046, pad=0.04)
+        plt.colorbar(im2, ax=axes[2, idx], fraction=0.046, pad=0.04)
+        plt.colorbar(im3, ax=axes[3, idx], fraction=0.046, pad=0.04)
+
+
+for ax in axes.flat:
+    ax.set_xlabel('j')
+    ax.set_ylabel('i')
+
+plt.tight_layout()
+plt.show()
+
+### CELL 21 ###
+kper = 2
+kstp_steps = range(1, nstp.max(), 5)  # every 5th kstp
+
+fig, axes = plt.subplots(nrows=len(kstp_steps), ncols=2, figsize=(8, 3 * len(kstp_steps)))
+
+for idx, kstp in enumerate(kstp_steps):
+    key = (kper, kstp)
+    mean_arr = arrs[key]['mean']
+    std_arr = arrs[key]['std']
+
+    im0 = axes[idx, 0].imshow(mean_arr, cmap='viridis')
+    axes[idx, 0].set_title(f'kper={kper}, kstp={kstp} mean')
+    plt.colorbar(im0, ax=axes[idx, 0], fraction=0.046, pad=0.04)
+
+    im1 = axes[idx, 1].imshow(std_arr, cmap='magma')
+    axes[idx, 1].set_title(f'kper={kper}, kstp={kstp} std')
+    plt.colorbar(im1, ax=axes[idx, 1], fraction=0.046, pad=0.04)
+
+for ax_row in axes:
+    for ax in ax_row:
+        ax.set_xlabel('j')
+        ax.set_ylabel('i')
+
+plt.tight_layout()
+plt.show()
+
+### CELL 22 ###
+kper = 2
+
+fig, ax = plt.subplots(figsize=(6, 5))
+vmin = min(np.nanmin(arrs[(kper, i)]['mean']) for i in range(1, nstp.max()))
+vmax = max(np.nanmax(arrs[(kper, i)]['mean']) for i in range(1, nstp.max()))
+im = ax.imshow(arrs[(kper, 1)]['mean'], cmap='viridis', vmin=vmin, vmax=vmax)
+cb = plt.colorbar(im, ax=ax)
+ax.set_title(f'kper={kper}, kstp=1')
+
+def update(frame):
+    arr = arrs[(kper, frame)]['mean']
+    im.set_data(arr)
+    ax.set_title(f'kper={kper}, kstp={frame}')
+    return [im]
+
+ani = animation.FuncAnimation(
+    fig, update, frames=range(1, nstp.max()), interval=200, blit=True
+)
+
+ani.save(f'{kper}_animation.gif', writer='pillow', fps=5)
+
+### CELL 23 ###
+extract_kper = lambda x: int([s for s in x.split('_') if s.startswith('kper:')][0].split(':')[1])
+extract_kstp = lambda x: int([s for s in x.split('_') if s.startswith('kstp:')][0].split(':')[1])
+extract_i = lambda x: int([s for s in x.split('_') if s.startswith('i:')][0].split(':')[1])
+extract_j = lambda x: int([s for s in x.split('_') if s.startswith('j:')][0].split(':')[1])
+extract_time = lambda x: int([s for s in x.split('_') if s.startswith('time:')][0].split(':')[1])
+extract_usecol = lambda x: [s for s in x.split('_') if s.startswith('usecol:')][0].split(':')[1]
+
+### CELL 24 ###
+# Decide which columns you want to load
+desired_cols = [col for col in headers if col.startswith('oname:budget')]
+
+# data
+pre_oe_budget = pd.read_csv(pr_oe_fn, usecols=desired_cols)
+budget_noise = pd.read_csv(noise_fn, usecols=desired_cols)
+
+### CELL 25 ###
+budget_noise.head()
+
+### CELL 26 ###
+kper = 1
+col = 'awanui'
+col = f'oname:budget_otype:lst_usecol:{col}_kper:{kper}'
+bins=20
+fig, ax = plt.subplots(1,1,figsize=(7,5))
+
+# plot posterior/noise (red)
+budget_noise.loc[:,col].hist(ax=ax, fc="r", alpha=0.5, bins=bins, label="Noise")
+
+# plot prior (blue)
+pre_oe_budget.loc[:,col].hist(ax=ax, fc="blue", alpha=0.5, bins=bins, label="Prior")
+
+# add mean line for noise & prior
+meanp_val = pre_oe_budget.loc[:,col].mean()
+# ax.axvline(meanp_val, color="blue", linestyle="--", linewidth=2, label=f"Mean={meanp_val:.2f}")
+mean_val = budget_noise.loc[:,col].mean()
+ax.axvline(mean_val, color="red", linestyle="--", linewidth=2, label=f"Mean={mean_val:.2f}")
+
+ax.set_title(col)
+
+### CELL 27 ###
+def format_bgtdf(df):
+    tdf = df.transpose()
+    tdf['kper'] = tdf.index.map(extract_kper)
+    tdf['usecol'] = tdf.index.map(extract_usecol)
+    return tdf
+
+budget_df = format_bgtdf(pre_oe_budget)
+
+### CELL 28 ###
+budget_df.head()
+
+### CELL 29 ###
+budget_df.melt(
+    id_vars=['usecol', 'kper'],
+    )
+

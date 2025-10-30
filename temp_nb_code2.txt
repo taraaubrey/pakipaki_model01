@@ -1,0 +1,425 @@
+### CELL 30 ###
+import seaborn as sns
+
+bx_df = budget_df.melt(
+    id_vars=['usecol', 'kper'],
+    )
+
+sns.boxplot(
+    data = bx_df,
+    x='usecol',
+    y='value',
+    hue='kper',
+    fliersize=3
+    # log_scale=True
+)
+
+### CELL 31 ###
+budget_df.melt()
+
+### CELL 32 ###
+# Create a single boxplot with all usecols on the same plot (outliers removed)
+unique_usecols = budget_df['usecol'].unique()
+
+# Prepare data for boxplot - separate list for each usecol with outlier removal
+boxplot_data = []
+labels = []
+
+def remove_outliers(data, method='iqr'):
+    """Remove outliers using IQR method"""
+    q1 = np.percentile(data, 25)
+    q3 = np.percentile(data, 75)
+    iqr = q3 - q1
+    lower_bound = q1 - 1.5 * iqr
+    upper_bound = q3 + 1.5 * iqr
+    return data[(data >= lower_bound) & (data <= upper_bound)]
+
+for usecol in unique_usecols:
+    df_sub = budget_df[budget_df['usecol'] == usecol]
+    value_cols = [col for col in df_sub.columns if col not in ['kper', 'usecol']]
+    
+    # Combine all values for this usecol
+    all_values = []
+    for col in value_cols:
+        values = df_sub[col].dropna().values
+        all_values.extend(values)
+    
+    # Remove outliers
+    all_values = np.array(all_values)
+    filtered_values = remove_outliers(all_values)
+    
+    boxplot_data.append(filtered_values)
+    labels.append(usecol)
+
+# Create the boxplot
+fig, ax = plt.subplots(figsize=(10, 6))
+bp = ax.boxplot(boxplot_data, labels=labels, patch_artist=True)
+
+# Color the boxes
+colors = plt.cm.Set3(np.linspace(0, 1, len(unique_usecols)))
+for patch, color in zip(bp['boxes'], colors):
+    patch.set_facecolor(color)
+    patch.set_alpha(0.7)
+
+# Add individual points with jitter for each category
+np.random.seed(42)  # For reproducible jitter
+for i, values in enumerate(boxplot_data):
+    x_pos = np.random.normal(i+1, 0.04, size=len(values))  # Add jitter around position i+1
+    ax.scatter(x_pos, values, alpha=0.3, s=1, color='red')
+
+ax.set_ylabel('Value')
+ax.set_title('Distribution of Budget Components (Outliers Removed)')
+ax.grid(True, alpha=0.3)
+
+# Rotate x-axis labels if they're long
+plt.xticks(rotation=45, ha='right')
+plt.tight_layout()
+plt.show()
+
+# Print summary of outlier removal
+print("Outlier removal summary:")
+for i, usecol in enumerate(unique_usecols):
+    original_count = len(np.concatenate([df_sub[col].dropna().values 
+                                       for col in df_sub.columns 
+                                       if col not in ['kper', 'usecol']
+                                       for df_sub in [budget_df[budget_df['usecol'] == usecol]]]))
+    filtered_count = len(boxplot_data[i])
+    removed_count = original_count - filtered_count
+    print(f"{usecol}: {removed_count} outliers removed ({removed_count/original_count*100:.1f}%)")
+
+### CELL 33 ###
+heads_truth = r"C:\Users\tfo46\e_Python\e_projects\pakipaki_01\truth\output.sample_heads.truth.csv"
+truth_df = pd.read_csv(heads_truth, index_col=0)
+
+### CELL 34 ###
+extract_i = lambda x: int([s for s in x.split('_') if s.startswith('i:')][0].split(':')[1])
+extract_j = lambda x: int([s for s in x.split('_') if s.startswith('j:')][0].split(':')[1])
+extract_time = lambda x: int([s for s in x.split('_') if s.startswith('time:')][0].split(':')[1])
+extract_usecol = lambda x: [s for s in x.split('_') if s.startswith('usecol:')][0].split(':')[1]
+
+# Decide which columns you want to load
+desired_cols = [col for col in headers if col.startswith('oname:ts-heads')]
+
+# data
+pre_oe_ts = pd.read_csv(pr_oe_fn, usecols=desired_cols)
+pt_oe_ts = pd.read_csv(pt_oe_fn, usecols=desired_cols)
+ts_noise = pd.read_csv(noise_fn, usecols=desired_cols)
+
+### CELL 35 ###
+time = 1
+colname = 'pk4'
+
+for time in np.arange(1, 53, 5):
+    col = f'oname:ts-heads_otype:lst_usecol:{colname}_time:{time}'
+    bins=20
+    fig, ax = plt.subplots(1,1,figsize=(7,5))
+
+    # plot posterior/noise (red)
+    ts_noise.loc[:,col].hist(ax=ax, fc="r", alpha=0.5, bins=bins, label="Noise")
+
+    # plot prior (blue)
+    pre_oe_ts.loc[:,col].hist(ax=ax, fc="grey", alpha=0.5, bins=bins, label="Prior")
+    pt_oe_ts.loc[:,col].hist(ax=ax, fc="blue", alpha=0.5, bins=bins, label="Posterior")
+
+    # add mean line for noise & prior
+    meanp_val = pre_oe_ts.loc[:,col].mean()
+    # ax.axvline(meanp_val, color="blue", linestyle="--", linewidth=2, label=f"Mean={meanp_val:.2f}")
+    mean_val = ts_noise.loc[:,col].mean()
+    ax.axvline(mean_val, color="red", linestyle="--", linewidth=2, label=f"Mean={mean_val:.2f}")
+
+    ax.set_title(col)
+
+### CELL 36 ###
+def format_tsdf(df):
+    tdf = df.transpose()
+    tdf['time'] = tdf.index.map(extract_time)
+    tdf['usecol'] = tdf.index.map(extract_usecol)
+    return tdf
+
+ts_df = format_tsdf(pre_oe_ts)
+ts_pt_df = format_tsdf(pt_oe_ts)
+
+### CELL 37 ###
+ts_df['usecol'].unique()
+
+### CELL 38 ###
+ts_df
+
+### CELL 39 ###
+unique_usecols = ts_df['usecol'].unique()
+n = len(unique_usecols)
+
+fig = plt.figure(figsize=(12, n * 4))
+gs = gridspec.GridSpec(n, 2, width_ratios=[4, 1])
+
+axes = []
+for i in range(n):
+    if i == 0:
+        ax0 = fig.add_subplot(gs[i, 0])
+        ax1 = fig.add_subplot(gs[i, 1], sharey=ax0)
+    else:
+        ax0 = fig.add_subplot(gs[i, 0], sharex=axes[0][0])
+        ax1 = fig.add_subplot(gs[i, 1], sharey=ax0)
+    axes.append([ax0, ax1])
+
+for idx, usecol in enumerate(unique_usecols):
+    truth_col = truth_df[usecol]
+    
+    # prep
+    df_sub = ts_df[(ts_df['usecol'] == usecol)].sort_values('time')
+    df_pt_sub = ts_pt_df[(ts_pt_df['usecol'] == usecol)].sort_values('time')
+
+    # if values are -999 replace with np.nana
+    df_sub.replace(-999, np.nan, inplace=True)
+    df_pt_sub.replace(-999, np.nan, inplace=True)
+
+    value_cols = [col for col in df_sub.columns if col not in ['time', 'usecol']]
+    all_values = df_sub[value_cols].values.flatten()
+    all_values_pt = df_pt_sub[value_cols].values.flatten()
+    lower, upper = np.percentile(all_values, [1, 99])
+    lower_pt, upper_pt = np.percentile(all_values_pt, [1, 99])
+    
+    # line plot
+    for col in value_cols:
+        y = df_sub[col].copy()
+        y_pt = df_pt_sub[col].copy()
+        # mask outliers
+        y[(y < lower) | (y > upper)] = np.nan
+        y_pt[(y_pt < lower_pt) | (y_pt > upper_pt)] = np.nan
+        # plot prio/posterior
+        axes[idx][0].plot(df_sub['time'], y, alpha=0.3, color='grey')
+        axes[idx][0].plot(df_pt_sub['time'], y_pt, alpha=0.3, color='blue')
+
+    # plot truth
+    axes[idx][0].plot(truth_col, alpha=1, color='red')
+    
+    axes[idx][0].set_title(f'usecol={usecol}', loc='left')
+    axes[idx][0].set_ylabel('value')
+    # Only show x-axis on the bottom plot
+    if idx != n - 1:
+        axes[idx][0].set_xlabel('')
+        axes[idx][0].tick_params(labelbottom=False)
+    else:
+        axes[idx][0].set_xlabel('kstp')
+    
+    # histogram
+    filtered_values = all_values[(all_values >= lower) & (all_values <= upper)]
+    filtered_values_pt = all_values_pt[(all_values_pt >= lower_pt) & (all_values_pt <= upper_pt)]
+
+    axes[idx][1].hist(filtered_values, bins=30, alpha=0.7, color='gray', orientation='horizontal')
+    axes[idx][1].hist(filtered_values_pt, bins=30, alpha=0.7, color='blue', orientation='horizontal')
+
+    # mean_val = filtered_values.mean()
+    # axes[idx][1].axhline(mean_val, color='red', linestyle='--', label=f'Mean={mean_val:.2f}')
+    # axes[idx][1].set_title(f'Distribution')
+    axes[idx][1].tick_params(labelleft=False)
+    
+    # Only show x-axis on the bottom plot
+    if idx != n - 1:
+        axes[idx][1].set_xlabel('')
+        axes[idx][1].tick_params(labelbottom=False)
+    else:
+        axes[idx][1].set_xlabel('count')
+    axes[idx][1].legend()
+
+plt.tight_layout()
+
+# save
+fig.savefig(os.path.join(output, 'output.ts-heads_timeseries.png'), dpi=300)
+
+plt.show()
+
+### CELL 40 ###
+truth_recession = truth_df['pk4']
+
+### CELL 41 ###
+
+
+### CELL 42 ###
+print(truth_df['pk4'].mean())
+truth_df.iloc[1]-truth_df.iloc[-1]
+
+### CELL 43 ###
+truth_df['pk4'].mean()
+
+### CELL 44 ###
+ts_pt_df = ts_pt_df.sort_values('time')
+
+### CELL 45 ###
+pk4_ts = ts_df[ts_df['usecol'] == 'pk4']
+pk4_spring_ts = ts_df[ts_df['usecol'] == 'pk4-spr-diff']
+pk4_conf_ts = ts_df[ts_df['usecol'] == 'pk4-conf-diff']
+
+### CELL 46 ###
+pk4_ts.loc[:,0:99].head()
+
+### CELL 47 ###
+pk4_ts.loc[:,0:99].apply(lambda x: x.mean(), axis=0)
+
+### CELL 48 ###
+ts_df.iloc[1].iloc[0:100]
+
+### CELL 49 ###
+def get_subset(start, end, ts_df, col, less_than, greater_than, mean_val):
+    # recessions
+    ts_df = ts_df[ts_df['usecol'] == col]
+    ts_r = ts_df.iloc[start].iloc[0:100] - ts_df.iloc[end].iloc[0:100]
+    ts_mean = ts_df.iloc[:,0:100].apply(lambda x: x.mean(), axis=0)
+    return ts_r[(ts_r < less_than) & (ts_r > greater_than) & (ts_mean < mean_val+2) & (ts_mean > mean_val-2)].index.to_list()
+
+### CELL 50 ###
+pk4_r = get_subset(0, 52, ts_df, 'pk4', 1, 0, truth_df['pk4'].mean())
+pk4sp_r = get_subset(0, 52, ts_df, 'pk4-spr-diff', 0.5, 0, truth_df['pk4-spr-diff'].mean())
+pk4cf_r = get_subset(0, 52, ts_df, 'pk4-conf-diff', -1, -3, truth_df['pk4-conf-diff'].mean())
+
+# shows reals where numbers are in all lists
+prior_reals = set(pk4_r) & set(pk4cf_r)
+prior_reals_list = list(prior_reals)
+prior_reals_list
+
+### CELL 51 ###
+pk4_r = get_subset(0, 52, ts_pt_df, 'pk4', 3, 0, truth_df['pk4'].mean())
+pk4sp_r = get_subset(0, 52, ts_pt_df, 'pk4-spr-diff', 1, 0, truth_df['pk4-spr-diff'].mean())
+pk4cf_r = get_subset(0, 52, ts_pt_df, 'pk4-conf-diff', 0, -5, truth_df['pk4-conf-diff'].mean())
+
+# shows reals where numbers are in all lists
+pt_reals = set(pk4_r) & set(pk4cf_r)
+pt_reals_list = list(pt_reals)
+pt_reals_list
+
+### CELL 52 ###
+df_sub[prior_reals_list]
+
+### CELL 53 ###
+unique_usecols = ts_df['usecol'].unique()
+n = len(unique_usecols)
+
+fig = plt.figure(figsize=(12, n * 4))
+gs = gridspec.GridSpec(n, 2, width_ratios=[4, 1])
+
+axes = []
+for i in range(n):
+    if i == 0:
+        ax0 = fig.add_subplot(gs[i, 0])
+        ax1 = fig.add_subplot(gs[i, 1], sharey=ax0)
+    else:
+        ax0 = fig.add_subplot(gs[i, 0], sharex=axes[0][0])
+        ax1 = fig.add_subplot(gs[i, 1], sharey=ax0)
+    axes.append([ax0, ax1])
+
+for idx, usecol in enumerate(unique_usecols):
+    truth_col = truth_df[usecol]
+    
+    # prep
+    df_sub = ts_df[(ts_df['usecol'] == usecol)].sort_values('time')
+    df_pt_sub = ts_pt_df[(ts_pt_df['usecol'] == usecol)].sort_values('time')
+
+    # if values are -999 replace with np.nana
+    df_sub.replace(-999, np.nan, inplace=True)
+    df_pt_sub.replace(-999, np.nan, inplace=True)
+
+    value_cols = [col for col in df_sub.columns if col not in ['time', 'usecol']]
+    
+    all_values = df_sub[value_cols].values.flatten()
+    all_values_pt = df_pt_sub[value_cols].values.flatten()
+    
+    pr_values = df_sub[prior_reals_list].values.flatten()
+    pt_values = df_pt_sub[pt_reals_list].values.flatten()
+
+    lower, upper = np.percentile(all_values, [1, 99])
+    lower_pt, upper_pt = np.percentile(all_values_pt, [1, 99])
+
+    
+    # line plot
+    for col in value_cols:
+        y = df_sub[col].copy()
+        y_pt = df_pt_sub[col].copy()
+        # mask outliers
+        y[(y < lower) | (y > upper)] = np.nan
+        y_pt[(y_pt < lower_pt) | (y_pt > upper_pt)] = np.nan
+        
+        # plot prio/posterior
+        axes[idx][0].plot(df_sub['time'], y, alpha=0.3, color='grey')
+        if col in prior_reals_list:
+            axes[idx][0].plot(df_sub['time'], y_pt, alpha=0.8, color='black')
+        axes[idx][0].plot(df_pt_sub['time'], y_pt, alpha=0.3, color='blue')
+        if col in pt_reals_list:
+            axes[idx][0].plot(df_pt_sub['time'], y_pt, alpha=0.8, color='purple')
+    # plot truth
+    axes[idx][0].plot(truth_col, alpha=1, color='red')
+    
+    axes[idx][0].set_title(f'usecol={usecol}', loc='left')
+    axes[idx][0].set_ylabel('value')
+    # Only show x-axis on the bottom plot
+    if idx != n - 1:
+        axes[idx][0].set_xlabel('')
+        axes[idx][0].tick_params(labelbottom=False)
+    else:
+        axes[idx][0].set_xlabel('kstp')
+    
+    # histogram
+    filtered_values = all_values[(all_values >= lower) & (all_values <= upper)]
+    filtered_values_pt = all_values_pt[(all_values_pt >= lower_pt) & (all_values_pt <= upper_pt)]
+
+    axes[idx][1].hist(filtered_values, bins=30, alpha=0.7, color='gray', orientation='horizontal')
+    axes[idx][1].hist(filtered_values_pt, bins=30, alpha=0.3, color='blue', orientation='horizontal')
+    
+    axes[idx][1].hist(pr_values, bins=30, alpha=0.7, color='black', orientation='horizontal')
+    axes[idx][1].hist(pt_values, bins=30, alpha=0.7, color='purple', orientation='horizontal')
+    # mean_val = filtered_values.mean()
+    # axes[idx][1].axhline(mean_val, color='red', linestyle='--', label=f'Mean={mean_val:.2f}')
+    # axes[idx][1].set_title(f'Distribution')
+    axes[idx][1].tick_params(labelleft=False)
+    
+    # Only show x-axis on the bottom plot
+    if idx != n - 1:
+        axes[idx][1].set_xlabel('')
+        axes[idx][1].tick_params(labelbottom=False)
+    else:
+        axes[idx][1].set_xlabel('count')
+    axes[idx][1].legend()
+
+plt.tight_layout()
+
+# save
+fig.savefig(os.path.join(output, 'output.ts-heads_timeseries.png'), dpi=300)
+
+plt.show()
+
+### CELL 54 ###
+idf = ts_df[
+    (ts_df['kper'] == 1) \
+        & (ts_df['kstp'] == 1)
+    ].sort_values('kstp')
+col_df = idf.set_index('usecol').transpose()[:-2]
+
+### CELL 55 ###
+col_df.columns
+
+### CELL 56 ###
+# Example: scatter plot of the first two columns in col_df
+col_names = col_df.columns[:2]
+plt.figure(figsize=(6, 5))
+plt.scatter(col_df['pk4springdiff'], col_df['awtot']*-1, alpha=0.7)
+plt.xlim(0,10)
+# plt.ylim(-250,5)
+plt.tight_layout()
+plt.grid()
+plt.show()
+
+### CELL 57 ###
+idf = ts_df[
+    (ts_df['kper'] == 2) \
+        # & (ts_df['kstp'] == 1)
+    ].sort_values('kstp')
+# col_df = idf.set_index('usecol').transpose()
+
+### CELL 58 ###
+idf
+
+### CELL 59 ###
+dfs = {}
+for i in idf['kstp'].unique():
+    kstp_df = idf[idf['kstp'] == i]
+    dfs[i] = kstp_df.set_index('usecol').transpose()[:-2]
+

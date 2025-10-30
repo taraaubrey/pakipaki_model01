@@ -1,25 +1,34 @@
-2025-10-21 10:51:33.703743 starting: opening plot_pst_helper.log for logging
-2025-10-21 10:51:33.703743 plot_utils.pst_helper()
-2025-10-21 10:51:33.703743 starting: plot res_1to1
-2025-10-21 10:51:36.710017 starting: plotting 1to1 for awq
-2025-10-21 10:51:36.766307 using control file obsvals to calculate residuals
-2025-10-21 10:51:37.002151 finished: plotting 1to1 for awq took: 0:00:00.292134
-2025-10-21 10:51:37.002151 starting: plotting 1to1 for budget
-2025-10-21 10:51:37.002151 using control file obsvals to calculate residuals
-2025-10-21 10:51:37.002151 no non-zero obs for group 'budget'
-2025-10-21 10:51:37.002151 finished: plotting 1to1 for budget took: 0:00:00
-2025-10-21 10:51:37.002151 starting: plotting 1to1 for confq
-2025-10-21 10:51:37.196880 using control file obsvals to calculate residuals
-2025-10-21 10:51:37.215408 no non-zero obs for group 'confq'
-2025-10-21 10:51:37.215408 finished: plotting 1to1 for confq took: 0:00:00.213257
-2025-10-21 10:51:37.215408 starting: plotting 1to1 for less_head-arr
-2025-10-21 10:51:37.646472 using control file obsvals to calculate residuals
-2025-10-21 10:51:37.773945 finished: plotting 1to1 for less_head-arr took: 0:00:00.558537
-2025-10-21 10:51:37.773945 starting: plotting 1to1 for ts-flux
-2025-10-21 10:51:37.801666 using control file obsvals to calculate residuals
-2025-10-21 10:51:37.803368 no non-zero obs for group 'ts-flux'
-2025-10-21 10:51:37.803368 finished: plotting 1to1 for ts-flux took: 0:00:00.029423
-2025-10-21 10:51:37.803368 starting: plotting 1to1 for ts-heads
-2025-10-21 10:51:37.803368 using control file obsvals to calculate residuals
-2025-10-21 10:51:37.812451 finished: plotting 1to1 for ts-heads took: 0:00:00.009083
-2025-10-21 10:51:37.952215 finished: plot res_1to1 took: 0:00:04.248472
+2025-10-29 11:38:39.597876 starting: opening plot_pst_helper.log for logging
+2025-10-29 11:38:39.597876 plot_utils.pst_helper()
+2025-10-29 11:38:39.598786 starting: plot res_1to1
+2025-10-29 11:38:43.174564 starting: plotting 1to1 for awq
+2025-10-29 11:38:43.204805 using control file obsvals to calculate residuals
+2025-10-29 11:38:43.365057 finished: plotting 1to1 for awq took: 0:00:00.190493
+2025-10-29 11:38:43.365057 starting: plotting 1to1 for budget
+2025-10-29 11:38:43.366030 using control file obsvals to calculate residuals
+2025-10-29 11:38:43.367147 no non-zero obs for group 'budget'
+2025-10-29 11:38:43.367147 finished: plotting 1to1 for budget took: 0:00:00.002090
+2025-10-29 11:38:43.367147 starting: plotting 1to1 for confq
+2025-10-29 11:38:43.528145 using control file obsvals to calculate residuals
+2025-10-29 11:38:43.562399 no non-zero obs for group 'confq'
+2025-10-29 11:38:43.562399 finished: plotting 1to1 for confq took: 0:00:00.195252
+2025-10-29 11:38:43.562399 starting: plotting 1to1 for greater_budget
+2025-10-29 11:38:43.563399 using control file obsvals to calculate residuals
+2025-10-29 11:38:43.569398 finished: plotting 1to1 for greater_budget took: 0:00:00.006999
+2025-10-29 11:38:43.569398 starting: plotting 1to1 for less_budget
+2025-10-29 11:38:43.570405 using control file obsvals to calculate residuals
+2025-10-29 11:38:43.575402 finished: plotting 1to1 for less_budget took: 0:00:00.006004
+2025-10-29 11:38:43.575402 starting: plotting 1to1 for less_head-arr
+2025-10-29 11:38:43.855060 using control file obsvals to calculate residuals
+2025-10-29 11:38:43.954404 finished: plotting 1to1 for less_head-arr took: 0:00:00.379002
+2025-10-29 11:38:43.954404 starting: plotting 1to1 for recession
+2025-10-29 11:38:43.969985 using control file obsvals to calculate residuals
+2025-10-29 11:38:44.325998 finished: plotting 1to1 for recession took: 0:00:00.371594
+2025-10-29 11:38:44.325998 starting: plotting 1to1 for ts-flux
+2025-10-29 11:38:44.327090 using control file obsvals to calculate residuals
+2025-10-29 11:38:44.328012 no non-zero obs for group 'ts-flux'
+2025-10-29 11:38:44.328012 finished: plotting 1to1 for ts-flux took: 0:00:00.002014
+2025-10-29 11:38:44.328012 starting: plotting 1to1 for ts-heads
+2025-10-29 11:38:44.329081 using control file obsvals to calculate residuals
+2025-10-29 11:38:44.335001 finished: plotting 1to1 for ts-heads took: 0:00:00.006989
+2025-10-29 11:38:44.434040 finished: plot res_1to1 took: 0:00:04.835254

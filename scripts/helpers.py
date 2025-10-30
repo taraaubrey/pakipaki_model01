@@ -725,6 +725,11 @@ def extract_model_heads(model_name, gwf=None, sample_path=None):
 
         all_samples.fillna(-999, inplace=True)
 
+        recession_rates = all_samples.iloc[52] - all_samples.iloc[1]
+        recession_df = recession_rates.loc[['pk4', 'pk4-spr-diff', 'pk4-conf-diff']].to_frame().T
+        recession_df.index.name = 'idx'
+        recession_df.to_csv(f"output.sample_recession_rates.csv")
+
         all_samples.to_csv(f"output.sample_heads.csv", index=False)
         return all_samples
 
@@ -841,8 +846,14 @@ def samples_truth(gwf, TRUTHREL_DIR):
 
     df.fillna(0, inplace=True)
 
+    recession_rates = df.iloc[52] - df.iloc[1]
+    recession_rates['std'] = PK4_std
+    recession_rates['weight'] = 1/PK4_std
+    recession_df = recession_rates.loc[['pk4', 'pk4-spr-diff', 'pk4-conf-diff', 'std', 'weight']].to_frame().T
+    recession_df.index.name = 'idx'
+    recession_df.to_csv(Path(TRUTHREL_DIR, f"output.sample_recession_rates.truth.csv"))
+    
     df = df[['pk4', 'pk4-spr-diff', 'pk4-conf-diff', 'std', 'weight']].reset_index().rename(columns={'index': 'time'})
-
     df.to_csv(Path(TRUTHREL_DIR, f"output.sample_heads.truth.csv"), index=False)
     
     return

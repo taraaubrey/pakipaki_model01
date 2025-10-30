@@ -1,0 +1,322 @@
+### CELL 60 ###
+plt.figure(figsize=(7, 6))
+
+# Use realization index for color, all points have the same marker shape
+for nstp in dfs.keys():
+    ndf = dfs[nstp]
+    colors = plt.cm.viridis(np.linspace(0, 1, len(ndf)))
+    for i, (idx, row) in enumerate(ndf.iterrows()):
+        plt.scatter(row['pk4head'], -row['awtot'],
+                    color=colors[i],
+                    marker='o',  # same shape for all
+                    alpha=0.8)
+
+plt.xlabel('pk4 (mRL)')
+plt.ylabel('awtot (m3/d, sign flipped)')
+plt.title('PK4 Head vs Awanui Flux by Realization (all kstp)')
+plt.xlim(0, 30)
+plt.ylim(0, 500000) 
+plt.tight_layout()
+plt.grid()
+plt.show()
+
+### CELL 61 ###
+plt.figure(figsize=(7, 6))
+
+# Use realization index for color, all points have the same marker shape
+for nstp in dfs.keys():
+    ndf = dfs[nstp]
+    colors = plt.cm.viridis(np.linspace(0, 1, len(ndf)))
+    for i, (idx, row) in enumerate(ndf.iterrows()):
+        plt.scatter(row['pk4head'], row['confhead'],
+                    color=colors[i],
+                    marker='o',  # same shape for all
+                    alpha=0.8)
+
+plt.xlabel('pk4 (mRL)')
+plt.ylabel('confined (mRL)')
+plt.title('PK4 Head vs Conf Head (all kstp)')
+plt.xlim(0, 30)
+# plt.ylim(0, 500000) 
+plt.tight_layout()
+plt.grid()
+plt.show()
+
+### CELL 62 ###
+extract_kper = lambda x: int([s for s in x.split('_') if s.startswith('kper:')][0].split(':')[1])
+extract_kstp = lambda x: int([s for s in x.split('_') if s.startswith('kstp:')][0].split(':')[1])
+extract_i = lambda x: int([s for s in x.split('_') if s.startswith('i:')][0].split(':')[1])
+extract_j = lambda x: int([s for s in x.split('_') if s.startswith('j:')][0].split(':')[1])
+extract_time = lambda x: int([s for s in x.split('_') if s.startswith('time:')][0].split(':')[1])
+extract_usecol = lambda x: [s for s in x.split('_') if s.startswith('usecol:')][0].split(':')[1]
+
+# Decide which columns you want to load
+desired_cols = [col for col in headers if col.startswith('oname:awq')]
+
+# data
+pre_oe_ts = pd.read_csv(pr_oe_fn, usecols=desired_cols)
+ts_noise = pd.read_csv(noise_fn, usecols=desired_cols)
+
+### CELL 63 ###
+desired_cols[:10]
+
+### CELL 64 ###
+col = f'oname:awq_otype:lst_usecol:awq_kper:1_kstp:1_k:0_i:10_j:42'
+bins=20
+fig, ax = plt.subplots(1,1,figsize=(7,5))
+
+# plot posterior/noise (red)
+ts_noise.loc[:,col].hist(ax=ax, fc="r", alpha=0.5, bins=bins, label="Noise")
+
+# plot prior (blue)
+pre_oe_ts.loc[:,col].hist(ax=ax, fc="blue", alpha=0.5, bins=bins, label="Prior")
+
+# add mean line for noise & prior
+meanp_val = pre_oe_ts.loc[:,col].mean()
+# ax.axvline(meanp_val, color="blue", linestyle="--", linewidth=2, label=f"Mean={meanp_val:.2f}")
+mean_val = ts_noise.loc[:,col].mean()
+ax.axvline(mean_val, color="red", linestyle="--", linewidth=2, label=f"Mean={mean_val:.2f}")
+
+ax.set_title(col)
+
+### CELL 65 ###
+par_df = pd.read_csv(par_data_fn, index_col=0)
+pr_pe = pd.read_csv(pr_pe_fn, index_col=0)
+pt_pe = pd.read_csv(pt_pe_fn, index_col=0)
+
+pr_peT = pd.merge(pr_pe, par_df, left_index=True, right_index=True)
+pt_peT = pd.merge(pt_pe, par_df, left_index=True, right_index=True)
+
+temp_arr = np.loadtxt(r"C:\Users\tfo46\e_Python\e_projects\pakipaki_01\models\local_run0\pest\master_ies\org\local_run0.rcha_recharge_0.txt")
+
+param_headers = pr_pe.columns.tolist()
+
+### CELL 66 ###
+par_df['pargp'].unique()
+
+### CELL 67 ###
+par_pr_df.iloc[common_reals_list]
+
+### CELL 68 ###
+pargps = par_df['pargp'].unique().tolist()
+
+dfs = {}
+for parg in pargps:
+    if parg[:3] in ['npf', 'rch', 'sto']:
+        cols = []
+        idx = 'constant'
+        if 'cn' in parg:
+            idx = 'constant'
+            cols = [p for p in param_headers if p.startswith(f'pname:{parg[:-2]}-cn')]
+        elif 'pp' in parg:
+            idx = 'pp'
+            cols = [p for p in param_headers if p.startswith(f'pname:{parg[:-2]}-pp')]
+        elif 'fngr' in parg:
+            idx = 'fngr'
+            cols = [p for p in param_headers if p.startswith(f'pname:{parg[:-4]}-fngr')]
+        elif 'crgr' in parg:
+            idx = 'crgr'
+            cols = [p for p in param_headers if p.startswith(f'pname:{parg[:-4]}-crgr')]
+    else:
+        cols = [p for p in param_headers if p.startswith(f'pname:{parg}')]
+    dfs[parg] = to_par_df(par_pr_df[cols], parg, idx)
+
+### CELL 69 ###
+arrs = {}
+i = 'npfklayer1pp'
+idf = dfs[i]
+ptype = idf['ptype'].unique()[0]
+i_arrs = []
+for real in idf.columns[:-4]:
+    arr = np.ones_like(temp_arr)
+    if ptype == 'cn':
+        val = idf[real].values[0]
+        arr = np.ones_like(temp_arr) * val
+    elif ptype in ['pp', 'fngr', 'crgr']:
+        #  for idx, row in idf.iterrows():
+        #     i_idx = row['i']
+        #     j_idx = row['j']
+        #     val = row[real]
+        #     arr[i_idx, j_idx] = val
+        arr = idf.pivot(index='i', columns='j', values=real).to_numpy()
+        max_nan = 1e+30
+        arr = np.where(arr == max_nan, np.nan, arr)
+    i_arrs.append(arr)
+i_stack = np.stack(i_arrs)
+arrs[i] = {
+    'i_stack': i_stack,
+    'mean': np.mean(i_stack, axis=0),
+    'min': np.min(i_stack, axis=0),
+    'max': np.max(i_stack, axis=0),
+    'std': np.std(i_stack, axis=0),
+}
+
+### CELL 70 ###
+plt.imshow(arrs[i]['i_stack'][56])
+
+### CELL 71 ###
+# get all the heads into an array which we can now call to plot
+arrs = {}
+for i in dfs.keys():
+    idf = dfs[i]
+    ptype = idf['ptype'].unique()[0]
+    i_arrs = []
+    for real in idf.columns[:-4]:
+        arr = np.ones_like(temp_arr) * np.nan
+        if ptype == 'cn':
+            val = idf[real].values[0]
+            arr = np.ones_like(temp_arr) * val
+        elif ptype in ['pp', 'fngr', 'crgr']:
+             for idx, row in idf.iterrows():
+                i_idx = row['i']
+                j_idx = row['j']
+                val = row[real]
+                arr[i_idx, j_idx] = val
+            # arr = idf.pivot(index='i', columns='j', values=real).to_numpy()
+            # max_nan = 1e+30
+        arr = np.where(arr == max_nan, np.nan, arr)
+        i_arrs.append(arr)
+    i_stack = np.stack(i_arrs)
+    arrs[i] = {
+        'i_stack': i_stack,
+        'mean': np.mean(i_stack, axis=0),
+        'min': np.min(i_stack, axis=0),
+        'max': np.max(i_stack, axis=0),
+        'std': np.std(i_stack, axis=0),
+    }
+
+### CELL 72 ###
+from scipy.interpolate import griddata
+
+# Create array with NaN values
+arr = arrs['npfklayer1pp']['i_stack'][56].copy()
+
+# Get coordinates of valid (non-NaN) points
+valid_mask = ~np.isnan(arr)
+points = np.column_stack(np.where(valid_mask))
+values = arr[valid_mask]
+
+# Get coordinates of all points
+all_i, all_j = np.mgrid[0:arr.shape[0], 0:arr.shape[1]]
+xi = np.column_stack([all_i.ravel(), all_j.ravel()])
+
+# Interpolate using nearest neighbor
+filled_arr = griddata(points, values, xi, method='nearest').reshape(arr.shape)
+
+### CELL 73 ###
+plt.imshow(filled_arr)
+
+### CELL 74 ###
+dfs.keys()
+
+### CELL 75 ###
+dfs['rchfngr']
+
+### CELL 76 ###
+plt.imshow(np.mean(arrs['rchfngr']['i_stack'][56], axis=0))
+
+### CELL 77 ###
+arrs['rchfngr']['i_stack'][56]
+
+### CELL 78 ###
+plt.imshow(arrs['rchfngr']['i_stack'][56])
+
+### CELL 79 ###
+plt.imshow(arrs['npfklayer1cn']['mean'])
+
+### CELL 80 ###
+# Get parameter groups (excluding those starting with 's_1_')
+all_groups = par_data['pargp'].unique()
+par_groups = [g for g in all_groups if not g.startswith('s_1_')]
+print(f"\nParameter groups to plot ({len(par_groups)}):")
+for g in sorted(par_groups):
+    print(f"  - {g}")
+
+# Filter pt_reals to only include valid realization indices
+valid_pt_reals = [r for r in pt_reals_list if r < len(pt_pe)]
+if len(valid_pt_reals) < len(pt_reals_list):
+    print(f"\nWarning: Only {len(valid_pt_reals)} of {len(pt_reals_list)} requested realizations exist")
+    print(f"Valid realizations: {valid_pt_reals}")
+
+# Create subset of posterior for highlighted realizations
+pt_subset = pt_pe.iloc[valid_pt_reals]
+
+# Plot histograms for each parameter group
+n_groups = len(par_groups)
+n_cols = 3
+n_rows = int(np.ceil(n_groups / n_cols))
+
+fig, axes = plt.subplots(n_rows, n_cols, figsize=(15, 4*n_rows))
+axes = axes.flatten() if n_groups > 1 else [axes]
+
+for idx, pargp in enumerate(sorted(par_groups)):
+    ax = axes[idx]
+
+    # Get parameters in this group
+    pars_in_group = par_data[par_data['pargp'] == pargp].index.tolist()
+    # get parameter transform
+    transform = par_data.loc[pars_in_group]['partrans'][0]
+
+    if len(pars_in_group) == 0:
+        ax.text(0.5, 0.5, f'No parameters\nin {pargp}',
+                ha='center', va='center', transform=ax.transAxes)
+        ax.set_title(pargp)
+        continue
+
+    # Get values for all realizations and all parameters in this group
+    prior_vals = pr_pe.loc[:, pars_in_group].values.flatten()
+    posterior_vals = pt_pe.loc[:, pars_in_group].values.flatten()
+    subset_vals = pt_subset.loc[:, pars_in_group].values.flatten()
+
+    if transform == 'log':
+        prior_vals = np.log(prior_vals)
+        posterior_vals = np.log(posterior_vals)
+        subset_vals = np.log(subset_vals)
+
+    # Determine histogram bins based on combined data range
+    all_vals = np.concatenate([prior_vals, posterior_vals])
+    bins = np.linspace(np.percentile(all_vals, 1), np.percentile(all_vals, 99), 30)
+
+    # Plot histograms
+    ax.hist(prior_vals, bins=bins, alpha=0.5, color='grey',
+            label='Prior', density=True, edgecolor='black', linewidth=0.5)
+    ax.hist(posterior_vals, bins=bins, alpha=0.5, color='cornflowerblue',
+            label='Posterior', density=True, edgecolor='black', linewidth=0.5)
+    ax.hist(subset_vals, bins=bins, alpha=0.7, color='darkblue',
+            label=f'Subset (n={len(valid_pt_reals)})', density=True,
+            edgecolor='black', linewidth=0.5)
+
+    ax.set_xlabel('Parameter Value')
+    ax.set_ylabel('Density')
+    ax.set_title(f'{pargp}\n(n={len(pars_in_group)} params)')
+    ax.legend(fontsize=8)
+    ax.grid(alpha=0.3)
+
+# Remove empty subplots
+for idx in range(n_groups, len(axes)):
+    fig.delaxes(axes[idx])
+
+plt.tight_layout()
+plt.savefig(os.path.join(output, 'output.parameter_group_histograms.png'),
+            dpi=300, bbox_inches='tight')
+print(f"\nFigure saved to: {os.path.join(output, 'output.parameter_group_histograms.png')}")
+plt.show()
+
+# Optional: Print summary statistics
+print("\n" + "="*70)
+print("SUMMARY STATISTICS")
+print("="*70)
+for pargp in sorted(par_groups):
+    pars_in_group = par_data[par_data['pargp'] == pargp].index.tolist()
+    if len(pars_in_group) == 0:
+        continue
+
+    prior_vals = pr_pe.loc[:, pars_in_group].values.flatten()
+    posterior_vals = pt_pe.loc[:, pars_in_group].values.flatten()
+
+    print(f"\n{pargp} ({len(pars_in_group)} parameters):")
+    print(f"  Prior:     mean={np.mean(prior_vals):.4f}, std={np.std(prior_vals):.4f}")
+    print(f"  Posterior: mean={np.mean(posterior_vals):.4f}, std={np.std(posterior_vals):.4f}")
+    print(f"  Std reduction: {(1 - np.std(posterior_vals)/np.std(prior_vals))*100:.1f}%")
+
+

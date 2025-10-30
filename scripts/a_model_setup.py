@@ -61,13 +61,14 @@ def main():
     # TDIS ####################################################################
     start = pd.to_datetime(START_DATE)
     end = pd.to_datetime(END_DATE)
-    PERLEN = (end - start).days + 1
+    PERLEN = (end - start).days
     NSTEPS = PERLEN  # 1 day time step
 
     print(f'Simulation period: {PERLEN} days with {NSTEPS} time steps.')
     
     # dis
     grid, idomain, top, nrow, ncol, delr, delc, fn_out = dis_setup(fn_out)
+    elev_constraint = grid.array_from_raster(TOP)
     # grid_gpd = grid.cell_geodataframe()
     # grid_gpd.to_file(Path(SPATIAL_DIR, f'{MODEL_NAME}_grid.shp'), driver='ESRI Shapefile')
     # ghbs
@@ -104,7 +105,8 @@ def main():
 
     tdis = fp.mf6.ModflowTdis(
         simulation=sim, # add to the simulation called sim (defined in prevous code cell)
-        time_units='DAYS', 
+        time_units='DAYS',
+        start_date_time=start.strftime('%Y-%m-%d'), #YYYY-MM-DDThh:mmTZD
         nper=NPER, # number of stress periods
         perioddata=[
             (1, 1, 1),
@@ -259,10 +261,10 @@ def main():
     # awanui flux truth
     helpers.create_awghb_truth(ghb_dfs, TRUTHREL_DIR)
     # top model constraints (head can't be greater than 1m above top)
-    helpers.create_head_truth(gwf.dis.top.get_data(), TRUTHREL_DIR)
+    helpers.create_head_truth(elev_constraint, TRUTHREL_DIR)
     # sample location truth
     helpers.samples_truth(gwf, TRUTHREL_DIR)
-    
+
     
     # # copy file to truth directory
     # obs_results  = pd.read_csv(f'obs_results.csv')
