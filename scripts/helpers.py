@@ -8,13 +8,16 @@ def extract_budget(model_name=None):
     import flopy
     import numpy as np
     
-    def get_gwf(gwf, model_name):
+    def get_gwf(model_name, gwf=None):
         if gwf is None:
             import flopy
 
             sim = flopy.mf6.MFSimulation.load(sim_ws='.')
             gwf = sim.get_model(model_name)
         return sim, gwf
+    
+    # _, gwf = get_gwf(model_name)
+    # gwf.ghb[0].name
 
     lst_path = f"{model_name}.lst"
     lst = flopy.utils.Mf6ListBudget(lst_path)
@@ -39,11 +42,14 @@ def extract_budget(model_name=None):
     incremental.index = np.arange(1, len(incremental) + 1)
     incremental.index.name = "kper"
 
+    incremental['sw'] = incremental['awanui'] + incremental['poukawa'] + incremental['spring']
+    incremental['inflow'] = incremental['recharge'] + incremental['confined']
+
     # in present day: awanui and spring seperate
     # incremental['awanui-spring'] = incremental['awanui'] + incremental['spring']
     # inc.to_csv(f"{MODEL_DIR}/inc.csv")
     incremental.to_csv(f"output.budget.csv")
-    return
+    return incremental
 
 
 # def extract_spring_obs(
@@ -179,20 +185,20 @@ def extract_budget(model_name=None):
 #         time_stop1 = int(head_results.loc[(head_results['kstp'] == head_results['kstp'].max()) & (head_results['kper'] == 2)]['time'].values[0]+1)
 #         time_start2 = int(head_results.loc[(head_results['kstp'] == 1) & (head_results['kper'] == 4)]['time'].values[0]-1)
 
-#         head_results['firstnegday'] = -1
+#         head_results['firstpostday'] = -1
 #         negs = head_results.loc[time_start1:time_stop1, 'pk4springdiff'].lt(0)
 #         if negs.any():
-#             head_results.loc[time_start1:time_stop1, 'firstnegday'] = head_results.loc[time_start1:time_stop1, 'pk4springdiff'].lt(0).idxmax()
+#             head_results.loc[time_start1:time_stop1, 'firstpostday'] = head_results.loc[time_start1:time_stop1, 'pk4springdiff'].lt(0).idxmax()
 #         else:
-#             head_results.loc[time_start1:time_stop1, 'firstnegday'] = -1
+#             head_results.loc[time_start1:time_stop1, 'firstpostday'] = -1
         
 #         negs = (time_start2) - head_results.loc[time_start2:, 'pk4springdiff'].lt(0)
 #         if negs.any():
-#             head_results.loc[time_start2:, 'firstnegday'] = (time_start2) - head_results.loc[time_start2:, 'pk4springdiff'].lt(0).idxmax()
+#             head_results.loc[time_start2:, 'firstpostday'] = (time_start2) - head_results.loc[time_start2:, 'pk4springdiff'].lt(0).idxmax()
 #         else:
-#             head_results.loc[time_start2:, 'firstnegday'] = -1
+#             head_results.loc[time_start2:, 'firstpostday'] = -1
 
-#         return head_results[['time', 'kper', 'kstp'] + cols + ['firstnegday']].reset_index(drop=True)
+#         return head_results[['time', 'kper', 'kstp'] + cols + ['firstpostday']].reset_index(drop=True)
         
 #     def extract_spring_flux(sample_locations, gwf=None, kstpkper=None):
 #         import geopandas as gpd
@@ -447,6 +453,7 @@ def extract_ghb_fluxes(model_name, gwf=None, save=True, sample_path=None):
     _, gwf = get_gwf(gwf, model_name)
     cbb = gwf.output.budget()
     idomain = gwf.dis.idomain.get_data()
+    idomain = np.where(idomain > 0, 1, 0)
 
     dfs = {
         'GHB_AW': [],
@@ -461,9 +468,6 @@ def extract_ghb_fluxes(model_name, gwf=None, save=True, sample_path=None):
         'GHB_SP': {},
     }
     samples_ts = {
-        'GHB_AW': [],
-        'GHB_CONF': [],
-        'GHB_PW': [],
         'GHB_SP': []
     }
 
@@ -489,6 +493,7 @@ def extract_ghb_fluxes(model_name, gwf=None, save=True, sample_path=None):
             # df['index'] = kij
             df['kper'] = kper
             df['kstp'] = kstp
+            df['time'] = time
             df['k'] = kij.apply(lambda x: x[0])
             df['i'] = kij.apply(lambda x: x[1])
             df['j'] = kij.apply(lambda x: x[2])
@@ -497,14 +502,16 @@ def extract_ghb_fluxes(model_name, gwf=None, save=True, sample_path=None):
             # reformat column name
             suffix = package_name.split('_')[-1]
             df.rename(columns={'q': f'{suffix}q'}, inplace=True)
-            dfs[package_name].append(df[['kper', 'kstp', 'k', 'i', 'j', f'{suffix}q']])
+            dfs[package_name].append(df[['kper', 'kstp', 'time', 'k', 'i', 'j', f'{suffix}q']])
 
-            if samples:
+            if isinstance(samples, dict) & (package_name == 'GHB_SP'):
                 arr = df_to_array(df, f'{suffix}q', idomain)
                 sample_fluxes = {}
                 for name, (lay, row, col) in samples.items():
                     sample_fluxes[name] = arr[lay, row, col]
-                
+                sample_fluxes['kper'] = kper
+                sample_fluxes['kstp'] = kstp
+
                 samples_ts[package_name].append(pd.DataFrame(sample_fluxes, index=[time]))
     
     
@@ -515,7 +522,7 @@ def extract_ghb_fluxes(model_name, gwf=None, save=True, sample_path=None):
             pkg_df.reset_index(inplace=True)
             pkg_df.rename(columns={'index': 'time'}, inplace=True)
             pkg_df = pkg_df.melt(
-                id_vars=['time'],
+                id_vars=['time', 'kper', 'kstp'],
                 value_vars=list(samples.keys()), 
                 var_name='sample', 
                 value_name='flux')
@@ -524,10 +531,10 @@ def extract_ghb_fluxes(model_name, gwf=None, save=True, sample_path=None):
         # combine all
         sample_results = pd.concat(sample_dfs)
 
-        fluxes = sample_results.groupby('time').sum()
+        # fluxes = sample_results.groupby('time').sum()
         # save
         if save:
-            fluxes['flux'].to_csv(f"output.spring_fluxes.csv")
+            sample_results.to_csv(f"output.spring_fluxes.csv")
 
     # combine all dataframes
     combined_dfs = {}
@@ -682,7 +689,7 @@ def extract_model_heads(model_name, gwf=None, sample_path=None):
         ghb_h.set_index('ts_time', inplace=True)
 
         df = pd.merge(all_samples, ghb_h, how='left', right_index=True, left_on='time')
-        return df['pk4'] - df[ghb_col]
+        return df[ghb_col] - df['pk4']
 
     _, gwf = get_gwf(gwf, model_name)
     kstpkper = gwf.output.head().get_kstpkper()
@@ -704,13 +711,15 @@ def extract_model_heads(model_name, gwf=None, sample_path=None):
         arrs[f'{kper}.{kstp}'] = heads
         for k in range(heads.shape[0]):
             # save each layer separately
-            np.savetxt(f"output.heads_lyr{k+1}_kper{kper+1}_kstp{kstp+1}.dat", heads[k])
+            np.savetxt(f"output.heads_kper{kper+1}_kstp{kstp+1}_time{time}.dat", heads[k])
         
         if samples:
             sample_heads = {}
             for name, (lay, row, col) in samples.items():
                 sample_heads[name] = heads[lay, row, col]
-            
+            sample_heads['kper'] = kper + 1  # make 1-based
+            sample_heads['kstp'] = kstp + 1  # make 1-based
+
             samples_ts[f'{kper}.{kstp}'] = pd.DataFrame(sample_heads, index=[time])
     
     if samples:
@@ -720,15 +729,27 @@ def extract_model_heads(model_name, gwf=None, sample_path=None):
 
         # add derived columns
         all_samples['pk4-spr-diff'] = compare_ghb_heads(gwf, 3, 'ts_array_11', all_samples)
-        all_samples['pk4-conf-diff'] = compare_ghb_heads(gwf, 1, 'ts_array', all_samples)
+
+
+        all_samples['pk4-conf-diff'] = compare_ghb_heads(gwf, 1, 'ts_array_0', all_samples)
         # all_samples['d-losing'] = days_losing_regime(sim, all_samples)
 
         all_samples.fillna(-999, inplace=True)
 
-        recession_rates = all_samples.iloc[52] - all_samples.iloc[1]
-        recession_df = recession_rates.loc[['pk4', 'pk4-spr-diff', 'pk4-conf-diff']].to_frame().T
-        recession_df.index.name = 'idx'
-        recession_df.to_csv(f"output.sample_recession_rates.csv")
+        recession_rates = all_samples.groupby(['kper']).last() - all_samples.groupby(['kper']).first()
+        
+        # get days to regime switch
+        recession_rates['fliptime'] = -1
+        for kper in recession_rates.index:
+            mask = (all_samples['kper'] == kper) & (all_samples['pk4-spr-diff'] > 0)
+            i_days = all_samples[mask].index.to_list()
+            if len(i_days) > 0:
+                day = i_days[0]
+            else:
+                day = -1
+            recession_rates.loc[kper, 'fliptime'] = day
+        
+        recession_rates.to_csv(f"output.sample_recession_rates.csv")
 
         all_samples.to_csv(f"output.sample_heads.csv", index=False)
         return all_samples
@@ -739,7 +760,7 @@ def compare_ghb_heads(gwf, i, ghb_col, all_samples):
     ghb_h.set_index('ts_time', inplace=True)
 
     df = pd.merge(all_samples, ghb_h, how='left', right_index=True, left_index=True)
-    return df['pk4'] - df[ghb_col]
+    return df[ghb_col] - df['pk4']
 
 
 # def days_losing_regime(sim, all_samples):
@@ -807,7 +828,7 @@ def create_awghb_truth(ghb_dfs, dir):
     # replace all values with GHB_Q
     df['weight'] = 0
     df['std'] = GHB_Qstd
-    df['AWq'] = GHB_Q
+    df['AWq'] = 0
     # set std only on kper 1 and kstp 1
     # df.loc[(df['kper'] == 1) & (df['kstp'] == 1), 'weight'] = 1/GHB_Qstd
     df['weight'] = np.where(
@@ -816,6 +837,23 @@ def create_awghb_truth(ghb_dfs, dir):
 
     df.to_csv(Path(dir, f"output.GHB_AW_fluxes.truth.csv"), index=False)
     return
+
+def create_confghb_truth(ghb_dfs, dir):
+    """
+    Replace all values in the kper, kstp dataframes with the truth values.
+    Only valid for kper 1 and kstp 1.
+    """
+
+    df = ghb_dfs['GHB_CONF'].copy()
+    # replace all values with GHB_Q
+    df['weight'] = 1/GHB_Qstd
+    df['std'] = GHB_Qstd
+    df['CONFq'] = 0
+    # set std only on kper 1 and kstp 1
+
+    df.to_csv(Path(dir, f"output.GHB_CONF_fluxes.truth.csv"), index=False)
+    return
+
 
 def create_head_truth(arr, TRUTHREL_DIR):
     np.savetxt(Path(TRUTHREL_DIR, f"output.heads.truth.dat"), arr + HEAD_offset)
@@ -833,27 +871,74 @@ def create_head_truth(arr, TRUTHREL_DIR):
 def samples_truth(gwf, TRUTHREL_DIR):
     import pandas as pd
 
+    recession_fn = Path(f"output.sample_recession_rates.csv")
     pk4_path = Path(f'{MODEL_NAME}.pk4_level.csv')
+    spr_path = Path(f'{MODEL_NAME}.ts_spring_raw.csv')
+    conf_path = Path(f'{MODEL_NAME}.ts_confined_raw.csv')
+    
     df = pd.read_csv(pk4_path, index_col=0)
-
-    # df = pd.merge(samples['spring'], pk4_h, left_index=True, right_index=True, how='left')
+    sp_df = pd.read_csv(spr_path, index_col=0)
+    conf_df = pd.read_csv(conf_path, index_col=0)
+    rec_df = pd.read_csv(recession_fn)
+    
     df.rename(columns={'sm_level_mRL': 'pk4'}, inplace=True)
+    df['spring'] = sp_df['sm_level_mRL'].values
+    df['conf'] = conf_df['level_mRL'].values
+
     df['std'] = np.where(~df['pk4'].isna(), PK4_std, 0)
     df['weight'] = np.where(~df['pk4'].isna(), 1/PK4_std, 0)
 
-    df['pk4-spr-diff'] = compare_ghb_heads(gwf, 3, 'ts_array_11', df)
-    df['pk4-conf-diff'] = compare_ghb_heads(gwf, 1, 'ts_array', df)
+    df['pk4-spr-diff'] = df['spring'] - df['pk4']
+    df['pk4-conf-diff'] = df['conf'] - df['pk4']
 
     df.fillna(0, inplace=True)
 
-    recession_rates = df.iloc[52] - df.iloc[1]
-    recession_rates['std'] = PK4_std
-    recession_rates['weight'] = 1/PK4_std
-    recession_df = recession_rates.loc[['pk4', 'pk4-spr-diff', 'pk4-conf-diff', 'std', 'weight']].to_frame().T
-    recession_df.index.name = 'idx'
-    recession_df.to_csv(Path(TRUTHREL_DIR, f"output.sample_recession_rates.truth.csv"))
+    # all_samples.groupby(['kper']).last() - all_samples.groupby(['kper']).first()
+    rec_df.loc[2, 'pk4'] = df['pk4'].iloc[-1] - df['pk4'].iloc[1]
+    rec_df.loc[2, 'pk4-spr-diff'] = df['pk4-spr-diff'].iloc[-1] - df['pk4-spr-diff'].iloc[1]
+    rec_df.loc[2, 'pk4-conf-diff'] = df['pk4-conf-diff'].iloc[-1] - df['pk4-conf-diff'].iloc[1]
+    
+    rec_df['std'] = 0.
+    rec_df['weight'] = 0.
+    rec_df.loc[2, 'std'] = PK4_std
+    rec_df.loc[2, 'weight'] = 1/PK4_std
+
+    rec_df['fliptime'] = -1.
+    mask = df['pk4-spr-diff'] > 0
+    i_days = df[mask].index.to_list()
+    if len(i_days) > 0:
+        day = int(np.min(i_days))
+    else:
+        day = -1
+    rec_df.loc[1, 'fliptime'] = day
+
+    rec_df[['time','kper', 'kstp', 'pk4', 'pk4-spr-diff', 'pk4-conf-diff', 'fliptime', 'std', 'weight']].to_csv(Path(TRUTHREL_DIR, f"output.sample_recession_rates.truth.csv"))
     
     df = df[['pk4', 'pk4-spr-diff', 'pk4-conf-diff', 'std', 'weight']].reset_index().rename(columns={'index': 'time'})
     df.to_csv(Path(TRUTHREL_DIR, f"output.sample_heads.truth.csv"), index=False)
     
     return
+
+def create_budget_truth(budget, TRUTHREL_DIR):
+    budget['confined'] = 0. # must be greater than
+    budget['sw'] = budget['recharge'] * -1 # must be less than
+
+    # default values
+    budget['conf-std'] = 0.
+    budget['conf-weight'] = 0.
+    budget['inflow-std'] = 0.
+    budget['inflow-weight'] = 0.
+
+    budget['confined'] = 0. # must be greater than
+    budget.loc[:, 'conf-std'] = 3000
+    budget.loc[:, 'conf-weight'] = (1/budget.loc[:, 'conf-std']).values
+
+    # sum of ghb conf and recharge can't be greater than awanui outflow
+    budget.loc[1, 'inflow'] = 73000 # must be less
+    budget.loc[2, 'inflow'] = 63000 # must be less than
+    budget.loc[1, 'inflow-std'] = budget.loc[1, 'inflow'] * 0.05
+    budget.loc[2, 'inflow-std'] = budget.loc[2, 'inflow'] * 0.05
+    budget.loc[:, 'inflow-weight'] = (1/budget.loc[:, 'inflow-std']).values
+    
+    budget.replace(np.inf, 0, inplace=True)
+    budget.to_csv(Path(TRUTHREL_DIR, f"output.budget.truth.csv"))

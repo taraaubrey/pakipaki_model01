@@ -74,12 +74,12 @@ def main():
 
     # PARAMETERIZATION --------------------------------------------------
     # exponential variogram for spatially varying parameters
-    v_space = pyemu.geostats.ExpVario(
+    v_coarse = pyemu.geostats.ExpVario(
         name='main_gs', contribution=1.0, a=1000, anisotropy=1.0, bearing=0.0)
     v_fine = pyemu.geostats.ExpVario(
         name='fine_gs', contribution=1.0, a=100, anisotropy=1.0, bearing=0.0)
     
-    vh_space = pyemu.geostats.GauVario(
+    vh_coarse = pyemu.geostats.GauVario(
         name='head_gs', contribution=1.0, a=1000, anisotropy=1.0, bearing=0.0)
     vh_fine = pyemu.geostats.GauVario(
         name='head_gs', contribution=1.0, a=100, anisotropy=1.0, bearing=0.0)
@@ -89,10 +89,10 @@ def main():
 
     # geostatistical structure for spatially varying parameters
     fine_gs = pyemu.geostats.GeoStruct(variograms=v_fine, transform='log')
-    grid_gs = pyemu.geostats.GeoStruct(variograms=v_space, transform='log')
+    coarse_gs = pyemu.geostats.GeoStruct(variograms=v_coarse, transform='log')
     
     h_fine_gs = pyemu.geostats.GeoStruct(variograms=vh_fine, transform='none')
-    h_grid_gs = pyemu.geostats.GeoStruct(variograms=vh_space, transform='none')
+    h_coarse_gs = pyemu.geostats.GeoStruct(variograms=vh_coarse, transform='none')
     
     time_gs = pyemu.geostats.GeoStruct(variograms=v_time, transform='none')
 
@@ -101,6 +101,7 @@ def main():
 
     # get the IDOMAIN array
     ib = gwf.dis.idomain.array
+
 
     # TIMESERIES data ------------------------------------
     aw_df = pd.read_csv(os.path.join(TEMP_DIR, f'{MODEL_NAME}.ghb_aw_head_names.csv'), header=None)
@@ -111,58 +112,77 @@ def main():
     dts = dts.to_list()
 
     # add ts data
-    add_ts_parameters(
-        pf, TEMP_DIR,
-        datetimes=dts,
-        name='ghb-ts-aw',
-        f=f'{MODEL_NAME}.ghb_aw_heads.csv',
-        bounds=[-1e-1, 1e-1],
-        parnames=list(aw_df[0]),
-        use_cols=np.arange(1, aw_df.shape[0]+1).tolist(),
-        time_gs={'tgs': time_gs},
-        )
-    add_ts_parameters(
-        pf, TEMP_DIR,
-        datetimes=dts,
-        name='ghb-ts-pw',
-        f=f'{MODEL_NAME}.ghb_pw_heads.csv',
-        bounds=[-1e-1, 1e-1],
-        parnames=list(pw_df[0]),
-        use_cols=np.arange(1, pw_df.shape[0]+1).tolist(),
-        time_gs={'tgs': time_gs},
-        )
-    add_ts_parameters(
-        pf, TEMP_DIR,
-        datetimes=dts,
-        name='ghb-ts-spring',
-        f=f'{MODEL_NAME}.ghb_spring_heads.csv',
-        bounds=[-1e-1, 1e-1],
-        parnames=list(sp_df[0]),
-        use_cols=np.arange(1, sp_df.shape[0]+1).tolist(),
-        time_gs={'tgs': time_gs},
-        )
-    add_ts_parameters(
-        pf, TEMP_DIR,
-        datetimes=dts,
-        name='ghb-ts-conf',
-        f=f'{MODEL_NAME}.ghb_conf_heads.csv',
-        bounds=[-1e-1, 1e-1],
-        parnames=['head_ts'],
-        use_cols=[1],
-        time_gs={'tgs': time_gs},
-        )
+    # add_ts_parameters(
+    #     pf, TEMP_DIR,
+    #     datetimes=dts,
+    #     name='ghb-ts-aw',
+    #     f=f'{MODEL_NAME}.ghb_aw_heads.csv',
+    #     bounds=[-1e-1, 1e-1],
+    #     parnames=list(aw_df[0]),
+    #     use_cols=np.arange(1, aw_df.shape[0]+1).tolist(),
+    #     time_gs={'tgs': time_gs},
+    #     )
+    # add_ts_parameters(
+    #     pf, TEMP_DIR,
+    #     datetimes=dts,
+    #     name='ghb-ts-pw',
+    #     f=f'{MODEL_NAME}.ghb_pw_heads.csv',
+    #     bounds=[-1e-1, 1e-1],
+    #     parnames=list(pw_df[0]),
+    #     use_cols=np.arange(1, pw_df.shape[0]+1).tolist(),
+    #     time_gs={'tgs': time_gs},
+    #     )
+    # add_ts_parameters(
+    #     pf, TEMP_DIR,
+    #     datetimes=dts,
+    #     name='ghb-ts-spring',
+    #     f=f'{MODEL_NAME}.ghb_spring_heads.csv',
+    #     bounds=[-1e-1, 1e-1],
+    #     parnames=list(sp_df[0]),
+    #     use_cols=np.arange(1, sp_df.shape[0]+1).tolist(),
+    #     time_gs={'tgs': time_gs},
+    #     )
+    # add_ts_parameters(
+    #     pf, TEMP_DIR,
+    #     datetimes=dts,
+    #     name='ghb-ts-conf',
+    #     f=f'{MODEL_NAME}.ghb_conf_heads.csv',
+    #     bounds=[-1e-1, 1e-1],
+    #     parnames=['head_ts'],
+    #     use_cols=[1],
+    #     time_gs={'tgs': time_gs},
+    #     )
     # # set up pst file
     # K ----------------------------------------------
     # shallow aquifer
+    K_ins = [
+        {
+            'type': 'grid',
+            'gs': fine_gs,
+            'zone_array': np.where(ib[0] == 2, 1, 0),
+            'name_suffix': '-gr'
+        },
+        {
+            'type': 'pilotpoints',
+            'gs': coarse_gs,
+            'pp_space': 'pilot_points.shp',
+            'zone_array': np.where(ib[0] > 0, 1, 0),
+            'name_suffix': '-pp'
+        },
+        {
+            'type': 'constant',
+            'zone_array': np.where(ib[0] > 0, 1, 0),
+            'name_suffix': '-cn'
+        },
+    ]
+    
     define_mult_array(
         pf, TEMP_DIR,
         tag=f'{MODEL_NAME}.npf_k_layer',
         ib=ib,
-        grid_gs=fine_gs,
-        grid_suffix='-fngr',
-        lb=KH_PRIOR['lb'], ub=KH_PRIOR['ub'], 
-        pp_space=5,
-        pp_gs = grid_gs,
+        p_ins = K_ins,
+        lb=KH_PRIOR['lb'], ub=KH_PRIOR['ub'],
+        ulb=KH_PRIOR['ulb'], uub=KH_PRIOR['uub'], 
         lays=np.arange(NLAY).tolist()
         )
     # S ----------------------------------------------
@@ -170,73 +190,87 @@ def main():
         pf, TEMP_DIR,
         tag=f'{MODEL_NAME}.sto_ss_layer',
         ib=ib,
-        grid_gs=grid_gs,
-        grid_suffix='-fngr',
-        lb=SS_PRIOR['lb'], ub=SS_PRIOR['ub'], 
-        pp_space=5,
-        pp_gs = grid_gs,
+        p_ins = K_ins,
+        lb=SS_PRIOR['lb'], ub=SS_PRIOR['ub'],
+        ulb=SS_PRIOR['ulb'], uub=SS_PRIOR['uub'],
         lays=np.arange(NLAY).tolist()
         )
 
     # RECHARGE ------------------------------------------------------
-  
-    rcha(
-        pf, TEMP_DIR, ib,
-        tag=f'{MODEL_NAME}.rcha_recharge',
-        grid_gs=fine_gs,
-        grid_suffix='-fngr',
-        rch_bounds=[RCH['lb'], RCH['ub']],
-        pp_gs=grid_gs,
-        pp_space=5,
-        )
+    # define_mult_array(
+    #     pf, TEMP_DIR,
+    #     tag=f'{MODEL_NAME}.rcha_recharge',
+    #     ib=ib,
+    #     p_ins = K_ins,
+    #     lb=RCH['lb'], ub=RCH['ub'],
+    #     ulb=RCH['ulb'], uub=RCH['uub'],
+    #     lays=[0, 2]
+    #     )
     
     # GHBS ------------------------------------------------------
-    h_ghb_gs = {
-        'fngr': h_fine_gs,
-        # 'crgr': h_grid_gs,
-    }
-    
-    ghb(pf, TEMP_DIR,
+    ghb_cond(pf, TEMP_DIR,
         name='ghb-aw',
         tag=f'{MODEL_NAME}.ghbaw_stress_period_data',
-        grid_gs={'fngr': fine_gs},
-        head_gs=h_ghb_gs,
+        grid_gs={'gr': fine_gs},
         cond_bounds=[GHB_SW['cond_lb'], GHB_SW['cond_ub']],
-        head_bounds=[GHB_SW['head_lb'], GHB_SW['head_ub']],
+        ult_bounds=[GHB_SW['cond_ulb'], GHB_SW['cond_uub']],
         )
-    
-    ghb(pf, TEMP_DIR,
+    ghb_cond(pf, TEMP_DIR,
         name='ghb-pw',
         tag=f'{MODEL_NAME}.ghb_pw_stress_period_data',
-        grid_gs={'fngr': fine_gs},
-        head_gs=h_ghb_gs,
+        grid_gs={'gr': fine_gs},
         cond_bounds=[GHB_SW['cond_lb'], GHB_SW['cond_ub']],
-        head_bounds=[GHB_SW['head_lb'], GHB_SW['head_ub']],
-        )
-    
-    ghb(pf, TEMP_DIR,
+        ult_bounds=[GHB_SW['cond_ulb'], GHB_SW['cond_uub']],
+        )    
+    ghb_cond(pf, TEMP_DIR,
         name='ghb-spring',
         tag=f'{MODEL_NAME}.ghbspr_stress_period_data',
-        grid_gs={'fngr': fine_gs},
-        head_gs=h_ghb_gs,
+        grid_gs={'gr': fine_gs},
         cond_bounds=[GHB_SW['cond_lb'], GHB_SW['cond_ub']],
-        head_bounds=[GHB_SW['head_lb'], GHB_SW['head_ub']],
+        ult_bounds=[GHB_SW['cond_ulb'], GHB_SW['cond_uub']],
         )
-    
-    conf_ghb(pf, TEMP_DIR,
+    ghb_cond(pf, TEMP_DIR,
         name='ghb-conf',
         tag=f'{MODEL_NAME}.ghb_conf_stress_period_data',
-        cond_gs=grid_gs,
-        head_gs=h_grid_gs,
+        grid_gs={'gr': coarse_gs},
         cond_bounds=[GHB_CONF['cond_lb'], GHB_CONF['cond_ub']],
-        head_bounds=[GHB_CONF['head_lb'], GHB_CONF['head_ub']],
+        ult_bounds=[GHB_CONF['cond_ulb'], GHB_CONF['cond_uub']],
         )
+    
+    # ghb_heads(pf, TEMP_DIR,
+    #     name='ghb-aw',
+    #     tag=f'{MODEL_NAME}.ghbaw_stress_period_data',
+    #     head_gs={'hg': h_fine_gs},
+    #     head_bounds=[GHB_SW['head_lb'], GHB_SW['head_ub']],
+    #     ult_bounds=[GHB_SW['head_ulb'], GHB_SW['head_uub']],
+    #     )
+    # ghb_heads(pf, TEMP_DIR,
+    #     name='ghb-pw',
+    #     tag=f'{MODEL_NAME}.ghb_pw_stress_period_data',
+    #     head_gs={'hg': h_fine_gs},
+    #     head_bounds=[GHB_SW['head_lb'], GHB_SW['head_ub']],
+    #     ult_bounds=[GHB_SW['head_ulb'], GHB_SW['head_uub']],
+    #     )
+    # ghb_heads(pf, TEMP_DIR,
+    #     name='ghb-spring',
+    #     tag=f'{MODEL_NAME}.ghbspr_stress_period_data',
+    #     head_gs={'hg': h_fine_gs},
+    #     head_bounds=[GHB_SW['head_lb'], GHB_SW['head_ub']],
+    #     ult_bounds=[GHB_SW['head_ulb'], GHB_SW['head_uub']],
+    #     )
+    # ghb_heads(pf, TEMP_DIR,
+    #     name='ghb-conf',
+    #     tag=f'{MODEL_NAME}.ghb_conf_stress_period_data',
+    #     head_gs={'hg': h_coarse_gs},
+    #     head_bounds=[GHB_CONF['head_lb'], GHB_CONF['head_ub']],
+    #     ult_bounds=[GHB_CONF['head_ulb'], GHB_CONF['head_uub']]
+    #     )
 
     # OBSERVATIONS ------------------------------------------------------
     print('SETTING OBSERVATIONS...')
 
     # add stress period head/fluxes observations
-    index_cols = ['time']
+    index_cols = ['kper', 'kstp', 'time']
     obs_use_cols = ['pk4', 'pk4-spr-diff', 'pk4-conf-diff']
     pf.add_observations(
         'output.sample_heads.csv', # this is being read from the template file not the above truth file
@@ -246,54 +280,52 @@ def main():
         obsgp='ts-heads',
     )
 
-    index_cols = ['time']
+    index_cols = ['kper', 'kstp', 'time']
     obs_use_cols = ['flux']
     pf.add_observations(
         'output.spring_fluxes.csv', # this is being read from the template file not the above truth file
         index_cols=index_cols,
         use_cols=obs_use_cols, # skip the index column
-        prefix='ts-flux',
-        obsgp='ts-flux',
+        prefix='ts-sprflux',
+        obsgp='ts-sprflux',
     )
 
     # add budget
-    index_cols = ['kper', 'kstp', 'k', 'i', 'j']
+    index_cols = ['kper', 'kstp', 'time', 'k', 'i', 'j']
     use_cols = ['AWq']
     pf.add_observations(
         "output.GHB_AW_fluxes.csv", # this is being read from the template file not the above truth file
         index_cols=index_cols,
         use_cols=use_cols, # skip the index column
-        prefix='AWq',
-        obsgp='AWq',
+        prefix='arr-awq',
+        obsgp='arr-awq',
     )
 
     # add confined flux
-    index_cols = ['kper', 'kstp', 'k', 'i', 'j']
+    index_cols = ['kper', 'kstp', 'time', 'k', 'i', 'j']
     use_cols = ['CONFq']
     pf.add_observations(
         "output.GHB_CONF_fluxes.csv", # this is being read from the template file not the above truth file
         index_cols=index_cols,
         use_cols=use_cols, # skip the index column
-        prefix='CONFq',
-        obsgp='CONFq',
+        prefix='arr-confq',
+        obsgp='arr-confq',
     )
 
     # add recession
-    recession = pd.read_csv(os.path.join(TEMP_DIR, "output.sample_recession_rates.csv"))
-    index_cols = ['idx']
-    use_cols=list(recession.columns[1:])
+    index_cols = ['kper']
+    use_cols=['pk4', 'pk4-spr-diff', 'pk4-conf-diff', 'fliptime']
     pf.add_observations(
         "output.sample_recession_rates.csv", # this is being read from the template file not the above truth file
         index_cols=index_cols,
-        use_cols=use_cols, # skip the index column
+        use_cols=use_cols,
         prefix='recession',
         obsgp='recession',
     )
 
     # add budget
-    budget = pd.read_csv(os.path.join(TEMP_DIR, "output.budget.csv"))
     index_cols = ['kper']
-    use_cols = list(budget.iloc[:, 1:].columns)
+    use_cols = ['awanui','confined','poukawa','spring','inout','percentdiscrepancy','recharge','stoss','total','sw' ,'inflow']
     pf.add_observations(
         "output.budget.csv", # this is being read from the template file not the above truth file
         index_cols=index_cols,
@@ -311,30 +343,29 @@ def main():
     for file_path in head_files:
         filename = os.path.basename(file_path)
         # Use regex to extract numbers
-        match = re.search(r'output\.heads_lyr(\d+)_kper(\d+)_kstp(\d+)\.dat', filename)
+        match = re.search(r'output\.heads_kper(\d+)_kstp(\d+)_time(\d+)\\.dat', filename)
         if match:
-            lyr = int(match.group(1))
-            kper = int(match.group(2))
-            kstp = int(match.group(3))
+            kper = int(match.group(1))
+            kstp = int(match.group(2))
+            time = int(match.group(3))
             file_info.append({
                 'file_path': file_path,
                 'filename': filename,
-                'layer': lyr,
                 'kper': kper,
                 'kstp': kstp
             })
     for info in file_info:
         file_path = info['file_path']
-        lyr = info['layer']
+        time = info['time']
         kper = info['kper']
         kstp = info['kstp']
         
         # Add as observation to pyemu
         pf.add_observations(
             info['filename'],
-            prefix=f'h-lyr{lyr}-kper{kper}-kstp{kstp}',
+            prefix=f'arr-h_kper:{kper}_kstp:{kstp}_time:{time}',
             obsgp=f'head-arr',
-            zone_array=ib[0,:,:], # assuming layer 1 for zone array
+            zone_array=np.where(ib[0] > 0, 1, 0),
         )
 
 
@@ -357,8 +388,11 @@ def main():
 
     ###############################################################################
     ts_heads = pd.read_csv(os.path.join(TRUTH_DIR, 'output.sample_heads.truth.csv'), index_col=0)
-    AWq = pd.read_csv(os.path.join(TRUTH_DIR, "output.GHB_AW_fluxes.truth.csv"), index_col=[0, 1, 2, 3, 4])
-    recession_truth = pd.read_csv(os.path.join(TRUTH_DIR, 'output.sample_recession_rates.truth.csv'), index_col=0)
+    AWq = pd.read_csv(os.path.join(TRUTH_DIR, "output.GHB_AW_fluxes.truth.csv"), index_col=['kper', 'kstp', 'k', 'i', 'j'])
+    CONFq = pd.read_csv(os.path.join(TRUTH_DIR, "output.GHB_CONF_fluxes.truth.csv"), index_col=['kper', 'kstp', 'k', 'i', 'j'])
+    recession_truth = pd.read_csv(os.path.join(TRUTH_DIR, 'output.sample_recession_rates.truth.csv'), index_col='kper')
+    budget = pd.read_csv(os.path.join(TRUTH_DIR, "output.budget.truth.csv"), index_col='kper')
+
     heads = np.loadtxt(
         os.path.join(TRUTH_DIR, "output.heads.truth.dat"))
     heads_std = np.loadtxt(
@@ -366,18 +400,15 @@ def main():
     heads_weight = np.loadtxt(
         os.path.join(TRUTH_DIR, "output.heads.weight.dat"))
     
+    get_oname = lambda x: x['obgnme'].split('_')[0].split(':')[-1]
+    extract_kper = lambda x: int([s for s in x.split('_') if s.startswith('kper:')][0].split(':')[1])
+    extract_kstp = lambda x: int([s for s in x.split('_') if s.startswith('kstp:')][0].split(':')[1])
+    extract_time = lambda x: int([s for s in x.split('_') if s.startswith('time:')][0].split(':')[1])
 
     # adjust obgnme to main groups (for some reason not working above)
-    pst.observation_data['obgnme'] = pst.observation_data.apply(
-        lambda x: x['obgnme'].split('_')[0].split(':')[-1], axis=1)
-    pst.observation_data['standard_deviation'] = 0
-    pst.observation_data['weight'] = 0
-
-    budget['awanui'] = 0 
-    budget['confined'] = 0
-    budget['poukawa'] = 0
-    budget['std'] = 3
-    budget['weight'] = 1/budget['std']
+    pst.observation_data['obgnme'] = pst.observation_data.apply(get_oname, axis=1)
+    pst.observation_data['standard_deviation'] = 0.
+    pst.observation_data['weight'] = 0.
 
     # add truth values for ts-heads
     for _, row in pst.observation_data.iterrows():
@@ -386,16 +417,13 @@ def main():
         if obgnme == 'ts-heads':
             time = int(row['time'])
             col = row['usecol']
-            
-            try:
+
+            if time < 54: # only first 54 time steps have truth data
                 pst.observation_data.at[row.name, 'obsval'] = ts_heads.loc[time, col]
                 pst.observation_data.at[row.name, 'standard_deviation'] = ts_heads.loc[time, 'std']
                 pst.observation_data.at[row.name, 'weight'] = ts_heads.loc[time, 'weight']
-
-            except:
-                continue
         
-        elif obgnme == 'AWq':
+        elif obgnme == 'arr-awq':
             kper = int(row['kper'])
             kstp = int(row['kstp'])
             k = int(row['k'])
@@ -406,53 +434,60 @@ def main():
                 pst.observation_data.at[row.name, 'obsval'] = AWq.loc[(kper, kstp, k, i, j), 'AWq']
                 pst.observation_data.at[row.name, 'standard_deviation'] = AWq.loc[(kper, kstp, k, i, j), 'std']
                 pst.observation_data.at[row.name, 'weight'] = AWq.loc[(kper, kstp, k, i, j), 'weight']
+                pst.observation_data.at[row.name, 'obgnme'] = 'less_' + row['obgnme']
         
-        elif obgnme == 'head-arr':
+        elif obgnme == 'arr-h':
+            i = int(row['i'])
+            j = int(row['j'])
+            kper = int(row['oname'].split('-')[2][-1])
+
+            if kper < 3: # only first 54 time steps have truth data
+                pst.observation_data.at[row.name, 'obsval'] = heads[i, j]
+                pst.observation_data.at[row.name, 'standard_deviation'] = heads_std[i, j]
+                pst.observation_data.at[row.name, 'weight'] = heads_weight[i, j]
+                pst.observation_data.at[row.name, 'obgnme'] = 'less_' + row['obgnme']
+
+        elif obgnme == 'arr-confq':
+            kper = int(row['kper'])
+            kstp = int(row['kstp'])
+            k = int(row['k'])
             i = int(row['i'])
             j = int(row['j'])
             
-            pst.observation_data.at[row.name, 'obsval'] = heads[i, j]
-            pst.observation_data.at[row.name, 'standard_deviation'] = heads_std[i, j]
-            pst.observation_data.at[row.name, 'weight'] = heads_weight[i, j]
-            pst.observation_data.at[row.name, 'obgnme'] = 'less_' + row['obgnme']
+            pst.observation_data.at[row.name, 'obsval'] = CONFq.loc[(kper, kstp, k, i, j), 'CONFq']
+            pst.observation_data.at[row.name, 'standard_deviation'] = CONFq.loc[(kper, kstp, k, i, j), 'std']
+            pst.observation_data.at[row.name, 'weight'] = CONFq.loc[(kper, kstp, k, i, j), 'weight']
+            pst.observation_data.at[row.name, 'obgnme'] = 'greater_' + row['obgnme']
         
         elif obgnme == 'budget':
             kper = int(row['kper'])
             col = row['usecol']
-            
-            if col in ['awanui', 'confined', 'poukawa']:
-                pst.observation_data.at[row.name, 'obsval'] = budget.loc[kper-1, col]
-                pst.observation_data.at[row.name, 'standard_deviation'] = budget.loc[kper-1, 'std']
-                pst.observation_data.at[row.name, 'weight'] = budget.loc[kper-1, 'weight']
 
-                if col in ['awanui','poukawa']:
-                    pst.observation_data.at[row.name, 'obgnme'] = 'less_' + row['obgnme']
+            if (col in ['confined']): # needs to be greater than recharge because negative
+                pst.observation_data.at[row.name, 'obsval'] = budget.loc[kper, col]
+                pst.observation_data.at[row.name, 'obgnme'] = 'greater_' + row['obgnme']
+                pst.observation_data.at[row.name, 'standard_deviation'] = budget.loc[kper, 'conf-std']
+                pst.observation_data.at[row.name, 'weight'] = budget.loc[kper, 'conf-weight']
+                
+            elif (col in ['inflow']) & (kper < 3): # recharge plus confined less than awanui max flows
+                pst.observation_data.at[row.name, 'obsval'] = budget.loc[kper, col]
+                pst.observation_data.at[row.name, 'obgnme'] = 'less_' + row['obgnme']
+                pst.observation_data.at[row.name, 'standard_deviation'] = budget.loc[kper, 'inflow-std']
+                pst.observation_data.at[row.name, 'weight'] = budget.loc[kper, 'inflow-weight']
 
-                elif col in ['confined']:
-                    pst.observation_data.at[row.name, 'obgnme'] = 'greater_' + row['obgnme']
         elif obgnme == 'recession':
-            idx = int(row['idx'])
+            kper = int(row['kper'])
             col = row['usecol']
             
-            try:
-                pst.observation_data.at[row.name, 'obsval'] = recession_truth.loc[idx, col]
-                pst.observation_data.at[row.name, 'standard_deviation'] = recession_truth.loc[idx, 'std']
-                pst.observation_data.at[row.name, 'weight'] = recession_truth.loc[idx, 'weight']
-
-            except:
-                continue
+            if kper == 2:
+                pst.observation_data.at[row.name, 'obsval'] = recession_truth.loc[kper, col]
+                pst.observation_data.at[row.name, 'standard_deviation'] = recession_truth.loc[kper, 'std']
+                pst.observation_data.at[row.name, 'weight'] = recession_truth.loc[kper, 'weight']
     
-
-    # create phi factor file
-    phi_dict = {
-        'head-arr': 100,
-        'ts-heads': 200,
-        'recession': 50,
-        'AWq': 1,
-        'budget': 10,
-    }
+    # PHI FACTORS ------------------------------------------------------
+    # set phi factors for different observation groups
     # to dataframe with no column names or index
-    df = pd.DataFrame(list(phi_dict.items()))
+    df = pd.DataFrame(list(PHI_OBS.items()))
     df.to_csv(os.path.join(TEMP_DIR, 'phi_factors.csv'), index=False, header=False)
 
     ## ADD FORECASTS ------------------------------------------------------
@@ -566,11 +601,17 @@ def main():
     # PRIOR PARAMETER COVARIANCE --------------------------------------------------
     print("Adding parameter covariance...")
     
-    pe = pf.draw(num_reals=NREALS_PRIOR, use_specsim=True)
-    pe.enforce() # enforces parameter bounds
+    # pe = pf.draw(num_reals=NREALS_PRIOR, use_specsim=True)
+    # pe.enforce() # enforces parameter bounds
     
-    pe_f = os.path.join(TEMP_DIR, 'prior_pe.jcb')
-    pe.to_binary(pe_f) #writes the parameter ensemble to binary file
+    # pe_f = os.path.join(TEMP_DIR, 'prior_pe_pr_nreals.jcb')
+    # pe.to_binary(pe_f) #writes the parameter ensemble to binary file
+
+    pe_full = pf.draw(num_reals=NREALS, use_specsim=True)
+    pe_full.enforce() # enforces parameter bounds
+
+    full_pe = os.path.join(TEMP_DIR, 'prior_pe.jcb')
+    pe_full.to_binary(full_pe) #writes the parameter ensemble to binary file
     
     pst.write(final_pst, version=2)
 

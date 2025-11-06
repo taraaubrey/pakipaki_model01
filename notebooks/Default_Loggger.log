@@ -1,0 +1,15 @@
+2025-11-01 17:54:36.681981 starting: opening Default_Loggger.log for logging
+2025-11-01 17:54:36.681981 starting: plot res_1to1
+2025-11-01 17:54:38.289285 starting: plotting 1to1 for awq
+2025-11-01 17:54:39.611471 finished: plotting 1to1 for awq took: 0:00:01.322186
+2025-11-01 17:54:39.611535 starting: plotting 1to1 for budget
+2025-11-01 17:54:39.617168 no non-zero obs for group 'budget'
+2025-11-01 17:54:39.617168 finished: plotting 1to1 for budget took: 0:00:00.005633
+2025-11-01 17:54:39.617168 starting: plotting 1to1 for confq
+2025-11-01 17:54:40.165782 no non-zero obs for group 'confq'
+2025-11-01 17:54:40.165782 finished: plotting 1to1 for confq took: 0:00:00.548614
+2025-11-01 17:54:40.165782 starting: plotting 1to1 for greater_budget
+2025-11-01 17:54:40.286549 finished: plotting 1to1 for greater_budget took: 0:00:00.120767
+2025-11-01 17:54:40.286549 starting: plotting 1to1 for less_budget
+2025-11-01 17:54:40.495887 finished: plotting 1to1 for less_budget took: 0:00:00.209338
+2025-11-01 17:54:40.495887 starting: plotting 1to1 for less_head-arr

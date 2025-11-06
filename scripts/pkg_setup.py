@@ -18,9 +18,12 @@ def dis_setup(fn_out):
     bottom = grid.array_from_raster(BOTTOM)  # get the bottom elevation
     top = np.ones_like(bottom) * 10  # flat top at 10mRL
     
+    pp_grid = grid.array_from_vector(GR_SHP).data
+    
     # open domain
     arr = ~grid.array_from_vector(DOMAIN).mask # want the binary version of the domain
     arr = np.where(elev.data > 16, 0, arr) # remove areas where elev > 18mRL (mainly at boundaries)
+    arr = np.where((pp_grid == 1) & (arr == 1), 2, arr)  # set pilot point areas to active
 
     idomain = np.stack([arr] * NLAY, axis=0)
 
@@ -77,7 +80,7 @@ def dis_setup(fn_out):
         idomain = idomain.astype(int)
         np.savetxt(idomain_fn, idomain[i], fmt='%d')
 
-    return grid, idomain, top, nrow, ncol, delr, delc, fn_out
+    return grid, idomain, top, nrow, ncol, delr, delc, fn_out, model_thickness
 
 
 def ghb_aw_setup(grid, idomain, start, end, fn_out, save=True):
@@ -110,6 +113,7 @@ def ghb_aw_setup(grid, idomain, start, end, fn_out, save=True):
     # kper2: PAST ############################################################
     riv_mask = ~grid.array_from_vector(DRAINS_PAST).mask
     wetland_mask = ~grid.array_from_vector(WETLANDA_PAST).mask
+    spring_mask = grid.array_from_vector(SPRING_DRAIN).mask
     wetland_influence_mask = ~grid.array_from_vector(WETLAND_INFLUENCE).mask
 
     past_arr = np.where(wetland_mask + riv_mask > 0, 1, 0)
@@ -123,15 +127,17 @@ def ghb_aw_setup(grid, idomain, start, end, fn_out, save=True):
             riv_mask * wetland_influence_mask,
             wetland_water_level,
             np.where(
-                riv_mask, top, 0))) * idomain[0]
+                riv_mask, top, 0)))
+    past_h = np.where(idomain[0] > 0, past_h, 0)
     past_h[past_h > wetland_water_level] = wetland_water_level  # ensure heads do not exceed wetland water level
+    past_h = past_h * spring_mask  # remove spring areas
     
     riv_kper2 = extract_value_with_indices(
         past_h, layer=0, val_col='head', mask_value=0
         )
     riv_kper2['cond'] = GHB_SW['initial_cond_aw']
 
-    ts_0 = river_stage(riv_kper0, [0], start_t = 1)
+    ts_0 = river_stage(riv_kper0, [0, 0], start_t = 0)
     ts_1 = river_stage(riv_kper0, riv_ts_values, start_t = ts_0.index[-1]+1)
     ts_2 = river_stage(riv_kper2, [0], start_t = ts_1.index[-1]+1)
     ts_3 = river_stage(riv_kper2, riv_ts_values, start_t = ts_2.index[-1]+1)
@@ -159,7 +165,7 @@ def ghb_aw_setup(grid, idomain, start, end, fn_out, save=True):
     rivstage_ts.columns.to_series().to_csv(Path(MODEL_DIR, f'{MODEL_NAME}.ghb_aw_head_names.csv'), index=False, header=False)
     fn_out['ghb_aw_ts'] = tomf6tsinput(riv_ts_fn, rivstage_ts)
 
-    return fn_out
+    return fn_out, riv_ts_values, wetland_water_level
 
 
 def get_awanui_timeseries(start, end):
@@ -167,12 +173,11 @@ def get_awanui_timeseries(start, end):
     riv_ts['DateTime'] = riv_ts['Awanui Stream at Flume (x)'].apply(pd.to_datetime, format = "%Y-%m-%d %H:%M:%S", dayfirst=True)
     riv_ts.set_index('DateTime', inplace=True)
     riv_ts['level_mRL'] = (riv_ts['Awanui Stream at Flume (y)'] * 0.001) - 10
-    riv_ts['sm_level_mRL'] = riv_ts['level_mRL'].rolling(window=21, center=True, min_periods=1).mean()
 
     # get specific dates
-    riv_ts = riv_ts[(riv_ts.index > start) & (riv_ts.index <= end)]
-    riv_ts['abs_val'] = riv_ts['level_mRL'] - riv_ts['level_mRL'].iloc[0]
-    riv_ts['sm_abs_val'] = riv_ts['abs_val'].rolling(window=21, center=True, min_periods=1).mean()
+    riv_ts = riv_ts[(riv_ts.index >= start) & (riv_ts.index < end)]
+    riv_ts['sm_level_mRL'] = riv_ts['level_mRL'].rolling(window=21, center=True, min_periods=1).mean()
+    riv_ts['sm_abs_val'] = riv_ts['sm_level_mRL'] - riv_ts['sm_level_mRL'].iloc[0]
     
     # save raw ts
     riv_ts_raw_fn = Path(MODEL_DIR, f'ts_awanui_stream_raw.csv')
@@ -180,24 +185,24 @@ def get_awanui_timeseries(start, end):
     riv_ts.to_csv(riv_ts_raw_fn)
 
     # riv absolute values during recession
-    return riv_ts['sm_abs_val'].values
+    return riv_ts['sm_abs_val'][1:].values
 
 def get_poukawa_timeseries(start, end):
     pw_ts = pd.read_csv(POUKAWA_TS)
     pw_ts['DateTime'] = pw_ts['Poukawa Stream at Douglas Road (x)'].apply(pd.to_datetime, format = "%Y-%m-%d %H:%M:%S", dayfirst=True)
     pw_ts['level_mRL'] = (pw_ts['Poukawa Stream at Douglas Road (y)'] * 0.001) - 10
-    pw_ts['sm_level_mRL'] = pw_ts['level_mRL'].rolling(window=21, center=True, min_periods=1).mean()
     pw_ts.set_index('DateTime', inplace=True)
 
     # get specific dates
-    pw_ts = pw_ts[(pw_ts.index > start) & (pw_ts.index <= end)]
-    pw_ts['abs_val'] = pw_ts['level_mRL'] - pw_ts['level_mRL'].iloc[0]
-    pw_ts['sm_abs_val'] = pw_ts['abs_val'].rolling(window=5, center=True, min_periods=1).mean()
+    pw_ts = pw_ts[(pw_ts.index >= start) & (pw_ts.index < end)]
+    pw_ts['sm_val'] = pw_ts['level_mRL'].rolling(window=5, center=True, min_periods=1).mean()
+    pw_ts['sm_abs_val'] = pw_ts['sm_val'] - pw_ts['sm_val'].iloc[0]
+    
     # riv absolute values during recession
-    return pw_ts['sm_abs_val'].values
+    return pw_ts['sm_abs_val'][1:].values
 
 
-def river_stage(ghb_cells, riv_ts_values, start_t = 1):
+def river_stage(ghb_cells, riv_ts_values, start_t = 1, stper=1):
     """
     ghb_cells: index and initial head values
     riv_ts_values: time series values to add to initial head
@@ -212,20 +217,45 @@ def river_stage(ghb_cells, riv_ts_values, start_t = 1):
         rivstage_dat[col] = kper_list
     riv_df = pd.DataFrame(
         rivstage_dat, 
+        index=np.arange(start_t, len(riv_ts_values) + start_t, stper)
+    )
+
+    return riv_df
+
+def conf_stage(ghb_cells, riv_ts_values, start_t = 1):
+    """
+    ghb_cells: index and initial head values
+    riv_ts_values: time series values to add to initial head
+    start_t: period start time
+    """
+    rivstage_dat = {}
+    for row in range(len(ghb_cells)):
+        index = ghb_cells.at[row, 'index']
+        col = f'cf_1_{index[1]+1}_{index[2]+1}'
+        initial_elev = ghb_cells.at[row, 'head']
+        kper_list = (initial_elev + riv_ts_values).tolist()
+        rivstage_dat[col] = kper_list
+    riv_df = pd.DataFrame(
+        rivstage_dat, 
         index=np.arange(start_t, len(riv_ts_values) + start_t)
     )
 
     return riv_df
 
 
-def ghb_spring_setup(grid, idomain, start, end, fn_out, save=True):
-    spring_mask = ~grid.array_from_vector(SPRING_DRAIN).mask * idomain[0]
+def ghb_spring_setup(grid, idomain, start, end, aw_ts, wetland_WL, fn_out, save=True):
+    spring_mask = ~grid.array_from_vector(SPRING_DRAIN).mask
+    spring_mask = np.where(idomain[0] > 0, spring_mask, 0)
     zones = grid.array_from_vector(DRAIN_ZONES, attribute='elev_ss_0')
     spring_stage_zones = ~zones.mask
     spring_rbot = grid.array_from_raster(TOP, resampling='min').data
     # adjust riv elevations absed on survey data
     spring_stage_arr = np.where(spring_stage_zones, zones.data, spring_rbot + 0.3) * spring_mask
     spring_stage_arr[spring_stage_arr > 7.59] = 7.59 # correct to no higher than surveyed max
+
+    # past spring_stage
+    past_spring_stage = np.where(spring_mask, spring_rbot + 2, 0)
+    past_spring_stage = np.where(past_spring_stage > wetland_WL, wetland_WL, past_spring_stage)
 
     # save to spatial
     if save:
@@ -237,6 +267,11 @@ def ghb_spring_setup(grid, idomain, start, end, fn_out, save=True):
         spring_stage_arr, layer=0, val_col='head', mask_value=0
         )
     spring_kper0['cond'] = GHB_SW['initial_cond_spr']
+    spring_kper2 = extract_value_with_indices(
+        past_spring_stage, layer=0, val_col='head', mask_value=0
+        )
+    spring_kper2['cond'] = GHB_SW['initial_cond_pw']
+
 
     # time series for riv elevations ###########################################################
     spring_ts = pd.read_csv(SPRING_TS)
@@ -246,37 +281,34 @@ def ghb_spring_setup(grid, idomain, start, end, fn_out, save=True):
     spring_ts['sm_level_mRL'] = spring_ts['level_mRL'].rolling(window=21, center=True, min_periods=1).mean()
 
     # get specific dates
-    spring_ts = spring_ts[(spring_ts.index > start) & (spring_ts.index <= end)]
-    spring_ts['abs_val'] = spring_ts['level_mRL'] - spring_ts['level_mRL'].iloc[0]
-    spring_ts['sm_abs_val'] = spring_ts['abs_val'].rolling(window=5, center=True, min_periods=1).mean()
-
+    spring_ts = spring_ts[(spring_ts.index >= start) & (spring_ts.index < end)]
+    spring_ts['sm_val'] = spring_ts['level_mRL'].rolling(window=5, center=True, min_periods=1).mean()
+    spring_ts['sm_abs_val'] = spring_ts['sm_val'] - spring_ts['sm_val'].iloc[0]
+    
     # save raw ts
-    spring_ts_fn = Path(MODEL_DIR, f'ts_spring_raw.csv')
-    spring_ts.index.name = 'DateTime'
+    spring_ts_fn = Path(MODEL_DIR, f'{MODEL_NAME}.ts_spring_raw.csv')
+    spring_ts.reset_index(inplace=True)
+    spring_ts.index = np.arange(1, len(spring_ts)+1)
     spring_ts.to_csv(spring_ts_fn)
 
     # riv absolute values during recession
-    spring_ts_values = spring_ts['sm_abs_val'].values
+    spring_ts_values = spring_ts['sm_abs_val'][1:].values
+    # correct so values do not exceed 0
+    spring_ts_values = np.where(spring_ts_values > 0, 0, spring_ts_values)
 
-    ts_0 = river_stage(spring_kper0, [0], start_t = 1)
+    ts_0 = river_stage(spring_kper0, [0, 0], start_t = 0)
     ts_1 = river_stage(spring_kper0, spring_ts_values, start_t = ts_0.index[-1]+1)
+    ts_2 = river_stage(spring_kper2, [0], start_t = ts_1.index[-1]+1)
+    ts_3 = river_stage(spring_kper2, aw_ts, start_t = ts_2.index[-1]+1)
 
     spring_kper1 = spring_kper0.copy()
     spring_kper1['head'] = ts_1.columns
 
-    # convert to dataframe
-    spring_h_ts = pd.concat([ts_0, ts_1]).fillna(0)
-    
-    # create spring_kper1
-    spring_kper1 = spring_kper0[['index']].copy()
-    spring_kper1['head'] = spring_kper1['index'].apply(lambda x: f's_1_{x[1]+1}_{x[2]+1}')
-    spring_kper1['cond'] = spring_kper0['cond']
+    spring_kper3 = spring_kper2.copy()
+    spring_kper3['head'] = ts_3.columns
 
-    # make 'empty' kper2 and kper3 (for parameterization)
-    spring_kper2 = spring_kper0.copy()
-    spring_kper3 = spring_kper0.copy()
-    spring_kper2['cond'] = 0
-    spring_kper3['cond'] = 0
+    # convert to dataframe
+    spring_h_ts = pd.concat([ts_0, ts_1, ts_2, ts_3]).fillna(0)
 
     # save
     fn_out['ghb_sp'] = {}
@@ -297,13 +329,15 @@ def ghb_spring_setup(grid, idomain, start, end, fn_out, save=True):
 def ghb_pw_setup(grid, idomain, start, end, fn_out, save=True):
     top_min = grid.array_from_raster(TOP, resampling='min')
     ghb_pw_arr = ~grid.array_from_vector(POUKAWA_BOUNDARY).mask
-    in_idomarr, idom_i = get_interior_indices(idomain[0], layer=0)  # idomainget interior indices of the mbr area
+    pos_idomain = np.where(idomain[0] > 0, 1, 0)
+
+    in_idomarr, idom_i = get_interior_indices(pos_idomain, layer=0)  # idomainget interior indices of the mbr area
     ghb_pw_active = np.logical_and(ghb_pw_arr.data, in_idomarr)  # mbr area that is active in the model domain
     ghb_pw_active = ghb_pw_active * top_min.data
 
     # save to spatial
     if save:
-        ghb_pw_active_fn = Path(SPATIAL_DIR, f'{MODEL_NAME}_spring_stage.dat')
+        ghb_pw_active_fn = Path(SPATIAL_DIR, f'{MODEL_NAME}_poukawa_stage.dat')
         np.savetxt(ghb_pw_active_fn, ghb_pw_active)
 
     ghb_pw_indices = get_indices(ghb_pw_active, layer=0, value=True)
@@ -324,7 +358,8 @@ def ghb_pw_setup(grid, idomain, start, end, fn_out, save=True):
     wetland_water_level = np.median(wetland_top[wetland_top > 0])
 
     ghb_pw_arr = ~grid.array_from_vector(PW_PAST).mask
-    in_idomarr, idom_i = get_interior_indices(idomain[0], layer=0)  # get edges of idomain
+    active_domain = np.where(idomain[0] > 0, 1, 0)
+    in_idomarr, idom_i = get_interior_indices(active_domain, layer=0)  # get edges of idomain
     ghb_pw_active = np.logical_and(ghb_pw_arr.data, in_idomarr)
     ghb_pw_active = ghb_pw_active * wetland_water_level
     ghb_pw_indices = get_indices(ghb_pw_active, layer=0, value=True)
@@ -333,7 +368,7 @@ def ghb_pw_setup(grid, idomain, start, end, fn_out, save=True):
     ghb_pw_kper2['head'] = [i[1] for i in ghb_pw_indices]  # head for Poukawa boundary
     ghb_pw_kper2['cond'] = 1
 
-    ts_0 = river_stage(ghb_pw_kper0, [0], start_t = 1)
+    ts_0 = river_stage(ghb_pw_kper0, [0, 0], start_t = 0)
     ts_1 = river_stage(ghb_pw_kper0, pw_ts_values, start_t = ts_0.index[-1]+1)
     ts_2 = river_stage(ghb_pw_kper2, [0], start_t = ts_1.index[-1]+1)
     ts_3 = river_stage(ghb_pw_kper2, aw_ts_values, start_t = ts_2.index[-1]+1) #all the same
@@ -362,21 +397,8 @@ def ghb_pw_setup(grid, idomain, start, end, fn_out, save=True):
     fn_out['ghb_pw_ts'] = tomf6tsinput(pwelev_ts_fn, pwelev_ts)
     return fn_out, ghb_pw_kper0
 
-def ghb_conf_setup(grid, idomain, start, end, fn_out):
-    conf_arr = ~grid.array_from_vector(CONF_AREA_ACTIVE).mask * idomain[0]
-    elev_max = grid.array_from_raster(TOP).data
-    conf_h = elev_max + GHB_CONF['initial_head_offset']
-    conf_h = np.where(conf_h < GHB_CONF['initial_head_min'], GHB_CONF['initial_head_min'], conf_h)
-    conf_arr = conf_arr * conf_h
-    
 
-    conf_kper0 = extract_value_with_indices(
-        conf_arr, layer=0, val_col='head', mask_value=0
-        )
-    # conf_kper0['head'] = GHB_CONF['initial_head']
-    conf_kper0['cond'] = GHB_CONF['initial_cond']
-
-    # TS ##########################
+def get_confined_timeseries(start, end):
     conf_ts = pd.read_csv(CONF_TS)
     conf_ts['DateTime'] = conf_ts['DateTime'].apply(pd.to_datetime, format = "%d/%m/%Y %H:%M")
     conf_ts.set_index('DateTime', inplace=True)
@@ -387,36 +409,73 @@ def ghb_conf_setup(grid, idomain, start, end, fn_out):
     # fill missing with interpolation
     conf_ts = conf_ts[['level_mRL']].resample('D').mean()
     conf_ts['level_mRL'] = conf_ts['level_mRL'].interpolate(method='linear')
-    conf_ts = conf_ts[(conf_ts.index > start) & (conf_ts.index <= end)]
-    # conf_ts['abs_val'] = conf_ts['level_mRL'] - conf_ts['level_mRL'].iloc[0]
-    # conf_ts['sm_abs_val'] = conf_ts['abs_val'].rolling(window=5, center=True, min_periods=1).mean()
+    conf_ts = conf_ts[(conf_ts.index >= start) & (conf_ts.index < end)]
+    
+    conf_ts['sm_abs_val'] = conf_ts['level_mRL'] - conf_ts['level_mRL'][0]
+    
+    # save raw ts
+    conf_ts_raw_fn = Path(MODEL_DIR, f'{MODEL_NAME}.ts_confined_raw.csv')
+    conf_ts.index.name = 'time'
+    conf_ts.reset_index(inplace=True)
+    conf_ts.index = np.arange(1, len(conf_ts)+1)
+    conf_ts.to_csv(conf_ts_raw_fn)
 
-    ts_0 = pd.Series(
-        [conf_ts['level_mRL'].values[0]], 
-        index=np.arange(1, len([conf_ts['level_mRL'].values[0]]) + 1)
-    )
-    ts_0.name = 'heads_ts'
-    # convert to dataframe
-    ts_1 = conf_ts['level_mRL'].reset_index(drop=True)
-    ts_1.name = 'heads_ts'
-    ts_1.index = np.arange(2, len(ts_1) + 2)
+    # ts_0 = pd.Series(
+    #     [0], 
+    #     index=[1]
+    # )
+    # ts_0.name = 'heads_ts'
+    # # convert to dataframe
+    ts_1 = conf_ts['sm_abs_val'][1:].reset_index(drop=True)
+    # ts_1.name = 'heads_ts'
+    # ts_1.index = np.arange(2, len(ts_1) + 2)
 
     # past (normalize between 13.95 and 12.95)
-    ts_2 = ts_0.copy()
-    ts_2.index = np.arange(ts_1.index[-1]+1, ts_1.index[-1]+2)
+    # ts_2 = ts_0.copy()
+    # ts_2.index = np.arange(ts_1.index[-1]+1, ts_1.index[-1]+2)
     ts_3 = ts_1.copy()
-    ts_3 = (ts_3 - ts_3.min()) / (ts_3.max() - ts_3.min()) + CONF_past_min
-    ts_3.index = np.arange(ts_2.index[-1]+1, ts_2.index[-1]+len(ts_3)+1)
+    ts_3 = (ts_3 - 0) / (ts_3.min() - 0) * -1
+    # ts_3.index = np.arange(ts_2.index[-1]+1, ts_2.index[-1]+len(ts_3)+1)
 
-    conf_ts = pd.concat([ts_0, ts_1, ts_2, ts_3]).fillna(0)
+    # conf_ts = pd.concat([ts_0, ts_1, ts_2, ts_3]).fillna(0)
 
-    conf_kper1 = conf_kper0[['index']].copy()
-    conf_kper1['head'] = 'heads_ts'
-    conf_kper1['cond'] = conf_kper0['cond']
+    return ts_1.values, ts_3.values
 
-    # PAST
+
+
+def ghb_conf_setup(grid, idomain, start, end, model_thickness, fn_out):
+    conf_arr = ~grid.array_from_vector(CONF_AREA_ACTIVE).mask * idomain[0]
+    conf_arr = np.where(model_thickness >= 15, conf_arr, 0)
+
+    # elev_max = grid.array_from_raster(TOP).data
+    # conf_h = elev_max + GHB_CONF['initial_head_offset']
+    # conf_h = np.where(conf_h < GHB_CONF['initial_head_min'], GHB_CONF['initial_head_min'], conf_h)
+    conf_arr = conf_arr * GHB_CONF['initial_head_min']
+    
+
+    conf_kper0 = extract_value_with_indices(
+        conf_arr, layer=0, val_col='head', mask_value=0
+        )
+    # conf_kper0['head'] = GHB_CONF['initial_head']
+    conf_kper0['cond'] = GHB_CONF['initial_cond']
     conf_kper2 = conf_kper0.copy()
-    conf_kper3 = conf_kper1.copy()
+
+    conf_ts1, conf_ts3 = get_confined_timeseries(start, end)
+
+    #NEW
+    ts_0 = conf_stage(conf_kper0, [0, 0], start_t = 0)
+    ts_1 = conf_stage(conf_kper0, conf_ts1, start_t = ts_0.index[-1]+1)
+    ts_2 = conf_stage(conf_kper2, [0], start_t = ts_1.index[-1]+1)
+    ts_3 = conf_stage(conf_kper2, conf_ts3, start_t = ts_2.index[-1]+1)
+
+    conf_kper1 = conf_kper0.copy()
+    conf_kper1['head'] = ts_1.columns
+    
+    conf_kper3 = conf_kper2.copy()
+    conf_kper3['head'] = ts_3.columns
+
+    # convert to dataframe
+    conf_ts = pd.concat([ts_0, ts_1, ts_2, ts_3]).fillna(0)
     
     #save
     fn_out['ghb_conf'] = {}
@@ -530,17 +589,17 @@ def rch_setup(idomain, fn_out):
         if i in [0, 2]:  # steady state periods
             recharge_rate = RCH['initial_rf'] + RCH['initial_mbr']
         else:
-            recharge_rate = RCH['initial_mbr']     
+            recharge_rate = RCH['initial_mbr']   
         recharge = np.ones_like(idomain[0]) * recharge_rate * idomain[0]
         rch_fn = Path(MODEL_DIR, f'{MODEL_NAME}.rcha_recharge_{i}.txt').as_posix()
         fn_out['rch'][i] = tomf6input(rch_fn)
-        np.savetxt(rch_fn, recharge)  # save bottom elevation for each layer
+        np.savetxt(rch_fn, recharge) 
     return fn_out
 
 def pk4_ts(start, end):
     # time series for riv elevations ###########################################################
     # get 1 day before start
-    start = start - pd.Timedelta(days=1)
+    # start = start - pd.Timedelta(days=1)
     gw_ts = pd.read_csv(PK4_TS)
     gw_ts['DateTime'] = gw_ts['DateTime'].apply(pd.to_datetime, format = "%Y-%m-%d")
     gw_ts.set_index('DateTime', inplace=True)
@@ -548,7 +607,7 @@ def pk4_ts(start, end):
     gw_ts['sm_level_mRL'] = gw_ts['level_mRL'].rolling(window=21, center=True, min_periods=1).mean()
 
     # get specific dates
-    gw_ts = gw_ts[(gw_ts.index > start) & (gw_ts.index <= end)]
+    gw_ts = gw_ts[(gw_ts.index >= start) & (gw_ts.index < end)]
     gw_ts['abs_val'] = gw_ts['level_mRL'] - gw_ts['level_mRL'].iloc[0]
     gw_ts['sm_abs_val'] = gw_ts['abs_val'].rolling(window=5, center=True, min_periods=1).mean()
 
@@ -567,7 +626,7 @@ def poukawa_ts(start, end):
     sw_ts['m3d'] = (sw_ts['Poukawa Stream at Douglas Road (y)'] * 84.6)
 
     # get specific dates
-    sw_ts = sw_ts[(sw_ts.index > start) & (sw_ts.index <= end)]
+    sw_ts = sw_ts[(sw_ts.index > start) & (sw_ts.index < end)]
     sw_ts['sm_m3d'] = sw_ts['m3d'].rolling(window=5, center=True, min_periods=1).mean()
     sw_ts.index = np.arange(2, len(sw_ts['m3d']) + 2)
 
@@ -584,7 +643,7 @@ def awanui_ts(start, end):
     sw_ts['m3d'] = (sw_ts['Awanui Stream at Flume (y)'] * 84.6)
 
     # get specific dates
-    sw_ts = sw_ts[(sw_ts.index > start) & (sw_ts.index <= end)]
+    sw_ts = sw_ts[(sw_ts.index > start) & (sw_ts.index < end)]
     sw_ts['sm_m3d'] = sw_ts['m3d'].rolling(window=21, center=True, min_periods=1).mean()
     sw_ts.index = np.arange(2, len(sw_ts['m3d']) + 2)
 

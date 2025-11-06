@@ -1,0 +1,15 @@
+2025-11-01 17:48:19.840739 starting: opening ensemble_helper.log for logging
+2025-11-01 17:48:19.840739 starting: pyemu.plot_utils.ensemble_helper()
+2025-11-01 17:48:19.857212 plotting 5 histograms
+2025-11-01 17:48:19.858211 saving pdf to None
+2025-11-01 17:48:19.858211 starting: plotting reals for ghb
+2025-11-01 17:48:19.973447 ghb min:  -10, max:1E+06
+2025-11-01 17:48:20.050149 starting: plotting reals for npf
+2025-11-01 17:48:20.050149 npf min:0.0001, max: 1000
+2025-11-01 17:48:20.116870 starting: plotting reals for rch
+2025-11-01 17:48:20.116870 rch min:0.345, max:  2.9
+2025-11-01 17:48:20.168091 starting: plotting reals for s_1
+2025-11-01 17:48:20.168091 s_1 min: -0.1, max:  0.1
+2025-11-01 17:48:20.228368 starting: plotting reals for sto
+2025-11-01 17:48:20.240199 sto min:0.001, max:  100
+2025-11-01 17:48:20.417163 finished: pyemu.plot_utils.ensemble_helper() took: 0:00:00.576424

@@ -6,130 +6,147 @@ def define_mult_array(
         pf, ws,
         tag='local1.recharge',
         ib=None,
-        grid_gs=None,
-        grid_suffix='-fngr',
+        p_ins = [],
         lb=0.2, ub=5.0,
+        ulb=0.1, uub=10.,
         lays=[0, 1, 2, 3, 4],
-        pp_space=None,
-        pp_gs=None,
         ):
     
     files = [f for f in os.listdir(ws) if tag in f.lower() and f.endswith(".txt")]
     
     for i, f in enumerate(files):
-        if i in lays:
-            if isinstance(f,str):
-                iname = f.split(".")[1].replace("_","")
-            else:
-                iname = f[0].split(".")[1]
+        for ins in p_ins:
+            par_type = ins.get('type', 'pilotpoints')
+            gs = ins.get('gs', None)
+            pp_space = ins.get('pp_space', None)
+            suffix = ins.get('name_suffix', '')
+            zone_array = ins.get('zone_array', ib[0])
+
+            if i in lays:
+                if isinstance(f,str):
+                    iname = f.split(".")[1].replace("_","")
+                else:
+                    iname = f[0].split(".")[1]
             
-            if pp_space:
+                if par_type == 'pilotpoints':
+                    pf.add_parameters(
+                        f,
+                        zone_array=zone_array,
+                        par_type="pilotpoints",
+                        par_name_base=iname+suffix,
+                        geostruct=gs,
+                        pargp=iname+suffix, 
+                        lower_bound=lb, upper_bound=ub,
+                        ult_lbound=ulb, ult_ubound=uub,
+                        transform="log",
+                        par_style="multiplier",
+                        pp_options= {
+                            "pp_space": pp_space, # specify the spacing of the pilot points
+                            }
+                        )
+            
+                if par_type == 'grid':
+                    # constant (coarse) scale parameters
+                    pf.add_parameters(
+                        f,
+                        zone_array=zone_array,
+                        par_type="grid",
+                        par_name_base=iname+suffix,
+                        geostruct=gs,
+                        pargp=iname+suffix,
+                        lower_bound=lb, upper_bound=ub,
+                        ult_lbound=ulb, ult_ubound=uub,
+                        transform="log",
+                        par_style="multiplier",
+                        )
+                
+                if par_type == 'constant':
+                    # constant scale parameters
+                    pf.add_parameters(
+                        f,
+                        zone_array=zone_array,
+                        par_type="constant",
+                        par_name_base=iname+suffix,
+                        pargp=iname+suffix,
+                        lower_bound=lb, upper_bound=ub,
+                        ult_lbound=ulb, ult_ubound=uub,
+                        transform="log",
+                        par_style="multiplier",
+                        )
+            
+    return
+
+
+def rcha(
+        pf, ws,
+        tag='local1.recharge',
+        ib=None,
+        p_ins = [],
+        lb=0.2, ub=5.0,
+        ulb=0.1, uub=10.,
+        ):
+    ss_files = [f for f in os.listdir(ws) if tag in f.lower() and (f.endswith("0.txt") or f.endswith("2.txt"))]
+    tr_files = [f for f in os.listdir(ws) if tag in f.lower() and (f.endswith("1.txt") or f.endswith("3.txt"))]
+
+    ins_files = {
+        'rchss': ss_files,
+        'rchtr': tr_files,
+    }
+
+    for name, files in ins_files.items():
+        for ins in p_ins:
+            par_type = ins.get('type', 'pilotpoints')
+            gs = ins.get('gs', None)
+            pp_space = ins.get('pp_space', None)
+            suffix = ins.get('name_suffix', '')
+            zone_array = ins.get('zone_array', ib[0])
+
+            if par_type == 'pilotpoints':
                 pf.add_parameters(
-                    f,
-                    zone_array=ib[0],
+                    files,
+                    zone_array=zone_array,
                     par_type="pilotpoints",
-                    par_name_base=iname+'-pp',
-                    geostruct=pp_gs,
-                    pargp=iname+'-pp', 
+                    par_name_base=name+suffix,
+                    geostruct=gs,
+                    pargp=name+suffix, 
                     lower_bound=lb, upper_bound=ub,
+                    ult_lbound=ulb, ult_ubound=uub,
                     transform="log",
                     par_style="multiplier",
                     pp_options= {
                         "pp_space": pp_space, # specify the spacing of the pilot points
                         }
                     )
-            
-            if grid_gs:
+        
+            if par_type == 'grid':
                 # constant (coarse) scale parameters
                 pf.add_parameters(
-                    f,
-                    zone_array=ib[0],
+                    files,
+                    zone_array=zone_array,
                     par_type="grid",
-                    par_name_base=iname+grid_suffix,
-                    geostruct=grid_gs,
-                    pargp=iname+grid_suffix,
+                    par_name_base=name+suffix,
+                    geostruct=gs,
+                    pargp=name+suffix,
                     lower_bound=lb, upper_bound=ub,
+                    ult_lbound=ulb, ult_ubound=uub,
                     transform="log",
                     par_style="multiplier",
                     )
             
-            # constant scale parameters
-            pf.add_parameters(
-                f,
-                zone_array=ib[0],
-                par_type="constant",
-                par_name_base=iname+'-cn',
-                pargp=iname+'-cn',
-                lower_bound=lb, upper_bound=ub,
-                transform="log",
-                par_style="multiplier",
-                )
+            if par_type == 'constant':
+                # constant scale parameters
+                pf.add_parameters(
+                    files,
+                    zone_array=zone_array,
+                    par_type="constant",
+                    par_name_base=name+suffix,
+                    pargp=name+suffix,
+                    lower_bound=lb, upper_bound=ub,
+                    ult_lbound=ulb, ult_ubound=uub,
+                    transform="log",
+                    par_style="multiplier",
+                    )
             
-    return
-
-
-def rcha(
-        pf, ws, ib,
-        name='rch', 
-        tag='local1.wel_stress_period_data', 
-        grid_gs=None,
-        grid_suffix='-fngn',
-        rch_bounds=[0.1, 10],
-        pp_gs=None,
-        pp_space=None,
-        time_gs = None,
-        datetimes=None,
-        ):
-    files = [f for f in os.listdir(ws) if tag in f.lower() and f.endswith(".txt")]
-    # for f in files:
-    if grid_gs:
-        pf.add_parameters(
-            files,
-            zone_array=ib[0],
-            par_type="grid",
-            geostruct=grid_gs,
-            par_name_base=name + grid_suffix,
-            pargp=name + grid_suffix,
-            lower_bound=rch_bounds[0],
-            upper_bound=rch_bounds[1],
-            )
-    if pp_space:
-        pf.add_parameters(
-            files,
-            zone_array=ib[0],
-            par_type="pilotpoints",
-            geostruct=pp_gs,
-            par_name_base=name+"-pp",
-            pargp=name+"-pp",
-            lower_bound=rch_bounds[0],
-            upper_bound=rch_bounds[1],
-            pp_options= {
-                "pp_space": pp_space, # specify the spacing of the pilot points
-                }
-        )
-
-    pf.add_parameters(
-        files,
-        zone_array=ib[0],
-        par_type="constant",
-        par_name_base=name+"-cn",
-        pargp=name+"-cn",
-        lower_bound=rch_bounds[0],
-        upper_bound=rch_bounds[1],
-    )
-
-    if time_gs:
-        pf.add_parameters(
-            files,
-            zone_array=ib[0],
-            par_type="constant",
-            par_name_base=name+"-tcn",
-            pargp=name+"-tcn",
-            lower_bound=rch_bounds[0],
-            upper_bound=rch_bounds[1],
-            datetime=datetimes,
-            geostruct=time_gs,
-        )
     return
 
 
@@ -184,52 +201,21 @@ def wel(
         )
     return
 
-def ghb(
+def ghb_heads(
         pf, ws,
         name='ghb', 
         tag='local1.drn_stress_period_data',
-        grid_gs=None, 
         head_gs=None,
-        cond_bounds=None, 
-        head_bounds=None,
+        head_bounds=[None, None],
+        ult_bounds=[None, None],
         ):
     
     if tag.split('.')[-1].startswith('ghbspr'):
         kper_files = [f for f in os.listdir(ws) if tag in f.lower() and f.endswith("0.txt")]
     else:
         kper_files = [f for f in os.listdir(ws) if tag in f.lower() and (f.endswith("0.txt") or f.endswith("2.txt"))]
-
-    # conductances all the same for each stress period
-    if cond_bounds:
-        if grid_gs:
-            if isinstance(grid_gs, dict):
-                for suffix, gs in grid_gs.items():
-                    iname = name + f'-cond-{suffix}'
-                    # every cell scale (fine scale)
-                    pf.add_parameters(
-                        kper_files,
-                        par_type="grid",
-                        geostruct=gs,
-                        par_name_base=iname,
-                        pargp=iname,
-                        index_cols={'k':0, 'i':1, 'j':2},
-                        use_cols=[4],
-                        lower_bound=cond_bounds[0],
-                        upper_bound=cond_bounds[1],
-                        )
-
-        pf.add_parameters(
-            kper_files,
-            par_type="constant",
-            par_name_base=name+"-cond-cn",
-            pargp=name+"-cond-cn",
-            index_cols={'k':0, 'i':1, 'j':2},
-            use_cols=[4],  
-            lower_bound=cond_bounds[0],
-            upper_bound=cond_bounds[1],
-            )
-
-    # conductances all the same for each stress period
+    name = name.replace('-', '')
+    # head but only in the kper 1, and 3 (ss) 
     if head_bounds:
         if head_gs:
             if isinstance(head_gs, dict):
@@ -248,6 +234,8 @@ def ghb(
                         transform="none",
                         lower_bound=head_bounds[0],
                         upper_bound=head_bounds[1],
+                        ult_lbound=ult_bounds[0],
+                        ult_ubound=ult_bounds[1],
                         )
 
         pf.add_parameters(
@@ -261,40 +249,46 @@ def ghb(
             transform="none",
             lower_bound=head_bounds[0],
             upper_bound=head_bounds[1],
+            ult_lbound=ult_bounds[0],
+            ult_ubound=ult_bounds[1],
             )
 
-    return
+        return
 
-
-def conf_ghb(
+def ghb_cond(
         pf, ws,
         name='ghb', 
         tag='local1.drn_stress_period_data',
-        cond_gs=None, 
-        head_gs=None,
-        cond_bounds=None, 
-        head_bounds=None,
-        pp_space=5,
+        grid_gs=None,
+        cond_bounds=[None, None], 
+        ult_bounds=[None, None],
         ):
     
     if tag.split('.')[-1].startswith('ghbspr'):
-        kper_files = [f for f in os.listdir(ws) if tag in f.lower() and f.endswith("0.txt")]
+        kper_files = [f for f in os.listdir(ws) if tag in f.lower() and (f.endswith("0.txt") or f.endswith("1.txt"))]
     else:
-        kper_files = [f for f in os.listdir(ws) if tag in f.lower() and (f.endswith("0.txt") or f.endswith("2.txt"))]
-
+        kper_files = [f for f in os.listdir(ws) if tag in f.lower()]
+    name = name.replace('-', '')
     # conductances all the same for each stress period
     if cond_bounds:
-        pf.add_parameters(
-            kper_files,
-            par_type="grid",
-            geostruct=cond_gs,
-            par_name_base=name+"-cond-gr",
-            pargp=name+"-cond-gr",
-            index_cols={'k':0, 'i':1, 'j':2},
-            use_cols=[4],
-            lower_bound=cond_bounds[0],
-            upper_bound=cond_bounds[1],
-            )
+        if grid_gs:
+            if isinstance(grid_gs, dict):
+                for suffix, gs in grid_gs.items():
+                    iname = name + f'-cond-{suffix}'
+                    # every cell scale (fine scale)
+                    pf.add_parameters(
+                        kper_files,
+                        par_type="grid",
+                        geostruct=gs,
+                        par_name_base=iname,
+                        pargp=iname,
+                        index_cols={'k':0, 'i':1, 'j':2},
+                        use_cols=[4],
+                        lower_bound=cond_bounds[0],
+                        upper_bound=cond_bounds[1],
+                        ult_lbound=ult_bounds[0],
+                        ult_ubound=ult_bounds[1],
+                        )
 
         pf.add_parameters(
             kper_files,
@@ -305,37 +299,11 @@ def conf_ghb(
             use_cols=[4],  
             lower_bound=cond_bounds[0],
             upper_bound=cond_bounds[1],
+            ult_lbound=ult_bounds[0],
+            ult_ubound=ult_bounds[1],
             )
 
-    # conductances all the same for each stress period
-    if head_bounds:
-        pf.add_parameters(
-            kper_files,
-            par_type="grid",
-            par_name_base=name+"-head-gr",
-            pargp=name+"-head-gr",
-            index_cols={'k':0, 'i':1, 'j':2}, # {'k':0, 'i':1, 'j':2}
-            use_cols=[3],   
-            par_style="a", 
-            transform="none",
-            lower_bound=head_bounds[0],
-            upper_bound=head_bounds[1],
-            )
-
-        pf.add_parameters(
-            kper_files,
-            par_type="constant",
-            par_name_base=name+"-head-cn",
-            pargp=name+"-head-cn",
-            index_cols={'k':0, 'i':1, 'j':2}, # {'k':0, 'i':1, 'j':2}
-            use_cols=[3],   
-            par_style="a", 
-            transform="none",
-            lower_bound=head_bounds[0],
-            upper_bound=head_bounds[1],
-            )
-
-    return
+        return
 
 
 def add_ts_parameters(

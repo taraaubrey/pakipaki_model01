@@ -44,7 +44,7 @@ def setup_paths(run_name):
 
     return paths
 
-def load_data(paths, run_name, last_iter=None, use_prior_only=False):
+def load_data(paths, run_name):
     """Load all necessary data files.
 
     Args:
@@ -53,66 +53,31 @@ def load_data(paths, run_name, last_iter=None, use_prior_only=False):
         last_iter: Last iteration number (for history matching runs)
         use_prior_only: If True, load only prior data from master_ies_prior directory
     """
-    # Select directory based on mode
-    if use_prior_only:
-        m_d = paths['m_d_pr']
-        print(f"Loading PRIOR-ONLY data from: {m_d}")
-    else:
-        m_d = paths['m_d']
-        print(f"Loading data from: {m_d}")
+    m_d = paths['m_d']
+    print(f"Loading data from: {m_d}")
 
     # Load PST file
     pst = pyemu.Pst(os.path.join(m_d, f"{run_name}.pst"))
 
-    if last_iter is None:
-        if use_prior_only:
-            last_iter = 0  # Prior only has iteration 0
-        else:
-            last_iter = pst.control_data.noptmax
-
-    # File paths (only available for history matching runs)
-    if use_prior_only:
-        f_act = None
-        f_meas = None
-    else:
-        f_act = os.path.join(m_d, f"{run_name}.phi.actual.csv")
-        f_meas = os.path.join(m_d, f"{run_name}.phi.meas.csv")
+    last_iter = 0  # Prior only has iteration 0
 
     # Observation filenames
     pr_oe_fn = os.path.join(m_d, f"{run_name}.0.obs.csv")  # prior
-    pt_oe_fn = os.path.join(m_d, f"{run_name}.{last_iter}.obs.csv")
     noise_fn = os.path.join(m_d, f"{run_name}.obs+noise.csv")
     obs_data_fn = os.path.join(m_d, f"{run_name}.obs_data.csv")
 
     # Parameter filenames
     par_data_fn = os.path.join(m_d, f"{run_name}.par_data.csv")
     pr_pe_fn = os.path.join(m_d, f"{run_name}.0.par.csv")  # prior
-    pt_pe_fn = os.path.join(m_d, f"{run_name}.{last_iter}.par.csv")
 
     # Load observation data
     obs_data = pd.read_csv(obs_data_fn, index_col=0)
-    # obs_data.set_index('obsnme', inplace=True)
     par_data = pd.read_csv(par_data_fn, index_col=0)
 
     # Load observation ensembles
-    pr_oe = pyemu.ObservationEnsemble.from_csv(pst=pst, filename=pr_oe_fn)
-
-    # For prior-only mode, pt_oe is same as pr_oe
-    if use_prior_only:
-        pt_oe = pr_oe
-    else:
-        pt_oe = pyemu.ObservationEnsemble.from_csv(pst=pst, filename=pt_oe_fn)
-
-    noise = pyemu.ObservationEnsemble.from_csv(pst=pst, filename=noise_fn)
-
-    # Load parameter ensembles
-    pr_pe = pyemu.ParameterEnsemble.from_csv(pst=pst, filename=pr_pe_fn)
-
-    # For prior-only mode, pt_pe is same as pr_pe
-    if use_prior_only:
-        pt_pe = pr_pe
-    else:
-        pt_pe = pyemu.ParameterEnsemble.from_csv(pst=pst, filename=pt_pe_fn)
+    # pr_oe = pyemu.ObservationEnsemble.from_csv(pst=pst, filename=pr_oe_fn)
+    # noise = pyemu.ObservationEnsemble.from_csv(pst=pst, filename=noise_fn)
+    # pr_pe = pyemu.ParameterEnsemble.from_csv(pst=pst, filename=pr_pe_fn)
 
     # Get headers
     headers = obs_data.index.to_list()
@@ -120,23 +85,16 @@ def load_data(paths, run_name, last_iter=None, use_prior_only=False):
 
     data = {
         'pst': pst,
-        'f_act': f_act,
-        'f_meas': f_meas,
         'pr_oe_fn': pr_oe_fn,
-        'pt_oe_fn': pt_oe_fn,
         'pr_pe_fn': pr_pe_fn,
-        'pt_pe_fn': pt_pe_fn,
         'noise_fn': noise_fn,
         'obs_data': obs_data,
         'par_data': par_data,
-        'pr_oe': pr_oe,
-        'pt_oe': pt_oe,
-        'noise': noise,
-        'pr_pe': pr_pe,
-        'pt_pe': pt_pe,
+        # 'pr_oe': pr_oe,
+        # 'noise': noise,
+        # 'pr_pe': pr_pe,
         'headers': headers,
         'param_headers': param_headers,
-        'use_prior_only': use_prior_only,
     }
 
     return data
@@ -193,13 +151,12 @@ def plot_phi_boxplot(data, output):
 
     # Prepare data for boxplot
     box_data = []
-    value_columns = [str(i) for i in range(100)] + ['base']
+    value_columns = phi_act.columns[5:].to_list()
 
     for total_runs in phi_act.index:
         row_values = []
         for col in value_columns:
-            if col in phi_act.columns:
-                row_values.append(phi_act.loc[total_runs, col])
+            row_values.append(phi_act.loc[total_runs, col])
         box_data.append(row_values)
 
     # Create boxplot
@@ -340,6 +297,8 @@ def plot_timeseries_obs(data, output, truth_file=None):
         ax_ts.set_title(f'{usecol}', loc='left')
         ax_ts.set_ylabel('Head (m)')
         ax_ts.grid(alpha=0.3)
+        ax_ts.set_ylim()
+
 
         if idx == 0 and truth_col is not None:
             ax_ts.legend(['Prior', 'Posterior', 'Truth'], fontsize=8)
@@ -1078,3 +1037,9 @@ def plot_pdc_budget_confined(data, output_dir):
     plt.savefig(fig_fn, dpi=300, bbox_inches='tight')
     plt.close()
     print(f"Saved: {fig_fn}")
+
+
+def plot_spring_flux_predictions(data, output_dir):
+    desired_cols = [col for col in data['headers'] if col.startswith('oname:springq')]
+
+    

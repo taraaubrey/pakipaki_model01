@@ -72,14 +72,14 @@ if [ $? -ne 0 ]; then
     exit $?
 fi
 
-echo ""
-echo "======================================================================"
-echo "COMPLETE WORKFLOW FINISHED SUCCESSFULLY!"
-echo "======================================================================"
-echo ""
-echo "Results are available in:"
-echo "  - models/{MODEL_NAME}/pest/master_ies/ (PEST++ results)"
-echo "  - models/{MODEL_NAME}/figures/ (output figures)"
-echo "======================================================================"
+# echo ""
+# echo "======================================================================"
+# echo "COMPLETE WORKFLOW FINISHED SUCCESSFULLY!"
+# echo "======================================================================"
+# echo ""
+# echo "Results are available in:"
+# echo "  - models/{MODEL_NAME}/pest/master_ies/ (PEST++ results)"
+# echo "  - models/{MODEL_NAME}/figures/ (output figures)"
+# echo "======================================================================"
 
-read -p "Press enter to exit..."
+# read -p "Press enter to exit..."

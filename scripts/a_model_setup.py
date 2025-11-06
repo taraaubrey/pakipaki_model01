@@ -67,30 +67,38 @@ def main():
     print(f'Simulation period: {PERLEN} days with {NSTEPS} time steps.')
     
     # dis
-    grid, idomain, top, nrow, ncol, delr, delc, fn_out = dis_setup(fn_out)
+    grid, idomain, top, nrow, ncol, delr, delc, fn_out, model_thickness = dis_setup(fn_out)
     elev_constraint = grid.array_from_raster(TOP)
-    # grid_gpd = grid.cell_geodataframe()
-    # grid_gpd.to_file(Path(SPATIAL_DIR, f'{MODEL_NAME}_grid.shp'), driver='ESRI Shapefile')
+    grid_gpd = grid.cell_geodataframe()
+    grid_gpd['idomain'] = idomain[0].flatten()
+    grid_gpd.to_file(Path(SPATIAL_DIR, f'{MODEL_NAME}_grid.shp'), driver='ESRI Shapefile')
     # ghbs
-    fn_out = ghb_aw_setup(grid, idomain, start, end, fn_out)
-    fn_out = ghb_spring_setup(grid, idomain, start, end, fn_out)
-    fn_out, ghb_pw_kper0 = ghb_pw_setup(grid, idomain, start, end, fn_out)
-    fn_out = ghb_conf_setup(grid, idomain, start, end, fn_out)
+    active_domain = np.where(idomain > 0, 1, 0)
+    fn_out, aw_ts, wetland_WL = ghb_aw_setup(grid, active_domain, start, end, fn_out)
+    fn_out = ghb_spring_setup(grid, active_domain, start, end, aw_ts, wetland_WL, fn_out)
+    fn_out, ghb_pw_kper0 = ghb_pw_setup(grid, active_domain, start, end, fn_out)
+    fn_out = ghb_conf_setup(grid, active_domain, start, end, model_thickness, fn_out)
     # wel
     # fn_out, mbr_df = wel_mbr_setup(grid, idomain, fn_out, ghb_pw_kper0)
     # fn_out = wel_inout_setup(grid, idomain, mbr_df, fn_out)
     # npf
-    fn_out = npf_setup(idomain, fn_out)
+    fn_out = npf_setup(active_domain, fn_out)
     # sto
-    fn_out = sto_ss_setup(idomain, fn_out)
+    fn_out = sto_ss_setup(active_domain, fn_out)
     # rch
-    fn_out = rch_setup(idomain, fn_out)
+    fn_out = rch_setup(active_domain, fn_out)
     #obs - save file
     pk4_h = pk4_ts(start, end)
     aw_Q = awanui_ts(start, end)
     pw_Q = poukawa_ts(start, end)
 
-    
+    # copy PP_SHP into model directory; need to copy all files associated with shapefile
+    pp_shp_path = Path(PP_SHP)
+    for ext in ['.shp', '.shx', '.dbf', '.prj', '.cpg']:
+        src_file = pp_shp_path.with_suffix(ext)
+        if src_file.exists():
+            shutil.copy2(src_file, MODEL_DIR)
+
     # other model parameters
     init_h = np.stack([top] * NLAY)  # initial head, based on average riv elevation
 
@@ -146,7 +154,10 @@ def main():
     
     sto = fp.mf6.ModflowGwfsto(
         model=gwf,
-        ss=fn_out['sto_ss'], 
+        ss = fn_out['sto_ss'],
+        # sy=SS_PRIOR['sy'], 
+        # ss=SS_PRIOR['ss'],
+        # iconvert=SS_PRIOR['iconvert'],
         steady_state={
             0: True,
             2: True,
@@ -175,24 +186,30 @@ def main():
         save_flows=True, # save flows for this package
         pname='rch' # package name
     )
-
+    
     ghb_aw = fp.mf6.ModflowGwfghb(
+        print_input=True,
         model=gwf, # add riv package to model gwf (created in previous code cell)
         timeseries=fn_out['ghb_aw_ts'],
         stress_period_data=fn_out['ghb_aw'],
         pname='ghb_aw', # package name
         save_flows=True,
         )
+    # ghb_aw.ts.initialize(fn_out['ghb_aw_ts'])
     
     ghb_conf = fp.mf6.ModflowGwfghb(
+        print_input=True,
+        # print_flows=True,
+        save_flows=True, # save flows for this package 
         model=gwf,
         timeseries=fn_out['ghb_conf_ts'],
         stress_period_data=fn_out['ghb_conf'],
         pname='ghb_conf', # package name
-        save_flows=True, # save flows for this package 
         )
+    # ghb_conf.ts.initialize(fn_out['ghb_conf_ts'])
 
     ghb_pw = fp.mf6.ModflowGwfghb(
+        print_input=True,
         model=gwf,
         timeseries=fn_out['ghb_pw_ts'],
         stress_period_data=fn_out['ghb_pw'],
@@ -201,6 +218,7 @@ def main():
         )
     
     ghb_sp = fp.mf6.ModflowGwfghb(
+        print_input=True,
         model=gwf,
         timeseries=fn_out['ghb_sp_ts'],
         stress_period_data=fn_out['ghb_sp'],
@@ -251,7 +269,7 @@ def main():
     os.chdir(MODEL_DIR)  # change directory to model directory
     sample_path = os.path.relpath(SAMPLES, MODEL_DIR)
     
-    helpers.extract_budget(model_name=f'{MODEL_NAME}')  # extract heads and budget from model output    
+    budget = helpers.extract_budget(model_name=f'{MODEL_NAME}')  # extract heads and budget from model output    
     samples = helpers.extract_model_heads(model_name=f'{MODEL_NAME}', sample_path=sample_path)
     ghb_dfs = helpers.extract_ghb_fluxes(model_name=f'{MODEL_NAME}', sample_path=sample_path)
 
@@ -260,10 +278,12 @@ def main():
     
     # awanui flux truth
     helpers.create_awghb_truth(ghb_dfs, TRUTHREL_DIR)
+    helpers.create_confghb_truth(ghb_dfs, TRUTHREL_DIR)
     # top model constraints (head can't be greater than 1m above top)
     helpers.create_head_truth(elev_constraint, TRUTHREL_DIR)
     # sample location truth
     helpers.samples_truth(gwf, TRUTHREL_DIR)
+    helpers.create_budget_truth(budget, TRUTHREL_DIR)
 
     
     # # copy file to truth directory

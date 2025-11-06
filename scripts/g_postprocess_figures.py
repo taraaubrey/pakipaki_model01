@@ -28,6 +28,9 @@ def main():
     # args.prior_only = True
     # Use MODEL_NAME from setup.py
     run_name = MODEL_NAME
+    # run_name = 'local_run4'
+    # args.prior_only = False
+
     mode_str = "PRIOR-ONLY" if args.prior_only else "HISTORY MATCHING"
     print(f"\n{'='*70}")
     print(f"POST-PROCESSING FIGURES FOR: {run_name} ({mode_str})")
@@ -52,7 +55,7 @@ def main():
 
     # Load data
     print("Loading data...")
-    data = load_data(paths, run_name, use_prior_only=args.prior_only)
+    data = load_data(paths, run_name, last_iter=12, use_prior_only=args.prior_only)
     output_dir = paths['output']
 
     # Add suffix to output filenames for prior-only mode
@@ -70,6 +73,9 @@ def main():
 
         print("\n2. Time series observation plots...")
         plot_timeseries_obs(data, output_dir)
+
+        print("\n3. Prediction plots...")
+        plot_spring_flux_predictions(data, output_dir)
 
         # print("\n3. Parameter histogram plots...")
         # plot_parameter_histograms(data, output_dir)
@@ -89,25 +95,25 @@ def main():
 
         print("\n7. 1:1 boxplot and scatter with uncertainty...")
         plot_1to1_boxplots(data, output_dir)
-    else:
-        # Prior-only mode: only generate array statistics
-        print("1. Parameter array statistics (prior)...")
-        # plot_pname_array_statistics(data, 'pr_pe_fn', output_dir, 'ghb-conf-cond-gr', 'ghb-conf-cond-gr')
-        # plot_pname_array_statistics(data, 'pr_pe_fn', output_dir, 'ghb-conf-head-gr', 'ghb-conf-head-gr')
-        # plot_pname_array_statistics(data, 'pr_pe_fn', output_dir, 'npfklayer1-fngr', 'npfklayer1-fngr', array_param=True)
-        # plot_pname_array_statistics(data, 'pr_pe_fn', output_dir, 'npfklayer1-pp', 'npfklayer1-pp', array_param=True)
-        # plot_pname_array_statistics(data, 'pr_pe_fn', output_dir, 'rch-fngr', 'rch-fngr', array_param=True)
-        # plot_pname_array_statistics(data, 'pr_pe_fn', output_dir, 'rch-pp', 'rch-pp', array_param=True)
-        # plot_pname_array_statistics(data, 'pr_pe_fn', output_dir, 'stosslayer1-pp', 'stosslayer1-pp', array_param=True)
-        # plot_pname_array_statistics(data, 'pr_pe_fn', output_dir, 'stosslayer1-fngr', 'stosslayer1-fngr', array_param=True)
 
-        # print("\n2. Observation array statistics (prior)...")
-        # plot_heads_oname_array_statistics(data, 'pr_oe_fn', output_dir, 'h-lyr', 'prior_heads')
-        # plot_oname_array_statistics(data, 'pr_oe_fn', output_dir, 'confq', 'prior_confq')
-        # plot_oname_array_statistics(data, 'pr_oe_fn', output_dir, 'awq', 'prior_awq')
+    # Prior-only mode: only generate array statistics
+    print("1. Parameter array statistics (prior)...")
+    # plot_pname_array_statistics(data, 'pr_pe_fn', output_dir, 'ghb-conf-cond-gr', 'ghb-conf-cond-gr')
+    # plot_pname_array_statistics(data, 'pr_pe_fn', output_dir, 'ghb-conf-head-gr', 'ghb-conf-head-gr')
+    # plot_pname_array_statistics(data, 'pr_pe_fn', output_dir, 'npfklayer1-fngr', 'npfklayer1-fngr', array_param=True)
+    # plot_pname_array_statistics(data, 'pr_pe_fn', output_dir, 'npfklayer1-pp', 'npfklayer1-pp', array_param=True)
+    # plot_pname_array_statistics(data, 'pr_pe_fn', output_dir, 'rch-fngr', 'rch-fngr', array_param=True)
+    # plot_pname_array_statistics(data, 'pr_pe_fn', output_dir, 'rch-pp', 'rch-pp', array_param=True)
+    # plot_pname_array_statistics(data, 'pr_pe_fn', output_dir, 'stosslayer1-pp', 'stosslayer1-pp', array_param=True)
+    # plot_pname_array_statistics(data, 'pr_pe_fn', output_dir, 'stosslayer1-fngr', 'stosslayer1-fngr', array_param=True)
 
-        print("\n3. Check for prior data conflicts...")
-        plot_pdc_budget_confined(data, output_dir)
+    # print("\n2. Observation array statistics (prior)...")
+    # plot_heads_oname_array_statistics(data, 'pr_oe_fn', output_dir, 'h-lyr', 'prior_heads')
+    # plot_oname_array_statistics(data, 'pr_oe_fn', output_dir, 'confq', 'prior_confq')
+    # plot_oname_array_statistics(data, 'pr_oe_fn', output_dir, 'awq', 'prior_awq')
+
+    print("\n3. Check for prior data conflicts...")
+    plot_pdc_budget_confined(data, output_dir)
         
 
     print(f"\n{'='*70}")

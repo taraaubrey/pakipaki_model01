@@ -1,8 +1,9 @@
-MODEL_NAME = 'local_run6'  # name of the model
+MODEL_NAME = 'local_run27'  # name of the model
 """
-- changed reinflation values (little changes seen in run5)
-- adjusted parameter bounds in c_parameterization.py
-- changed phi back to previous run 4 values
+- Removed recharge from parameterization.
+- Added shapefile for pilot points.
+- Updated IES settings for reinflation.
+- 200 realizations for IES.
 """
 # model domain
 RES = 25
@@ -62,47 +63,61 @@ TRUTH_DIR = r'truth'
 # Particle locations
 SAMPLES = r"data/sample_locations.shp"
 
-# Pest options
-NREALS_PRIOR = 200  # number of realizations for parameterization
-NOPTMAX = 3  # number of optimization iterations
+PP_SHP = r"data/pilot_points.shp"
+GR_SHP = r"data/pp_grid.shp" # polygon of grid zone
+
 
 # model parameters
 SS_PRIOR = {
-    'initial': 1e-3,
-    'lb': 1e-3,
-    'ub': 1e3,
+    'initial': 1e-1,
+    'lb': 1e-2,
+    'ub': 1e2,
+    'ulb': 1e-6,
+    'uub': 1,
 }
 KH_PRIOR = {
-    'initial': 1e-1,
-    'lb': 1e-5,
-    'ub': 1e5,
+    'initial': 100,
+    'lb': 1e-4,
+    'ub': 1e4,
+    'ulb': 1e-6,
+    'uub': 1e4,
 }
 
 RCH = {
-    'initial_rf': 0.000539, # rainfall recharge
-    'initial_mbr': 0.003134, # mbr recharge
-    'lb': 2e-1,
-    'ub': 4.9,
+    'initial_rf': 5.4e-4, # rainfall recharge 0.00025
+    'initial_mbr': 0.0011, # mbr recharge
+    'lb': 1.8e-1,
+    'ub': 5.6,
+    'ulb': 1e-4,
+    'uub': 1e-2,
 }
 
 GHB_SW = {
-    'initial_cond_aw': 1,
-    'initial_cond_pw': 1,
-    'initial_cond_spr': 1,
+    'initial_cond_aw': 100,
+    'initial_cond_pw': 100,
+    'initial_cond_spr': 100,
     'cond_lb': 1e-6,
     'cond_ub': 1e6,
+    'cond_ulb': 1e-4,
+    'cond_uub': 1e6,
     'head_lb': -0.5,
     'head_ub': 0.5,
+    'head_ulb': 5,
+    'head_uub': 12,
 }
 
 GHB_CONF = {
     'initial_cond': 1,
     'initial_head_offset': 2,
-    'initial_head_min': 13.5,
+    'initial_head_min': 14,
     'cond_lb': 1e-6,
     'cond_ub': 1e6,
+    'cond_ulb': 1e-4,
+    'cond_uub': 1e5,
     'head_lb': -2,
     'head_ub': 2,
+    'head_ulb': 10,
+    'head_uub': 16,
 }
 
 AWANUI_water_offset = 0.5  # m (above the minimum elevation as initial head)
@@ -112,15 +127,38 @@ CONF_past_min = 12.95 # m ; represents the lowest water level recorded in confin
 GHB_Q = -5.76  # m3/d
 GHB_Qstd = 3.0  # m3/d +/- 6 m3/d (assume 4 std is full range) 12/4
 
-HEAD_offset = 0.5 # from top of model domain (water level can't be above this)
+HEAD_offset = 1 # from top of model domain (water level can't be above this)
 HEAD_std = 0.025  # m  top heads +/- 0.5 cm (assume 4 std is full range) 1/4
 PK4_std = 0.01  # m +/- 2 cm (assume 4 std is full range) 0.04/4
 
-
 PHI_OBS = {
-    'head-arr': 100,
-    'ts-heads': 200,
-    'recession': 50,
-    'AWq': 1,
-    'budget': 20,
+        # important budget and flux obs
+        'arr-h': 60, # head obs
+        'budget': 50, # flux obs
+        # temporal observations
+        'arr-confq': 60, # flux obs
+        'arr-awq': 10, # flux obs
+        'ts-heads': 100, # head obs
+        'recession': 100, # head obs
+}
+
+# Pest options
+NREALS = 200  # number of realizations for parameterization
+NREALS_PRIOR = 50  # number of realizations for parameterization
+REINFLATE_ITERS = None  # iterations at which to reinflate
+
+if REINFLATE_ITERS:
+    NOPTMAX = sum(REINFLATE_ITERS)  # number of optimization iterations
+else:
+    NOPTMAX = 3 
+
+PEST_PP_OPTIONS = {
+    'ies_num_reals': NREALS,
+    'ies_parameter_ensemble': 'prior_pe.jcb',
+    'ies_no_noise': False,
+    'ies_verbose_level': 1,
+    'overdue_giveup_fac': 10,
+    'overdue_giveup_minutes': 15,
+    # 'ies_reinflate_factor': 1,
+    # 'ies_n_iter_reinflate': 3,
 }

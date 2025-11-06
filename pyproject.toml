@@ -18,4 +18,5 @@ dependencies = [
     "rasterio>=1.4.3",
     "scikit-learn>=1.7.1",
     "seaborn>=0.13.2",
+    "pyshp",
 ]
