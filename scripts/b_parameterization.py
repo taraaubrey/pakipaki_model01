@@ -266,6 +266,14 @@ def main():
     #     ult_bounds=[GHB_CONF['head_ulb'], GHB_CONF['head_uub']]
     #     )
 
+    print('*' * 40)
+    par_info = [(df['pargp'].unique(), df.shape[0]) for df in pf.par_dfs]
+    total_pars = sum([npar for grp, npar in par_info])
+    for grp, npar in par_info:
+        print(f'Parameter group: {grp[0]}, number of parameters: {npar}')
+    print(f'Total number of parameters: {total_pars}')
+    print('*' * 40)
+
     # OBSERVATIONS ------------------------------------------------------
     print('SETTING OBSERVATIONS...')
 
@@ -335,7 +343,7 @@ def main():
     )
 
     # add head arrays
-    pattern = os.path.join(TEMP_DIR, "output.heads_lyr*.dat")
+    pattern = os.path.join(TEMP_DIR, "output.heads_*.dat")
     head_files = glob.glob(pattern)
 
     # Extract layer, kper, kstp from filenames
@@ -343,7 +351,7 @@ def main():
     for file_path in head_files:
         filename = os.path.basename(file_path)
         # Use regex to extract numbers
-        match = re.search(r'output\.heads_kper(\d+)_kstp(\d+)_time(\d+)\\.dat', filename)
+        match = re.search(r'output.heads_kper(\d+)_kstp(\d+)_time(\d+).(\d+).dat', filename)
         if match:
             kper = int(match.group(1))
             kstp = int(match.group(2))
@@ -352,22 +360,23 @@ def main():
                 'file_path': file_path,
                 'filename': filename,
                 'kper': kper,
-                'kstp': kstp
+                'kstp': kstp,
+                'time': time
             })
     for info in file_info:
         file_path = info['file_path']
         time = info['time']
         kper = info['kper']
         kstp = info['kstp']
-        
-        # Add as observation to pyemu
-        pf.add_observations(
-            info['filename'],
-            prefix=f'arr-h_kper:{kper}_kstp:{kstp}_time:{time}',
-            obsgp=f'head-arr',
-            zone_array=np.where(ib[0] > 0, 1, 0),
-        )
 
+        if kper in np.arange(1,3): # only inlcude every 10th heads obs
+            # Add as observation to pyemu
+            pf.add_observations(
+                info['filename'],
+                prefix=f'arr-h_kper:{kper}_kstp:{kstp}_time:{time}',
+                obsgp=f'arr-h',
+                zone_array=np.where(ib[0] > 0, 1, 0),
+            )
 
     # FORWARD RUN SCRIPT --------------------------------------------------
     pf.mod_sys_cmds.append("mf6") #do this only once
@@ -401,16 +410,13 @@ def main():
         os.path.join(TRUTH_DIR, "output.heads.weight.dat"))
     
     get_oname = lambda x: x['obgnme'].split('_')[0].split(':')[-1]
-    extract_kper = lambda x: int([s for s in x.split('_') if s.startswith('kper:')][0].split(':')[1])
-    extract_kstp = lambda x: int([s for s in x.split('_') if s.startswith('kstp:')][0].split(':')[1])
-    extract_time = lambda x: int([s for s in x.split('_') if s.startswith('time:')][0].split(':')[1])
 
     # adjust obgnme to main groups (for some reason not working above)
     pst.observation_data['obgnme'] = pst.observation_data.apply(get_oname, axis=1)
     pst.observation_data['standard_deviation'] = 0.
     pst.observation_data['weight'] = 0.
 
-    # add truth values for ts-heads
+    # add truth values
     for _, row in pst.observation_data.iterrows():
         obgnme = row['obgnme']
 
@@ -434,12 +440,11 @@ def main():
                 pst.observation_data.at[row.name, 'obsval'] = AWq.loc[(kper, kstp, k, i, j), 'AWq']
                 pst.observation_data.at[row.name, 'standard_deviation'] = AWq.loc[(kper, kstp, k, i, j), 'std']
                 pst.observation_data.at[row.name, 'weight'] = AWq.loc[(kper, kstp, k, i, j), 'weight']
-                pst.observation_data.at[row.name, 'obgnme'] = 'less_' + row['obgnme']
         
         elif obgnme == 'arr-h':
             i = int(row['i'])
             j = int(row['j'])
-            kper = int(row['oname'].split('-')[2][-1])
+            kper = int(row['kper'])
 
             if kper < 3: # only first 54 time steps have truth data
                 pst.observation_data.at[row.name, 'obsval'] = heads[i, j]
@@ -484,6 +489,13 @@ def main():
                 pst.observation_data.at[row.name, 'standard_deviation'] = recession_truth.loc[kper, 'std']
                 pst.observation_data.at[row.name, 'weight'] = recession_truth.loc[kper, 'weight']
     
+    print('*' * 40)
+    print(f'Number of observations: {pst.nobs}')
+    print(f'Number of non-zero observations by group:')
+    print(pst.observation_data[pst.observation_data['weight'] > 0].groupby('obgnme').size())
+    print('Total number of non-zero observations:', pst.observation_data[pst.observation_data['weight'] > 0].shape[0])
+    print('*' * 40)
+
     # PHI FACTORS ------------------------------------------------------
     # set phi factors for different observation groups
     # to dataframe with no column names or index
@@ -504,85 +516,86 @@ def main():
 
     # cov = pyemu.Cov.from_parameter_data(pst)
 
-    # Add cross-covariance between ghb-conf and ghb-aw HEAD parameters
-    # (conductance parameters remain uncorrelated)
-    print("Adding cross-covariance between ghb-conf and ghb-aw head parameters...")
+    # # Add cross-covariance between ghb-conf and ghb-aw HEAD parameters
+    # # (conductance parameters remain uncorrelated)
+    # print("Adding cross-covariance between ghb-conf and ghb-aw head parameters...")
 
-    # Get all parameter names
-    par_names = pst.parameter_data.index.tolist()
+    # # Get all parameter names
+    # par_names = pst.parameter_data.index.tolist()
 
-    # Identify ghb-conf head parameters (exclude conductance)
-    conf_head_pars = [p for p in par_names if 'ghb-conf' in p and 'head' in p]
-    conf_head_pars += [p for p in par_names if 'ghb-ts-conf' in p]
+    # # Identify ghb-conf head parameters (exclude conductance)
+    # conf_head_pars = [p for p in par_names if 'ghb-conf' in p and 'head' in p]
+    # conf_head_pars += [p for p in par_names if 'ghb-ts-conf' in p]
 
-    # Identify ghb-aw head parameters (exclude conductance)
-    aw_head_pars = [p for p in par_names if 'ghb-aw' in p and 'head' in p]
-    aw_head_pars += [p for p in par_names if 'ghb-ts-aw' in p]
+    # # Identify ghb-aw head parameters (exclude conductance)
+    # aw_head_pars = [p for p in par_names if 'ghb-aw' in p and 'head' in p]
+    # aw_head_pars += [p for p in par_names if 'ghb-ts-aw' in p]
 
-    print(f"Found {len(conf_head_pars)} conf head parameters and {len(aw_head_pars)} aw head parameters")
+    # print(f"Found {len(conf_head_pars)} conf head parameters and {len(aw_head_pars)} aw head parameters")
 
-    # Set correlation coefficient
-    correlation = 0.6
+    # # Set correlation coefficient
+    # correlation = 0.6
 
-    cov_copy = cov.x.copy()
-    # Get parameter standard deviations from the covariance matrix diagonal
-    par_std = {}
-    for i, par_name in enumerate(cov.row_names):
-        par_std[par_name] = np.sqrt(cov_copy[i, i])
+    # cov_copy = cov.x.copy()
+    # # Get parameter standard deviations from the covariance matrix diagonal
+    # par_std = {}
+    # for i, par_name in enumerate(cov.row_names):
+    #     par_std[par_name] = np.sqrt(cov_copy[i, i])
 
-    # Create index mapping for covariance matrix
-    name_to_idx = {name: i for i, name in enumerate(cov.row_names)}
+    # # Create index mapping for covariance matrix
+    # name_to_idx = {name: i for i, name in enumerate(cov.row_names)}
 
-    # Helper function to extract indices from parameter name
-    def extract_indices(par_name):
-        """Extract idx0:idx1:idx2 from parameter name, or return None if not present"""
-        # Look for pattern like idx0:idx1:idx2 in the parameter name
-        match = re.search(r'idx(\d+):idx(\d+):idx(\d+)', par_name)
-        if match:
-            return (match.group(1), match.group(2), match.group(3))
-        return None
+    # # Helper function to extract indices from parameter name
+    # def extract_indices(par_name):
+    #     """Extract idx0:idx1:idx2 from parameter name, or return None if not present"""
+    #     # Look for pattern like idx0:idx1:idx2 in the parameter name
+    #     match = re.search(r'idx(\d+):idx(\d+):idx(\d+)', par_name)
+    #     if match:
+    #         return (match.group(1), match.group(2), match.group(3))
+    #     return None
 
-    # Create dictionaries mapping indices to parameter names for faster lookup
-    conf_by_indices = {}
-    for par in conf_head_pars:
-        indices = extract_indices(par)
-        if indices and par in name_to_idx:
-            conf_by_indices[indices] = par
+    # # Create dictionaries mapping indices to parameter names for faster lookup
+    # conf_by_indices = {}
+    # for par in conf_head_pars:
+    #     indices = extract_indices(par)
+    #     if indices and par in name_to_idx:
+    #         conf_by_indices[indices] = par
 
-    aw_by_indices = {}
-    for par in aw_head_pars:
-        indices = extract_indices(par)
-        if indices and par in name_to_idx:
-            aw_by_indices[indices] = par
+    # aw_by_indices = {}
+    # for par in aw_head_pars:
+    #     indices = extract_indices(par)
+    #     if indices and par in name_to_idx:
+    #         aw_by_indices[indices] = par
 
-    # Set cross-covariance only between parameters with matching indices
-    n_cross_cov = 0
-    for indices, conf_par in conf_by_indices.items():
-        # Check if there's a matching aw parameter with same indices
-        if indices in aw_by_indices:
-            aw_par = aw_by_indices[indices]
+    # # Set cross-covariance only between parameters with matching indices
+    # n_cross_cov = 0
+    # for indices, conf_par in conf_by_indices.items():
+    #     # Check if there's a matching aw parameter with same indices
+    #     if indices in aw_by_indices:
+    #         aw_par = aw_by_indices[indices]
 
-            if conf_par not in par_std or aw_par not in par_std:
-                continue
+    #         if conf_par not in par_std or aw_par not in par_std:
+    #             continue
 
-            idx_conf = name_to_idx[conf_par]
-            idx_aw = name_to_idx[aw_par]
+    #         idx_conf = name_to_idx[conf_par]
+    #         idx_aw = name_to_idx[aw_par]
 
-            # Calculate cross-covariance: cov[i,j] = correlation * std[i] * std[j]
-            cross_cov_value = correlation * par_std[conf_par] * par_std[aw_par]
+    #         # Calculate cross-covariance: cov[i,j] = correlation * std[i] * std[j]
+    #         cross_cov_value = correlation * par_std[conf_par] * par_std[aw_par]
 
-            # Set symmetric entries in covariance matrix
-            cov.x[idx_conf, idx_aw] = cross_cov_value
-            cov.x[idx_aw, idx_conf] = cross_cov_value
-            n_cross_cov += 1
+    #         # Set symmetric entries in covariance matrix
+    #         cov.x[idx_conf, idx_aw] = cross_cov_value
+    #         cov.x[idx_aw, idx_conf] = cross_cov_value
+    #         n_cross_cov += 1
 
-    print(f"Set {n_cross_cov} cross-covariance terms with correlation = {correlation}")
-    print(f"(Only correlated parameters with matching spatial indices)")
+    # print(f"Set {n_cross_cov} cross-covariance terms with correlation = {correlation}")
+    # print(f"(Only correlated parameters with matching spatial indices)")
 
     # Save covariance matrix to file
     cov_file = os.path.join(TEMP_DIR, 'prior_cov.jcb')
     cov.to_binary(cov_file)
     print(f"Saved covariance matrix to {cov_file}")
+
 
 
     # WRITE PEST -------------------------------------------------------

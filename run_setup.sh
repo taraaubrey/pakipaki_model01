@@ -60,17 +60,17 @@ if [ $? -ne 0 ]; then
     exit $?
 fi
 
-# Run post-processing figures
-echo ""
-echo "======================================================================"
-echo "STEP 4: Running g_postprocess_figures.py"
-echo "======================================================================"
-python scripts/g_postprocess_figures.py
-if [ $? -ne 0 ]; then
-    echo "ERROR: g_postprocess_figures.py failed with exit code $?"
-    read -p "Press enter to exit..."
-    exit $?
-fi
+# # Run post-processing figures
+# echo ""
+# echo "======================================================================"
+# echo "STEP 4: Running g_postprocess_figures.py"
+# echo "======================================================================"
+# python scripts/g_postprocess_figures.py
+# if [ $? -ne 0 ]; then
+#     echo "ERROR: g_postprocess_figures.py failed with exit code $?"
+#     read -p "Press enter to exit..."
+#     exit $?
+# fi
 
 # echo ""
 # echo "======================================================================"

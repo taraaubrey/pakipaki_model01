@@ -20,7 +20,9 @@ from setup import MODEL_NAME
 def main():
     """Main post-processing function."""
 
-    run_name = 'local_run26'
+    run_name = 'local_run27'
+    last_iter = 2
+
     # Setup paths
     paths = setup_paths(run_name)
 
@@ -32,7 +34,7 @@ def main():
 
     # Load data
     print("Loading data...")
-    data = load_data(paths, run_name, last_iter=3, use_prior_only=False)
+    data = load_data(paths, run_name, last_iter=last_iter, use_prior_only=False)
     output_dir = paths['output']
 
 

@@ -825,14 +825,18 @@ def create_awghb_truth(ghb_dfs, dir):
     """
 
     df = ghb_dfs['GHB_AW'].copy()
+
+    kstps = df['kstp'].unique()
+    kstp_include = np.arange(min(kstps), max(kstps), 10)  # include every 10th kstp
+
     # replace all values with GHB_Q
     df['weight'] = 0
     df['std'] = GHB_Qstd
-    df['AWq'] = 0
+    df['AWq'] = GHB_Q
     # set std only on kper 1 and kstp 1
     # df.loc[(df['kper'] == 1) & (df['kstp'] == 1), 'weight'] = 1/GHB_Qstd
     df['weight'] = np.where(
-        (df['kper'] == 1) & (df['kstp'] == 1), 
+        (df['kper'] < 3) & (df['kstp'] in kstp_include), 
         1/GHB_Qstd, 0)
 
     df.to_csv(Path(dir, f"output.GHB_AW_fluxes.truth.csv"), index=False)
@@ -843,12 +847,17 @@ def create_confghb_truth(ghb_dfs, dir):
     Replace all values in the kper, kstp dataframes with the truth values.
     Only valid for kper 1 and kstp 1.
     """
-
     df = ghb_dfs['GHB_CONF'].copy()
+    
+    kstps = df['kstp'].unique()
+    kstp_include = np.arange(min(kstps), max(kstps), 10)  # include every 10th kstp
+    
     # replace all values with GHB_Q
-    df['weight'] = 1/GHB_Qstd
     df['std'] = GHB_Qstd
     df['CONFq'] = 0
+    df['weight'] = np.where(
+        df['kstp'] in kstp_include, 
+        1/GHB_Qstd, 0)
     # set std only on kper 1 and kstp 1
 
     df.to_csv(Path(dir, f"output.GHB_CONF_fluxes.truth.csv"), index=False)
@@ -879,40 +888,47 @@ def samples_truth(gwf, TRUTHREL_DIR):
     df = pd.read_csv(pk4_path, index_col=0)
     sp_df = pd.read_csv(spr_path, index_col=0)
     conf_df = pd.read_csv(conf_path, index_col=0)
-    rec_df = pd.read_csv(recession_fn)
+    rec_df = pd.read_csv(recession_fn, index_col='kper')
+
+    kstps = df['kstp'].unique()
+    kstp_include = np.arange(min(kstps), max(kstps), 10)  # include every 10th kstp
     
     df.rename(columns={'sm_level_mRL': 'pk4'}, inplace=True)
     df['spring'] = sp_df['sm_level_mRL'].values
     df['conf'] = conf_df['level_mRL'].values
 
     df['std'] = np.where(~df['pk4'].isna(), PK4_std, 0)
-    df['weight'] = np.where(~df['pk4'].isna(), 1/PK4_std, 0)
+    df['weight'] = np.where(
+        (df['kstp'].isin(kstp_include)) & (~df['pk4'].isna()), 1/PK4_std, 0)
 
     df['pk4-spr-diff'] = df['spring'] - df['pk4']
     df['pk4-conf-diff'] = df['conf'] - df['pk4']
 
     df.fillna(0, inplace=True)
 
-    # all_samples.groupby(['kper']).last() - all_samples.groupby(['kper']).first()
+    # truth values
     rec_df.loc[2, 'pk4'] = df['pk4'].iloc[-1] - df['pk4'].iloc[1]
     rec_df.loc[2, 'pk4-spr-diff'] = df['pk4-spr-diff'].iloc[-1] - df['pk4-spr-diff'].iloc[1]
     rec_df.loc[2, 'pk4-conf-diff'] = df['pk4-conf-diff'].iloc[-1] - df['pk4-conf-diff'].iloc[1]
     
+    # default values
     rec_df['std'] = 0.
     rec_df['weight'] = 0.
-    rec_df.loc[2, 'std'] = PK4_std
-    rec_df.loc[2, 'weight'] = 1/PK4_std
-
     rec_df['fliptime'] = -1.
+
+    # get fliptime
     mask = df['pk4-spr-diff'] > 0
     i_days = df[mask].index.to_list()
     if len(i_days) > 0:
         day = int(np.min(i_days))
     else:
         day = -1
-    rec_df.loc[1, 'fliptime'] = day
+    
+    rec_df.loc[2, 'fliptime'] = day
+    rec_df.loc[2, 'std'] = PK4_std
+    rec_df.loc[2, 'weight'] = 1/PK4_std
 
-    rec_df[['time','kper', 'kstp', 'pk4', 'pk4-spr-diff', 'pk4-conf-diff', 'fliptime', 'std', 'weight']].to_csv(Path(TRUTHREL_DIR, f"output.sample_recession_rates.truth.csv"))
+    rec_df[['time','kstp', 'pk4', 'pk4-spr-diff', 'pk4-conf-diff', 'fliptime', 'std', 'weight']].to_csv(Path(TRUTHREL_DIR, f"output.sample_recession_rates.truth.csv"))
     
     df = df[['pk4', 'pk4-spr-diff', 'pk4-conf-diff', 'std', 'weight']].reset_index().rename(columns={'index': 'time'})
     df.to_csv(Path(TRUTHREL_DIR, f"output.sample_heads.truth.csv"), index=False)

@@ -2,46 +2,60 @@ import os
 import pandas as pd
 import numpy as np
 import pyemu
+import matplotlib.pyplot as plt
 
-Y_sim_fn = r"C:\Users\tfo46\e_Python\e_projects\pakipaki_01\models\local_run24\pest\master_ies\local_run24.3.obs.csv"
-B_fn = r"C:\Users\tfo46\e_Python\e_projects\pakipaki_01\models\local_run24\pest\master_ies\local_run24.3.par.csv"
-pst_fn = r"C:\Users\tfo46\e_Python\e_projects\pakipaki_01\models\local_run24\pest\master_ies\local_run24.pst"
+run_name = 'local_run27'
+
+Y_sim_fn = f"models//{run_name}//pest//master_ies//{run_name}.2.obs.csv"
+B_fn = f"models//{run_name}//pest//master_ies//{run_name}.2.par.csv"
+pst_fn = f"models//{run_name}//pest//master_ies//{run_name}.pst"
 
 Y_df = pd.read_csv(Y_sim_fn, index_col=0)
 B_df = pd.read_csv(B_fn, index_col=0)
-Ne = B.shape[0]
 
-Y_sim = Y_df.values # obs ensemble
-B = B_df.values # parameter ensemble
-Ne = B.shape[0] # ensemble size
-
-# means
-Y_mean = Y_sim.mean(axis=0)  # mean of each observation ensemble
-B_mean = B.mean(axis=0)  # mean of each parameter ensemble
-
-# deviations matrix
-Y_dev = np.subtract(Y_sim,Y_mean) / np.sqrt(Ne - 1)  # deviations from mean, scaled
-B_dev = np.subtract(B,B_mean) / np.sqrt(Ne - 1)  # deviations from mean, scaled
-
-# calculate Jacobian
-# obs ( Nobs x Ne )  , param ( Ne x Npar )  => Jacobian ( Nobs x Npar )
-B_inv = np.linalg.pinv(B_dev)  # pseudo-inverse of B_dev (Moore-Penrose)
-J = Y_dev.T @ B_inv.T  # Jacobian matrix
-# J_dir = r'C:\Users\tfo46\e_Python\e_projects\pakipaki_01\models\local_run24\figures'
-# np.savetxt(os.path.join(J_dir, 'Jacobian.txt'), J, delimiter=",")
-
-J_df = pd.DataFrame(J, columns=B_df.columns, index=Y_df.columns)
+Y_headers = Y_df.columns.tolist()
+oname_list = [oname.split('_')[0].split(':')[1] for oname in Y_headers]
+oname_set = set(oname_list)
 
 
-# sort the matrix 
-J_sort = np.sort(J, axis=0)
-J_sort = np.sort(J_sort, axis=1)
+for oname in set(oname_list):
+    indices = [i for i, x in enumerate(oname_list) if x == oname]
+    subset = Y_df.iloc[:, indices]
 
-# SVD
-"""
-very small singular values indicate directions in parameter space that have little effect on obs space. Non-identifiable or weakly identifiable parameters.
-"""
-U, s, Vt = np.linalg.svd(J)
+    Y_sim = subset.values # obs ensemble
+    B = B_df.values.T # parameter ensemble
+    Ne = B.shape[0] # ensemble size
+
+    # means
+    Y_mean = Y_sim.mean(axis=0)  # mean of each observation ensemble
+    B_mean = B.mean(axis=0)  # mean of each parameter ensemble
+
+    # deviations matrix
+    Y_dev = np.subtract(Y_sim,Y_mean) / np.sqrt(Ne - 1)  # deviations from mean, scaled
+    B_dev = np.subtract(B,B_mean) / np.sqrt(Ne - 1)  # deviations from mean, scaled
+
+    # calculate Jacobian
+    # obs ( Nobs x Ne )  , param ( Ne x Npar )  => Jacobian ( Nobs x Npar )
+    B_inv = np.linalg.pinv(B_dev)  # pseudo-inverse of B_dev (Moore-Penrose)
+    J = Y_dev.T @ B_inv  # Jacobian matrix
+
+    U, S, Vh = np.linalg.svd(J)
+
+    # # J_dir = r'C:\Users\tfo46\e_Python\e_projects\pakipaki_01\models\local_run24\figures'
+    # # np.savetxt(os.path.join(J_dir, 'Jacobian.txt'), J, delimiter=",")
+
+    # J_df = pd.DataFrame(J, columns=B_df.columns, index=Y_df.columns)
+
+    # # sort the matrix 
+    # J_sort = np.sort(J, axis=0)
+    # J_sort = np.sort(J_sort, axis=1)
+
+    # plt.imshow(J_sort[:100, :100], cmap='viridis', aspect='auto')
+    # # SVD
+    # """
+    # very small singular values indicate directions in parameter space that have little effect on obs space. Non-identifiable or weakly identifiable parameters.
+    # """
+    # U, s, Vt = np.linalg.svd(J)
 
 
 # ------------------------------------------------------------
