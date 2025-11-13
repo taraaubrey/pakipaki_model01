@@ -152,7 +152,7 @@ REINFLATE_ITERS = [5, 5, 7]  # iterations at which to reinflate
 if REINFLATE_ITERS:
     NOPTMAX = sum(REINFLATE_ITERS)  # number of optimization iterations
 else:
-    NOPTMAX = 3 
+    NOPTMAX = 17 
 
 PEST_PP_OPTIONS = {
     'ies_num_reals': NREALS,
