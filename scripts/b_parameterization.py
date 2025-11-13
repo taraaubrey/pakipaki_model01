@@ -237,34 +237,34 @@ def main():
         ult_bounds=[GHB_CONF['cond_ulb'], GHB_CONF['cond_uub']],
         )
     
-    # ghb_heads(pf, TEMP_DIR,
-    #     name='ghb-aw',
-    #     tag=f'{MODEL_NAME}.ghbaw_stress_period_data',
-    #     head_gs={'hg': h_fine_gs},
-    #     head_bounds=[GHB_SW['head_lb'], GHB_SW['head_ub']],
-    #     ult_bounds=[GHB_SW['head_ulb'], GHB_SW['head_uub']],
-    #     )
-    # ghb_heads(pf, TEMP_DIR,
-    #     name='ghb-pw',
-    #     tag=f'{MODEL_NAME}.ghb_pw_stress_period_data',
-    #     head_gs={'hg': h_fine_gs},
-    #     head_bounds=[GHB_SW['head_lb'], GHB_SW['head_ub']],
-    #     ult_bounds=[GHB_SW['head_ulb'], GHB_SW['head_uub']],
-    #     )
-    # ghb_heads(pf, TEMP_DIR,
-    #     name='ghb-spring',
-    #     tag=f'{MODEL_NAME}.ghbspr_stress_period_data',
-    #     head_gs={'hg': h_fine_gs},
-    #     head_bounds=[GHB_SW['head_lb'], GHB_SW['head_ub']],
-    #     ult_bounds=[GHB_SW['head_ulb'], GHB_SW['head_uub']],
-    #     )
-    # ghb_heads(pf, TEMP_DIR,
-    #     name='ghb-conf',
-    #     tag=f'{MODEL_NAME}.ghb_conf_stress_period_data',
-    #     head_gs={'hg': h_coarse_gs},
-    #     head_bounds=[GHB_CONF['head_lb'], GHB_CONF['head_ub']],
-    #     ult_bounds=[GHB_CONF['head_ulb'], GHB_CONF['head_uub']]
-    #     )
+    ghb_heads(pf, TEMP_DIR,
+        name='ghb-aw',
+        tag=f'{MODEL_NAME}.ghbaw_stress_period_data',
+        head_gs={'hg': h_fine_gs},
+        head_bounds=[GHB_SW['head_lb'], GHB_SW['head_ub']],
+        ult_bounds=[GHB_SW['head_ulb'], GHB_SW['head_uub']],
+        )
+    ghb_heads(pf, TEMP_DIR,
+        name='ghb-pw',
+        tag=f'{MODEL_NAME}.ghb_pw_stress_period_data',
+        head_gs={'hg': h_fine_gs},
+        head_bounds=[GHB_SW['head_lb'], GHB_SW['head_ub']],
+        ult_bounds=[GHB_SW['head_ulb'], GHB_SW['head_uub']],
+        )
+    ghb_heads(pf, TEMP_DIR,
+        name='ghb-spring',
+        tag=f'{MODEL_NAME}.ghbspr_stress_period_data',
+        head_gs={'hg': h_fine_gs},
+        head_bounds=[GHB_SW['head_lb'], GHB_SW['head_ub']],
+        ult_bounds=[GHB_SW['head_ulb'], GHB_SW['head_uub']],
+        )
+    ghb_heads(pf, TEMP_DIR,
+        name='ghb-conf',
+        tag=f'{MODEL_NAME}.ghb_conf_stress_period_data',
+        head_gs={'hg': h_coarse_gs},
+        head_bounds=[GHB_CONF['head_lb'], GHB_CONF['head_ub']],
+        ult_bounds=[GHB_CONF['head_ulb'], GHB_CONF['head_uub']]
+        )
 
     print('*' * 40)
     par_info = [(df['pargp'].unique(), df.shape[0]) for df in pf.par_dfs]
@@ -307,6 +307,17 @@ def main():
         use_cols=use_cols, # skip the index column
         prefix='arr-awq',
         obsgp='arr-awq',
+    )
+
+    # add budget
+    index_cols = ['kper', 'kstp', 'time', 'k', 'i', 'j']
+    use_cols = ['SPq']
+    pf.add_observations(
+        "output.GHB_SP_fluxes.csv", # this is being read from the template file not the above truth file
+        index_cols=index_cols,
+        use_cols=use_cols, # skip the index column
+        prefix='arr-spq',
+        obsgp='arr-spq',
     )
 
     # add confined flux
@@ -369,7 +380,7 @@ def main():
         kper = info['kper']
         kstp = info['kstp']
 
-        if kper in np.arange(1,3): # only inlcude every 10th heads obs
+        if kstp in np.arange(1,53, 10): # only inlcude every 10th heads obs
             # Add as observation to pyemu
             pf.add_observations(
                 info['filename'],
@@ -398,6 +409,7 @@ def main():
     ###############################################################################
     ts_heads = pd.read_csv(os.path.join(TRUTH_DIR, 'output.sample_heads.truth.csv'), index_col=0)
     AWq = pd.read_csv(os.path.join(TRUTH_DIR, "output.GHB_AW_fluxes.truth.csv"), index_col=['kper', 'kstp', 'k', 'i', 'j'])
+    SPq = pd.read_csv(os.path.join(TRUTH_DIR, "output.GHB_SP_fluxes.truth.csv"), index_col=['kper', 'kstp', 'k', 'i', 'j'])
     CONFq = pd.read_csv(os.path.join(TRUTH_DIR, "output.GHB_CONF_fluxes.truth.csv"), index_col=['kper', 'kstp', 'k', 'i', 'j'])
     recession_truth = pd.read_csv(os.path.join(TRUTH_DIR, 'output.sample_recession_rates.truth.csv'), index_col='kper')
     budget = pd.read_csv(os.path.join(TRUTH_DIR, "output.budget.truth.csv"), index_col='kper')
@@ -440,6 +452,18 @@ def main():
                 pst.observation_data.at[row.name, 'obsval'] = AWq.loc[(kper, kstp, k, i, j), 'AWq']
                 pst.observation_data.at[row.name, 'standard_deviation'] = AWq.loc[(kper, kstp, k, i, j), 'std']
                 pst.observation_data.at[row.name, 'weight'] = AWq.loc[(kper, kstp, k, i, j), 'weight']
+        
+        elif obgnme == 'arr-spq':
+            kper = int(row['kper'])
+            kstp = int(row['kstp'])
+            k = int(row['k'])
+            i = int(row['i'])
+            j = int(row['j'])
+            
+            if kper == 1:
+                pst.observation_data.at[row.name, 'obsval'] = SPq.loc[(kper, kstp, k, i, j), 'SPq']
+                pst.observation_data.at[row.name, 'standard_deviation'] = SPq.loc[(kper, kstp, k, i, j), 'std']
+                pst.observation_data.at[row.name, 'weight'] = SPq.loc[(kper, kstp, k, i, j), 'weight']
         
         elif obgnme == 'arr-h':
             i = int(row['i'])
@@ -484,7 +508,7 @@ def main():
             kper = int(row['kper'])
             col = row['usecol']
             
-            if kper == 2:
+            if (kper == 2) & (col in ['pk4', 'pk4-spr-diff', 'pk4-conf-diff']):
                 pst.observation_data.at[row.name, 'obsval'] = recession_truth.loc[kper, col]
                 pst.observation_data.at[row.name, 'standard_deviation'] = recession_truth.loc[kper, 'std']
                 pst.observation_data.at[row.name, 'weight'] = recession_truth.loc[kper, 'weight']

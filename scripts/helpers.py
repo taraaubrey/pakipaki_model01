@@ -836,10 +836,34 @@ def create_awghb_truth(ghb_dfs, dir):
     # set std only on kper 1 and kstp 1
     # df.loc[(df['kper'] == 1) & (df['kstp'] == 1), 'weight'] = 1/GHB_Qstd
     df['weight'] = np.where(
-        (df['kper'] < 3) & (df['kstp'] in kstp_include), 
+        (df['kper'] < 3) & (df['kstp'].isin(kstp_include)), 
         1/GHB_Qstd, 0)
 
     df.to_csv(Path(dir, f"output.GHB_AW_fluxes.truth.csv"), index=False)
+    return
+
+def create_sprghb_truth(ghb_dfs, dir):
+    """
+    Replace all values in the kper, kstp dataframes with the truth values.
+    Only valid for kper 1 and kstp 1.
+    """
+
+    df = ghb_dfs['GHB_SP'].copy()
+
+    kstps = df['kstp'].unique()
+    kstp_include = np.arange(min(kstps), max(kstps), 10)  # include every 10th kstp
+
+    # replace all values with GHB_Q
+    df['weight'] = 0
+    df['std'] = GHB_Qstd
+    df['SPq'] = GHB_SPRING_Q
+    # set std only on kper 1 and kstp 1
+    # df.loc[(df['kper'] == 1) & (df['kstp'] == 1), 'weight'] = 1/GHB_Qstd
+    df['weight'] = np.where(
+        (df['kper'] < 2) & (df['kstp'].isin(kstp_include)), 
+        1/GHB_Qstd, 0)
+
+    df.to_csv(Path(dir, f"output.GHB_SP_fluxes.truth.csv"), index=False)
     return
 
 def create_confghb_truth(ghb_dfs, dir):
@@ -856,7 +880,7 @@ def create_confghb_truth(ghb_dfs, dir):
     df['std'] = GHB_Qstd
     df['CONFq'] = 0
     df['weight'] = np.where(
-        df['kstp'] in kstp_include, 
+        df['kstp'].isin(kstp_include), 
         1/GHB_Qstd, 0)
     # set std only on kper 1 and kstp 1
 
@@ -890,8 +914,8 @@ def samples_truth(gwf, TRUTHREL_DIR):
     conf_df = pd.read_csv(conf_path, index_col=0)
     rec_df = pd.read_csv(recession_fn, index_col='kper')
 
-    kstps = df['kstp'].unique()
-    kstp_include = np.arange(min(kstps), max(kstps), 10)  # include every 10th kstp
+    times = list(df.index)
+    times_include = list(np.arange(1, max(times), 10)) + [2]  # include every 10th kstp
     
     df.rename(columns={'sm_level_mRL': 'pk4'}, inplace=True)
     df['spring'] = sp_df['sm_level_mRL'].values
@@ -899,7 +923,7 @@ def samples_truth(gwf, TRUTHREL_DIR):
 
     df['std'] = np.where(~df['pk4'].isna(), PK4_std, 0)
     df['weight'] = np.where(
-        (df['kstp'].isin(kstp_include)) & (~df['pk4'].isna()), 1/PK4_std, 0)
+        (df.index.isin(times_include)) & (~df['pk4'].isna()), 1/PK4_std, 0)
 
     df['pk4-spr-diff'] = df['spring'] - df['pk4']
     df['pk4-conf-diff'] = df['conf'] - df['pk4']

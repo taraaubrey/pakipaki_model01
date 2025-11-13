@@ -278,6 +278,7 @@ def main():
     
     # awanui flux truth
     helpers.create_awghb_truth(ghb_dfs, TRUTHREL_DIR)
+    helpers.create_sprghb_truth(ghb_dfs, TRUTHREL_DIR)
     helpers.create_confghb_truth(ghb_dfs, TRUTHREL_DIR)
     # top model constraints (head can't be greater than 1m above top)
     helpers.create_head_truth(elev_constraint, TRUTHREL_DIR)

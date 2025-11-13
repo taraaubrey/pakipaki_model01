@@ -4,11 +4,11 @@ import numpy as np
 import pyemu
 import matplotlib.pyplot as plt
 
-run_name = 'local_run27'
+run_name = 'local_run28'
 
-Y_sim_fn = f"models//{run_name}//pest//master_ies//{run_name}.2.obs.csv"
-B_fn = f"models//{run_name}//pest//master_ies//{run_name}.2.par.csv"
-pst_fn = f"models//{run_name}//pest//master_ies//{run_name}.pst"
+Y_sim_fn = f"models//{run_name}//pest//master_ies_prior//{run_name}.0.obs.csv"
+B_fn = f"models//{run_name}//pest//master_ies_prior//{run_name}.0.par.csv"
+pst_fn = f"models//{run_name}//pest//master_ies_prior//{run_name}.pst"
 
 Y_df = pd.read_csv(Y_sim_fn, index_col=0)
 B_df = pd.read_csv(B_fn, index_col=0)
@@ -40,6 +40,22 @@ for oname in set(oname_list):
     J = Y_dev.T @ B_inv  # Jacobian matrix
 
     U, S, Vh = np.linalg.svd(J)
+    plt.imshow(U, cmap='viridis', aspect='auto')
+    
+    k = 43
+    u_k = U[:, k]        # length 44, one element per observation
+    v_k = Vh[k, :]       # length 4298, one element per parameter
+    sigma_k = S[k]
+
+    
+
+    # print top contributing observations for mode k
+    idx_sorted = np.argsort(np.abs(u_k))[::-1]   # indices sorted by abs contribution desc
+    top_n = 10
+    print("Top observations contributing to mode", k)
+    for i in idx_sorted[:top_n]:
+        print(f"obs_index={subset.columns[i]}, value={u_k[i]:+.4f}, abs={abs(u_k[i]):.4f}")
+
 
     # # J_dir = r'C:\Users\tfo46\e_Python\e_projects\pakipaki_01\models\local_run24\figures'
     # # np.savetxt(os.path.join(J_dir, 'Jacobian.txt'), J, delimiter=",")

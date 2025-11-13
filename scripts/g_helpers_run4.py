@@ -11,6 +11,9 @@ import flopy
 
 from setup import MODEL_NAME, NREALS_PRIOR
 
+plt.rcParams['font.family'] = 'Arial'  # or 'Times New Roman', 'Helvetica', etc.
+plt.rcParams['font.size'] = 8
+
 # Extraction helper functions
 extract_kper = lambda x: int([s for s in x.split('_') if s.startswith('kper:')][0].split(':')[1])
 extract_kstp = lambda x: int([s for s in x.split('_') if s.startswith('kstp:')][0].split(':')[1])
@@ -25,7 +28,7 @@ extract_idx2 = lambda x: int([s for s in x.split('_') if s.startswith('idx2:')][
 extract_time = lambda x: int([s for s in x.split('_') if s.startswith('time:')][0].split(':')[1])
 extract_usecol = lambda x: [s for s in x.split('_') if s.startswith('usecol:')][0].split(':')[1]
 
-def setup_paths(run_name):
+def setup_paths(run_name, m_d_str='master_ies', m_d_prior=None):
     """Set up directory paths for a given run."""
     # Get absolute path from scripts directory
     script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -34,17 +37,20 @@ def setup_paths(run_name):
     paths = {
         'o_d': os.path.join(project_root, f'models/{run_name}/{run_name}'),
         'temp_d': os.path.join(project_root, f'models/{run_name}/{run_name}'),
-        'm_d_pr': os.path.join(project_root, f'models/{run_name}/pest/master_ies_prior'),
-        'm_d': os.path.join(project_root, f'models/{run_name}/pest/master_ies'),
+        'm_d': os.path.join(project_root, f'models/{run_name}/pest/{m_d_str}'),
         'output': os.path.join(project_root, f'models/{run_name}/figures'),
     }
 
+    if m_d_prior:
+        paths['m_d_pr'] = os.path.join(project_root, f'models/{run_name}/pest/{m_d_prior}')
+    else:
+        paths['m_d_pr'] = os.path.join(project_root, f'models/{run_name}/pest/{m_d_str}')
     # Create output directory if it doesn't exist
     os.makedirs(paths['output'], exist_ok=True)
 
     return paths
 
-def load_data(paths, run_name, last_iter=None, use_prior_only=False):
+def load_data(paths, run_name, last_iter=None, use_prior_only=False, restart=False):
     """Load all necessary data files.
 
     Args:
@@ -60,7 +66,9 @@ def load_data(paths, run_name, last_iter=None, use_prior_only=False):
     else:
         m_d = paths['m_d']
         print(f"Loading data from: {m_d}")
-
+    
+    m_d_pr = paths['m_d_pr']
+    
     # Load PST file
     pst = pyemu.Pst(os.path.join(m_d, f"{run_name}.pst"))
 
@@ -70,6 +78,17 @@ def load_data(paths, run_name, last_iter=None, use_prior_only=False):
         else:
             last_iter = pst.control_data.noptmax
 
+    # prior first
+    pr_oe_fn = os.path.join(m_d_pr, f"{run_name}.0.obs.csv")  # observations
+    pr_pe_fn = os.path.join(m_d_pr, f"{run_name}.0.par.csv")  # parameters
+    noise_fn = os.path.join(m_d, f"{run_name}.obs+noise.csv") # obs + noise
+
+    par_data_fn = os.path.join(m_d_pr, f"{run_name}.par_data.csv")
+    obs_data_fn = os.path.join(m_d_pr, f"{run_name}.obs_data.csv") 
+
+    if restart:
+        run_name = f'{MODEL_NAME}_restart'
+
     # File paths (only available for history matching runs)
     if use_prior_only:
         f_act = None
@@ -78,30 +97,22 @@ def load_data(paths, run_name, last_iter=None, use_prior_only=False):
         f_act = os.path.join(m_d, f"{run_name}.phi.actual.csv")
         f_meas = os.path.join(m_d, f"{run_name}.phi.meas.csv")
 
-    # Observation filenames
-    pr_oe_fn = os.path.join(m_d, f"{run_name}.0.obs.csv")  # prior
-    pt_oe_fn = os.path.join(m_d, f"{run_name}.{last_iter}.obs.csv")
-    noise_fn = os.path.join(m_d, f"{run_name}.obs+noise.csv")
-    obs_data_fn = os.path.join(m_d, f"{run_name}.obs_data.csv")
+    # Posterior
+    pt_oe_fn = os.path.join(m_d, f"{run_name}.{last_iter}.obs.csv") # observations
+    pt_pe_fn = os.path.join(m_d, f"{run_name}.{last_iter}.par.csv") # parameters
 
-    # Parameter filenames
-    par_data_fn = os.path.join(m_d, f"{run_name}.par_data.csv")
-    pr_pe_fn = os.path.join(m_d, f"{run_name}.0.par.csv")  # prior
-    pt_pe_fn = os.path.join(m_d, f"{run_name}.{last_iter}.par.csv")
-
-    # Load observation data
+    # # Load observation data
     obs_data = pd.read_csv(obs_data_fn, index_col=0)
-    # obs_data.set_index('obsnme', inplace=True)
     par_data = pd.read_csv(par_data_fn, index_col=0)
 
-    # Load observation ensembles
+    # # Load observation ensembles
     pr_oe = pyemu.ObservationEnsemble.from_csv(pst=pst, filename=pr_oe_fn)
 
     # For prior-only mode, pt_oe is same as pr_oe
-    if use_prior_only:
-        pt_oe = pr_oe
-    else:
-        pt_oe = pyemu.ObservationEnsemble.from_csv(pst=pst, filename=pt_oe_fn)
+    # if use_prior_only:
+    #     pt_oe = pr_oe
+    # else:
+    #     pt_oe = pyemu.ObservationEnsemble.from_csv(pst=pst, filename=pt_oe_fn)
 
     noise = pyemu.ObservationEnsemble.from_csv(pst=pst, filename=noise_fn)
 
@@ -109,10 +120,10 @@ def load_data(paths, run_name, last_iter=None, use_prior_only=False):
     pr_pe = pyemu.ParameterEnsemble.from_csv(pst=pst, filename=pr_pe_fn)
 
     # For prior-only mode, pt_pe is same as pr_pe
-    if use_prior_only:
-        pt_pe = pr_pe
-    else:
-        pt_pe = pyemu.ParameterEnsemble.from_csv(pst=pst, filename=pt_pe_fn)
+    # if use_prior_only:
+    #     pt_pe = pr_pe
+    # else:
+    #     pt_pe = pyemu.ParameterEnsemble.from_csv(pst=pst, filename=pt_pe_fn)
 
     # Get headers
     headers = obs_data.index.to_list()
@@ -130,16 +141,69 @@ def load_data(paths, run_name, last_iter=None, use_prior_only=False):
         'obs_data': obs_data,
         'par_data': par_data,
         'pr_oe': pr_oe,
-        'pt_oe': pt_oe,
+        # 'pt_oe': pt_oe,
         'noise': noise,
         'pr_pe': pr_pe,
-        'pt_pe': pt_pe,
+        # 'pt_pe': pt_pe,
         'headers': headers,
         'param_headers': param_headers,
         'use_prior_only': use_prior_only,
     }
 
     return data
+
+def subset_realizations_by_phi(data, min_threshold=100):
+    phi = pd.read_csv(data['f_act'], index_col=0)
+
+    # Convert to numpy array, flatten, get argsort, then convert back to DataFrame indexes
+    flat_values = phi.iloc[:,5:-1].values.flatten()
+    flat_indexes = np.argsort(flat_values)[:min_threshold]
+
+    # Convert flat indexes back to DataFrame row/column positions
+    rows, cols = np.unravel_index(flat_indexes, phi.iloc[:,5:-1].shape)
+    int_rows = [int(row) for row in rows] # iterations
+    int_cols = [int(col) for col in cols] # realizations
+    indexes = list(zip(int_rows, int_cols))
+    vals = [int(phi.iloc[:,5:-1].iloc[r, c]) for r, c in indexes]
+    return indexes, vals
+
+def get_subset_ensembles(paths, run_name, subset_indexes):
+    m_d = paths['m_d']
+    unique_iterations = set(i[0] for i in subset_indexes)
+
+    oe_list=[]
+    pe_list=[]
+    for iter in unique_iterations:
+        oe_fn = os.path.join(m_d, f"{run_name}.{iter}.obs.csv")
+        pe_fn = os.path.join(m_d, f"{run_name}.{iter}.par.csv")
+        # get the realization indexes
+        reals = [i[1] for i in subset_indexes if i[0] == iter]
+        obs = pd.read_csv(
+            oe_fn,
+            index_col=0)
+        pars = pd.read_csv(
+            pe_fn,
+            index_col=0)
+        
+        #convert index to string
+        reals = [str(r) for r in reals]
+        obs.index = obs.index.map(str)
+        pars.index = pars.index.map(str)
+
+        oe_list.append(obs.loc[reals,:])
+        pe_list.append(pars.loc[reals,:])
+    
+    # merge all dataframes
+    subset_oe = pd.concat(oe_list)
+    subset_pe = pd.concat(pe_list)
+
+    # save
+    subset_oe.to_csv(os.path.join(paths['output'], 'subset_oe.csv'))
+    subset_pe.to_csv(os.path.join(paths['output'], 'subset_pe.csv'))
+
+    return subset_oe, subset_pe
+
+
 
 
 def plot_phi_comparison(data, output):
@@ -160,7 +224,7 @@ def plot_phi_comparison(data, output):
     ax = axes[0]
     phi = pd.read_csv(f_act, index_col=0)
     phi.index = phi.total_runs
-    phi.iloc[:, 6:].apply(np.log10).plot(legend=False, lw=0.5, color='k', ax=ax)
+    phi.iloc[:, 5:].apply(np.log10).plot(legend=False, lw=0.5, color='k', ax=ax)
     ax.set_title(r'Actual $\Phi$')
     ax.set_ylabel(r'log $\Phi$')
     ax.set_xlabel('Total Model Runs')
@@ -195,7 +259,7 @@ def plot_phi_boxplot(data, output):
     box_data = []
     value_columns = phi_act.columns[5:].to_list()
 
-    for total_runs in phi_act.index[:13]:
+    for total_runs in phi_act.index:
         row_values = []
         for col in value_columns:
             val = phi_act.loc[total_runs, col]
@@ -231,10 +295,12 @@ def format_tsdf(df):
     """Format time series dataframe."""
     tdf = df.transpose()
     tdf['time'] = tdf.index.map(extract_time)
+    tdf['kper'] = tdf.index.map(extract_kper)
+    tdf['kstp'] = tdf.index.map(extract_kstp)
     tdf['usecol'] = tdf.index.map(extract_usecol)
     return tdf
 
-def plot_timeseries_obs(data, output, truth_file=None, col_startswith='oname:ts-heads'):
+def plot_timeseries_obs(data, subset_oe, output, truth_file=None, col_startswith='oname:ts-heads'):
     """Plot time series observations - prior vs posterior vs truth.
 
     Creates two separate plots:
@@ -243,7 +309,6 @@ def plot_timeseries_obs(data, output, truth_file=None, col_startswith='oname:ts-
     """
     headers = data['headers']
     pr_oe_fn = data['pr_oe_fn']
-    pt_oe_fn = data['pt_oe_fn']
     noise_fn = data['noise_fn']
 
     # Load truth data
@@ -264,7 +329,7 @@ def plot_timeseries_obs(data, output, truth_file=None, col_startswith='oname:ts-
         return
 
     pre_oe_ts = pd.read_csv(pr_oe_fn, usecols=desired_cols)
-    pt_oe_ts = pd.read_csv(pt_oe_fn, usecols=desired_cols)
+    pt_oe_ts = subset_oe.loc[:, list(desired_cols)]
     noise_ts = pd.read_csv(noise_fn, usecols=desired_cols)
 
     ts_df = format_tsdf(pre_oe_ts)
@@ -287,8 +352,10 @@ def plot_timeseries_obs(data, output, truth_file=None, col_startswith='oname:ts-
             ax0 = fig1.add_subplot(gs1[i, 0], sharex=axes1[0][0])
             ax1 = fig1.add_subplot(gs1[i, 1], sharey=ax0)
         axes1.append([ax0, ax1])
+        
 
     for idx, usecol in enumerate(unique_usecols):
+        
         # Get truth if available
         if truth_df is not None and usecol in truth_df.columns:
             truth_col = truth_df[usecol]
@@ -296,25 +363,18 @@ def plot_timeseries_obs(data, output, truth_file=None, col_startswith='oname:ts-
             truth_col = None
 
         # Prep data - filter for times 1-53
-        df_sub = ts_df[(ts_df['usecol'] == usecol) & (ts_df['time'] >= 1) & (ts_df['time'] <= 53)].sort_values('time')
-        df_pt_sub = ts_pt_df[(ts_pt_df['usecol'] == usecol) & (ts_pt_df['time'] >= 1) & (ts_pt_df['time'] <= 53)].sort_values('time')
-        df_noise_sub = ts_noise_df[(ts_noise_df['usecol'] == usecol) & (ts_noise_df['time'] >= 1) & (ts_noise_df['time'] <= 53)].sort_values('time')
+        mask = (ts_df['usecol'] == usecol) & (ts_df['kper'] == 2)
+        df_pr_kper2 = ts_df[mask].sort_values('kstp').replace(-999, np.nan)
+        df_pt_kper2 = ts_pt_df[mask].sort_values('kstp').replace(-999, np.nan)
+        df_obsnoise_kper2 = ts_noise_df[mask].sort_values('kstp').replace(-999, np.nan)
 
-        # Replace -999 with NaN
-        df_sub.replace(-999, np.nan, inplace=True)
-        df_pt_sub.replace(-999, np.nan, inplace=True)
-        df_noise_sub.replace(-999, np.nan, inplace=True)
+        value_cols = [col for col in df_pt_kper2.columns if col not in ['time', 'kper', 'kstp', 'usecol']]
 
-        value_cols = [col for col in df_sub.columns if col not in ['time', 'usecol']]
-        value_cols_pt = [col for col in df_pt_sub.columns if col not in ['time', 'usecol']]
-        value_cols_noise = [col for col in df_noise_sub.columns if col not in ['time', 'usecol']]
-
-        # Calculate y-limits based on 5-95th percentile of prior distribution
-        all_prior_values = df_sub[value_cols].values.flatten()
-        all_prior_values = all_prior_values[~np.isnan(all_prior_values)]
-        if len(all_prior_values) > 0:
-            y_min = np.percentile(all_prior_values, 5)
-            y_max = np.percentile(all_prior_values, 95)
+        # Calculate y-limits
+        pt_values = df_pt_kper2[value_cols].values.flatten()
+        if len(pt_values) > 0:
+            y_min = np.min(pt_values)
+            y_max = np.max(pt_values)
         else:
             y_min, y_max = None, None
 
@@ -323,14 +383,12 @@ def plot_timeseries_obs(data, output, truth_file=None, col_startswith='oname:ts-
 
         # Plot all ensemble members
         for col in value_cols:
-            y = df_sub[col].copy() if col in df_sub.columns else None
-            if y is not None:
-                ax_ts.plot(df_sub['time'], y, alpha=0.2, color='grey', linewidth=0.5)
-
-        for col in value_cols_pt:
-            y_pt = df_pt_sub[col].copy() if col in df_pt_sub.columns else None
+            y_pre = df_pr_kper2[col].copy() if col in df_pr_kper2.columns else None
+            if y_pre is not None:
+                ax_ts.plot(df_pr_kper2['kstp'], y_pre, alpha=0.2, color='grey', linewidth=0.5)
+            y_pt = df_pt_kper2[col].copy() if col in df_pt_kper2.columns else None
             if y_pt is not None:
-                ax_ts.plot(df_pt_sub['time'], y_pt, alpha=0.3, color='blue', linewidth=0.8)
+                ax_ts.plot(df_pt_kper2['kstp'], y_pt, alpha=0.3, color='blue', linewidth=0.8)
 
         # Plot truth
         if truth_col is not None:
@@ -350,79 +408,46 @@ def plot_timeseries_obs(data, output, truth_file=None, col_startswith='oname:ts-
 
         # Only show x-label on bottom plot
         if idx == n - 1:
-            ax_ts.set_xlabel('Time Step')
+            ax_ts.set_xlabel('Days')
         else:
             ax_ts.set_xlabel('')
 
-        # Get values for different stress period groups
-        all_times = df_sub['time'].unique()
-        mid_time = len(all_times) // 2
-
-        # Define time ranges for kper groups - only use kper 1-2
-        time_kper12 = all_times[:mid_time]
-
-        # Collect values for histograms - only kper 1-2
-        prior_hist_vals_kper12 = []
-        posterior_hist_vals_kper12 = []
-        noise_hist_vals_kper12 = []
-
-        # For kper 1-2 (early times) - "present"
-        for t in time_kper12[-5:] if len(time_kper12) >= 5 else time_kper12:
-            df_time = df_sub[df_sub['time'] == t]
-            df_pt_time = df_pt_sub[df_pt_sub['time'] == t]
-            df_noise_time = df_noise_sub[df_noise_sub['time'] == t]
-
-            for col in value_cols:
-                if col in df_time.columns:
-                    val = df_time[col].values
-                    if len(val) > 0 and not np.isnan(val[0]):
-                        prior_hist_vals_kper12.append(val[0])
-
-            for col in value_cols_pt:
-                if col in df_pt_time.columns:
-                    val = df_pt_time[col].values
-                    if len(val) > 0 and not np.isnan(val[0]):
-                        posterior_hist_vals_kper12.append(val[0])
-
-            for col in value_cols_noise:
-                if col in df_noise_time.columns:
-                    val = df_noise_time[col].values
-                    if len(val) > 0 and not np.isnan(val[0]):
-                        noise_hist_vals_kper12.append(val[0])
-
-        # Determine bins for histogram
-        all_vals = prior_hist_vals_kper12 + posterior_hist_vals_kper12
-        if len(all_vals) > 0:
-            bins = np.linspace(np.percentile(all_vals, 1), np.percentile(all_vals, 99), 15)
-        else:
-            bins = 15
 
         # RIGHT PLOT: Histogram for kper 1-2 (present) - ONLY ONE HISTOGRAM
+        df_pr_kper2_vals = df_pr_kper2[value_cols].values.flatten()
+        df_pt_kper2_vals = df_pt_kper2[value_cols].values.flatten()
+        df_obsnoise_kper2_vals = df_obsnoise_kper2[value_cols].values.flatten()
+        # df_pr_kper4_vals = df_pr_kper4[value_cols].values.flatten()
+        # df_pt_kper4_vals = df_pt_kper4[value_cols].values.flatten()
+        
         ax_hist_kper12 = axes1[idx][1]
 
-        if len(prior_hist_vals_kper12) > 0:
-            ax_hist_kper12.hist(prior_hist_vals_kper12, bins=bins, alpha=0.5, color='lightgrey',
+        if len(df_pr_kper2_vals) > 0:
+            ax_hist_kper12.hist(df_pr_kper2_vals, bins=20, alpha=0.5, color='lightgrey',
                         orientation='horizontal', density=True, edgecolor='grey', linewidth=0.8,
                         label='Prior')
 
-        if len(posterior_hist_vals_kper12) > 0:
-            ax_hist_kper12.hist(posterior_hist_vals_kper12, bins=bins, alpha=0.6, color='lightblue',
+        if len(df_pt_kper2_vals) > 0:
+            ax_hist_kper12.hist(df_pt_kper2_vals, bins=20, alpha=0.6, color='lightblue',
                         orientation='horizontal', density=True, edgecolor='blue', linewidth=0.8,
                         label='Posterior')
 
         # Add obs+noise histogram if available
-        if len(noise_hist_vals_kper12) > 0:
-            ax_hist_kper12.hist(noise_hist_vals_kper12, bins=bins, alpha=0.4, color='orange',
-                        orientation='horizontal', density=True, edgecolor='darkorange', linewidth=0.8,
-                        label='Obs+noise')
+        if len(df_obsnoise_kper2_vals) > 0:
+            ax_hist_kper12.hist(
+                df_obsnoise_kper2_vals, bins=20, alpha=0.4, color='orange',
+                orientation='horizontal', density=True, edgecolor='darkorange', linewidth=0.8,
+                label='Obs+noise')
 
         # Add mean line for "present" (kper 1-2)
-        if len(posterior_hist_vals_kper12) > 0:
-            mean_present = np.mean(posterior_hist_vals_kper12)
-            ax_hist_kper12.axhline(mean_present, color='green', linestyle='-', linewidth=2, label='Mean')
+        if len(df_obsnoise_kper2_vals) > 0:
+            mean_pt = np.mean(df_pt_kper2_vals)
+            mean_truth = np.mean(df_obsnoise_kper2_vals)
+            ax_hist_kper12.axhline(mean_pt, color='green', linestyle='-', linewidth=2, label='Mean')
+            ax_hist_kper12.axhline(mean_truth, color='red', linestyle='--', linewidth=2, label='Obs+Noise Mean')
 
         ax_hist_kper12.set_xlabel('Density', fontsize=8)
-        ax_hist_kper12.set_title('kper 1-2', fontsize=9)
+        ax_hist_kper12.set_title('kper 2', fontsize=9)
         ax_hist_kper12.tick_params(axis='both', labelsize=8)
         ax_hist_kper12.grid(alpha=0.3)
         plt.setp(ax_hist_kper12.get_yticklabels(), visible=False)
@@ -454,34 +479,39 @@ def plot_timeseries_obs(data, output, truth_file=None, col_startswith='oname:ts-
         axes2.append([ax0, ax1, ax2])
 
     for idx, usecol in enumerate(unique_usecols):
-        # Prep data - filter for times 54+
-        df_sub = ts_df[(ts_df['usecol'] == usecol) & (ts_df['time'] >= 54)].sort_values('time')
-        df_pt_sub = ts_pt_df[(ts_pt_df['usecol'] == usecol) & (ts_pt_df['time'] >= 54)].sort_values('time')
+        mask = (ts_df['usecol'] == usecol) & (ts_df['kper'] == 2)
+        df_pr_kper2 = ts_df[mask].sort_values('kstp').replace(-999, np.nan)
+        df_pt_kper2 = ts_pt_df[mask].sort_values('kstp').replace(-999, np.nan)
+        df_obsnoise_kper2 = ts_noise_df[mask].sort_values('kstp').replace(-999, np.nan)
+        # KPER4
+        mask = (ts_df['usecol'] == usecol) & (ts_df['kper'] == 4)
+        df_pr_kper4 = ts_df[mask].sort_values('kstp').replace(-999, np.nan)
+        df_pt_kper4 = ts_pt_df[mask].sort_values('kstp').replace(-999, np.nan)
 
-        # Replace -999 with NaN
-        df_sub.replace(-999, np.nan, inplace=True)
-        df_pt_sub.replace(-999, np.nan, inplace=True)
-
-        value_cols = [col for col in df_sub.columns if col not in ['time', 'usecol']]
-        value_cols_pt = [col for col in df_pt_sub.columns if col not in ['time', 'usecol']]
+        value_cols = [col for col in df_pr_kper4.columns if col not in ['kstp', 'usecol']]
+        value_cols_pt = [col for col in df_pt_kper4.columns if col not in ['kstp', 'usecol']]
 
         # LEFT PLOT: Time series (NO outlier removal - plot all ensembles)
         ax_ts = axes2[idx][0]
 
         # Plot all ensemble members
         for col in value_cols:
-            y = df_sub[col].copy() if col in df_sub.columns else None
+            y = df_pr_kper4[col].copy() if col in df_pr_kper4.columns else None
             if y is not None:
-                ax_ts.plot(df_sub['time'], y, alpha=0.2, color='grey', linewidth=0.5)
+                ax_ts.plot(df_pr_kper4['kstp'], y, alpha=0.2, color='grey', linewidth=0.5)
 
         for col in value_cols_pt:
-            y_pt = df_pt_sub[col].copy() if col in df_pt_sub.columns else None
+            y_pt = df_pt_kper4[col].copy() if col in df_pt_kper4.columns else None
             if y_pt is not None:
-                ax_ts.plot(df_pt_sub['time'], y_pt, alpha=0.3, color='blue', linewidth=0.8)
+                ax_ts.plot(df_pt_kper4['kstp'], y_pt, alpha=0.3, color='blue', linewidth=0.8)
+
+        ymin = np.percentile(df_pt_kper4[value_cols_pt].values.flatten(), 1)
+        ymax = np.percentile(df_pt_kper4[value_cols_pt].values.flatten(), 99)
 
         ax_ts.set_title(f'{usecol}', loc='left')
         ax_ts.set_ylabel('Head (m)')
         ax_ts.grid(alpha=0.3)
+        ax_ts.set_ylim(ymin, ymax)
 
         if idx == 0:
             ax_ts.legend(['Prior', 'Posterior'], fontsize=8)
@@ -491,88 +521,45 @@ def plot_timeseries_obs(data, output, truth_file=None, col_startswith='oname:ts-
             ax_ts.set_xlabel('Time Step')
         else:
             ax_ts.set_xlabel('')
+        
 
-        # Get values for different stress period groups
-        all_times = df_sub['time'].unique()
+        if idx == 0 and truth_col is not None:
+            ax_ts.legend(['Prior', 'Posterior', 'Truth'], fontsize=8)
 
-        if len(all_times) == 0:
-            continue
-
-        mid_time = len(all_times) // 2
-
-        # Define time ranges for kper groups
-        time_kper12 = all_times[:mid_time] if mid_time > 0 else all_times
-        time_kper34 = all_times[mid_time:] if mid_time > 0 else []
-
-        # Collect values for histograms by stress period group
-        prior_hist_vals_kper12 = []
-        prior_hist_vals_kper34 = []
-        posterior_hist_vals_kper12 = []
-        posterior_hist_vals_kper34 = []
-
-        # For first half of prediction period
-        for t in time_kper12[-5:] if len(time_kper12) >= 5 else time_kper12:
-            df_time = df_sub[df_sub['time'] == t]
-            df_pt_time = df_pt_sub[df_pt_sub['time'] == t]
-
-            for col in value_cols:
-                if col in df_time.columns:
-                    val = df_time[col].values
-                    if len(val) > 0 and not np.isnan(val[0]):
-                        prior_hist_vals_kper12.append(val[0])
-
-            for col in value_cols_pt:
-                if col in df_pt_time.columns:
-                    val = df_pt_time[col].values
-                    if len(val) > 0 and not np.isnan(val[0]):
-                        posterior_hist_vals_kper12.append(val[0])
-
-        # For second half of prediction period
-        if len(time_kper34) > 0:
-            for t in time_kper34[-5:] if len(time_kper34) >= 5 else time_kper34:
-                df_time = df_sub[df_sub['time'] == t]
-                df_pt_time = df_pt_sub[df_pt_sub['time'] == t]
-
-                for col in value_cols:
-                    if col in df_time.columns:
-                        val = df_time[col].values
-                        if len(val) > 0 and not np.isnan(val[0]):
-                            prior_hist_vals_kper34.append(val[0])
-
-                for col in value_cols_pt:
-                    if col in df_pt_time.columns:
-                        val = df_pt_time[col].values
-                        if len(val) > 0 and not np.isnan(val[0]):
-                            posterior_hist_vals_kper34.append(val[0])
+        df_pr_kper2_vals = df_pr_kper2[value_cols].values.flatten()
+        df_pt_kper2_vals = df_pt_kper2[value_cols_pt].values.flatten()
+        df_obsnoise_kper2_vals = df_obsnoise_kper2[value_cols].values.flatten()
+        df_pr_kper4_vals = df_pr_kper4[value_cols].values.flatten()
+        df_pt_kper4_vals = df_pt_kper4[value_cols_pt].values.flatten()
 
         # Determine shared bins for consistent plotting across both histograms
-        all_vals = (prior_hist_vals_kper12 + prior_hist_vals_kper34 +
-                   posterior_hist_vals_kper12 + posterior_hist_vals_kper34)
+        all_vals = list(df_pr_kper2_vals) + list(df_pt_kper2_vals) + list(df_pr_kper4_vals) + list(df_pt_kper4_vals)
         if len(all_vals) > 0:
-            bins = np.linspace(np.percentile(all_vals, 1), np.percentile(all_vals, 99), 15)
+            bins = np.linspace(np.percentile(all_vals, 2.5), np.percentile(all_vals, 97.5), 15)
         else:
             bins = 15
 
         # MIDDLE PLOT: Histogram for first half
         ax_hist_kper12 = axes2[idx][1]
 
-        if len(prior_hist_vals_kper12) > 0:
-            ax_hist_kper12.hist(prior_hist_vals_kper12, bins=bins, alpha=0.5, color='lightgrey',
+        if len(df_pr_kper2_vals) > 0:
+            ax_hist_kper12.hist(df_pr_kper2_vals, bins=bins, alpha=0.5, color='lightgrey',
                         orientation='horizontal', density=True, edgecolor='grey', linewidth=0.8,
                         label='Prior')
 
-        if len(posterior_hist_vals_kper12) > 0:
-            ax_hist_kper12.hist(posterior_hist_vals_kper12, bins=bins, alpha=0.6, color='lightblue',
+        if len(df_pt_kper2_vals) > 0:
+            ax_hist_kper12.hist(df_pt_kper2_vals, bins=bins, alpha=0.6, color='lightblue',
                         orientation='horizontal', density=True, edgecolor='blue', linewidth=0.8,
                         label='Posterior')
 
         # Add mean line
-        if len(posterior_hist_vals_kper12) > 0:
-            mean_present = np.mean(posterior_hist_vals_kper12)
+        if len(df_pt_kper2_vals) > 0:
+            mean_present = np.mean(df_pt_kper2_vals)
             ax_hist_kper12.axhline(mean_present, color='green', linestyle='-', linewidth=2, label='Mean')
 
         ax_hist_kper12.set_xlabel('Density', fontsize=8)
         ax_hist_kper12.set_title('First Half', fontsize=9)
+        ax_hist_kper12.set_ylim(ymin, ymax)
         ax_hist_kper12.tick_params(axis='both', labelsize=8)
         ax_hist_kper12.grid(alpha=0.3)
         plt.setp(ax_hist_kper12.get_yticklabels(), visible=False)
@@ -584,25 +571,26 @@ def plot_timeseries_obs(data, output, truth_file=None, col_startswith='oname:ts-
         # RIGHT PLOT: Histogram for second half
         ax_hist_kper34 = axes2[idx][2]
 
-        if len(prior_hist_vals_kper34) > 0:
-            ax_hist_kper34.hist(prior_hist_vals_kper34, bins=bins, alpha=0.5, color='darkgrey',
+        if len(df_pr_kper4_vals) > 0:
+            ax_hist_kper34.hist(df_pr_kper4_vals, bins=bins, alpha=0.5, color='darkgrey',
                         orientation='horizontal', density=True, edgecolor='black', linewidth=0.8,
                         label='Prior')
 
-        if len(posterior_hist_vals_kper34) > 0:
-            ax_hist_kper34.hist(posterior_hist_vals_kper34, bins=bins, alpha=0.6, color='darkblue',
+        if len(df_pt_kper4_vals) > 0:
+            ax_hist_kper34.hist(df_pt_kper4_vals, bins=bins, alpha=0.6, color='darkblue',
                         orientation='horizontal', density=True, edgecolor='navy', linewidth=0.8,
                         label='Posterior')
 
         # Add mean line
-        if len(posterior_hist_vals_kper34) > 0:
-            mean_past = np.mean(posterior_hist_vals_kper34)
+        if len(df_pt_kper4_vals) > 0:
+            mean_past = np.mean(df_pt_kper4_vals)
             ax_hist_kper34.axhline(mean_past, color='purple', linestyle='-', linewidth=2, label='Mean')
 
         ax_hist_kper34.set_xlabel('Density', fontsize=8)
         ax_hist_kper34.set_title('Second Half', fontsize=9)
         ax_hist_kper34.tick_params(axis='both', labelsize=8)
         ax_hist_kper34.grid(alpha=0.3)
+        ax_hist_kper34.set_ylim(ymin, ymax)
         plt.setp(ax_hist_kper34.get_yticklabels(), visible=False)
 
         # Add legend only to first subplot
@@ -614,6 +602,90 @@ def plot_timeseries_obs(data, output, truth_file=None, col_startswith='oname:ts-
     plt.savefig(fig_fn, dpi=300, bbox_inches='tight')
     plt.close()
     print(f"Saved: {fig_fn}")
+
+
+def plot_budget_histogram(data, output, col_startswith='budget'):
+    headers = data['headers']
+
+    # Get budget observations
+    desired_cols = [col for col in headers if col.startswith(f'oname:{col_startswith}')]
+
+    if len(desired_cols) == 0:
+        print("No budget observations found, skipping plot")
+
+    # Read budget data
+    budget = {
+        'pr': pd.read_csv(data['pr_oe_fn'], usecols=desired_cols),
+        'pt':  pd.read_csv(data['pt_oe_fn'], usecols=desired_cols)
+    }
+
+    # Format the dataframe to extract usecol and kper
+    for name, df in budget.items():
+        df = df.transpose()
+        df['usecol'] = df.index.map(extract_usecol)
+        df['kper'] = df.index.map(extract_kper)
+        budget[name] = df
+    
+    pe_value_cols = [col for col in budget['pr'].columns if col not in ['usecol', 'kper']]
+    pt_value_cols = [col for col in budget['pt'].columns if col not in ['usecol', 'kper']]
+
+    for col in budget['pt']['usecol'].unique():
+        # create histogram with 4 columns for kper 1-4
+        fig, axes = plt.subplots(1, 4, figsize=(7.1, 3))
+
+        for i, ax in enumerate(axes.flatten()):
+            mask = (budget['pr']['usecol'] == col) & (budget['pr']['kper'] == i + 1)
+
+            pr_values = budget['pr'][mask][pe_value_cols].values.flatten()
+            pt_values = budget['pt'][mask][pt_value_cols].values.flatten()
+
+            if len(pt_values) > 0:
+                min = np.percentile(pt_values, 1)
+                max = np.percentile(pt_values, 99)
+                ax.set_xlim(min, max)
+
+            ax.hist(pr_values, bins=30, alpha=0.5, label='Prior', color='grey')
+            ax.hist(pt_values, bins=30, alpha=0.5, label='Posterior', color='blue')
+            ax.set_title(f'kper {i + 1}')
+        
+        axes[0].set_xlabel('Budget Value')
+        axes[0].set_ylabel('Frequency')
+        axes[0].legend()
+        fig.tight_layout()
+        fig_fn = os.path.join(output, f'output.budget_{col}.png')
+        plt.savefig(fig_fn, dpi=300, bbox_inches='tight')
+        plt.close()
+    
+    for col in ['awanui', 'confined', 'inflow', 'spring', 'stoss', 'sw']:
+        # create histogram with 4 columns for kper 1-4
+        fig, axes = plt.subplots(1, 2, figsize=(7.1, 3))
+
+        kpers = [(1, 3), (2, 4)]
+
+        for i, kper_i in enumerate(kpers):
+            ax = axes.flatten()[i]
+            mask_kper_a = (budget['pt']['usecol'] == col) & (budget['pt']['kper'] == kper_i[0])
+            mask_kper_b = (budget['pt']['usecol'] == col) & (budget['pt']['kper'] == kper_i[1])
+
+            kper_a_values = budget['pt'][mask_kper_a][pt_value_cols].values.flatten()
+            kper_b_values = budget['pt'][mask_kper_b][pt_value_cols].values.flatten()
+            
+            # if len(pt_values) > 0:
+            #     min = np.percentile(pt_values, 1)
+            #     max = np.percentile(pt_values, 99)
+            #     ax.set_xlim(min, max)
+
+            ax.hist(kper_a_values, bins=30, alpha=0.5, label='Present', color='green')
+            ax.hist(kper_b_values, bins=30, alpha=0.5, label='Past', color='purple')
+            ax.set_title(f'kper {i + 1}')
+        
+        axes[0].set_ylabel('Frequency')
+        axes[0].legend()
+        fig.tight_layout()
+        fig_fn = os.path.join(output, f'prediction.budget_{col}.png')
+        plt.savefig(fig_fn, dpi=300, bbox_inches='tight')
+        plt.close()
+
 
 def plot_budgets(data, output, col_startswith='budget'):
     """Plot budget components with subplots for each usecol, showing boxplots by kper.
@@ -642,8 +714,8 @@ def plot_budgets(data, output, col_startswith='budget'):
     # Format the dataframe to extract usecol and kper
     budget_df = pt_oe_budget.transpose()
     budget_df['usecol'] = budget_df.index.map(extract_usecol)
-    budget_df['kper'] = budget_df.index.map(lambda x: int([s for s in x.split('_') if s.startswith('kper:')][0].split(':')[1])
-                                             if any(s.startswith('kper:') for s in x.split('_')) else 0)
+    budget_df['kper'] = budget_df.index.map(
+        lambda x: int([s for s in x.split('_') if s.startswith('kper:')][0].split(':')[1])if any(s.startswith('kper:') for s in x.split('_')) else 0)
 
     # Create 'surface water' as sum of awanui, poukawa, and spring
     sw_components = ['awanui', 'poukawa', 'spring']
@@ -842,11 +914,11 @@ def plot_budgets(data, output, col_startswith='budget'):
     for stat in outlier_stats:
         print(f"{stat['usecol']:<30} {stat['kper']:<6} {stat['removed']:<10} {stat['original']:<10} {stat['percent']:<10.1f}%")
 
-def plot_parameter_histograms(data, output):
+def plot_parameter_histograms(data, subset_pe, output):
     """Plot parameter histograms by group - prior vs posterior."""
     par_data = data['par_data']
     pr_pe = data['pr_pe']
-    pt_pe = data['pt_pe']
+    pt_pe = subset_pe
 
     # Get parameter groups (excluding those starting with 's_1_' which are pilot points)
     all_groups = par_data['pargp'].unique()
@@ -1153,8 +1225,8 @@ def extract_index(df, extract_dict):
     return input_df
 
 def get_arr_list(df, col_names):
-    # create a dummy array (43, 53)
-    dummy_arr = np.full((43, 53), np.nan)
+    # create a dummy array
+    dummy_arr = np.full((47,57), np.nan)
     i_arrs = []
     for real in col_names:
         # fill array with values from df where i and j are indexes
@@ -1193,13 +1265,14 @@ def get_arrs_stats(df, reals, is_kper=False):
             'pr_stack': i_stack,
             'mean': np.mean(i_stack, axis=0),
             'std': np.std(i_stack, axis=0),
+            'var': np.var(i_stack, axis=0),
             'min': np.min(i_stack, axis=0),
             'max': np.max(i_stack, axis=0),
         }
     return arrs
 
-def plot_pname_array_statistics(data, fn, output, oname_prefix, out_name, array_param=False):
-    desired_cols = [col for col in data['param_headers'] if col.startswith(f'pname:{oname_prefix}')]
+def plot_pname_array_statistics(data, output, pname_prefix, array_param=False):
+    desired_cols = [col for col in data['param_headers'] if col.startswith(f'pname:{pname_prefix}')]
 
     if array_param:
         index_col=None
@@ -1213,24 +1286,38 @@ def plot_pname_array_statistics(data, fn, output, oname_prefix, out_name, array_
             'i': extract_idx1,
             'j': extract_idx2,
         }
-
-    rdf = pd.read_csv(data[fn], usecols=desired_cols, index_col=index_col)
-    reals = rdf.index.tolist()
-
-    df = extract_index(rdf, extract_dict)
     
-    arrs = get_arrs_stats(df, reals)
+    dfs = {
+        'pe': pd.read_csv(data['pr_pe_fn'], usecols=desired_cols, index_col=index_col),
+        'pt': pd.read_csv(data['pt_pe_fn'], usecols=desired_cols, index_col=index_col),
+    }
+    arrs = {}
+    for name, rdf in dfs.items():
+        rdf.reset_index(drop=True, inplace=True)
+        reals = rdf.index.tolist()
+        df = extract_index(rdf, extract_dict)
+        arrs[name] = get_arrs_stats(df, reals)
 
-    # plot & save
-    plot_arr_stats(arrs, output, out_name)
+        # plot & save
+        plot_arr_stats(arrs[name], output, pname_prefix+f'_{name}')
+    
+    # percent change plot
+    var_change = 100 * (1 - (arrs['pe'][(1,1)]['std'] / arrs['pt'][(1,1)]['std']))
+
+    fig, ax = plt.subplots(figsize=(6, 5))
+    im = ax.imshow(var_change, cmap='bwr', vmin=-100, vmax=100)
+    cbar = plt.colorbar(im, ax=ax, fraction=0.046, pad=0.04)
+    ax.set_title('Variance Percent Change (pt vs pe)')
+    fig_fn = os.path.join(output, f'output.{pname_prefix}_percent_change.png')
+    plt.savefig(fig_fn, dpi=300, bbox_inches='tight')
+    plt.close()    
 
 
-
-def plot_oname_array_statistics(data, fn, output, oname_prefix, out_name):
+def plot_oname_array_statistics(data, subset_pe, output, oname_prefix):
     desired_cols = [col for col in data['headers'] if col.startswith(f'oname:{oname_prefix}')]
     
-    rdf = pd.read_csv(data[fn], usecols=desired_cols, index_col=0)
-    reals = rdf.index.tolist()
+    # rdf = pd.read_csv(data[fn], usecols=desired_cols, index_col=0)
+    
     extract_dict = {
         'i': extract_i,
         'j': extract_j,
@@ -1238,12 +1325,39 @@ def plot_oname_array_statistics(data, fn, output, oname_prefix, out_name):
         'kstp': extract_kstp,
     }
 
-    df = extract_index(rdf, extract_dict)
-    
-    arrs = get_arrs_stats(df, reals, is_kper=True)
+    pr_df = pd.read_csv(data['pr_oe_fn'], usecols=desired_cols, index_col=0)
 
-    # plot & save
-    plot_arr_stats(arrs, output, out_name)
+    if subset_pe is not None:
+        pe_df = subset_pe.loc[:, desired_cols]
+    else:
+        pe_df = pd.read_csv(data['pr_oe_fn'], usecols=desired_cols, index_col=0)
+
+    dfs = {
+        'pe': pr_df,
+        'pt': pe_df,
+    }
+    
+    arrs = {}
+    for name, rdf in dfs.items():
+        reals = rdf.index.tolist()
+
+        df = extract_index(rdf, extract_dict)
+    
+        arrs[name] = get_arrs_stats(df, reals, is_kper=True)
+
+        # plot & save
+        plot_arr_stats(arrs[name], output, oname_prefix+f'_{name}')
+
+    # percent change plot
+    var_change = 100 * (1 - (arrs['pe'][(1,1)]['std'] / arrs['pt'][(1,1)]['std']))
+
+    fig, ax = plt.subplots(figsize=(6, 5))
+    im = ax.imshow(var_change, cmap='bwr', vmin=-100, vmax=100)
+    cbar = plt.colorbar(im, ax=ax, fraction=0.046, pad=0.04)
+    ax.set_title('Variance Percent Change (pt vs pe)')
+    fig_fn = os.path.join(output, f'output.{oname_prefix}_var_percent_change.png')
+    plt.savefig(fig_fn, dpi=300, bbox_inches='tight')
+    plt.close()  
 
 
 def plot_heads_oname_array_statistics(data, fn, output, oname_prefix, out_name):
@@ -1367,7 +1481,7 @@ def plot_arr_stats(arrs, output, arr_name):
             if j > 0:  # Not left column
                 axes[i, j].set_yticklabels([])
 
-    fig_fn = os.path.join(output, f'output.arr_stats_{arr_name}.png')
+    fig_fn = os.path.join(output, f'arrs.pt_{arr_name}.png')
     plt.savefig(fig_fn, dpi=300, bbox_inches='tight')
     plt.close()
     print(f"Saved: {fig_fn}")
@@ -1448,11 +1562,11 @@ def plot_pdc_budget_confined(data, output_dir):
     print(f"Saved: {fig_fn}")
 
 
-def plot_timeseries_spring_flux(data, output, col_startswith='ts-flux'):
+def plot_histograms_spring_flux(data, subset_oe, output, col_startswith='ts-flux'):
     """Plot time series observations - prior vs posterior vs truth."""
     headers = data['headers']
     pr_oe_fn = data['pr_oe_fn']
-    pt_oe_fn = data['pt_oe_fn']
+    # pt_oe_fn = data['pt_oe_fn']
 
     # Get time series head observations
     desired_cols = [col for col in headers if col.startswith(f'oname:{col_startswith}')]
@@ -1462,7 +1576,91 @@ def plot_timeseries_spring_flux(data, output, col_startswith='ts-flux'):
         return
 
     pre_oe_ts = pd.read_csv(pr_oe_fn, usecols=desired_cols)
-    pt_oe_ts = pd.read_csv(pt_oe_fn, usecols=desired_cols)
+    pt_oe_ts = subset_oe.loc[:, desired_cols]
+
+    ts_df = format_tsdf(pre_oe_ts)
+    ts_pt_df = format_tsdf(pt_oe_ts)
+
+    usecol = ts_df['usecol'].unique()[0]
+
+    # Prep data
+    df_sub = ts_df[(ts_df['usecol'] == usecol)].sort_values('time').replace(-999, np.nan)
+    df_pt_sub = ts_pt_df[(ts_pt_df['usecol'] == usecol)].sort_values('time').replace(-999, np.nan)
+
+    value_cols = [col for col in df_sub.columns if col not in ['time', 'kper', 'kstp', 'usecol']]
+    # Ensure columns exist in posterior and noise dataframes
+    value_cols_pt = [col for col in df_pt_sub.columns if col not in ['time', 'kper', 'kstp', 'usecol']]
+
+    fig, axes = plt.subplots(nrows=1, ncols= 4, figsize=(6, 2))
+
+    kpers = [1, 2, 3, 4]
+
+    for i, kper in enumerate(kpers):
+        kper_mask = df_sub['kper'] == kper
+        plt_pr = df_sub[kper_mask]
+        plt_pt = df_pt_sub[kper_mask]
+
+        # Determine shared bins for consistent plotting across both histograms
+        pr_values = plt_pr[value_cols].values.flatten()
+        pt_values = plt_pt[value_cols_pt].values.flatten()
+        # all_vals = np.concatenate([pr_values, pt_values])
+
+        if len(pt_values) > 0:
+            min = np.percentile(pt_values, 5)
+            max = np.percentile(pt_values, 95)
+            bins = np.linspace(min, max, 20)
+        else:
+            min = 0
+            max = 1
+            bins = 20
+        #     
+        # else:
+        #     bins = 15
+
+        axes[i].hist(
+            pr_values, bins=20, alpha=0.5, color='lightgrey', 
+            density=True, edgecolor='grey', linewidth=0.8,
+            label='Prior')
+        axes[i].hist(
+            pt_values, bins=bins, alpha=0.5, color='blue',
+            density=True, edgecolor='darkblue', linewidth=0.8,
+            label='Posterior')
+
+        # Add mean line for "present" (kper 1-2)
+        mean_present = np.mean(pt_values)
+        axes[i].axvline(mean_present, color='purple', linestyle='-', linewidth=2, label='Mean')
+
+        axes[i].set_xlabel(f'Flux (m\u00b3/d)', fontsize=8)
+        # ax_hist.set_title('kper 1-2', fontsize=9)
+        axes[i].set_xlim(min, max)
+        axes[i].tick_params(axis='both', labelsize=8)
+        axes[i].grid(alpha=0.3)
+        plt.setp(axes[i].get_yticklabels(), visible=False)
+
+        # Add legend only to first subplot
+        if i == 0:
+            axes[i].legend(fontsize=6, loc='upper left')
+
+    plt.tight_layout()
+    fig_fn = os.path.join(output, 'prediction.spring_flux_kper.png')
+    plt.savefig(fig_fn, dpi=300, bbox_inches='tight')
+    plt.close()
+    print(f"Saved: {fig_fn}")
+
+def plot_timeseries_spring_flux(data, subset_oe, output, col_startswith='ts-flux'):
+    """Plot time series observations - prior vs posterior vs truth."""
+    headers = data['headers']
+    pr_oe_fn = data['pr_oe_fn']
+
+    # Get time series head observations
+    desired_cols = [col for col in headers if col.startswith(f'oname:{col_startswith}')]
+
+    if len(desired_cols) == 0:
+        print("No time series head observations found, skipping plot")
+        return
+
+    pre_oe_ts = pd.read_csv(pr_oe_fn, usecols=desired_cols)
+    pt_oe_ts = subset_oe.loc[:, desired_cols]
 
     ts_df = format_tsdf(pre_oe_ts)
     ts_pt_df = format_tsdf(pt_oe_ts)
@@ -1471,42 +1669,39 @@ def plot_timeseries_spring_flux(data, output, col_startswith='ts-flux'):
     n = 2 # two predicted periods
 
     # Prep data
-    df_sub = ts_df[(ts_df['usecol'] == usecol)].sort_values('time')
-    df_pt_sub = ts_pt_df[(ts_pt_df['usecol'] == usecol)].sort_values('time')
+    df_sub = ts_df[(ts_df['usecol'] == usecol)].sort_values('time').replace(-999, np.nan)
+    df_pt_sub = ts_pt_df[(ts_pt_df['usecol'] == usecol)].sort_values('time').replace(-999, np.nan)
 
-    # Replace -999 with NaN
-    df_sub.replace(-999, np.nan, inplace=True)
-    df_pt_sub.replace(-999, np.nan, inplace=True)
-
-    value_cols = [col for col in df_sub.columns if col not in ['time', 'usecol']]
+    value_cols = [col for col in df_sub.columns if col not in ['time', 'kper', 'kstp', 'usecol']]
     # Ensure columns exist in posterior and noise dataframes
-    value_cols_pt = [col for col in df_pt_sub.columns if col not in ['time', 'usecol']]
+    value_cols_pt = [col for col in df_pt_sub.columns if col not in ['time', 'kper', 'kstp', 'usecol']]
 
-    fig = plt.figure(figsize=(10, n * 3))
-    gs = gridspec.GridSpec(n, 2, width_ratios=[4, 1])
+    fig, ax = plt.subplots(nrows=n, ncols=1, figsize=(6, 2*n), sharex=True)
 
-    kpers = [(2,53), (55,106)]
+    kpers = [2, 4]
 
-    axes = []
     for i, kper in enumerate(kpers):
-        kper_mask = (df_sub['time'] >= kper[0]) & (df_sub['time'] <= kper[1])
+        kper_mask = df_sub['kper'] == kper
         plt_pr = df_sub[kper_mask]
         plt_pt = df_pt_sub[kper_mask]
 
-        if i == 0:
-            ax0 = fig.add_subplot(gs[i, 0])
-            ax1 = fig.add_subplot(gs[i, 1], sharey=ax0)
-        else:
-            ax0 = fig.add_subplot(gs[i, 0], sharex=axes[0][0])
-            ax1 = fig.add_subplot(gs[i, 1], sharey=ax0)
-        axes.append([ax0, ax1])
+        # Plot ensemble members
+        for col in value_cols:
+            y = plt_pr[col].copy() if col in plt_pr.columns else None
 
-        # LEFT PLOT: Time series
-        ax_ts = axes[i][0]
+            if y is None and y_pt is None:
+                continue
+
+            # Mask outliers
+            if y is not None:
+                ax[i].plot(np.arange(0,len(y)), y, alpha=0.3, color='grey', linewidth=0.5)
+
+    for i, kper in enumerate(kpers):
+        kper_mask = df_sub['kper'] == kper
+        plt_pt = df_pt_sub[kper_mask]
 
         # Plot ensemble members
-        for col in value_cols:  # Limit to 50 realizations for clarity
-            y = plt_pr[col].copy() if col in plt_pr.columns else None
+        for col in value_cols:
             y_pt = plt_pt[col].copy() if col in plt_pt.columns else None
 
             if y is None and y_pt is None:
@@ -1514,66 +1709,224 @@ def plot_timeseries_spring_flux(data, output, col_startswith='ts-flux'):
 
             # Mask outliers
             if y is not None:
-                ax_ts.plot(np.arange(0,len(y)), y, alpha=0.3, color='grey', linewidth=0.5)
+                ax[i].plot(np.arange(0,len(y)), y, alpha=0.3, color='grey', linewidth=0.5)
 
             if y_pt is not None:
-                ax_ts.plot(np.arange(0,len(y_pt)), y_pt, alpha=0.3, color='blue', linewidth=0.8)
+                ax[i].plot(np.arange(0,len(y_pt)), y_pt, alpha=0.3, color='blue', linewidth=0.8)
 
         if i == 0:
-            ax_ts.set_title(f'Present', loc='left')
+            ax[i].set_title(f'Present', loc='left')
         else:
-            ax_ts.set_title(f'Pre-European', loc='left')
-        ax_ts.set_ylabel('Spring flux (m3/d)')
-        ax_ts.grid(alpha=0.3)
+            ax[i].set_title(f'Pre-European', loc='left')
+        ax[i].set_ylabel('Spring flux (m3/d)')
+        ax[i].grid(alpha=0.3)
 
         if i == 0:
-            ax_ts.legend(['Prior', 'Posterior'], fontsize=8)
+            ax[i].legend(['Prior', 'Posterior'], fontsize=8)
 
         # Only show x-label on bottom plot
         if i == n - 1:
-            ax_ts.set_xlabel('Days')
+            ax[i].set_xlabel('Days')
         else:
-            ax_ts.set_xlabel('')
-
-        # Determine shared bins for consistent plotting across both histograms
-        pr_values = plt_pr[value_cols].values.flatten()
-        pt_values = plt_pt[value_cols_pt].values.flatten()
-        all_vals = np.concatenate([pr_values, pt_values])
-
-        if len(all_vals) > 0:
-            bins = np.linspace(np.percentile(all_vals, 1), np.percentile(all_vals, 99), 15)
-        else:
-            bins = 15
-
-        # MIDDLE PLOT: Histogram for kper 1-2 (present)
-        ax_hist = axes[i][1]
-
-        ax_hist.hist(pr_values, bins=bins, alpha=0.5, color='lightgrey',
-                        orientation='horizontal', density=True, edgecolor='grey', linewidth=0.8,
-                        label='Prior')
-        ax_hist.hist(pt_values, bins=bins, alpha=0.5, color='blue',
-                        orientation='horizontal', density=True, edgecolor='darkblue', linewidth=0.8,
-                        label='Prior')
-
-        # Add mean line for "present" (kper 1-2)
-        mean_present = np.mean(pt_values)
-        ax_hist.axhline(mean_present, color='purple', linestyle='-', linewidth=2, label='Mean')
-
-        ax_hist.set_xlabel('Density', fontsize=8)
-        # ax_hist.set_title('kper 1-2', fontsize=9)
-        ax_hist.tick_params(axis='both', labelsize=8)
-        ax_hist.grid(alpha=0.3)
-        plt.setp(ax_hist.get_yticklabels(), visible=False)
-
-        # Add legend only to first subplot
-        if i == 0:
-            ax_hist.legend(fontsize=6, loc='lower right')
+            ax[i].set_xlabel('')
 
     # present day
-    axes[0][0].set_ylim(np.min(df_pt_sub[value_cols_pt].values), np.max(df_pt_sub[value_cols_pt].values))
+    ax[0].set_ylim(np.min(df_pt_sub[value_cols_pt].values), np.max(df_pt_sub[value_cols_pt].values))
 
     plt.tight_layout()
     fig_fn = os.path.join(output, 'prediction.timeseries_spring_flux.png')
     plt.savefig(fig_fn, dpi=300, bbox_inches='tight')
     plt.close()
     print(f"Saved: {fig_fn}")
+
+def plot_parameter_distributions(data, output_dir, subset_oe=None):
+    
+    par_data = data['par_data']
+    pr_pe = data['pr_pe']
+    pt_pe = data['pt_pe']
+
+    # Get parameter groups (excluding those starting with 's_1_')
+    all_groups = par_data['pargp'].unique()
+    par_groups = [g for g in all_groups if not g.startswith('s_1_')]
+    print(f"\nParameter groups to plot ({len(par_groups)}):")
+    for g in sorted(par_groups):
+        print(f"  - {g}")
+
+    # Filter pt_reals to only include valid realization indices
+    if subset_oe:
+        valid_pt_reals = [r for r in pt_reals_list if r < len(pt_pe)]
+        if len(valid_pt_reals) < len(pt_reals_list):
+            print(f"\nWarning: Only {len(valid_pt_reals)} of {len(pt_reals_list)} requested realizations exist")
+            print(f"Valid realizations: {valid_pt_reals}")
+
+        # Create subset of posterior for highlighted realizations
+        pt_subset = pt_pe.iloc[valid_pt_reals]
+
+    # Plot histograms for each parameter group
+    n_groups = len(par_groups)
+    n_cols = 3
+    n_rows = int(np.ceil(n_groups / n_cols))
+
+    fig, axes = plt.subplots(n_rows, n_cols, figsize=(15, 4*n_rows))
+    axes = axes.flatten() if n_groups > 1 else [axes]
+
+    for idx, pargp in enumerate(sorted(par_groups)):
+        ax = axes[idx]
+
+        # Get parameters in this group
+        pars_in_group = par_data[par_data['pargp'] == pargp].index.tolist()
+        # get parameter transform
+        transform = par_data.loc[pars_in_group]['partrans'][0]
+
+        if len(pars_in_group) == 0:
+            ax.text(0.5, 0.5, f'No parameters\nin {pargp}',
+                    ha='center', va='center', transform=ax.transAxes)
+            ax.set_title(pargp)
+            continue
+
+        # Get values for all realizations and all parameters in this group
+        prior_vals = pr_pe.loc[:, pars_in_group].values.flatten()
+        posterior_vals = pt_pe.loc[:, pars_in_group].values.flatten()
+
+        if subset:
+            subset_vals = pt_subset.loc[:, pars_in_group].values.flatten()
+
+        if transform == 'log':
+            prior_vals = np.log(prior_vals)
+            posterior_vals = np.log(posterior_vals)
+
+            if subset:
+                subset_vals = np.log(subset_vals)
+
+        # Determine histogram bins based on combined data range
+        all_vals = np.concatenate([prior_vals, posterior_vals])
+        bins = np.linspace(np.percentile(all_vals, 1), np.percentile(all_vals, 99), 30)
+
+        # Plot histograms
+        ax.hist(prior_vals, bins=bins, alpha=0.5, color='grey',
+                label='Prior', density=True, edgecolor='black', linewidth=0.5)
+        ax.hist(posterior_vals, bins=bins, alpha=0.5, color='cornflowerblue',
+                label='Posterior', density=True, edgecolor='black', linewidth=0.5)
+        if subset:
+            ax.hist(subset_vals, bins=bins, alpha=0.7, color='darkblue',
+                    label=f'Subset (n={len(valid_pt_reals)})', density=True,
+                    edgecolor='black', linewidth=0.5)
+
+        ax.set_xlabel('Parameter Value')
+        ax.set_ylabel('Density')
+        ax.set_title(f'{pargp}\n(n={len(pars_in_group)} params)')
+        ax.legend(fontsize=8)
+        ax.grid(alpha=0.3)
+
+    # Remove empty subplots
+    for idx in range(n_groups, len(axes)):
+        fig.delaxes(axes[idx])
+
+    plt.tight_layout()
+    plt.savefig(os.path.join(output_dir, 'output.parameter_group_histograms.png'),
+                dpi=300, bbox_inches='tight')
+    print(f"\nFigure saved to: {os.path.join(output_dir, 'output.parameter_group_histograms.png')}")
+
+    # Optional: Print summary statistics
+    print("\n" + "="*70)
+    print("SUMMARY STATISTICS")
+    print("="*70)
+    for pargp in sorted(par_groups):
+        pars_in_group = par_data[par_data['pargp'] == pargp].index.tolist()
+        if len(pars_in_group) == 0:
+            continue
+
+        prior_vals = pr_pe.loc[:, pars_in_group].values.flatten()
+        posterior_vals = pt_pe.loc[:, pars_in_group].values.flatten()
+
+        print(f"\n{pargp} ({len(pars_in_group)} parameters):")
+        print(f"  Prior:     mean={np.mean(prior_vals):.4f}, std={np.std(prior_vals):.4f}")
+        print(f"  Posterior: mean={np.mean(posterior_vals):.4f}, std={np.std(posterior_vals):.4f}")
+        print(f"  Std reduction: {(1 - np.std(posterior_vals)/np.std(prior_vals))*100:.1f}%")
+
+
+def plot_parameter_distributions_subset(data, output_dir, subset_pe=None):
+    
+    par_data = data['par_data']
+    pr_pe = data['pr_pe']
+    pt_pe = subset_pe
+
+    # Get parameter groups (excluding those starting with 's_1_')
+    all_groups = par_data['pargp'].unique()
+    par_groups = [g for g in all_groups if not g.startswith('s_1_')]
+    print(f"\nParameter groups to plot ({len(par_groups)}):")
+    for g in sorted(par_groups):
+        print(f"  - {g}")
+
+    # Plot histograms for each parameter group
+    n_groups = len(par_groups)
+    n_cols = 3
+    n_rows = int(np.ceil(n_groups / n_cols))
+
+    fig, axes = plt.subplots(n_rows, n_cols, figsize=(15, 4*n_rows))
+    axes = axes.flatten() if n_groups > 1 else [axes]
+
+    for idx, pargp in enumerate(sorted(par_groups)):
+        ax = axes[idx]
+
+        # Get parameters in this group
+        pars_in_group = par_data[par_data['pargp'] == pargp].index.tolist()
+        # get parameter transform
+        transform = par_data.loc[pars_in_group]['partrans'][0]
+
+        if len(pars_in_group) == 0:
+            ax.text(0.5, 0.5, f'No parameters\nin {pargp}',
+                    ha='center', va='center', transform=ax.transAxes)
+            ax.set_title(pargp)
+            continue
+
+        # Get values for all realizations and all parameters in this group
+        prior_vals = pr_pe.loc[:, pars_in_group].values.flatten()
+        posterior_vals = pt_pe.loc[:, pars_in_group].values.flatten()
+
+        if transform == 'log':
+            prior_vals = np.log(prior_vals)
+            posterior_vals = np.log(posterior_vals)
+
+        # Determine histogram bins based on combined data range
+        all_vals = np.concatenate([prior_vals, posterior_vals])
+        bins = np.linspace(np.percentile(all_vals, 1), np.percentile(all_vals, 99), 30)
+
+        # Plot histograms
+        ax.hist(prior_vals, bins=bins, alpha=0.5, color='grey',
+                label='Prior', density=True, edgecolor='black', linewidth=0.5)
+        ax.hist(posterior_vals, bins=bins, alpha=0.5, color='cornflowerblue',
+                label='Posterior', density=True, edgecolor='black', linewidth=0.5)
+
+        ax.set_xlabel('Parameter Value')
+        ax.set_ylabel('Density')
+        ax.set_title(f'{pargp}\n(n={len(pars_in_group)} params)')
+        ax.legend(fontsize=8)
+        ax.grid(alpha=0.3)
+
+    # Remove empty subplots
+    for idx in range(n_groups, len(axes)):
+        fig.delaxes(axes[idx])
+
+    plt.tight_layout()
+    plt.savefig(os.path.join(output_dir, 'output.parameter_group_histograms.png'),
+                dpi=300, bbox_inches='tight')
+    print(f"\nFigure saved to: {os.path.join(output_dir, 'output.parameter_group_histograms.png')}")
+
+    # Optional: Print summary statistics
+    print("\n" + "="*70)
+    print("SUMMARY STATISTICS")
+    print("="*70)
+    for pargp in sorted(par_groups):
+        pars_in_group = par_data[par_data['pargp'] == pargp].index.tolist()
+        if len(pars_in_group) == 0:
+            continue
+
+        prior_vals = pr_pe.loc[:, pars_in_group].values.flatten()
+        posterior_vals = pt_pe.loc[:, pars_in_group].values.flatten()
+
+        print(f"\n{pargp} ({len(pars_in_group)} parameters):")
+        print(f"  Prior:     mean={np.mean(prior_vals):.4f}, std={np.std(prior_vals):.4f}")
+        print(f"  Posterior: mean={np.mean(posterior_vals):.4f}, std={np.std(posterior_vals):.4f}")
+        print(f"  Std reduction: {(1 - np.std(posterior_vals)/np.std(prior_vals))*100:.1f}%")
+
