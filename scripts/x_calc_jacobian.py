@@ -4,11 +4,11 @@ import numpy as np
 import pyemu
 import matplotlib.pyplot as plt
 
-run_name = 'local_run28'
+run_name = 'local_run31'
 
-Y_sim_fn = f"models//{run_name}//pest//master_ies_prior//{run_name}.0.obs.csv"
-B_fn = f"models//{run_name}//pest//master_ies_prior//{run_name}.0.par.csv"
-pst_fn = f"models//{run_name}//pest//master_ies_prior//{run_name}.pst"
+Y_sim_fn = f"models//{run_name}//pest//master_ies//{run_name}.0.obs.csv"
+B_fn = f"models//{run_name}//pest//master_ies//{run_name}.0.par.csv"
+pst_fn = f"models//{run_name}//pest//master_ies//{run_name}.pst"
 
 Y_df = pd.read_csv(Y_sim_fn, index_col=0)
 B_df = pd.read_csv(B_fn, index_col=0)

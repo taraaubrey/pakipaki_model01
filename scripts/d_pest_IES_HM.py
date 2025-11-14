@@ -11,7 +11,7 @@ def main():
     pst = pyemu.Pst(os.path.join(TEMP_DIR, pst_name))
     pst.pestpp_options.update(PEST_PP_OPTIONS)
     pst.control_data.noptmax = NOPTMAX
-    pst.svd_data.maxsing = 120
+    pst.svd_data.maxsing = MAXSING
     pst.write(os.path.join(TEMP_DIR, pst_name))
     
     # start ies

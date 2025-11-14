@@ -469,18 +469,18 @@ def main():
             i = int(row['i'])
             j = int(row['j'])
             kper = int(row['kper'])
-            # idom = ib[0, i-1, j-1]
+            idom = ib[0, i-1, j-1]
             if (kper < 3):
                 pst.observation_data.at[row.name, 'obsval'] = heads[i, j]
                 pst.observation_data.at[row.name, 'standard_deviation'] = heads_std[i, j]
                 pst.observation_data.at[row.name, 'weight'] = heads_weight[i, j]
                 pst.observation_data.at[row.name, 'obgnme'] = 'less_' + row['obgnme']
-            # if idom == 2: # proximal to spring (less certain about heads here & but more penalty for being over top + 1m)
-            #     if (kper < 3) & (i % 5) & (j % 5):
-            #         pst.observation_data.at[row.name, 'obsval'] = heads[i, j]
-            #         pst.observation_data.at[row.name, 'standard_deviation'] = heads_std[i, j]
-            #         pst.observation_data.at[row.name, 'weight'] = 1/(heads_std[i, j]/4)
-            #         pst.observation_data.at[row.name, 'obgnme'] = 'less_' + row['obgnme']
+            
+            if idom == 1: # zone away from the spring
+                if (kper < 3) & (i % 8 == 0) & (j % 8 == 0):
+                    pst.observation_data.at[row.name, 'obsval'] = heads[i, j] - (HEAD_offset*2) # 1m below ground level
+                    pst.observation_data.at[row.name, 'standard_deviation'] = heads_std[i, j]*20
+                    pst.observation_data.at[row.name, 'weight'] = 1/(heads_std[i, j]*20)
             # else: # elsewhere in the model domain (less penalty on heads here; more uncertain about heads here)
             #     if (kper < 3) & (i % 10) & (j % 10):
             #         pst.observation_data.at[row.name, 'obsval'] = heads[i, j]
