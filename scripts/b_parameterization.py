@@ -469,12 +469,26 @@ def main():
             i = int(row['i'])
             j = int(row['j'])
             kper = int(row['kper'])
-
-            if kper < 3: # only first 54 time steps have truth data
+            # idom = ib[0, i-1, j-1]
+            if (kper < 3):
                 pst.observation_data.at[row.name, 'obsval'] = heads[i, j]
                 pst.observation_data.at[row.name, 'standard_deviation'] = heads_std[i, j]
                 pst.observation_data.at[row.name, 'weight'] = heads_weight[i, j]
                 pst.observation_data.at[row.name, 'obgnme'] = 'less_' + row['obgnme']
+            # if idom == 2: # proximal to spring (less certain about heads here & but more penalty for being over top + 1m)
+            #     if (kper < 3) & (i % 5) & (j % 5):
+            #         pst.observation_data.at[row.name, 'obsval'] = heads[i, j]
+            #         pst.observation_data.at[row.name, 'standard_deviation'] = heads_std[i, j]
+            #         pst.observation_data.at[row.name, 'weight'] = 1/(heads_std[i, j]/4)
+            #         pst.observation_data.at[row.name, 'obgnme'] = 'less_' + row['obgnme']
+            # else: # elsewhere in the model domain (less penalty on heads here; more uncertain about heads here)
+            #     if (kper < 3) & (i % 10) & (j % 10):
+            #         pst.observation_data.at[row.name, 'obsval'] = heads[i, j]
+            #         pst.observation_data.at[row.name, 'standard_deviation'] = heads_std[i, j]
+            #         pst.observation_data.at[row.name, 'weight'] = heads_weight[i, j]
+            #         # pst.observation_data.at[row.name, 'obgnme'] = 'less_' + row['obgnme']
+            
+
 
         elif obgnme == 'arr-confq':
             kper = int(row['kper'])
@@ -537,89 +551,12 @@ def main():
 
     # PARAMETER COVARIANCE ---------------------------------------------
     cov = pf.build_prior(fmt='coo', filename=os.path.join(TEMP_DIR, "prior_cov.jcb"))
-
-    # cov = pyemu.Cov.from_parameter_data(pst)
-
-    # # Add cross-covariance between ghb-conf and ghb-aw HEAD parameters
-    # # (conductance parameters remain uncorrelated)
-    # print("Adding cross-covariance between ghb-conf and ghb-aw head parameters...")
-
-    # # Get all parameter names
-    # par_names = pst.parameter_data.index.tolist()
-
-    # # Identify ghb-conf head parameters (exclude conductance)
-    # conf_head_pars = [p for p in par_names if 'ghb-conf' in p and 'head' in p]
-    # conf_head_pars += [p for p in par_names if 'ghb-ts-conf' in p]
-
-    # # Identify ghb-aw head parameters (exclude conductance)
-    # aw_head_pars = [p for p in par_names if 'ghb-aw' in p and 'head' in p]
-    # aw_head_pars += [p for p in par_names if 'ghb-ts-aw' in p]
-
-    # print(f"Found {len(conf_head_pars)} conf head parameters and {len(aw_head_pars)} aw head parameters")
-
-    # # Set correlation coefficient
-    # correlation = 0.6
-
-    # cov_copy = cov.x.copy()
-    # # Get parameter standard deviations from the covariance matrix diagonal
-    # par_std = {}
-    # for i, par_name in enumerate(cov.row_names):
-    #     par_std[par_name] = np.sqrt(cov_copy[i, i])
-
-    # # Create index mapping for covariance matrix
-    # name_to_idx = {name: i for i, name in enumerate(cov.row_names)}
-
-    # # Helper function to extract indices from parameter name
-    # def extract_indices(par_name):
-    #     """Extract idx0:idx1:idx2 from parameter name, or return None if not present"""
-    #     # Look for pattern like idx0:idx1:idx2 in the parameter name
-    #     match = re.search(r'idx(\d+):idx(\d+):idx(\d+)', par_name)
-    #     if match:
-    #         return (match.group(1), match.group(2), match.group(3))
-    #     return None
-
-    # # Create dictionaries mapping indices to parameter names for faster lookup
-    # conf_by_indices = {}
-    # for par in conf_head_pars:
-    #     indices = extract_indices(par)
-    #     if indices and par in name_to_idx:
-    #         conf_by_indices[indices] = par
-
-    # aw_by_indices = {}
-    # for par in aw_head_pars:
-    #     indices = extract_indices(par)
-    #     if indices and par in name_to_idx:
-    #         aw_by_indices[indices] = par
-
-    # # Set cross-covariance only between parameters with matching indices
-    # n_cross_cov = 0
-    # for indices, conf_par in conf_by_indices.items():
-    #     # Check if there's a matching aw parameter with same indices
-    #     if indices in aw_by_indices:
-    #         aw_par = aw_by_indices[indices]
-
-    #         if conf_par not in par_std or aw_par not in par_std:
-    #             continue
-
-    #         idx_conf = name_to_idx[conf_par]
-    #         idx_aw = name_to_idx[aw_par]
-
-    #         # Calculate cross-covariance: cov[i,j] = correlation * std[i] * std[j]
-    #         cross_cov_value = correlation * par_std[conf_par] * par_std[aw_par]
-
-    #         # Set symmetric entries in covariance matrix
-    #         cov.x[idx_conf, idx_aw] = cross_cov_value
-    #         cov.x[idx_aw, idx_conf] = cross_cov_value
-    #         n_cross_cov += 1
-
-    # print(f"Set {n_cross_cov} cross-covariance terms with correlation = {correlation}")
-    # print(f"(Only correlated parameters with matching spatial indices)")
-
     # Save covariance matrix to file
     cov_file = os.path.join(TEMP_DIR, 'prior_cov.jcb')
     cov.to_binary(cov_file)
     print(f"Saved covariance matrix to {cov_file}")
-
+    
+    # OBSERVATION COVARIANCE ---------------------------------------------
 
 
     # WRITE PEST -------------------------------------------------------

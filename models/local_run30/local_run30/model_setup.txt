@@ -135,24 +135,24 @@ HEAD_std = 0.025  # m  top heads +/- 0.5 cm (assume 4 std is full range) 1/4
 PK4_std = 0.01  # m +/- 2 cm (assume 4 std is full range) 0.04/4
 
 PHI_OBS = {
-        'arr-h': 0.1, # head obs
+        'arr-h': 0.2, # head obs
         'arr-confq': 0.1, # flux obs
         'budget': 0.15, # flux obs
         'arr-spq': 0.15, # flux obs
         'arr-awq': 0.15, # flux obs
         'ts-heads': 0.15, # head obs
-        'recession': 0.15, # head obs
+        'recession': 0.12, # head obs
 }
 
 # Pest options
-NREALS = 300  # number of realizations for parameterization
+NREALS = 250  # number of realizations for parameterization
 NREALS_PRIOR = 50  # number of realizations for parameterization
-REINFLATE_ITERS = [5, 5, 7]  # iterations at which to reinflate
+REINFLATE_ITERS = 5, 5  # iterations at which to reinflate
 
 if REINFLATE_ITERS:
-    NOPTMAX = sum(REINFLATE_ITERS)  # number of optimization iterations
+    NOPTMAX = sum(REINFLATE_ITERS) - 1  # number of optimization iterations
 else:
-    NOPTMAX = 3 
+    NOPTMAX = 5 
 
 PEST_PP_OPTIONS = {
     'ies_num_reals': NREALS,
@@ -165,6 +165,6 @@ PEST_PP_OPTIONS = {
     'par_sigma_range': 6,
     # 'ies_save_rescov': True, doesn't scale beyond 20,000 nnzobs
     # 'ies_reinflate_factor': 1,
-    'ies_n_iter_reinflate': REINFLATE_ITERS,
+    # 'ies_n_iter_reinflate': REINFLATE_ITERS,
     "ies_reg_factor": 0.25
 }

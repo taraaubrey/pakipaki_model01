@@ -152,41 +152,73 @@ def load_data(paths, run_name, last_iter=None, use_prior_only=False, restart=Fal
 
     return data
 
-def subset_realizations_by_phi(data, min_threshold=100):
+def subset_realizations_by_phi(data, min_threshold=100, from_iter=None):
     phi = pd.read_csv(data['f_act'], index_col=0)
-
-    # Convert to numpy array, flatten, get argsort, then convert back to DataFrame indexes
-    flat_values = phi.iloc[:,5:-1].values.flatten()
+    if from_iter is None:
+        phi_filter = phi.iloc[:,5:-1]
+    else:
+        phi_filter = phi.iloc[from_iter,5:-1]
+    
+    flat_values = phi_filter.values.flatten()
     flat_indexes = np.argsort(flat_values)[:min_threshold]
-
     # Convert flat indexes back to DataFrame row/column positions
     rows, cols = np.unravel_index(flat_indexes, phi.iloc[:,5:-1].shape)
     int_rows = [int(row) for row in rows] # iterations
     int_cols = [int(col) for col in cols] # realizations
     indexes = list(zip(int_rows, int_cols))
-    vals = [int(phi.iloc[:,5:-1].iloc[r, c]) for r, c in indexes]
+    
+    if from_iter:
+        # adjust row indexes to match original dataframe
+        vals = phi_filter.iloc[cols].values.tolist()
+    else:
+        vals = [int(phi_filter.iloc[r, c]) for r, c in indexes]
     return indexes, vals
 
-def get_subset_ensembles(paths, run_name, subset_indexes):
+def subset_realizations_by_mean_heads(data, oname_prefix):
+    desired_cols = [col for col in data['headers'] if col.startswith(f'oname:{oname_prefix}')]
+    
+    rdf = pd.read_csv(data['pr_oe_fn'], usecols=desired_cols, index_col=0)
+
+    arrs = get_array_statistics(rdf)
+
+    realization_mean = [(i, np.mean([n for n in list(arr.flatten()) if ~np.isnan(n)])) for i, arr in enumerate(arrs[(1,1)]['pr_stack'])]
+    means = [s[1] for s in realization_mean if (s[1] < 15)]
+    subset_indexes = [(0, s[0]) for s in realization_mean if (s[1] < 15)]
+    return subset_indexes, means
+
+def get_subset_ensembles(paths, data, run_name, subset_indexes, head_filter=False):
     m_d = paths['m_d']
     unique_iterations = set(i[0] for i in subset_indexes)
+    desired_cols = [col for col in data['headers'] if col.startswith(f'oname:arr-h')]
 
     oe_list=[]
     pe_list=[]
+
     for iter in unique_iterations:
         oe_fn = os.path.join(m_d, f"{run_name}.{iter}.obs.csv")
         pe_fn = os.path.join(m_d, f"{run_name}.{iter}.par.csv")
         # get the realization indexes
         reals = [i[1] for i in subset_indexes if i[0] == iter]
+        reals = [str(r) for r in reals]
+
         obs = pd.read_csv(
             oe_fn,
             index_col=0)
+        
+        if head_filter:
+            h_df = obs[desired_cols]
+            h_means = h_df.mean(axis=1)
+            # if h_means > 20 m, skip remove this realization
+            valid_reals = h_means[h_means > 20].index.map(str).to_list()
+            n_reals = len(reals)
+            reals = list(set(reals).intersection(set(valid_reals)))
+            print(f'Iteration {iter}: {1-(n_reals/len(reals))*100} percent filtered out by head thresholding. {len(reals)} from this iteration.')
+
         pars = pd.read_csv(
             pe_fn,
             index_col=0)
-        
+
         #convert index to string
-        reals = [str(r) for r in reals]
         obs.index = obs.index.map(str)
         pars.index = pars.index.map(str)
 
@@ -368,6 +400,11 @@ def plot_timeseries_obs(data, subset_oe, output, truth_file=None, col_startswith
         df_pt_kper2 = ts_pt_df[mask].sort_values('kstp').replace(-999, np.nan)
         df_obsnoise_kper2 = ts_noise_df[mask].sort_values('kstp').replace(-999, np.nan)
 
+        # make columns string
+        df_pr_kper2.columns = df_pr_kper2.columns.map(str)
+        df_pt_kper2.columns = df_pt_kper2.columns.map(str)
+        df_obsnoise_kper2.columns = df_obsnoise_kper2.columns.map(str)
+
         value_cols = [col for col in df_pt_kper2.columns if col not in ['time', 'kper', 'kstp', 'usecol']]
 
         # Calculate y-limits
@@ -535,20 +572,20 @@ def plot_timeseries_obs(data, subset_oe, output, truth_file=None, col_startswith
         # Determine shared bins for consistent plotting across both histograms
         all_vals = list(df_pr_kper2_vals) + list(df_pt_kper2_vals) + list(df_pr_kper4_vals) + list(df_pt_kper4_vals)
         if len(all_vals) > 0:
-            bins = np.linspace(np.percentile(all_vals, 2.5), np.percentile(all_vals, 97.5), 15)
+            bins = np.linspace(np.min(all_vals), np.max(all_vals), 20)
         else:
-            bins = 15
+            bins = 20
 
         # MIDDLE PLOT: Histogram for first half
         ax_hist_kper12 = axes2[idx][1]
 
         if len(df_pr_kper2_vals) > 0:
-            ax_hist_kper12.hist(df_pr_kper2_vals, bins=bins, alpha=0.5, color='lightgrey',
+            ax_hist_kper12.hist(df_pr_kper2_vals, bins=20, alpha=0.5, color='lightgrey',
                         orientation='horizontal', density=True, edgecolor='grey', linewidth=0.8,
                         label='Prior')
 
         if len(df_pt_kper2_vals) > 0:
-            ax_hist_kper12.hist(df_pt_kper2_vals, bins=bins, alpha=0.6, color='lightblue',
+            ax_hist_kper12.hist(df_pt_kper2_vals, bins=20, alpha=0.6, color='lightblue',
                         orientation='horizontal', density=True, edgecolor='blue', linewidth=0.8,
                         label='Posterior')
 
@@ -572,12 +609,12 @@ def plot_timeseries_obs(data, subset_oe, output, truth_file=None, col_startswith
         ax_hist_kper34 = axes2[idx][2]
 
         if len(df_pr_kper4_vals) > 0:
-            ax_hist_kper34.hist(df_pr_kper4_vals, bins=bins, alpha=0.5, color='darkgrey',
+            ax_hist_kper34.hist(df_pr_kper4_vals, bins=20, alpha=0.5, color='darkgrey',
                         orientation='horizontal', density=True, edgecolor='black', linewidth=0.8,
                         label='Prior')
 
         if len(df_pt_kper4_vals) > 0:
-            ax_hist_kper34.hist(df_pt_kper4_vals, bins=bins, alpha=0.6, color='darkblue',
+            ax_hist_kper34.hist(df_pt_kper4_vals, bins=20, alpha=0.6, color='darkblue',
                         orientation='horizontal', density=True, edgecolor='navy', linewidth=0.8,
                         label='Posterior')
 
@@ -687,7 +724,7 @@ def plot_budget_histogram(data, output, col_startswith='budget'):
         plt.close()
 
 
-def plot_budgets(data, output, col_startswith='budget'):
+def plot_budgets(data, subset_oe=None, output=None, col_startswith='budget'):
     """Plot budget components with subplots for each usecol, showing boxplots by kper.
 
     Creates a figure with 1 row of subplots (one per usecol), where each subplot
@@ -699,7 +736,6 @@ def plot_budgets(data, output, col_startswith='budget'):
         col_startswith: Prefix for budget columns (default: 'budget')
     """
     headers = data['headers']
-    pt_oe_fn = data['pt_oe_fn']
 
     # Get budget observations
     desired_cols = [col for col in headers if col.startswith(f'oname:{col_startswith}')]
@@ -709,7 +745,11 @@ def plot_budgets(data, output, col_startswith='budget'):
         return
 
     # Read budget data
-    pt_oe_budget = pd.read_csv(pt_oe_fn, usecols=desired_cols)
+    if subset_oe is not None:
+        pt_oe_budget = subset_oe.loc[:, desired_cols]
+    else:
+        pt_oe_fn = data['pt_oe_fn']
+        pt_oe_budget = pd.read_csv(pt_oe_fn, usecols=desired_cols)
 
     # Format the dataframe to extract usecol and kper
     budget_df = pt_oe_budget.transpose()
@@ -747,9 +787,9 @@ def plot_budgets(data, output, col_startswith='budget'):
                 sw_data.append(new_row)
 
     # Append surface water data to budget_df
-    if sw_data:
-        sw_df = pd.DataFrame(sw_data)
-        budget_df = pd.concat([budget_df, sw_df], ignore_index=True)
+    # if sw_data:
+    #     sw_df = pd.DataFrame([df.reset_index() for df in sw_data])
+    #     budget_df = pd.concat([budget_df, sw_df], ignore_index=True)
 
     unique_kpers = sorted(budget_df['kper'].unique())
 
@@ -1312,6 +1352,20 @@ def plot_pname_array_statistics(data, output, pname_prefix, array_param=False):
     plt.savefig(fig_fn, dpi=300, bbox_inches='tight')
     plt.close()    
 
+
+def get_array_statistics(rdf):
+    extract_dict = {
+        'i': extract_i,
+        'j': extract_j,
+        'kper': extract_kper,
+        'kstp': extract_kstp,
+    }
+
+    reals = rdf.index.tolist()
+
+    df = extract_index(rdf, extract_dict)
+    
+    return get_arrs_stats(df, reals, is_kper=True)
 
 def plot_oname_array_statistics(data, subset_pe, output, oname_prefix):
     desired_cols = [col for col in data['headers'] if col.startswith(f'oname:{oname_prefix}')]

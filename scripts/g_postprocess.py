@@ -18,7 +18,7 @@ def main():
     """Main post-processing function."""
 
     run_name = 'local_run30'
-    last_iter = 19
+    last_iter = 9
 
     # Setup paths
     paths = setup_paths(run_name, m_d_str='master_ies', m_d_prior='master_ies')
@@ -35,16 +35,19 @@ def main():
     
     output_dir = paths['output']
 
-    subset_indexes, phis = subset_realizations_by_phi(data, min_threshold=100)
+    # subset_indexes, means = subset_realizations_by_mean_heads(data, 'arr-h')
+    subset_indexes, phis = subset_realizations_by_phi(data, min_threshold=300)
+    # subset_indexes, means = subset_realizations_by_mean_heads(data, 'arr-h', from_iter=9)
+    
     subset_oe_fn = os.path.join(paths['output'], 'subset_oe.csv')
     subset_pe_fn = os.path.join(paths['output'], 'subset_pe.csv')
     if not os.path.exists(subset_oe_fn):
-        subset_oe, subset_pe = get_subset_ensembles(paths, run_name, subset_indexes)
+        subset_oe, subset_pe = get_subset_ensembles(paths, data, run_name, subset_indexes, head_filter=True)
     else:
         subset_oe = pd.read_csv(subset_oe_fn)
         subset_pe = pd.read_csv(subset_pe_fn)
 
-    plot_oname_array_statistics(data, subset_oe, output_dir, 'arr-h')
+    # plot_oname_array_statistics(data, subset_oe, output_dir, 'arr-h')
 
     # Generate figures
     print("\n--- Generating Figures ---\n")
@@ -55,7 +58,7 @@ def main():
     plot_phi_boxplot(data, output_dir)
 
     # plot parameter distributions
-    plot_parameter_distributions(data, output_dir, subset_pe)
+    # plot_parameter_distributions(data, output_dir, subset_pe)
     plot_parameter_distributions_subset(data, output_dir, subset_pe)
     
     print("\n2. Prediction plots...")
@@ -68,7 +71,7 @@ def main():
         truth_file='truth/output.sample_heads.truth.csv', 
         col_startswith='ts-heads')
     
-    plot_budgets(data, output_dir, col_startswith='budget')
+    plot_budgets(data, subset_oe, output_dir, col_startswith='budget')
     plot_budget_histogram(data, output_dir, col_startswith='budget')
 
     # print("\n3. Parameter histogram plots...")

@@ -1,612 +1,614 @@
-2025-11-10 19:31:54.147961 starting: opening PstFrom.log for logging
-2025-11-10 19:31:54.147961 starting PstFrom process
-2025-11-10 19:31:54.147961 starting: setting up dirs
-2025-11-10 19:31:54.147961 starting: copying original_d 'models\local_run30\pest\local_run30' to new_d 'models\local_run30\pest\local_run30_template'
-2025-11-10 19:31:54.520092 finished: copying original_d 'models\local_run30\pest\local_run30' to new_d 'models\local_run30\pest\local_run30_template' took: 0:00:00.372131
-2025-11-10 19:31:54.522058 finished: setting up dirs took: 0:00:00.374097
-2025-11-10 19:31:54.609732 starting: adding grid type m style parameters for file(s) ['local_run30.npf_k_layer1.txt']
-2025-11-10 19:31:54.609732 starting: using geostruct:name:struct1,nugget:0.0,structures:
+2025-11-13 19:44:07.122278 starting: opening PstFrom.log for logging
+2025-11-13 19:44:07.122278 starting PstFrom process
+2025-11-13 19:44:07.122278 starting: setting up dirs
+2025-11-13 19:44:07.122278 starting: removing existing new_d 'models\local_run30\pest\local_run30_template'
+2025-11-13 19:44:07.233966 finished: removing existing new_d 'models\local_run30\pest\local_run30_template' took: 0:00:00.111688
+2025-11-13 19:44:07.233966 starting: copying original_d 'models\local_run30\pest\local_run30' to new_d 'models\local_run30\pest\local_run30_template'
+2025-11-13 19:44:07.522212 finished: copying original_d 'models\local_run30\pest\local_run30' to new_d 'models\local_run30\pest\local_run30_template' took: 0:00:00.288246
+2025-11-13 19:44:07.522212 finished: setting up dirs took: 0:00:00.399934
+2025-11-13 19:44:07.606449 starting: adding grid type m style parameters for file(s) ['local_run30.npf_k_layer1.txt']
+2025-11-13 19:44:07.606449 starting: using geostruct:name:struct1,nugget:0.0,structures:
 name:fine_gs,contribution:1.0,a:100.0,anisotropy:1.0,bearing:0.0
 
-2025-11-10 19:31:54.609732 starting: loading array models\local_run30\pest\local_run30_template\local_run30.npf_k_layer1.txt
-2025-11-10 19:31:54.644808 finished: loading array models\local_run30\pest\local_run30_template\local_run30.npf_k_layer1.txt took: 0:00:00.035076
-2025-11-10 19:31:54.644808 loaded array 'models\local_run30\pest\local_run30\local_run30.npf_k_layer1.txt' of shape (47, 57)
-2025-11-10 19:31:54.648888 starting: writing array-style template file 'models\local_run30\pest\local_run30_template\npfklayer1-gr_inst0_grid.csv.tpl'
-2025-11-10 19:31:54.648888 starting: writing template file models\local_run30\pest\local_run30_template\npfklayer1-gr_inst0_grid.csv.tpl for ['npfklayer1-gr_inst:0']
-2025-11-10 19:31:54.660687 finished: writing template file models\local_run30\pest\local_run30_template\npfklayer1-gr_inst0_grid.csv.tpl for ['npfklayer1-gr_inst:0'] took: 0:00:00.011799
-2025-11-10 19:31:54.660687 starting: writing array-based template file 'models\local_run30\pest\local_run30_template\npfklayer1-gr_inst0_grid.csv.tpl'
-2025-11-10 19:31:54.660687 saving zone array models\local_run30\pest\local_run30_template\npfklayer1-gr_inst0_grid.csv.zone for tpl file models\local_run30\pest\local_run30_template\npfklayer1-gr_inst0_grid.csv.tpl
-2025-11-10 19:31:54.679238 finished: adding grid type m style parameters for file(s) ['local_run30.npf_k_layer1.txt'] took: 0:00:00.069506
-2025-11-10 19:31:54.679238 starting: adding pilotpoints type m style parameters for file(s) ['local_run30.npf_k_layer1.txt']
-2025-11-10 19:31:54.679238 starting: using geostruct:name:struct1,nugget:0.0,structures:
+2025-11-13 19:44:07.606449 starting: loading array models\local_run30\pest\local_run30_template\local_run30.npf_k_layer1.txt
+2025-11-13 19:44:07.632233 finished: loading array models\local_run30\pest\local_run30_template\local_run30.npf_k_layer1.txt took: 0:00:00.025784
+2025-11-13 19:44:07.632233 loaded array 'models\local_run30\pest\local_run30\local_run30.npf_k_layer1.txt' of shape (47, 57)
+2025-11-13 19:44:07.632233 starting: writing array-style template file 'models\local_run30\pest\local_run30_template\npfklayer1-gr_inst0_grid.csv.tpl'
+2025-11-13 19:44:07.632233 starting: writing template file models\local_run30\pest\local_run30_template\npfklayer1-gr_inst0_grid.csv.tpl for ['npfklayer1-gr_inst:0']
+2025-11-13 19:44:07.646605 finished: writing template file models\local_run30\pest\local_run30_template\npfklayer1-gr_inst0_grid.csv.tpl for ['npfklayer1-gr_inst:0'] took: 0:00:00.014372
+2025-11-13 19:44:07.646605 starting: writing array-based template file 'models\local_run30\pest\local_run30_template\npfklayer1-gr_inst0_grid.csv.tpl'
+2025-11-13 19:44:07.646605 saving zone array models\local_run30\pest\local_run30_template\npfklayer1-gr_inst0_grid.csv.zone for tpl file models\local_run30\pest\local_run30_template\npfklayer1-gr_inst0_grid.csv.tpl
+2025-11-13 19:44:07.652157 finished: adding grid type m style parameters for file(s) ['local_run30.npf_k_layer1.txt'] took: 0:00:00.045708
+2025-11-13 19:44:07.652157 starting: adding pilotpoints type m style parameters for file(s) ['local_run30.npf_k_layer1.txt']
+2025-11-13 19:44:07.652157 starting: using geostruct:name:struct1,nugget:0.0,structures:
 name:main_gs,contribution:1.0,a:1000.0,anisotropy:1.0,bearing:0.0
 
-2025-11-10 19:31:54.679238 starting: loading array models\local_run30\pest\local_run30_template\local_run30.npf_k_layer1.txt
-2025-11-10 19:31:54.679238 finished: loading array models\local_run30\pest\local_run30_template\local_run30.npf_k_layer1.txt took: 0:00:00
-2025-11-10 19:31:54.679238 loaded array 'models\local_run30\pest\local_run30\local_run30.npf_k_layer1.txt' of shape (47, 57)
-2025-11-10 19:31:54.687805 starting: writing array-style template file 'models\local_run30\pest\local_run30_template\npfklayer1-pp_inst0_pilotpoints.csv.tpl'
-2025-11-10 19:31:54.687805 starting: setting up pilot point parameters
-2025-11-10 19:31:54.687805 'use_pp_zones' not set in pp_options, Setting to default value: [False]
-2025-11-10 19:31:54.687805 'spatial_reference' not set in pp_options, Setting to default value: [None]
-2025-11-10 19:31:54.687805 'try_use_ppu' not set in pp_options, Setting to default value: [True]
-2025-11-10 19:31:54.687805 'num_threads' not set in pp_options, Setting to default value: [10]
-2025-11-10 19:31:54.687805 'minpts_interp' not set in pp_options, Setting to default value: [1]
-2025-11-10 19:31:54.687805 'maxpts_interp' not set in pp_options, Setting to default value: [20]
-2025-11-10 19:31:54.687805 'search_radius' not set in pp_options, Setting to default value: [10000000000.0]
-2025-11-10 19:31:54.687805 'fill_value' not set in pp_options, Setting to default value: [1.0]
-2025-11-10 19:31:54.687805 'lower_limit' not set in pp_options, Setting to default value: [1e-30]
-2025-11-10 19:31:54.687805 'upper_limit' not set in pp_options, Setting to default value: [1e+30]
-2025-11-10 19:31:54.687805 WARNING: `use_ppu` requested but failed to import
+2025-11-13 19:44:07.652157 starting: loading array models\local_run30\pest\local_run30_template\local_run30.npf_k_layer1.txt
+2025-11-13 19:44:07.656689 finished: loading array models\local_run30\pest\local_run30_template\local_run30.npf_k_layer1.txt took: 0:00:00.004532
+2025-11-13 19:44:07.656689 loaded array 'models\local_run30\pest\local_run30\local_run30.npf_k_layer1.txt' of shape (47, 57)
+2025-11-13 19:44:07.659217 starting: writing array-style template file 'models\local_run30\pest\local_run30_template\npfklayer1-pp_inst0_pilotpoints.csv.tpl'
+2025-11-13 19:44:07.659217 starting: setting up pilot point parameters
+2025-11-13 19:44:07.659217 'use_pp_zones' not set in pp_options, Setting to default value: [False]
+2025-11-13 19:44:07.659217 'spatial_reference' not set in pp_options, Setting to default value: [None]
+2025-11-13 19:44:07.659217 'try_use_ppu' not set in pp_options, Setting to default value: [True]
+2025-11-13 19:44:07.659217 'num_threads' not set in pp_options, Setting to default value: [10]
+2025-11-13 19:44:07.659217 'minpts_interp' not set in pp_options, Setting to default value: [1]
+2025-11-13 19:44:07.659217 'maxpts_interp' not set in pp_options, Setting to default value: [20]
+2025-11-13 19:44:07.659217 'search_radius' not set in pp_options, Setting to default value: [10000000000.0]
+2025-11-13 19:44:07.659217 'fill_value' not set in pp_options, Setting to default value: [1.0]
+2025-11-13 19:44:07.659217 'lower_limit' not set in pp_options, Setting to default value: [1e-30]
+2025-11-13 19:44:07.659217 'upper_limit' not set in pp_options, Setting to default value: [1e+30]
+2025-11-13 19:44:07.659217 WARNING: `use_ppu` requested but failed to import
 falling back to pyemu pp methods
-2025-11-10 19:31:54.687805 No spatial reference (containing cell spacing) passed.
-2025-11-10 19:31:54.687805 OK - using spatial reference in parent object.
-2025-11-10 19:31:54.687805 trying to load pilot point location info from shapefile 'models\local_run30\pest\local_run30_template\pilot_points.shp'
-2025-11-10 19:31:54.809030 pilot points found in file 'pilot_points.shp' will be transferred to 'npfklayer1-pp_inst0pp.dat' for parameterization
-2025-11-10 19:31:54.809030 WARNING: 'zone' col not found in pp dataframe, adding generic zone
-2025-11-10 19:31:54.820609 74 pilot point parameters created
-2025-11-10 19:31:54.820609 pilot point 'pargp':n,p,f,k,l,a,y,e,r,1,-,p,p
-2025-11-10 19:31:54.820609 finished: setting up pilot point parameters took: 0:00:00.132804
-2025-11-10 19:31:54.828854 starting: calculating factors for pargp=npfklayer1-pp
-2025-11-10 19:31:54.828854 saving krige variance file:models\local_run30\pest\local_run30_template\npfklayer1-pp_inst0pp.var.dat
-2025-11-10 19:31:54.828854 saving krige factors file:models\local_run30\pest\local_run30_template\npfklayer1-pp_inst0pp.fac
-2025-11-10 19:32:18.779398 finished: calculating factors for pargp=npfklayer1-pp took: 0:00:23.950544
-2025-11-10 19:32:18.779398 starting: writing array-based template file 'models\local_run30\pest\local_run30_template\npfklayer1-pp_inst0pp.dat.tpl'
-2025-11-10 19:32:18.779398 saving zone array models\local_run30\pest\local_run30_template\npfklayer1-pp_inst0pp.dat.zone for tpl file models\local_run30\pest\local_run30_template\npfklayer1-pp_inst0pp.dat.tpl
-2025-11-10 19:32:18.797783 finished: adding pilotpoints type m style parameters for file(s) ['local_run30.npf_k_layer1.txt'] took: 0:00:24.118545
-2025-11-10 19:32:18.797783 starting: adding constant type m style parameters for file(s) ['local_run30.npf_k_layer1.txt']
-2025-11-10 19:32:18.797783 starting: loading array models\local_run30\pest\local_run30_template\local_run30.npf_k_layer1.txt
-2025-11-10 19:32:18.808227 finished: loading array models\local_run30\pest\local_run30_template\local_run30.npf_k_layer1.txt took: 0:00:00.010444
-2025-11-10 19:32:18.808227 loaded array 'models\local_run30\pest\local_run30\local_run30.npf_k_layer1.txt' of shape (47, 57)
-2025-11-10 19:32:18.817687 starting: writing array-style template file 'models\local_run30\pest\local_run30_template\npfklayer1-cn_inst0_constant.csv.tpl'
-2025-11-10 19:32:18.817687 starting: writing template file models\local_run30\pest\local_run30_template\npfklayer1-cn_inst0_constant.csv.tpl for ['npfklayer1-cn_inst:0']
-2025-11-10 19:32:18.838835 finished: writing template file models\local_run30\pest\local_run30_template\npfklayer1-cn_inst0_constant.csv.tpl for ['npfklayer1-cn_inst:0'] took: 0:00:00.021148
-2025-11-10 19:32:18.838835 starting: writing array-based template file 'models\local_run30\pest\local_run30_template\npfklayer1-cn_inst0_constant.csv.tpl'
-2025-11-10 19:32:18.838835 saving zone array models\local_run30\pest\local_run30_template\npfklayer1-cn_inst0_constant.csv.zone for tpl file models\local_run30\pest\local_run30_template\npfklayer1-cn_inst0_constant.csv.tpl
-2025-11-10 19:32:18.854660 finished: adding constant type m style parameters for file(s) ['local_run30.npf_k_layer1.txt'] took: 0:00:00.056877
-2025-11-10 19:32:18.854660 starting: adding grid type m style parameters for file(s) ['local_run30.sto_ss_layer1.txt']
-2025-11-10 19:32:18.854660 finished: using geostruct:name:struct1,nugget:0.0,structures:
+2025-11-13 19:44:07.661723 No spatial reference (containing cell spacing) passed.
+2025-11-13 19:44:07.661723 OK - using spatial reference in parent object.
+2025-11-13 19:44:07.661723 trying to load pilot point location info from shapefile 'models\local_run30\pest\local_run30_template\pilot_points.shp'
+2025-11-13 19:44:07.754587 pilot points found in file 'pilot_points.shp' will be transferred to 'npfklayer1-pp_inst0pp.dat' for parameterization
+2025-11-13 19:44:07.754587 WARNING: 'zone' col not found in pp dataframe, adding generic zone
+2025-11-13 19:44:07.770667 74 pilot point parameters created
+2025-11-13 19:44:07.770667 pilot point 'pargp':n,p,f,k,l,a,y,e,r,1,-,p,p
+2025-11-13 19:44:07.770667 finished: setting up pilot point parameters took: 0:00:00.111450
+2025-11-13 19:44:07.787391 starting: calculating factors for pargp=npfklayer1-pp
+2025-11-13 19:44:07.787391 saving krige variance file:models\local_run30\pest\local_run30_template\npfklayer1-pp_inst0pp.var.dat
+2025-11-13 19:44:07.787391 saving krige factors file:models\local_run30\pest\local_run30_template\npfklayer1-pp_inst0pp.fac
+2025-11-13 19:44:30.152227 finished: calculating factors for pargp=npfklayer1-pp took: 0:00:22.364836
+2025-11-13 19:44:30.152227 starting: writing array-based template file 'models\local_run30\pest\local_run30_template\npfklayer1-pp_inst0pp.dat.tpl'
+2025-11-13 19:44:30.152227 saving zone array models\local_run30\pest\local_run30_template\npfklayer1-pp_inst0pp.dat.zone for tpl file models\local_run30\pest\local_run30_template\npfklayer1-pp_inst0pp.dat.tpl
+2025-11-13 19:44:30.162411 finished: adding pilotpoints type m style parameters for file(s) ['local_run30.npf_k_layer1.txt'] took: 0:00:22.510254
+2025-11-13 19:44:30.162411 starting: adding constant type m style parameters for file(s) ['local_run30.npf_k_layer1.txt']
+2025-11-13 19:44:30.162411 starting: loading array models\local_run30\pest\local_run30_template\local_run30.npf_k_layer1.txt
+2025-11-13 19:44:30.164942 finished: loading array models\local_run30\pest\local_run30_template\local_run30.npf_k_layer1.txt took: 0:00:00.002531
+2025-11-13 19:44:30.164942 loaded array 'models\local_run30\pest\local_run30\local_run30.npf_k_layer1.txt' of shape (47, 57)
+2025-11-13 19:44:30.172028 starting: writing array-style template file 'models\local_run30\pest\local_run30_template\npfklayer1-cn_inst0_constant.csv.tpl'
+2025-11-13 19:44:30.172028 starting: writing template file models\local_run30\pest\local_run30_template\npfklayer1-cn_inst0_constant.csv.tpl for ['npfklayer1-cn_inst:0']
+2025-11-13 19:44:30.193719 finished: writing template file models\local_run30\pest\local_run30_template\npfklayer1-cn_inst0_constant.csv.tpl for ['npfklayer1-cn_inst:0'] took: 0:00:00.021691
+2025-11-13 19:44:30.193719 starting: writing array-based template file 'models\local_run30\pest\local_run30_template\npfklayer1-cn_inst0_constant.csv.tpl'
+2025-11-13 19:44:30.193719 saving zone array models\local_run30\pest\local_run30_template\npfklayer1-cn_inst0_constant.csv.zone for tpl file models\local_run30\pest\local_run30_template\npfklayer1-cn_inst0_constant.csv.tpl
+2025-11-13 19:44:30.208016 finished: adding constant type m style parameters for file(s) ['local_run30.npf_k_layer1.txt'] took: 0:00:00.045605
+2025-11-13 19:44:30.211665 starting: adding grid type m style parameters for file(s) ['local_run30.sto_ss_layer1.txt']
+2025-11-13 19:44:30.211665 finished: using geostruct:name:struct1,nugget:0.0,structures:
 name:fine_gs,contribution:1.0,a:100.0,anisotropy:1.0,bearing:0.0
- took: 0:00:24.244928
-2025-11-10 19:32:18.854660 starting: loading array models\local_run30\pest\local_run30_template\local_run30.sto_ss_layer1.txt
-2025-11-10 19:32:18.877999 finished: loading array models\local_run30\pest\local_run30_template\local_run30.sto_ss_layer1.txt took: 0:00:00.023339
-2025-11-10 19:32:18.877999 loaded array 'models\local_run30\pest\local_run30\local_run30.sto_ss_layer1.txt' of shape (47, 57)
-2025-11-10 19:32:18.887788 starting: writing array-style template file 'models\local_run30\pest\local_run30_template\stosslayer1-gr_inst0_grid.csv.tpl'
-2025-11-10 19:32:18.887788 starting: writing template file models\local_run30\pest\local_run30_template\stosslayer1-gr_inst0_grid.csv.tpl for ['stosslayer1-gr_inst:0']
-2025-11-10 19:32:18.909466 finished: writing template file models\local_run30\pest\local_run30_template\stosslayer1-gr_inst0_grid.csv.tpl for ['stosslayer1-gr_inst:0'] took: 0:00:00.021678
-2025-11-10 19:32:18.909466 starting: writing array-based template file 'models\local_run30\pest\local_run30_template\stosslayer1-gr_inst0_grid.csv.tpl'
-2025-11-10 19:32:18.909466 saving zone array models\local_run30\pest\local_run30_template\stosslayer1-gr_inst0_grid.csv.zone for tpl file models\local_run30\pest\local_run30_template\stosslayer1-gr_inst0_grid.csv.tpl
-2025-11-10 19:32:18.929325 finished: adding grid type m style parameters for file(s) ['local_run30.sto_ss_layer1.txt'] took: 0:00:00.074665
-2025-11-10 19:32:18.929325 starting: adding pilotpoints type m style parameters for file(s) ['local_run30.sto_ss_layer1.txt']
-2025-11-10 19:32:18.929325 finished: using geostruct:name:struct1,nugget:0.0,structures:
+ took: 0:00:22.605216
+2025-11-13 19:44:30.211665 starting: loading array models\local_run30\pest\local_run30_template\local_run30.sto_ss_layer1.txt
+2025-11-13 19:44:30.223963 finished: loading array models\local_run30\pest\local_run30_template\local_run30.sto_ss_layer1.txt took: 0:00:00.012298
+2025-11-13 19:44:30.223963 loaded array 'models\local_run30\pest\local_run30\local_run30.sto_ss_layer1.txt' of shape (47, 57)
+2025-11-13 19:44:30.242175 starting: writing array-style template file 'models\local_run30\pest\local_run30_template\stosslayer1-gr_inst0_grid.csv.tpl'
+2025-11-13 19:44:30.242175 starting: writing template file models\local_run30\pest\local_run30_template\stosslayer1-gr_inst0_grid.csv.tpl for ['stosslayer1-gr_inst:0']
+2025-11-13 19:44:30.262228 finished: writing template file models\local_run30\pest\local_run30_template\stosslayer1-gr_inst0_grid.csv.tpl for ['stosslayer1-gr_inst:0'] took: 0:00:00.020053
+2025-11-13 19:44:30.262228 starting: writing array-based template file 'models\local_run30\pest\local_run30_template\stosslayer1-gr_inst0_grid.csv.tpl'
+2025-11-13 19:44:30.262228 saving zone array models\local_run30\pest\local_run30_template\stosslayer1-gr_inst0_grid.csv.zone for tpl file models\local_run30\pest\local_run30_template\stosslayer1-gr_inst0_grid.csv.tpl
+2025-11-13 19:44:30.273652 finished: adding grid type m style parameters for file(s) ['local_run30.sto_ss_layer1.txt'] took: 0:00:00.061987
+2025-11-13 19:44:30.273652 starting: adding pilotpoints type m style parameters for file(s) ['local_run30.sto_ss_layer1.txt']
+2025-11-13 19:44:30.273652 finished: using geostruct:name:struct1,nugget:0.0,structures:
 name:main_gs,contribution:1.0,a:1000.0,anisotropy:1.0,bearing:0.0
- took: 0:00:24.250087
-2025-11-10 19:32:18.933877 starting: loading array models\local_run30\pest\local_run30_template\local_run30.sto_ss_layer1.txt
-2025-11-10 19:32:18.937932 finished: loading array models\local_run30\pest\local_run30_template\local_run30.sto_ss_layer1.txt took: 0:00:00.004055
-2025-11-10 19:32:18.941969 loaded array 'models\local_run30\pest\local_run30\local_run30.sto_ss_layer1.txt' of shape (47, 57)
-2025-11-10 19:32:18.949747 starting: writing array-style template file 'models\local_run30\pest\local_run30_template\stosslayer1-pp_inst0_pilotpoints.csv.tpl'
-2025-11-10 19:32:18.949747 starting: setting up pilot point parameters
-2025-11-10 19:32:18.949747 'use_pp_zones' not set in pp_options, Setting to default value: [False]
-2025-11-10 19:32:18.949747 'spatial_reference' not set in pp_options, Setting to default value: [None]
-2025-11-10 19:32:18.949747 'try_use_ppu' not set in pp_options, Setting to default value: [True]
-2025-11-10 19:32:18.949747 'num_threads' not set in pp_options, Setting to default value: [10]
-2025-11-10 19:32:18.949747 'minpts_interp' not set in pp_options, Setting to default value: [1]
-2025-11-10 19:32:18.949747 'maxpts_interp' not set in pp_options, Setting to default value: [20]
-2025-11-10 19:32:18.949747 'search_radius' not set in pp_options, Setting to default value: [10000000000.0]
-2025-11-10 19:32:18.949747 'fill_value' not set in pp_options, Setting to default value: [1.0]
-2025-11-10 19:32:18.949747 'lower_limit' not set in pp_options, Setting to default value: [1e-30]
-2025-11-10 19:32:18.949747 'upper_limit' not set in pp_options, Setting to default value: [1e+30]
-2025-11-10 19:32:18.949747 WARNING: `use_ppu` requested but failed to import
+ took: 0:00:22.621495
+2025-11-13 19:44:30.273652 starting: loading array models\local_run30\pest\local_run30_template\local_run30.sto_ss_layer1.txt
+2025-11-13 19:44:30.273652 finished: loading array models\local_run30\pest\local_run30_template\local_run30.sto_ss_layer1.txt took: 0:00:00
+2025-11-13 19:44:30.273652 loaded array 'models\local_run30\pest\local_run30\local_run30.sto_ss_layer1.txt' of shape (47, 57)
+2025-11-13 19:44:30.282217 starting: writing array-style template file 'models\local_run30\pest\local_run30_template\stosslayer1-pp_inst0_pilotpoints.csv.tpl'
+2025-11-13 19:44:30.282217 starting: setting up pilot point parameters
+2025-11-13 19:44:30.282217 'use_pp_zones' not set in pp_options, Setting to default value: [False]
+2025-11-13 19:44:30.282217 'spatial_reference' not set in pp_options, Setting to default value: [None]
+2025-11-13 19:44:30.282217 'try_use_ppu' not set in pp_options, Setting to default value: [True]
+2025-11-13 19:44:30.282217 'num_threads' not set in pp_options, Setting to default value: [10]
+2025-11-13 19:44:30.282217 'minpts_interp' not set in pp_options, Setting to default value: [1]
+2025-11-13 19:44:30.282217 'maxpts_interp' not set in pp_options, Setting to default value: [20]
+2025-11-13 19:44:30.282217 'search_radius' not set in pp_options, Setting to default value: [10000000000.0]
+2025-11-13 19:44:30.282217 'fill_value' not set in pp_options, Setting to default value: [1.0]
+2025-11-13 19:44:30.282217 'lower_limit' not set in pp_options, Setting to default value: [1e-30]
+2025-11-13 19:44:30.282217 'upper_limit' not set in pp_options, Setting to default value: [1e+30]
+2025-11-13 19:44:30.282217 WARNING: `use_ppu` requested but failed to import
 falling back to pyemu pp methods
-2025-11-10 19:32:18.957285 No spatial reference (containing cell spacing) passed.
-2025-11-10 19:32:18.957285 OK - using spatial reference in parent object.
-2025-11-10 19:32:18.957285 trying to load pilot point location info from shapefile 'models\local_run30\pest\local_run30_template\pilot_points.shp'
-2025-11-10 19:32:18.957805 pilot points found in file 'pilot_points.shp' will be transferred to 'stosslayer1-pp_inst0pp.dat' for parameterization
-2025-11-10 19:32:18.957805 WARNING: 'zone' col not found in pp dataframe, adding generic zone
-2025-11-10 19:32:18.988044 74 pilot point parameters created
-2025-11-10 19:32:18.996140 pilot point 'pargp':s,t,o,s,s,l,a,y,e,r,1,-,p,p
-2025-11-10 19:32:18.996140 finished: setting up pilot point parameters took: 0:00:00.046393
-2025-11-10 19:32:19.013079 reusing factors
-2025-11-10 19:32:19.013079 starting: writing array-based template file 'models\local_run30\pest\local_run30_template\stosslayer1-pp_inst0pp.dat.tpl'
-2025-11-10 19:32:19.013079 saving zone array models\local_run30\pest\local_run30_template\stosslayer1-pp_inst0pp.dat.zone for tpl file models\local_run30\pest\local_run30_template\stosslayer1-pp_inst0pp.dat.tpl
-2025-11-10 19:32:19.028911 finished: adding pilotpoints type m style parameters for file(s) ['local_run30.sto_ss_layer1.txt'] took: 0:00:00.099586
-2025-11-10 19:32:19.028911 starting: adding constant type m style parameters for file(s) ['local_run30.sto_ss_layer1.txt']
-2025-11-10 19:32:19.028911 starting: loading array models\local_run30\pest\local_run30_template\local_run30.sto_ss_layer1.txt
-2025-11-10 19:32:19.039472 finished: loading array models\local_run30\pest\local_run30_template\local_run30.sto_ss_layer1.txt took: 0:00:00.010561
-2025-11-10 19:32:19.039472 loaded array 'models\local_run30\pest\local_run30\local_run30.sto_ss_layer1.txt' of shape (47, 57)
-2025-11-10 19:32:19.047659 starting: writing array-style template file 'models\local_run30\pest\local_run30_template\stosslayer1-cn_inst0_constant.csv.tpl'
-2025-11-10 19:32:19.047659 starting: writing template file models\local_run30\pest\local_run30_template\stosslayer1-cn_inst0_constant.csv.tpl for ['stosslayer1-cn_inst:0']
-2025-11-10 19:32:19.079892 finished: writing template file models\local_run30\pest\local_run30_template\stosslayer1-cn_inst0_constant.csv.tpl for ['stosslayer1-cn_inst:0'] took: 0:00:00.032233
-2025-11-10 19:32:19.079892 starting: writing array-based template file 'models\local_run30\pest\local_run30_template\stosslayer1-cn_inst0_constant.csv.tpl'
-2025-11-10 19:32:19.079892 saving zone array models\local_run30\pest\local_run30_template\stosslayer1-cn_inst0_constant.csv.zone for tpl file models\local_run30\pest\local_run30_template\stosslayer1-cn_inst0_constant.csv.tpl
-2025-11-10 19:32:19.106917 finished: adding constant type m style parameters for file(s) ['local_run30.sto_ss_layer1.txt'] took: 0:00:00.078006
-2025-11-10 19:32:19.107956 transform was not passed, setting default tranform to 'log'
-2025-11-10 19:32:19.107956 starting: adding grid type m style parameters for file(s) ['local_run30.ghbaw_stress_period_data_0.txt', 'local_run30.ghbaw_stress_period_data_1.txt', 'local_run30.ghbaw_stress_period_data_2.txt', 'local_run30.ghbaw_stress_period_data_3.txt']
-2025-11-10 19:32:19.107956 starting: using geostruct:name:struct1,nugget:0.0,structures:
+2025-11-13 19:44:30.282217 No spatial reference (containing cell spacing) passed.
+2025-11-13 19:44:30.282217 OK - using spatial reference in parent object.
+2025-11-13 19:44:30.282217 trying to load pilot point location info from shapefile 'models\local_run30\pest\local_run30_template\pilot_points.shp'
+2025-11-13 19:44:30.288392 pilot points found in file 'pilot_points.shp' will be transferred to 'stosslayer1-pp_inst0pp.dat' for parameterization
+2025-11-13 19:44:30.288392 WARNING: 'zone' col not found in pp dataframe, adding generic zone
+2025-11-13 19:44:30.302295 74 pilot point parameters created
+2025-11-13 19:44:30.303316 pilot point 'pargp':s,t,o,s,s,l,a,y,e,r,1,-,p,p
+2025-11-13 19:44:30.303316 finished: setting up pilot point parameters took: 0:00:00.021099
+2025-11-13 19:44:30.319066 reusing factors
+2025-11-13 19:44:30.319066 starting: writing array-based template file 'models\local_run30\pest\local_run30_template\stosslayer1-pp_inst0pp.dat.tpl'
+2025-11-13 19:44:30.319066 saving zone array models\local_run30\pest\local_run30_template\stosslayer1-pp_inst0pp.dat.zone for tpl file models\local_run30\pest\local_run30_template\stosslayer1-pp_inst0pp.dat.tpl
+2025-11-13 19:44:30.332126 finished: adding pilotpoints type m style parameters for file(s) ['local_run30.sto_ss_layer1.txt'] took: 0:00:00.058474
+2025-11-13 19:44:30.332126 starting: adding constant type m style parameters for file(s) ['local_run30.sto_ss_layer1.txt']
+2025-11-13 19:44:30.332126 starting: loading array models\local_run30\pest\local_run30_template\local_run30.sto_ss_layer1.txt
+2025-11-13 19:44:30.337470 finished: loading array models\local_run30\pest\local_run30_template\local_run30.sto_ss_layer1.txt took: 0:00:00.005344
+2025-11-13 19:44:30.337470 loaded array 'models\local_run30\pest\local_run30\local_run30.sto_ss_layer1.txt' of shape (47, 57)
+2025-11-13 19:44:30.342134 starting: writing array-style template file 'models\local_run30\pest\local_run30_template\stosslayer1-cn_inst0_constant.csv.tpl'
+2025-11-13 19:44:30.342134 starting: writing template file models\local_run30\pest\local_run30_template\stosslayer1-cn_inst0_constant.csv.tpl for ['stosslayer1-cn_inst:0']
+2025-11-13 19:44:30.362509 finished: writing template file models\local_run30\pest\local_run30_template\stosslayer1-cn_inst0_constant.csv.tpl for ['stosslayer1-cn_inst:0'] took: 0:00:00.020375
+2025-11-13 19:44:30.362509 starting: writing array-based template file 'models\local_run30\pest\local_run30_template\stosslayer1-cn_inst0_constant.csv.tpl'
+2025-11-13 19:44:30.362509 saving zone array models\local_run30\pest\local_run30_template\stosslayer1-cn_inst0_constant.csv.zone for tpl file models\local_run30\pest\local_run30_template\stosslayer1-cn_inst0_constant.csv.tpl
+2025-11-13 19:44:30.372536 finished: adding constant type m style parameters for file(s) ['local_run30.sto_ss_layer1.txt'] took: 0:00:00.040410
+2025-11-13 19:44:30.372536 transform was not passed, setting default tranform to 'log'
+2025-11-13 19:44:30.372536 starting: adding grid type m style parameters for file(s) ['local_run30.ghbaw_stress_period_data_0.txt', 'local_run30.ghbaw_stress_period_data_1.txt', 'local_run30.ghbaw_stress_period_data_2.txt', 'local_run30.ghbaw_stress_period_data_3.txt']
+2025-11-13 19:44:30.372536 starting: using geostruct:name:struct1,nugget:0.0,structures:
 name:fine_gs,contribution:1.0,a:100.0,anisotropy:1.0,bearing:0.0
 
-2025-11-10 19:32:19.107956 WARNING: Discrepancy between number of filenames (4) and number of formatter strings (1). Will repeat first (free)
-2025-11-10 19:32:19.107956 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_0.txt
-2025-11-10 19:32:19.107956 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_0.txt
-2025-11-10 19:32:19.117812 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_0.txt took: 0:00:00.009856
-2025-11-10 19:32:19.117812 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_0.txt' of shape (121, 5)
-2025-11-10 19:32:19.127798 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_0.txt took: 0:00:00.019842
-2025-11-10 19:32:19.127798 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_1.txt
-2025-11-10 19:32:19.129872 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_1.txt
-2025-11-10 19:32:19.129872 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_1.txt took: 0:00:00
-2025-11-10 19:32:19.129872 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_1.txt' of shape (121, 5)
-2025-11-10 19:32:19.139984 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_1.txt took: 0:00:00.012186
-2025-11-10 19:32:19.139984 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_2.txt
-2025-11-10 19:32:19.139984 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_2.txt
-2025-11-10 19:32:19.143903 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_2.txt took: 0:00:00.003919
-2025-11-10 19:32:19.143903 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_2.txt' of shape (340, 5)
-2025-11-10 19:32:19.149409 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_2.txt took: 0:00:00.009425
-2025-11-10 19:32:19.149409 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_3.txt
-2025-11-10 19:32:19.149409 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_3.txt
-2025-11-10 19:32:19.156944 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_3.txt took: 0:00:00.007535
-2025-11-10 19:32:19.156944 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_3.txt' of shape (340, 5)
-2025-11-10 19:32:19.177862 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_3.txt took: 0:00:00.028453
-2025-11-10 19:32:19.177862 starting: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbaw-cond-gr_inst0_grid.csv.tpl'
-2025-11-10 19:32:19.379266 finished: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbaw-cond-gr_inst0_grid.csv.tpl' took: 0:00:00.201404
-2025-11-10 19:32:19.393625 finished: adding grid type m style parameters for file(s) ['local_run30.ghbaw_stress_period_data_0.txt', 'local_run30.ghbaw_stress_period_data_1.txt', 'local_run30.ghbaw_stress_period_data_2.txt', 'local_run30.ghbaw_stress_period_data_3.txt'] took: 0:00:00.285669
-2025-11-10 19:32:19.393625 transform was not passed, setting default tranform to 'log'
-2025-11-10 19:32:19.393625 starting: adding constant type m style parameters for file(s) ['local_run30.ghbaw_stress_period_data_0.txt', 'local_run30.ghbaw_stress_period_data_1.txt', 'local_run30.ghbaw_stress_period_data_2.txt', 'local_run30.ghbaw_stress_period_data_3.txt']
-2025-11-10 19:32:19.393625 WARNING: Discrepancy between number of filenames (4) and number of formatter strings (1). Will repeat first (free)
-2025-11-10 19:32:19.396134 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_0.txt
-2025-11-10 19:32:19.396134 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_0.txt
-2025-11-10 19:32:19.397702 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_0.txt took: 0:00:00.001568
-2025-11-10 19:32:19.397702 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_0.txt' of shape (121, 5)
-2025-11-10 19:32:19.399105 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_0.txt took: 0:00:00.002971
-2025-11-10 19:32:19.399105 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_1.txt
-2025-11-10 19:32:19.399105 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_1.txt
-2025-11-10 19:32:19.399105 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_1.txt took: 0:00:00
-2025-11-10 19:32:19.399105 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_1.txt' of shape (121, 5)
-2025-11-10 19:32:19.418956 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_1.txt took: 0:00:00.019851
-2025-11-10 19:32:19.418956 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_2.txt
-2025-11-10 19:32:19.418956 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_2.txt
-2025-11-10 19:32:19.427021 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_2.txt took: 0:00:00.008065
-2025-11-10 19:32:19.427021 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_2.txt' of shape (340, 5)
-2025-11-10 19:32:19.437589 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_2.txt took: 0:00:00.018633
-2025-11-10 19:32:19.437589 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_3.txt
-2025-11-10 19:32:19.437589 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_3.txt
-2025-11-10 19:32:19.441609 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_3.txt took: 0:00:00.004020
-2025-11-10 19:32:19.441609 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_3.txt' of shape (340, 5)
-2025-11-10 19:32:19.461960 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_3.txt took: 0:00:00.024371
-2025-11-10 19:32:19.461960 starting: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbaw-cond-cn_inst0_constant.csv.tpl'
-2025-11-10 19:32:19.518009 finished: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbaw-cond-cn_inst0_constant.csv.tpl' took: 0:00:00.056049
-2025-11-10 19:32:19.527771 finished: adding constant type m style parameters for file(s) ['local_run30.ghbaw_stress_period_data_0.txt', 'local_run30.ghbaw_stress_period_data_1.txt', 'local_run30.ghbaw_stress_period_data_2.txt', 'local_run30.ghbaw_stress_period_data_3.txt'] took: 0:00:00.134146
-2025-11-10 19:32:19.529793 transform was not passed, setting default tranform to 'log'
-2025-11-10 19:32:19.529793 starting: adding grid type m style parameters for file(s) ['local_run30.ghb_pw_stress_period_data_0.txt', 'local_run30.ghb_pw_stress_period_data_1.txt', 'local_run30.ghb_pw_stress_period_data_2.txt', 'local_run30.ghb_pw_stress_period_data_3.txt']
-2025-11-10 19:32:19.529793 finished: using geostruct:name:struct1,nugget:0.0,structures:
+2025-11-13 19:44:30.372536 WARNING: Discrepancy between number of filenames (4) and number of formatter strings (1). Will repeat first (free)
+2025-11-13 19:44:30.372536 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_0.txt
+2025-11-13 19:44:30.372536 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_0.txt
+2025-11-13 19:44:30.392496 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_0.txt took: 0:00:00.019960
+2025-11-13 19:44:30.392496 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_0.txt' of shape (121, 5)
+2025-11-13 19:44:30.399540 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_0.txt took: 0:00:00.027004
+2025-11-13 19:44:30.399540 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_1.txt
+2025-11-13 19:44:30.401559 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_1.txt
+2025-11-13 19:44:30.403467 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_1.txt took: 0:00:00.001908
+2025-11-13 19:44:30.403467 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_1.txt' of shape (121, 5)
+2025-11-13 19:44:30.403467 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_1.txt took: 0:00:00.003927
+2025-11-13 19:44:30.403467 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_2.txt
+2025-11-13 19:44:30.403467 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_2.txt
+2025-11-13 19:44:30.423874 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_2.txt took: 0:00:00.020407
+2025-11-13 19:44:30.423874 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_2.txt' of shape (340, 5)
+2025-11-13 19:44:30.432467 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_2.txt took: 0:00:00.029000
+2025-11-13 19:44:30.432467 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_3.txt
+2025-11-13 19:44:30.432467 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_3.txt
+2025-11-13 19:44:30.432467 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_3.txt took: 0:00:00
+2025-11-13 19:44:30.432467 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_3.txt' of shape (340, 5)
+2025-11-13 19:44:30.452609 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_3.txt took: 0:00:00.020142
+2025-11-13 19:44:30.452609 starting: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbaw-cond-gr_inst0_grid.csv.tpl'
+2025-11-13 19:44:30.582452 finished: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbaw-cond-gr_inst0_grid.csv.tpl' took: 0:00:00.129843
+2025-11-13 19:44:30.587880 finished: adding grid type m style parameters for file(s) ['local_run30.ghbaw_stress_period_data_0.txt', 'local_run30.ghbaw_stress_period_data_1.txt', 'local_run30.ghbaw_stress_period_data_2.txt', 'local_run30.ghbaw_stress_period_data_3.txt'] took: 0:00:00.215344
+2025-11-13 19:44:30.587880 transform was not passed, setting default tranform to 'log'
+2025-11-13 19:44:30.587880 starting: adding constant type m style parameters for file(s) ['local_run30.ghbaw_stress_period_data_0.txt', 'local_run30.ghbaw_stress_period_data_1.txt', 'local_run30.ghbaw_stress_period_data_2.txt', 'local_run30.ghbaw_stress_period_data_3.txt']
+2025-11-13 19:44:30.587880 WARNING: Discrepancy between number of filenames (4) and number of formatter strings (1). Will repeat first (free)
+2025-11-13 19:44:30.589517 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_0.txt
+2025-11-13 19:44:30.589517 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_0.txt
+2025-11-13 19:44:30.591612 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_0.txt took: 0:00:00.002095
+2025-11-13 19:44:30.591612 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_0.txt' of shape (121, 5)
+2025-11-13 19:44:30.593907 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_0.txt took: 0:00:00.004390
+2025-11-13 19:44:30.593907 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_1.txt
+2025-11-13 19:44:30.593907 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_1.txt
+2025-11-13 19:44:30.593907 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_1.txt took: 0:00:00
+2025-11-13 19:44:30.593907 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_1.txt' of shape (121, 5)
+2025-11-13 19:44:30.605534 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_1.txt took: 0:00:00.011627
+2025-11-13 19:44:30.605534 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_2.txt
+2025-11-13 19:44:30.605534 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_2.txt
+2025-11-13 19:44:30.612065 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_2.txt took: 0:00:00.006531
+2025-11-13 19:44:30.612065 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_2.txt' of shape (340, 5)
+2025-11-13 19:44:30.613732 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_2.txt took: 0:00:00.008198
+2025-11-13 19:44:30.613732 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_3.txt
+2025-11-13 19:44:30.613732 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_3.txt
+2025-11-13 19:44:30.622368 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_3.txt took: 0:00:00.008636
+2025-11-13 19:44:30.622368 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_3.txt' of shape (340, 5)
+2025-11-13 19:44:30.637496 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_3.txt took: 0:00:00.023764
+2025-11-13 19:44:30.637496 starting: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbaw-cond-cn_inst0_constant.csv.tpl'
+2025-11-13 19:44:30.672420 finished: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbaw-cond-cn_inst0_constant.csv.tpl' took: 0:00:00.034924
+2025-11-13 19:44:30.676443 finished: adding constant type m style parameters for file(s) ['local_run30.ghbaw_stress_period_data_0.txt', 'local_run30.ghbaw_stress_period_data_1.txt', 'local_run30.ghbaw_stress_period_data_2.txt', 'local_run30.ghbaw_stress_period_data_3.txt'] took: 0:00:00.088563
+2025-11-13 19:44:30.676443 transform was not passed, setting default tranform to 'log'
+2025-11-13 19:44:30.676443 starting: adding grid type m style parameters for file(s) ['local_run30.ghb_pw_stress_period_data_0.txt', 'local_run30.ghb_pw_stress_period_data_1.txt', 'local_run30.ghb_pw_stress_period_data_2.txt', 'local_run30.ghb_pw_stress_period_data_3.txt']
+2025-11-13 19:44:30.676443 finished: using geostruct:name:struct1,nugget:0.0,structures:
 name:fine_gs,contribution:1.0,a:100.0,anisotropy:1.0,bearing:0.0
- took: 0:00:00.421837
-2025-11-10 19:32:19.529793 WARNING: Discrepancy between number of filenames (4) and number of formatter strings (1). Will repeat first (free)
-2025-11-10 19:32:19.529793 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_0.txt
-2025-11-10 19:32:19.529793 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_0.txt
-2025-11-10 19:32:19.537976 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_0.txt took: 0:00:00.008183
-2025-11-10 19:32:19.537976 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_0.txt' of shape (25, 5)
-2025-11-10 19:32:19.542015 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_0.txt took: 0:00:00.012222
-2025-11-10 19:32:19.542015 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_1.txt
-2025-11-10 19:32:19.542015 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_1.txt
-2025-11-10 19:32:19.551454 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_1.txt took: 0:00:00.009439
-2025-11-10 19:32:19.551454 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_1.txt' of shape (25, 5)
-2025-11-10 19:32:19.558107 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_1.txt took: 0:00:00.016092
-2025-11-10 19:32:19.558107 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_2.txt
-2025-11-10 19:32:19.558107 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_2.txt
-2025-11-10 19:32:19.567307 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_2.txt took: 0:00:00.009200
-2025-11-10 19:32:19.567822 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_2.txt' of shape (11, 5)
-2025-11-10 19:32:19.569292 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_2.txt took: 0:00:00.011185
-2025-11-10 19:32:19.569292 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_3.txt
-2025-11-10 19:32:19.569292 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_3.txt
-2025-11-10 19:32:19.577942 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_3.txt took: 0:00:00.008650
-2025-11-10 19:32:19.577942 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_3.txt' of shape (11, 5)
-2025-11-10 19:32:19.589560 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_3.txt took: 0:00:00.020268
-2025-11-10 19:32:19.589560 starting: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbpw-cond-gr_inst0_grid.csv.tpl'
-2025-11-10 19:32:19.619586 finished: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbpw-cond-gr_inst0_grid.csv.tpl' took: 0:00:00.030026
-2025-11-10 19:32:19.627656 finished: adding grid type m style parameters for file(s) ['local_run30.ghb_pw_stress_period_data_0.txt', 'local_run30.ghb_pw_stress_period_data_1.txt', 'local_run30.ghb_pw_stress_period_data_2.txt', 'local_run30.ghb_pw_stress_period_data_3.txt'] took: 0:00:00.097863
-2025-11-10 19:32:19.627656 transform was not passed, setting default tranform to 'log'
-2025-11-10 19:32:19.627656 starting: adding constant type m style parameters for file(s) ['local_run30.ghb_pw_stress_period_data_0.txt', 'local_run30.ghb_pw_stress_period_data_1.txt', 'local_run30.ghb_pw_stress_period_data_2.txt', 'local_run30.ghb_pw_stress_period_data_3.txt']
-2025-11-10 19:32:19.627656 WARNING: Discrepancy between number of filenames (4) and number of formatter strings (1). Will repeat first (free)
-2025-11-10 19:32:19.631180 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_0.txt
-2025-11-10 19:32:19.631180 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_0.txt
-2025-11-10 19:32:19.631180 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_0.txt took: 0:00:00
-2025-11-10 19:32:19.631180 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_0.txt' of shape (25, 5)
-2025-11-10 19:32:19.639467 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_0.txt took: 0:00:00.008287
-2025-11-10 19:32:19.639467 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_1.txt
-2025-11-10 19:32:19.639467 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_1.txt
-2025-11-10 19:32:19.639467 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_1.txt took: 0:00:00
-2025-11-10 19:32:19.639467 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_1.txt' of shape (25, 5)
-2025-11-10 19:32:19.639467 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_1.txt took: 0:00:00
-2025-11-10 19:32:19.647116 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_2.txt
-2025-11-10 19:32:19.647627 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_2.txt
-2025-11-10 19:32:19.647627 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_2.txt took: 0:00:00
-2025-11-10 19:32:19.647627 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_2.txt' of shape (11, 5)
-2025-11-10 19:32:19.647627 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_2.txt took: 0:00:00.000511
-2025-11-10 19:32:19.647627 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_3.txt
-2025-11-10 19:32:19.647627 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_3.txt
-2025-11-10 19:32:19.657972 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_3.txt took: 0:00:00.010345
-2025-11-10 19:32:19.657972 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_3.txt' of shape (11, 5)
-2025-11-10 19:32:19.659384 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_3.txt took: 0:00:00.011757
-2025-11-10 19:32:19.659384 starting: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbpw-cond-cn_inst0_constant.csv.tpl'
-2025-11-10 19:32:19.694704 finished: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbpw-cond-cn_inst0_constant.csv.tpl' took: 0:00:00.035320
-2025-11-10 19:32:19.699052 finished: adding constant type m style parameters for file(s) ['local_run30.ghb_pw_stress_period_data_0.txt', 'local_run30.ghb_pw_stress_period_data_1.txt', 'local_run30.ghb_pw_stress_period_data_2.txt', 'local_run30.ghb_pw_stress_period_data_3.txt'] took: 0:00:00.071396
-2025-11-10 19:32:19.707632 transform was not passed, setting default tranform to 'log'
-2025-11-10 19:32:19.707632 starting: adding grid type m style parameters for file(s) ['local_run30.ghbspr_stress_period_data_0.txt', 'local_run30.ghbspr_stress_period_data_1.txt']
-2025-11-10 19:32:19.707632 starting: using geostruct:name:struct1,nugget:0.0,structures:
+ took: 0:00:00.303907
+2025-11-13 19:44:30.676443 WARNING: Discrepancy between number of filenames (4) and number of formatter strings (1). Will repeat first (free)
+2025-11-13 19:44:30.676443 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_0.txt
+2025-11-13 19:44:30.676443 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_0.txt
+2025-11-13 19:44:30.683696 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_0.txt took: 0:00:00.007253
+2025-11-13 19:44:30.683696 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_0.txt' of shape (25, 5)
+2025-11-13 19:44:30.685249 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_0.txt took: 0:00:00.008806
+2025-11-13 19:44:30.685249 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_1.txt
+2025-11-13 19:44:30.685249 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_1.txt
+2025-11-13 19:44:30.692508 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_1.txt took: 0:00:00.007259
+2025-11-13 19:44:30.692508 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_1.txt' of shape (25, 5)
+2025-11-13 19:44:30.692508 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_1.txt took: 0:00:00.007259
+2025-11-13 19:44:30.692508 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_2.txt
+2025-11-13 19:44:30.692508 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_2.txt
+2025-11-13 19:44:30.702525 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_2.txt took: 0:00:00.010017
+2025-11-13 19:44:30.702525 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_2.txt' of shape (11, 5)
+2025-11-13 19:44:30.703815 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_2.txt took: 0:00:00.011307
+2025-11-13 19:44:30.703815 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_3.txt
+2025-11-13 19:44:30.703815 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_3.txt
+2025-11-13 19:44:30.703815 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_3.txt took: 0:00:00
+2025-11-13 19:44:30.703815 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_3.txt' of shape (11, 5)
+2025-11-13 19:44:30.717520 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_3.txt took: 0:00:00.013705
+2025-11-13 19:44:30.717520 starting: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbpw-cond-gr_inst0_grid.csv.tpl'
+2025-11-13 19:44:30.743871 finished: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbpw-cond-gr_inst0_grid.csv.tpl' took: 0:00:00.026351
+2025-11-13 19:44:30.748908 finished: adding grid type m style parameters for file(s) ['local_run30.ghb_pw_stress_period_data_0.txt', 'local_run30.ghb_pw_stress_period_data_1.txt', 'local_run30.ghb_pw_stress_period_data_2.txt', 'local_run30.ghb_pw_stress_period_data_3.txt'] took: 0:00:00.072465
+2025-11-13 19:44:30.748908 transform was not passed, setting default tranform to 'log'
+2025-11-13 19:44:30.748908 starting: adding constant type m style parameters for file(s) ['local_run30.ghb_pw_stress_period_data_0.txt', 'local_run30.ghb_pw_stress_period_data_1.txt', 'local_run30.ghb_pw_stress_period_data_2.txt', 'local_run30.ghb_pw_stress_period_data_3.txt']
+2025-11-13 19:44:30.748908 WARNING: Discrepancy between number of filenames (4) and number of formatter strings (1). Will repeat first (free)
+2025-11-13 19:44:30.751513 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_0.txt
+2025-11-13 19:44:30.752212 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_0.txt
+2025-11-13 19:44:30.752212 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_0.txt took: 0:00:00
+2025-11-13 19:44:30.752212 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_0.txt' of shape (25, 5)
+2025-11-13 19:44:30.761485 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_0.txt took: 0:00:00.009972
+2025-11-13 19:44:30.761485 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_1.txt
+2025-11-13 19:44:30.761485 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_1.txt
+2025-11-13 19:44:30.765060 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_1.txt took: 0:00:00.003575
+2025-11-13 19:44:30.765060 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_1.txt' of shape (25, 5)
+2025-11-13 19:44:30.771651 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_1.txt took: 0:00:00.010166
+2025-11-13 19:44:30.772192 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_2.txt
+2025-11-13 19:44:30.772192 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_2.txt
+2025-11-13 19:44:30.772192 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_2.txt took: 0:00:00
+2025-11-13 19:44:30.772192 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_2.txt' of shape (11, 5)
+2025-11-13 19:44:30.776735 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_2.txt took: 0:00:00.004543
+2025-11-13 19:44:30.776735 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_3.txt
+2025-11-13 19:44:30.776735 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_3.txt
+2025-11-13 19:44:30.782285 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_3.txt took: 0:00:00.005550
+2025-11-13 19:44:30.782285 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_3.txt' of shape (11, 5)
+2025-11-13 19:44:30.783606 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_3.txt took: 0:00:00.006871
+2025-11-13 19:44:30.783606 starting: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbpw-cond-cn_inst0_constant.csv.tpl'
+2025-11-13 19:44:30.802214 finished: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbpw-cond-cn_inst0_constant.csv.tpl' took: 0:00:00.018608
+2025-11-13 19:44:30.813935 finished: adding constant type m style parameters for file(s) ['local_run30.ghb_pw_stress_period_data_0.txt', 'local_run30.ghb_pw_stress_period_data_1.txt', 'local_run30.ghb_pw_stress_period_data_2.txt', 'local_run30.ghb_pw_stress_period_data_3.txt'] took: 0:00:00.065027
+2025-11-13 19:44:30.813935 transform was not passed, setting default tranform to 'log'
+2025-11-13 19:44:30.813935 starting: adding grid type m style parameters for file(s) ['local_run30.ghbspr_stress_period_data_0.txt', 'local_run30.ghbspr_stress_period_data_1.txt']
+2025-11-13 19:44:30.813935 starting: using geostruct:name:struct1,nugget:0.0,structures:
 name:fine_gs,contribution:1.0,a:100.0,anisotropy:1.0,bearing:0.0
 
-2025-11-10 19:32:19.707632 WARNING: Discrepancy between number of filenames (2) and number of formatter strings (1). Will repeat first (free)
-2025-11-10 19:32:19.707632 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_0.txt
-2025-11-10 19:32:19.707632 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_0.txt
-2025-11-10 19:32:19.710681 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_0.txt took: 0:00:00.003049
-2025-11-10 19:32:19.710681 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_0.txt' of shape (12, 5)
-2025-11-10 19:32:19.719478 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_0.txt took: 0:00:00.011846
-2025-11-10 19:32:19.719478 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_1.txt
-2025-11-10 19:32:19.719478 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_1.txt
-2025-11-10 19:32:19.727628 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_1.txt took: 0:00:00.008150
-2025-11-10 19:32:19.727628 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_1.txt' of shape (12, 5)
-2025-11-10 19:32:19.737929 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_1.txt took: 0:00:00.018451
-2025-11-10 19:32:19.737929 starting: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbspring-cond-gr_inst0_grid.csv.tpl'
-2025-11-10 19:32:19.778076 finished: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbspring-cond-gr_inst0_grid.csv.tpl' took: 0:00:00.040147
-2025-11-10 19:32:19.790886 finished: adding grid type m style parameters for file(s) ['local_run30.ghbspr_stress_period_data_0.txt', 'local_run30.ghbspr_stress_period_data_1.txt'] took: 0:00:00.083254
-2025-11-10 19:32:19.790886 transform was not passed, setting default tranform to 'log'
-2025-11-10 19:32:19.790886 starting: adding constant type m style parameters for file(s) ['local_run30.ghbspr_stress_period_data_0.txt', 'local_run30.ghbspr_stress_period_data_1.txt']
-2025-11-10 19:32:19.790886 WARNING: Discrepancy between number of filenames (2) and number of formatter strings (1). Will repeat first (free)
-2025-11-10 19:32:19.790886 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_0.txt
-2025-11-10 19:32:19.790886 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_0.txt
-2025-11-10 19:32:19.797733 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_0.txt took: 0:00:00.006847
-2025-11-10 19:32:19.797733 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_0.txt' of shape (12, 5)
-2025-11-10 19:32:19.797733 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_0.txt took: 0:00:00.006847
-2025-11-10 19:32:19.797733 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_1.txt
-2025-11-10 19:32:19.797733 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_1.txt
-2025-11-10 19:32:19.807592 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_1.txt took: 0:00:00.009859
-2025-11-10 19:32:19.808730 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_1.txt' of shape (12, 5)
-2025-11-10 19:32:19.809471 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_1.txt took: 0:00:00.011738
-2025-11-10 19:32:19.817018 starting: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbspring-cond-cn_inst0_constant.csv.tpl'
-2025-11-10 19:32:19.839672 finished: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbspring-cond-cn_inst0_constant.csv.tpl' took: 0:00:00.022654
-2025-11-10 19:32:19.858597 finished: adding constant type m style parameters for file(s) ['local_run30.ghbspr_stress_period_data_0.txt', 'local_run30.ghbspr_stress_period_data_1.txt'] took: 0:00:00.067711
-2025-11-10 19:32:19.858597 transform was not passed, setting default tranform to 'log'
-2025-11-10 19:32:19.858597 starting: adding grid type m style parameters for file(s) ['local_run30.ghb_conf_stress_period_data_0.txt', 'local_run30.ghb_conf_stress_period_data_1.txt', 'local_run30.ghb_conf_stress_period_data_2.txt', 'local_run30.ghb_conf_stress_period_data_3.txt']
-2025-11-10 19:32:19.858597 starting: using geostruct:name:struct1,nugget:0.0,structures:
+2025-11-13 19:44:30.813935 WARNING: Discrepancy between number of filenames (2) and number of formatter strings (1). Will repeat first (free)
+2025-11-13 19:44:30.813935 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_0.txt
+2025-11-13 19:44:30.813935 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_0.txt
+2025-11-13 19:44:30.821463 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_0.txt took: 0:00:00.007528
+2025-11-13 19:44:30.821463 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_0.txt' of shape (12, 5)
+2025-11-13 19:44:30.822485 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_0.txt took: 0:00:00.008550
+2025-11-13 19:44:30.822485 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_1.txt
+2025-11-13 19:44:30.822485 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_1.txt
+2025-11-13 19:44:30.831455 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_1.txt took: 0:00:00.008970
+2025-11-13 19:44:30.832493 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_1.txt' of shape (12, 5)
+2025-11-13 19:44:30.838051 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_1.txt took: 0:00:00.015566
+2025-11-13 19:44:30.838051 starting: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbspring-cond-gr_inst0_grid.csv.tpl'
+2025-11-13 19:44:30.861763 finished: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbspring-cond-gr_inst0_grid.csv.tpl' took: 0:00:00.023712
+2025-11-13 19:44:30.866331 finished: adding grid type m style parameters for file(s) ['local_run30.ghbspr_stress_period_data_0.txt', 'local_run30.ghbspr_stress_period_data_1.txt'] took: 0:00:00.052396
+2025-11-13 19:44:30.866331 transform was not passed, setting default tranform to 'log'
+2025-11-13 19:44:30.866331 starting: adding constant type m style parameters for file(s) ['local_run30.ghbspr_stress_period_data_0.txt', 'local_run30.ghbspr_stress_period_data_1.txt']
+2025-11-13 19:44:30.866331 WARNING: Discrepancy between number of filenames (2) and number of formatter strings (1). Will repeat first (free)
+2025-11-13 19:44:30.866331 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_0.txt
+2025-11-13 19:44:30.871385 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_0.txt
+2025-11-13 19:44:30.872467 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_0.txt took: 0:00:00.001082
+2025-11-13 19:44:30.872467 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_0.txt' of shape (12, 5)
+2025-11-13 19:44:30.875485 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_0.txt took: 0:00:00.009154
+2025-11-13 19:44:30.875485 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_1.txt
+2025-11-13 19:44:30.875485 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_1.txt
+2025-11-13 19:44:30.875485 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_1.txt took: 0:00:00
+2025-11-13 19:44:30.875485 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_1.txt' of shape (12, 5)
+2025-11-13 19:44:30.882259 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_1.txt took: 0:00:00.006774
+2025-11-13 19:44:30.882259 starting: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbspring-cond-cn_inst0_constant.csv.tpl'
+2025-11-13 19:44:30.908758 finished: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbspring-cond-cn_inst0_constant.csv.tpl' took: 0:00:00.026499
+2025-11-13 19:44:30.913670 finished: adding constant type m style parameters for file(s) ['local_run30.ghbspr_stress_period_data_0.txt', 'local_run30.ghbspr_stress_period_data_1.txt'] took: 0:00:00.047339
+2025-11-13 19:44:30.913670 transform was not passed, setting default tranform to 'log'
+2025-11-13 19:44:30.922216 starting: adding grid type m style parameters for file(s) ['local_run30.ghb_conf_stress_period_data_0.txt', 'local_run30.ghb_conf_stress_period_data_1.txt', 'local_run30.ghb_conf_stress_period_data_2.txt', 'local_run30.ghb_conf_stress_period_data_3.txt']
+2025-11-13 19:44:30.922216 starting: using geostruct:name:struct1,nugget:0.0,structures:
 name:main_gs,contribution:1.0,a:1000.0,anisotropy:1.0,bearing:0.0
 
-2025-11-10 19:32:19.858597 WARNING: Discrepancy between number of filenames (4) and number of formatter strings (1). Will repeat first (free)
-2025-11-10 19:32:19.858597 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_0.txt
-2025-11-10 19:32:19.858597 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_0.txt
-2025-11-10 19:32:19.889425 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_0.txt took: 0:00:00.030828
-2025-11-10 19:32:19.889425 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_0.txt' of shape (1423, 5)
-2025-11-10 19:32:19.907820 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_0.txt took: 0:00:00.049223
-2025-11-10 19:32:19.907820 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_1.txt
-2025-11-10 19:32:19.907820 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_1.txt
-2025-11-10 19:32:19.937853 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_1.txt took: 0:00:00.030033
-2025-11-10 19:32:19.937853 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_1.txt' of shape (1423, 5)
-2025-11-10 19:32:19.981826 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_1.txt took: 0:00:00.074006
-2025-11-10 19:32:19.981826 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_2.txt
-2025-11-10 19:32:19.981826 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_2.txt
-2025-11-10 19:32:20.007725 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_2.txt took: 0:00:00.025899
-2025-11-10 19:32:20.007725 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_2.txt' of shape (1423, 5)
-2025-11-10 19:32:20.019706 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_2.txt took: 0:00:00.037880
-2025-11-10 19:32:20.019706 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_3.txt
-2025-11-10 19:32:20.019706 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_3.txt
-2025-11-10 19:32:20.039584 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_3.txt took: 0:00:00.019878
-2025-11-10 19:32:20.039584 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_3.txt' of shape (1423, 5)
-2025-11-10 19:32:20.060773 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_3.txt took: 0:00:00.041067
-2025-11-10 19:32:20.060773 starting: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbconf-cond-gr_inst0_grid.csv.tpl'
-2025-11-10 19:32:20.149408 finished: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbconf-cond-gr_inst0_grid.csv.tpl' took: 0:00:00.088635
-2025-11-10 19:32:20.157705 finished: adding grid type m style parameters for file(s) ['local_run30.ghb_conf_stress_period_data_0.txt', 'local_run30.ghb_conf_stress_period_data_1.txt', 'local_run30.ghb_conf_stress_period_data_2.txt', 'local_run30.ghb_conf_stress_period_data_3.txt'] took: 0:00:00.299108
-2025-11-10 19:32:20.157705 transform was not passed, setting default tranform to 'log'
-2025-11-10 19:32:20.157705 starting: adding constant type m style parameters for file(s) ['local_run30.ghb_conf_stress_period_data_0.txt', 'local_run30.ghb_conf_stress_period_data_1.txt', 'local_run30.ghb_conf_stress_period_data_2.txt', 'local_run30.ghb_conf_stress_period_data_3.txt']
-2025-11-10 19:32:20.157705 WARNING: Discrepancy between number of filenames (4) and number of formatter strings (1). Will repeat first (free)
-2025-11-10 19:32:20.157705 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_0.txt
-2025-11-10 19:32:20.157705 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_0.txt
-2025-11-10 19:32:20.157705 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_0.txt took: 0:00:00
-2025-11-10 19:32:20.157705 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_0.txt' of shape (1423, 5)
-2025-11-10 19:32:20.172226 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_0.txt took: 0:00:00.014521
-2025-11-10 19:32:20.172226 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_1.txt
-2025-11-10 19:32:20.172226 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_1.txt
-2025-11-10 19:32:20.177951 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_1.txt took: 0:00:00.005725
-2025-11-10 19:32:20.177951 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_1.txt' of shape (1423, 5)
-2025-11-10 19:32:20.209175 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_1.txt took: 0:00:00.036949
-2025-11-10 19:32:20.209175 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_2.txt
-2025-11-10 19:32:20.209175 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_2.txt
-2025-11-10 19:32:20.209175 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_2.txt took: 0:00:00
-2025-11-10 19:32:20.209175 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_2.txt' of shape (1423, 5)
-2025-11-10 19:32:20.237927 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_2.txt took: 0:00:00.028752
-2025-11-10 19:32:20.237927 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_3.txt
-2025-11-10 19:32:20.237927 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_3.txt
-2025-11-10 19:32:20.237927 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_3.txt took: 0:00:00
-2025-11-10 19:32:20.237927 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_3.txt' of shape (1423, 5)
-2025-11-10 19:32:20.287924 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_3.txt took: 0:00:00.049997
-2025-11-10 19:32:20.287924 starting: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbconf-cond-cn_inst0_constant.csv.tpl'
-2025-11-10 19:32:20.348005 finished: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbconf-cond-cn_inst0_constant.csv.tpl' took: 0:00:00.060081
-2025-11-10 19:32:20.359750 finished: adding constant type m style parameters for file(s) ['local_run30.ghb_conf_stress_period_data_0.txt', 'local_run30.ghb_conf_stress_period_data_1.txt', 'local_run30.ghb_conf_stress_period_data_2.txt', 'local_run30.ghb_conf_stress_period_data_3.txt'] took: 0:00:00.202045
-2025-11-10 19:32:20.362789 starting: adding grid type a style parameters for file(s) ['local_run30.ghbaw_stress_period_data_0.txt', 'local_run30.ghbaw_stress_period_data_2.txt']
-2025-11-10 19:32:20.362789 starting: using geostruct:name:struct1,nugget:0.0,structures:
+2025-11-13 19:44:30.922216 WARNING: Discrepancy between number of filenames (4) and number of formatter strings (1). Will repeat first (free)
+2025-11-13 19:44:30.922216 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_0.txt
+2025-11-13 19:44:30.923739 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_0.txt
+2025-11-13 19:44:30.941302 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_0.txt took: 0:00:00.017563
+2025-11-13 19:44:30.941302 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_0.txt' of shape (1423, 5)
+2025-11-13 19:44:30.942329 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_0.txt took: 0:00:00.020113
+2025-11-13 19:44:30.942329 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_1.txt
+2025-11-13 19:44:30.942329 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_1.txt
+2025-11-13 19:44:30.962124 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_1.txt took: 0:00:00.019795
+2025-11-13 19:44:30.962124 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_1.txt' of shape (1423, 5)
+2025-11-13 19:44:30.992353 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_1.txt took: 0:00:00.050024
+2025-11-13 19:44:30.992353 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_2.txt
+2025-11-13 19:44:30.992353 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_2.txt
+2025-11-13 19:44:31.019556 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_2.txt took: 0:00:00.027203
+2025-11-13 19:44:31.019556 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_2.txt' of shape (1423, 5)
+2025-11-13 19:44:31.023670 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_2.txt took: 0:00:00.031317
+2025-11-13 19:44:31.023670 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_3.txt
+2025-11-13 19:44:31.023670 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_3.txt
+2025-11-13 19:44:31.043535 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_3.txt took: 0:00:00.019865
+2025-11-13 19:44:31.043535 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_3.txt' of shape (1423, 5)
+2025-11-13 19:44:31.082559 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_3.txt took: 0:00:00.058889
+2025-11-13 19:44:31.084245 starting: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbconf-cond-gr_inst0_grid.csv.tpl'
+2025-11-13 19:44:31.191342 finished: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbconf-cond-gr_inst0_grid.csv.tpl' took: 0:00:00.107097
+2025-11-13 19:44:31.195197 finished: adding grid type m style parameters for file(s) ['local_run30.ghb_conf_stress_period_data_0.txt', 'local_run30.ghb_conf_stress_period_data_1.txt', 'local_run30.ghb_conf_stress_period_data_2.txt', 'local_run30.ghb_conf_stress_period_data_3.txt'] took: 0:00:00.272981
+2025-11-13 19:44:31.195197 transform was not passed, setting default tranform to 'log'
+2025-11-13 19:44:31.195197 starting: adding constant type m style parameters for file(s) ['local_run30.ghb_conf_stress_period_data_0.txt', 'local_run30.ghb_conf_stress_period_data_1.txt', 'local_run30.ghb_conf_stress_period_data_2.txt', 'local_run30.ghb_conf_stress_period_data_3.txt']
+2025-11-13 19:44:31.195197 WARNING: Discrepancy between number of filenames (4) and number of formatter strings (1). Will repeat first (free)
+2025-11-13 19:44:31.195197 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_0.txt
+2025-11-13 19:44:31.195197 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_0.txt
+2025-11-13 19:44:31.195197 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_0.txt took: 0:00:00
+2025-11-13 19:44:31.195197 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_0.txt' of shape (1423, 5)
+2025-11-13 19:44:31.206787 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_0.txt took: 0:00:00.011590
+2025-11-13 19:44:31.206787 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_1.txt
+2025-11-13 19:44:31.206787 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_1.txt
+2025-11-13 19:44:31.212326 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_1.txt took: 0:00:00.005539
+2025-11-13 19:44:31.213604 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_1.txt' of shape (1423, 5)
+2025-11-13 19:44:31.246370 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_1.txt took: 0:00:00.039583
+2025-11-13 19:44:31.246370 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_2.txt
+2025-11-13 19:44:31.246370 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_2.txt
+2025-11-13 19:44:31.253772 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_2.txt took: 0:00:00.007402
+2025-11-13 19:44:31.253772 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_2.txt' of shape (1423, 5)
+2025-11-13 19:44:31.267021 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_2.txt took: 0:00:00.020651
+2025-11-13 19:44:31.267021 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_3.txt
+2025-11-13 19:44:31.267021 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_3.txt
+2025-11-13 19:44:31.273617 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_3.txt took: 0:00:00.006596
+2025-11-13 19:44:31.273617 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_3.txt' of shape (1423, 5)
+2025-11-13 19:44:31.292274 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_3.txt took: 0:00:00.025253
+2025-11-13 19:44:31.301748 starting: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbconf-cond-cn_inst0_constant.csv.tpl'
+2025-11-13 19:44:31.362483 finished: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbconf-cond-cn_inst0_constant.csv.tpl' took: 0:00:00.060735
+2025-11-13 19:44:31.369313 finished: adding constant type m style parameters for file(s) ['local_run30.ghb_conf_stress_period_data_0.txt', 'local_run30.ghb_conf_stress_period_data_1.txt', 'local_run30.ghb_conf_stress_period_data_2.txt', 'local_run30.ghb_conf_stress_period_data_3.txt'] took: 0:00:00.174116
+2025-11-13 19:44:31.369313 starting: adding grid type a style parameters for file(s) ['local_run30.ghbaw_stress_period_data_0.txt', 'local_run30.ghbaw_stress_period_data_2.txt']
+2025-11-13 19:44:31.369313 starting: using geostruct:name:struct1,nugget:0.0,structures:
 name:head_gs,contribution:1.0,a:100.0,anisotropy:1.0,bearing:0.0
 
-2025-11-10 19:32:20.362789 WARNING: Discrepancy between number of filenames (2) and number of formatter strings (1). Will repeat first (free)
-2025-11-10 19:32:20.362789 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_0.txt
-2025-11-10 19:32:20.362789 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_0.txt
-2025-11-10 19:32:20.367949 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_0.txt took: 0:00:00.005160
-2025-11-10 19:32:20.367949 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_0.txt' of shape (121, 5)
-2025-11-10 19:32:20.367949 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_0.txt took: 0:00:00.005160
-2025-11-10 19:32:20.367949 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_2.txt
-2025-11-10 19:32:20.367949 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_2.txt
-2025-11-10 19:32:20.379715 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_2.txt took: 0:00:00.011766
-2025-11-10 19:32:20.379715 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_2.txt' of shape (340, 5)
-2025-11-10 19:32:20.387894 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_2.txt took: 0:00:00.019945
-2025-11-10 19:32:20.387894 starting: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbaw-head-hg_inst0_grid.csv.tpl'
-2025-11-10 19:32:20.467774 finished: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbaw-head-hg_inst0_grid.csv.tpl' took: 0:00:00.079880
-2025-11-10 19:32:20.477149 finished: adding grid type a style parameters for file(s) ['local_run30.ghbaw_stress_period_data_0.txt', 'local_run30.ghbaw_stress_period_data_2.txt'] took: 0:00:00.114360
-2025-11-10 19:32:20.477701 starting: adding constant type a style parameters for file(s) ['local_run30.ghbaw_stress_period_data_0.txt', 'local_run30.ghbaw_stress_period_data_2.txt']
-2025-11-10 19:32:20.477701 WARNING: Discrepancy between number of filenames (2) and number of formatter strings (1). Will repeat first (free)
-2025-11-10 19:32:20.477701 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_0.txt
-2025-11-10 19:32:20.477701 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_0.txt
-2025-11-10 19:32:20.477701 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_0.txt took: 0:00:00
-2025-11-10 19:32:20.477701 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_0.txt' of shape (121, 5)
-2025-11-10 19:32:20.490730 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_0.txt took: 0:00:00.013029
-2025-11-10 19:32:20.490730 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_2.txt
-2025-11-10 19:32:20.490730 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_2.txt
-2025-11-10 19:32:20.497972 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_2.txt took: 0:00:00.007242
-2025-11-10 19:32:20.497972 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_2.txt' of shape (340, 5)
-2025-11-10 19:32:20.507137 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_2.txt took: 0:00:00.016407
-2025-11-10 19:32:20.507648 starting: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbaw-head-cn_inst0_constant.csv.tpl'
-2025-11-10 19:32:20.555080 finished: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbaw-head-cn_inst0_constant.csv.tpl' took: 0:00:00.047432
-2025-11-10 19:32:20.562164 finished: adding constant type a style parameters for file(s) ['local_run30.ghbaw_stress_period_data_0.txt', 'local_run30.ghbaw_stress_period_data_2.txt'] took: 0:00:00.084463
-2025-11-10 19:32:20.567183 starting: adding grid type a style parameters for file(s) ['local_run30.ghb_pw_stress_period_data_0.txt', 'local_run30.ghb_pw_stress_period_data_2.txt']
-2025-11-10 19:32:20.567183 finished: using geostruct:name:struct1,nugget:0.0,structures:
+2025-11-13 19:44:31.369313 WARNING: Discrepancy between number of filenames (2) and number of formatter strings (1). Will repeat first (free)
+2025-11-13 19:44:31.372364 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_0.txt
+2025-11-13 19:44:31.372364 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_0.txt
+2025-11-13 19:44:31.372364 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_0.txt took: 0:00:00
+2025-11-13 19:44:31.372364 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_0.txt' of shape (121, 5)
+2025-11-13 19:44:31.383947 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_0.txt took: 0:00:00.011583
+2025-11-13 19:44:31.383947 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_2.txt
+2025-11-13 19:44:31.383947 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_2.txt
+2025-11-13 19:44:31.385057 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_2.txt took: 0:00:00.001110
+2025-11-13 19:44:31.385057 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_2.txt' of shape (340, 5)
+2025-11-13 19:44:31.392356 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_2.txt took: 0:00:00.008409
+2025-11-13 19:44:31.392356 starting: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbaw-head-hg_inst0_grid.csv.tpl'
+2025-11-13 19:44:31.462455 finished: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbaw-head-hg_inst0_grid.csv.tpl' took: 0:00:00.070099
+2025-11-13 19:44:31.467227 finished: adding grid type a style parameters for file(s) ['local_run30.ghbaw_stress_period_data_0.txt', 'local_run30.ghbaw_stress_period_data_2.txt'] took: 0:00:00.097914
+2025-11-13 19:44:31.467227 starting: adding constant type a style parameters for file(s) ['local_run30.ghbaw_stress_period_data_0.txt', 'local_run30.ghbaw_stress_period_data_2.txt']
+2025-11-13 19:44:31.467227 WARNING: Discrepancy between number of filenames (2) and number of formatter strings (1). Will repeat first (free)
+2025-11-13 19:44:31.472369 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_0.txt
+2025-11-13 19:44:31.472369 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_0.txt
+2025-11-13 19:44:31.473787 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_0.txt took: 0:00:00.001418
+2025-11-13 19:44:31.473787 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_0.txt' of shape (121, 5)
+2025-11-13 19:44:31.481362 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_0.txt took: 0:00:00.008993
+2025-11-13 19:44:31.481362 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_2.txt
+2025-11-13 19:44:31.481362 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_2.txt
+2025-11-13 19:44:31.482415 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_2.txt took: 0:00:00.001053
+2025-11-13 19:44:31.482415 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_2.txt' of shape (340, 5)
+2025-11-13 19:44:31.491539 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbaw_stress_period_data_2.txt took: 0:00:00.010177
+2025-11-13 19:44:31.491539 starting: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbaw-head-cn_inst0_constant.csv.tpl'
+2025-11-13 19:44:31.513732 finished: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbaw-head-cn_inst0_constant.csv.tpl' took: 0:00:00.022193
+2025-11-13 19:44:31.527653 finished: adding constant type a style parameters for file(s) ['local_run30.ghbaw_stress_period_data_0.txt', 'local_run30.ghbaw_stress_period_data_2.txt'] took: 0:00:00.060426
+2025-11-13 19:44:31.527653 starting: adding grid type a style parameters for file(s) ['local_run30.ghb_pw_stress_period_data_0.txt', 'local_run30.ghb_pw_stress_period_data_2.txt']
+2025-11-13 19:44:31.527653 finished: using geostruct:name:struct1,nugget:0.0,structures:
 name:head_gs,contribution:1.0,a:100.0,anisotropy:1.0,bearing:0.0
- took: 0:00:00.204394
-2025-11-10 19:32:20.567722 WARNING: Discrepancy between number of filenames (2) and number of formatter strings (1). Will repeat first (free)
-2025-11-10 19:32:20.567722 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_0.txt
-2025-11-10 19:32:20.567722 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_0.txt
-2025-11-10 19:32:20.570766 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_0.txt took: 0:00:00.003044
-2025-11-10 19:32:20.570766 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_0.txt' of shape (25, 5)
-2025-11-10 19:32:20.579385 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_0.txt took: 0:00:00.011663
-2025-11-10 19:32:20.579385 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_2.txt
-2025-11-10 19:32:20.579385 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_2.txt
-2025-11-10 19:32:20.579385 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_2.txt took: 0:00:00
-2025-11-10 19:32:20.579385 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_2.txt' of shape (11, 5)
-2025-11-10 19:32:20.592122 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_2.txt took: 0:00:00.012737
-2025-11-10 19:32:20.592122 starting: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbpw-head-hg_inst0_grid.csv.tpl'
-2025-11-10 19:32:20.627786 finished: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbpw-head-hg_inst0_grid.csv.tpl' took: 0:00:00.035664
-2025-11-10 19:32:20.633642 finished: adding grid type a style parameters for file(s) ['local_run30.ghb_pw_stress_period_data_0.txt', 'local_run30.ghb_pw_stress_period_data_2.txt'] took: 0:00:00.066459
-2025-11-10 19:32:20.633642 starting: adding constant type a style parameters for file(s) ['local_run30.ghb_pw_stress_period_data_0.txt', 'local_run30.ghb_pw_stress_period_data_2.txt']
-2025-11-10 19:32:20.633642 WARNING: Discrepancy between number of filenames (2) and number of formatter strings (1). Will repeat first (free)
-2025-11-10 19:32:20.633642 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_0.txt
-2025-11-10 19:32:20.637152 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_0.txt
-2025-11-10 19:32:20.639397 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_0.txt took: 0:00:00.002245
-2025-11-10 19:32:20.639397 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_0.txt' of shape (25, 5)
-2025-11-10 19:32:20.639397 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_0.txt took: 0:00:00.005755
-2025-11-10 19:32:20.639397 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_2.txt
-2025-11-10 19:32:20.646933 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_2.txt
-2025-11-10 19:32:20.647980 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_2.txt took: 0:00:00.001047
-2025-11-10 19:32:20.649520 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_2.txt' of shape (11, 5)
-2025-11-10 19:32:20.649520 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_2.txt took: 0:00:00.010123
-2025-11-10 19:32:20.649520 starting: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbpw-head-cn_inst0_constant.csv.tpl'
-2025-11-10 19:32:20.681697 finished: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbpw-head-cn_inst0_constant.csv.tpl' took: 0:00:00.032177
-2025-11-10 19:32:20.687940 finished: adding constant type a style parameters for file(s) ['local_run30.ghb_pw_stress_period_data_0.txt', 'local_run30.ghb_pw_stress_period_data_2.txt'] took: 0:00:00.054298
-2025-11-10 19:32:20.687940 starting: adding grid type a style parameters for file(s) ['local_run30.ghbspr_stress_period_data_0.txt']
-2025-11-10 19:32:20.687940 starting: using geostruct:name:struct1,nugget:0.0,structures:
+ took: 0:00:00.158340
+2025-11-13 19:44:31.527653 WARNING: Discrepancy between number of filenames (2) and number of formatter strings (1). Will repeat first (free)
+2025-11-13 19:44:31.531793 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_0.txt
+2025-11-13 19:44:31.531793 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_0.txt
+2025-11-13 19:44:31.533639 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_0.txt took: 0:00:00.001846
+2025-11-13 19:44:31.533639 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_0.txt' of shape (25, 5)
+2025-11-13 19:44:31.533639 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_0.txt took: 0:00:00.001846
+2025-11-13 19:44:31.533639 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_2.txt
+2025-11-13 19:44:31.541753 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_2.txt
+2025-11-13 19:44:31.543494 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_2.txt took: 0:00:00.001741
+2025-11-13 19:44:31.543494 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_2.txt' of shape (11, 5)
+2025-11-13 19:44:31.543494 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_2.txt took: 0:00:00.009855
+2025-11-13 19:44:31.543494 starting: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbpw-head-hg_inst0_grid.csv.tpl'
+2025-11-13 19:44:31.575700 finished: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbpw-head-hg_inst0_grid.csv.tpl' took: 0:00:00.032206
+2025-11-13 19:44:31.586863 finished: adding grid type a style parameters for file(s) ['local_run30.ghb_pw_stress_period_data_0.txt', 'local_run30.ghb_pw_stress_period_data_2.txt'] took: 0:00:00.059210
+2025-11-13 19:44:31.586863 starting: adding constant type a style parameters for file(s) ['local_run30.ghb_pw_stress_period_data_0.txt', 'local_run30.ghb_pw_stress_period_data_2.txt']
+2025-11-13 19:44:31.586863 WARNING: Discrepancy between number of filenames (2) and number of formatter strings (1). Will repeat first (free)
+2025-11-13 19:44:31.588876 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_0.txt
+2025-11-13 19:44:31.588876 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_0.txt
+2025-11-13 19:44:31.592336 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_0.txt took: 0:00:00.003460
+2025-11-13 19:44:31.592336 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_0.txt' of shape (25, 5)
+2025-11-13 19:44:31.593998 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_0.txt took: 0:00:00.005122
+2025-11-13 19:44:31.593998 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_2.txt
+2025-11-13 19:44:31.593998 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_2.txt
+2025-11-13 19:44:31.602092 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_2.txt took: 0:00:00.008094
+2025-11-13 19:44:31.602092 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_2.txt' of shape (11, 5)
+2025-11-13 19:44:31.607185 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_pw_stress_period_data_2.txt took: 0:00:00.013187
+2025-11-13 19:44:31.607185 starting: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbpw-head-cn_inst0_constant.csv.tpl'
+2025-11-13 19:44:31.623526 finished: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbpw-head-cn_inst0_constant.csv.tpl' took: 0:00:00.016341
+2025-11-13 19:44:31.632255 finished: adding constant type a style parameters for file(s) ['local_run30.ghb_pw_stress_period_data_0.txt', 'local_run30.ghb_pw_stress_period_data_2.txt'] took: 0:00:00.045392
+2025-11-13 19:44:31.632255 starting: adding grid type a style parameters for file(s) ['local_run30.ghbspr_stress_period_data_0.txt']
+2025-11-13 19:44:31.632255 starting: using geostruct:name:struct1,nugget:0.0,structures:
 name:head_gs,contribution:1.0,a:100.0,anisotropy:1.0,bearing:0.0
 
-2025-11-10 19:32:20.687940 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_0.txt
-2025-11-10 19:32:20.687940 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_0.txt
-2025-11-10 19:32:20.687940 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_0.txt took: 0:00:00
-2025-11-10 19:32:20.687940 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_0.txt' of shape (12, 5)
-2025-11-10 19:32:20.697075 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_0.txt took: 0:00:00.009135
-2025-11-10 19:32:20.697181 starting: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbspring-head-hg_inst0_grid.csv.tpl'
-2025-11-10 19:32:20.718120 finished: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbspring-head-hg_inst0_grid.csv.tpl' took: 0:00:00.020939
-2025-11-10 19:32:20.729012 finished: adding grid type a style parameters for file(s) ['local_run30.ghbspr_stress_period_data_0.txt'] took: 0:00:00.041072
-2025-11-10 19:32:20.729012 starting: adding constant type a style parameters for file(s) ['local_run30.ghbspr_stress_period_data_0.txt']
-2025-11-10 19:32:20.729012 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_0.txt
-2025-11-10 19:32:20.729012 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_0.txt
-2025-11-10 19:32:20.737656 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_0.txt took: 0:00:00.008644
-2025-11-10 19:32:20.737656 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_0.txt' of shape (12, 5)
-2025-11-10 19:32:20.744717 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_0.txt took: 0:00:00.015705
-2025-11-10 19:32:20.744717 starting: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbspring-head-cn_inst0_constant.csv.tpl'
-2025-11-10 19:32:20.777936 finished: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbspring-head-cn_inst0_constant.csv.tpl' took: 0:00:00.033219
-2025-11-10 19:32:20.792697 finished: adding constant type a style parameters for file(s) ['local_run30.ghbspr_stress_period_data_0.txt'] took: 0:00:00.063685
-2025-11-10 19:32:20.797782 starting: adding grid type a style parameters for file(s) ['local_run30.ghb_conf_stress_period_data_0.txt', 'local_run30.ghb_conf_stress_period_data_2.txt']
-2025-11-10 19:32:20.797782 starting: using geostruct:name:struct1,nugget:0.0,structures:
+2025-11-13 19:44:31.632255 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_0.txt
+2025-11-13 19:44:31.632255 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_0.txt
+2025-11-13 19:44:31.632255 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_0.txt took: 0:00:00
+2025-11-13 19:44:31.632255 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_0.txt' of shape (12, 5)
+2025-11-13 19:44:31.642418 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_0.txt took: 0:00:00.010163
+2025-11-13 19:44:31.642418 starting: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbspring-head-hg_inst0_grid.csv.tpl'
+2025-11-13 19:44:31.670896 finished: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbspring-head-hg_inst0_grid.csv.tpl' took: 0:00:00.028478
+2025-11-13 19:44:31.672617 finished: adding grid type a style parameters for file(s) ['local_run30.ghbspr_stress_period_data_0.txt'] took: 0:00:00.040362
+2025-11-13 19:44:31.672617 starting: adding constant type a style parameters for file(s) ['local_run30.ghbspr_stress_period_data_0.txt']
+2025-11-13 19:44:31.672617 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_0.txt
+2025-11-13 19:44:31.672617 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_0.txt
+2025-11-13 19:44:31.682164 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_0.txt took: 0:00:00.009547
+2025-11-13 19:44:31.682164 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_0.txt' of shape (12, 5)
+2025-11-13 19:44:31.686839 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghbspr_stress_period_data_0.txt took: 0:00:00.014222
+2025-11-13 19:44:31.686839 starting: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbspring-head-cn_inst0_constant.csv.tpl'
+2025-11-13 19:44:31.705590 finished: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbspring-head-cn_inst0_constant.csv.tpl' took: 0:00:00.018751
+2025-11-13 19:44:31.712124 finished: adding constant type a style parameters for file(s) ['local_run30.ghbspr_stress_period_data_0.txt'] took: 0:00:00.039507
+2025-11-13 19:44:31.712124 starting: adding grid type a style parameters for file(s) ['local_run30.ghb_conf_stress_period_data_0.txt', 'local_run30.ghb_conf_stress_period_data_2.txt']
+2025-11-13 19:44:31.712124 starting: using geostruct:name:struct1,nugget:0.0,structures:
 name:head_gs,contribution:1.0,a:1000.0,anisotropy:1.0,bearing:0.0
 
-2025-11-10 19:32:20.797782 WARNING: Discrepancy between number of filenames (2) and number of formatter strings (1). Will repeat first (free)
-2025-11-10 19:32:20.797782 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_0.txt
-2025-11-10 19:32:20.797782 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_0.txt
-2025-11-10 19:32:20.797782 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_0.txt took: 0:00:00
-2025-11-10 19:32:20.797782 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_0.txt' of shape (1423, 5)
-2025-11-10 19:32:20.821851 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_0.txt took: 0:00:00.024069
-2025-11-10 19:32:20.821851 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_2.txt
-2025-11-10 19:32:20.821851 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_2.txt
-2025-11-10 19:32:20.827937 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_2.txt took: 0:00:00.006086
-2025-11-10 19:32:20.827937 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_2.txt' of shape (1423, 5)
-2025-11-10 19:32:20.840933 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_2.txt took: 0:00:00.019082
-2025-11-10 19:32:20.840933 starting: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbconf-head-hg_inst0_grid.csv.tpl'
-2025-11-10 19:32:20.939935 finished: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbconf-head-hg_inst0_grid.csv.tpl' took: 0:00:00.099002
-2025-11-10 19:32:20.950796 finished: adding grid type a style parameters for file(s) ['local_run30.ghb_conf_stress_period_data_0.txt', 'local_run30.ghb_conf_stress_period_data_2.txt'] took: 0:00:00.153014
-2025-11-10 19:32:20.950796 starting: adding constant type a style parameters for file(s) ['local_run30.ghb_conf_stress_period_data_0.txt', 'local_run30.ghb_conf_stress_period_data_2.txt']
-2025-11-10 19:32:20.950796 WARNING: Discrepancy between number of filenames (2) and number of formatter strings (1). Will repeat first (free)
-2025-11-10 19:32:20.950796 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_0.txt
-2025-11-10 19:32:20.950796 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_0.txt
-2025-11-10 19:32:20.959340 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_0.txt took: 0:00:00.008544
-2025-11-10 19:32:20.959340 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_0.txt' of shape (1423, 5)
-2025-11-10 19:32:20.968000 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_0.txt took: 0:00:00.017204
-2025-11-10 19:32:20.968000 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_2.txt
-2025-11-10 19:32:20.968000 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_2.txt
-2025-11-10 19:32:20.972026 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_2.txt took: 0:00:00.004026
-2025-11-10 19:32:20.972026 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_2.txt' of shape (1423, 5)
-2025-11-10 19:32:20.983056 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_2.txt took: 0:00:00.015056
-2025-11-10 19:32:20.983056 starting: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbconf-head-cn_inst0_constant.csv.tpl'
-2025-11-10 19:32:21.042046 finished: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbconf-head-cn_inst0_constant.csv.tpl' took: 0:00:00.058990
-2025-11-10 19:32:21.049080 finished: adding constant type a style parameters for file(s) ['local_run30.ghb_conf_stress_period_data_0.txt', 'local_run30.ghb_conf_stress_period_data_2.txt'] took: 0:00:00.098284
-2025-11-10 19:32:21.049080 starting: adding observations from output file output.sample_heads.csv
-2025-11-10 19:32:21.049080 starting: adding observations from tabular output file '['output.sample_heads.csv']'
-2025-11-10 19:32:21.049080 starting: reading list-style file: models\local_run30\pest\local_run30_template\output.sample_heads.csv
-2025-11-10 19:32:21.069238 finished: reading list-style file: models\local_run30\pest\local_run30_template\output.sample_heads.csv took: 0:00:00.020158
-2025-11-10 19:32:21.078870 starting: building insfile for tabular output file output.sample_heads.csv
-2025-11-10 19:32:21.097748 finished: building insfile for tabular output file output.sample_heads.csv took: 0:00:00.018878
-2025-11-10 19:32:21.097748 starting: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.sample_heads.csv.ins'
-2025-11-10 19:32:21.137815 finished: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.sample_heads.csv.ins' took: 0:00:00.040067
-2025-11-10 19:32:21.137815 finished: adding observations from tabular output file '['output.sample_heads.csv']' took: 0:00:00.088735
-2025-11-10 19:32:21.137815 finished: adding observations from output file output.sample_heads.csv took: 0:00:00.088735
-2025-11-10 19:32:21.137815 starting: adding observations from output file output.spring_fluxes.csv
-2025-11-10 19:32:21.137815 starting: adding observations from tabular output file '['output.spring_fluxes.csv']'
-2025-11-10 19:32:21.137815 starting: reading list-style file: models\local_run30\pest\local_run30_template\output.spring_fluxes.csv
-2025-11-10 19:32:21.157562 finished: reading list-style file: models\local_run30\pest\local_run30_template\output.spring_fluxes.csv took: 0:00:00.019747
-2025-11-10 19:32:21.167826 starting: building insfile for tabular output file output.spring_fluxes.csv
-2025-11-10 19:32:21.182141 finished: building insfile for tabular output file output.spring_fluxes.csv took: 0:00:00.014315
-2025-11-10 19:32:21.182141 starting: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.spring_fluxes.csv.ins'
-2025-11-10 19:32:21.222987 finished: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.spring_fluxes.csv.ins' took: 0:00:00.040846
-2025-11-10 19:32:21.222987 finished: adding observations from tabular output file '['output.spring_fluxes.csv']' took: 0:00:00.085172
-2025-11-10 19:32:21.222987 finished: adding observations from output file output.spring_fluxes.csv took: 0:00:00.085172
-2025-11-10 19:32:21.222987 starting: adding observations from output file output.GHB_AW_fluxes.csv
-2025-11-10 19:32:21.222987 starting: adding observations from tabular output file '['output.GHB_AW_fluxes.csv']'
-2025-11-10 19:32:21.222987 starting: reading list-style file: models\local_run30\pest\local_run30_template\output.GHB_AW_fluxes.csv
-2025-11-10 19:32:21.279664 finished: reading list-style file: models\local_run30\pest\local_run30_template\output.GHB_AW_fluxes.csv took: 0:00:00.056677
-2025-11-10 19:32:21.398209 starting: building insfile for tabular output file output.GHB_AW_fluxes.csv
-2025-11-10 19:32:21.879420 finished: building insfile for tabular output file output.GHB_AW_fluxes.csv took: 0:00:00.481211
-2025-11-10 19:32:21.879420 starting: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.GHB_AW_fluxes.csv.ins'
-2025-11-10 19:32:23.207831 finished: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.GHB_AW_fluxes.csv.ins' took: 0:00:01.328411
-2025-11-10 19:32:23.240701 finished: adding observations from tabular output file '['output.GHB_AW_fluxes.csv']' took: 0:00:02.017714
-2025-11-10 19:32:23.240701 finished: adding observations from output file output.GHB_AW_fluxes.csv took: 0:00:02.017714
-2025-11-10 19:32:23.247975 starting: adding observations from output file output.GHB_SP_fluxes.csv
-2025-11-10 19:32:23.247975 starting: adding observations from tabular output file '['output.GHB_SP_fluxes.csv']'
-2025-11-10 19:32:23.247975 starting: reading list-style file: models\local_run30\pest\local_run30_template\output.GHB_SP_fluxes.csv
-2025-11-10 19:32:23.277824 finished: reading list-style file: models\local_run30\pest\local_run30_template\output.GHB_SP_fluxes.csv took: 0:00:00.029849
-2025-11-10 19:32:23.288013 starting: building insfile for tabular output file output.GHB_SP_fluxes.csv
-2025-11-10 19:32:23.329680 finished: building insfile for tabular output file output.GHB_SP_fluxes.csv took: 0:00:00.041667
-2025-11-10 19:32:23.329680 starting: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.GHB_SP_fluxes.csv.ins'
-2025-11-10 19:32:23.480097 finished: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.GHB_SP_fluxes.csv.ins' took: 0:00:00.150417
-2025-11-10 19:32:23.480097 finished: adding observations from tabular output file '['output.GHB_SP_fluxes.csv']' took: 0:00:00.232122
-2025-11-10 19:32:23.480097 finished: adding observations from output file output.GHB_SP_fluxes.csv took: 0:00:00.232122
-2025-11-10 19:32:23.480097 starting: adding observations from output file output.GHB_CONF_fluxes.csv
-2025-11-10 19:32:23.480097 starting: adding observations from tabular output file '['output.GHB_CONF_fluxes.csv']'
-2025-11-10 19:32:23.480097 starting: reading list-style file: models\local_run30\pest\local_run30_template\output.GHB_CONF_fluxes.csv
-2025-11-10 19:32:23.708025 finished: reading list-style file: models\local_run30\pest\local_run30_template\output.GHB_CONF_fluxes.csv took: 0:00:00.227928
-2025-11-10 19:32:24.467672 starting: building insfile for tabular output file output.GHB_CONF_fluxes.csv
-2025-11-10 19:32:26.538005 finished: building insfile for tabular output file output.GHB_CONF_fluxes.csv took: 0:00:02.070333
-2025-11-10 19:32:26.538005 starting: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.GHB_CONF_fluxes.csv.ins'
-2025-11-10 19:32:33.192029 finished: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.GHB_CONF_fluxes.csv.ins' took: 0:00:06.654024
-2025-11-10 19:32:33.329825 finished: adding observations from tabular output file '['output.GHB_CONF_fluxes.csv']' took: 0:00:09.849728
-2025-11-10 19:32:33.329825 finished: adding observations from output file output.GHB_CONF_fluxes.csv took: 0:00:09.849728
-2025-11-10 19:32:33.349634 starting: adding observations from output file output.sample_recession_rates.csv
-2025-11-10 19:32:33.349634 starting: adding observations from tabular output file '['output.sample_recession_rates.csv']'
-2025-11-10 19:32:33.349634 starting: reading list-style file: models\local_run30\pest\local_run30_template\output.sample_recession_rates.csv
-2025-11-10 19:32:33.349634 finished: reading list-style file: models\local_run30\pest\local_run30_template\output.sample_recession_rates.csv took: 0:00:00
-2025-11-10 19:32:33.355245 starting: building insfile for tabular output file output.sample_recession_rates.csv
-2025-11-10 19:32:33.357974 finished: building insfile for tabular output file output.sample_recession_rates.csv took: 0:00:00.002729
-2025-11-10 19:32:33.357974 starting: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.sample_recession_rates.csv.ins'
-2025-11-10 19:32:33.407660 finished: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.sample_recession_rates.csv.ins' took: 0:00:00.049686
-2025-11-10 19:32:33.413356 finished: adding observations from tabular output file '['output.sample_recession_rates.csv']' took: 0:00:00.063722
-2025-11-10 19:32:33.413356 finished: adding observations from output file output.sample_recession_rates.csv took: 0:00:00.063722
-2025-11-10 19:32:33.413356 starting: adding observations from output file output.budget.csv
-2025-11-10 19:32:33.413356 starting: adding observations from tabular output file '['output.budget.csv']'
-2025-11-10 19:32:33.413356 starting: reading list-style file: models\local_run30\pest\local_run30_template\output.budget.csv
-2025-11-10 19:32:33.434157 finished: reading list-style file: models\local_run30\pest\local_run30_template\output.budget.csv took: 0:00:00.020801
-2025-11-10 19:32:33.437690 starting: building insfile for tabular output file output.budget.csv
-2025-11-10 19:32:33.438854 finished: building insfile for tabular output file output.budget.csv took: 0:00:00.001164
-2025-11-10 19:32:33.438854 starting: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.budget.csv.ins'
-2025-11-10 19:32:33.513323 finished: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.budget.csv.ins' took: 0:00:00.074469
-2025-11-10 19:32:33.519387 finished: adding observations from tabular output file '['output.budget.csv']' took: 0:00:00.106031
-2025-11-10 19:32:33.519387 finished: adding observations from output file output.budget.csv took: 0:00:00.106031
-2025-11-10 19:32:33.519387 starting: adding observations from output file output.heads_kper1_kstp1_time1.0.dat
-2025-11-10 19:32:33.519387 starting: adding observations from array output file 'output.heads_kper1_kstp1_time1.0.dat'
-2025-11-10 19:32:33.548934 starting: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper1_kstp1_time1.0.dat.ins'
-2025-11-10 19:32:33.660876 finished: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper1_kstp1_time1.0.dat.ins' took: 0:00:00.111942
-2025-11-10 19:32:33.660876 finished: adding observations from array output file 'output.heads_kper1_kstp1_time1.0.dat' took: 0:00:00.141489
-2025-11-10 19:32:33.660876 finished: adding observations from output file output.heads_kper1_kstp1_time1.0.dat took: 0:00:00.141489
-2025-11-10 19:32:33.660876 starting: adding observations from output file output.heads_kper2_kstp11_time12.0.dat
-2025-11-10 19:32:33.660876 starting: adding observations from array output file 'output.heads_kper2_kstp11_time12.0.dat'
-2025-11-10 19:32:33.698013 starting: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper2_kstp11_time12.0.dat.ins'
-2025-11-10 19:32:33.778951 finished: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper2_kstp11_time12.0.dat.ins' took: 0:00:00.080938
-2025-11-10 19:32:33.788066 finished: adding observations from array output file 'output.heads_kper2_kstp11_time12.0.dat' took: 0:00:00.127190
-2025-11-10 19:32:33.788066 finished: adding observations from output file output.heads_kper2_kstp11_time12.0.dat took: 0:00:00.127190
-2025-11-10 19:32:33.788066 starting: adding observations from output file output.heads_kper2_kstp1_time2.0.dat
-2025-11-10 19:32:33.788066 starting: adding observations from array output file 'output.heads_kper2_kstp1_time2.0.dat'
-2025-11-10 19:32:33.827564 starting: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper2_kstp1_time2.0.dat.ins'
-2025-11-10 19:32:33.938116 finished: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper2_kstp1_time2.0.dat.ins' took: 0:00:00.110552
-2025-11-10 19:32:33.947200 finished: adding observations from array output file 'output.heads_kper2_kstp1_time2.0.dat' took: 0:00:00.159134
-2025-11-10 19:32:33.947254 finished: adding observations from output file output.heads_kper2_kstp1_time2.0.dat took: 0:00:00.159188
-2025-11-10 19:32:33.947254 starting: adding observations from output file output.heads_kper2_kstp21_time22.0.dat
-2025-11-10 19:32:33.947761 starting: adding observations from array output file 'output.heads_kper2_kstp21_time22.0.dat'
-2025-11-10 19:32:33.979212 starting: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper2_kstp21_time22.0.dat.ins'
-2025-11-10 19:32:34.097097 finished: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper2_kstp21_time22.0.dat.ins' took: 0:00:00.117885
-2025-11-10 19:32:34.099182 finished: adding observations from array output file 'output.heads_kper2_kstp21_time22.0.dat' took: 0:00:00.151421
-2025-11-10 19:32:34.099182 finished: adding observations from output file output.heads_kper2_kstp21_time22.0.dat took: 0:00:00.151928
-2025-11-10 19:32:34.099182 starting: adding observations from output file output.heads_kper2_kstp31_time32.0.dat
-2025-11-10 19:32:34.099182 starting: adding observations from array output file 'output.heads_kper2_kstp31_time32.0.dat'
-2025-11-10 19:32:34.139142 starting: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper2_kstp31_time32.0.dat.ins'
-2025-11-10 19:32:34.213944 finished: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper2_kstp31_time32.0.dat.ins' took: 0:00:00.074802
-2025-11-10 19:32:34.217684 finished: adding observations from array output file 'output.heads_kper2_kstp31_time32.0.dat' took: 0:00:00.118502
-2025-11-10 19:32:34.217684 finished: adding observations from output file output.heads_kper2_kstp31_time32.0.dat took: 0:00:00.118502
-2025-11-10 19:32:34.217684 starting: adding observations from output file output.heads_kper2_kstp41_time42.0.dat
-2025-11-10 19:32:34.217684 starting: adding observations from array output file 'output.heads_kper2_kstp41_time42.0.dat'
-2025-11-10 19:32:34.249129 starting: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper2_kstp41_time42.0.dat.ins'
-2025-11-10 19:32:34.359985 finished: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper2_kstp41_time42.0.dat.ins' took: 0:00:00.110856
-2025-11-10 19:32:34.367736 finished: adding observations from array output file 'output.heads_kper2_kstp41_time42.0.dat' took: 0:00:00.150052
-2025-11-10 19:32:34.367736 finished: adding observations from output file output.heads_kper2_kstp41_time42.0.dat took: 0:00:00.150052
-2025-11-10 19:32:34.367736 starting: adding observations from output file output.heads_kper2_kstp51_time52.0.dat
-2025-11-10 19:32:34.367736 starting: adding observations from array output file 'output.heads_kper2_kstp51_time52.0.dat'
-2025-11-10 19:32:34.399490 starting: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper2_kstp51_time52.0.dat.ins'
-2025-11-10 19:32:34.535299 finished: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper2_kstp51_time52.0.dat.ins' took: 0:00:00.135809
-2025-11-10 19:32:34.537763 finished: adding observations from array output file 'output.heads_kper2_kstp51_time52.0.dat' took: 0:00:00.170027
-2025-11-10 19:32:34.537763 finished: adding observations from output file output.heads_kper2_kstp51_time52.0.dat took: 0:00:00.170027
-2025-11-10 19:32:34.537763 starting: adding observations from output file output.heads_kper3_kstp1_time54.0.dat
-2025-11-10 19:32:34.537763 starting: adding observations from array output file 'output.heads_kper3_kstp1_time54.0.dat'
-2025-11-10 19:32:34.569210 starting: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper3_kstp1_time54.0.dat.ins'
-2025-11-10 19:32:34.708749 finished: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper3_kstp1_time54.0.dat.ins' took: 0:00:00.139539
-2025-11-10 19:32:34.717241 finished: adding observations from array output file 'output.heads_kper3_kstp1_time54.0.dat' took: 0:00:00.179478
-2025-11-10 19:32:34.717766 finished: adding observations from output file output.heads_kper3_kstp1_time54.0.dat took: 0:00:00.180003
-2025-11-10 19:32:34.717766 starting: adding observations from output file output.heads_kper4_kstp11_time65.0.dat
-2025-11-10 19:32:34.717766 starting: adding observations from array output file 'output.heads_kper4_kstp11_time65.0.dat'
-2025-11-10 19:32:34.747898 starting: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper4_kstp11_time65.0.dat.ins'
-2025-11-10 19:32:34.868037 finished: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper4_kstp11_time65.0.dat.ins' took: 0:00:00.120139
-2025-11-10 19:32:34.869549 finished: adding observations from array output file 'output.heads_kper4_kstp11_time65.0.dat' took: 0:00:00.151783
-2025-11-10 19:32:34.869549 finished: adding observations from output file output.heads_kper4_kstp11_time65.0.dat took: 0:00:00.151783
-2025-11-10 19:32:34.869549 starting: adding observations from output file output.heads_kper4_kstp1_time55.0.dat
-2025-11-10 19:32:34.869549 starting: adding observations from array output file 'output.heads_kper4_kstp1_time55.0.dat'
-2025-11-10 19:32:34.916801 starting: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper4_kstp1_time55.0.dat.ins'
-2025-11-10 19:32:35.027854 finished: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper4_kstp1_time55.0.dat.ins' took: 0:00:00.111053
-2025-11-10 19:32:35.031907 finished: adding observations from array output file 'output.heads_kper4_kstp1_time55.0.dat' took: 0:00:00.162358
-2025-11-10 19:32:35.031907 finished: adding observations from output file output.heads_kper4_kstp1_time55.0.dat took: 0:00:00.162358
-2025-11-10 19:32:35.031907 starting: adding observations from output file output.heads_kper4_kstp21_time75.0.dat
-2025-11-10 19:32:35.031907 starting: adding observations from array output file 'output.heads_kper4_kstp21_time75.0.dat'
-2025-11-10 19:32:35.068049 starting: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper4_kstp21_time75.0.dat.ins'
-2025-11-10 19:32:35.233947 finished: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper4_kstp21_time75.0.dat.ins' took: 0:00:00.165898
-2025-11-10 19:32:35.238036 finished: adding observations from array output file 'output.heads_kper4_kstp21_time75.0.dat' took: 0:00:00.206129
-2025-11-10 19:32:35.238036 finished: adding observations from output file output.heads_kper4_kstp21_time75.0.dat took: 0:00:00.206129
-2025-11-10 19:32:35.238036 starting: adding observations from output file output.heads_kper4_kstp31_time85.0.dat
-2025-11-10 19:32:35.238036 starting: adding observations from array output file 'output.heads_kper4_kstp31_time85.0.dat'
-2025-11-10 19:32:35.287694 starting: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper4_kstp31_time85.0.dat.ins'
-2025-11-10 19:32:35.467892 finished: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper4_kstp31_time85.0.dat.ins' took: 0:00:00.180198
-2025-11-10 19:32:35.469598 finished: adding observations from array output file 'output.heads_kper4_kstp31_time85.0.dat' took: 0:00:00.231562
-2025-11-10 19:32:35.477154 finished: adding observations from output file output.heads_kper4_kstp31_time85.0.dat took: 0:00:00.239118
-2025-11-10 19:32:35.477154 starting: adding observations from output file output.heads_kper4_kstp41_time95.0.dat
-2025-11-10 19:32:35.477154 starting: adding observations from array output file 'output.heads_kper4_kstp41_time95.0.dat'
-2025-11-10 19:32:35.511994 starting: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper4_kstp41_time95.0.dat.ins'
-2025-11-10 19:32:35.660543 finished: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper4_kstp41_time95.0.dat.ins' took: 0:00:00.148549
-2025-11-10 19:32:35.667851 finished: adding observations from array output file 'output.heads_kper4_kstp41_time95.0.dat' took: 0:00:00.190697
-2025-11-10 19:32:35.667851 finished: adding observations from output file output.heads_kper4_kstp41_time95.0.dat took: 0:00:00.190697
-2025-11-10 19:32:35.667851 starting: adding observations from output file output.heads_kper4_kstp51_time105.0.dat
-2025-11-10 19:32:35.667851 starting: adding observations from array output file 'output.heads_kper4_kstp51_time105.0.dat'
-2025-11-10 19:32:35.717637 starting: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper4_kstp51_time105.0.dat.ins'
-2025-11-10 19:32:35.835847 finished: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper4_kstp51_time105.0.dat.ins' took: 0:00:00.118210
-2025-11-10 19:32:35.841966 finished: adding observations from array output file 'output.heads_kper4_kstp51_time105.0.dat' took: 0:00:00.174115
-2025-11-10 19:32:35.841966 finished: adding observations from output file output.heads_kper4_kstp51_time105.0.dat took: 0:00:00.174115
-2025-11-10 19:32:40.061978 forward_run line:pyemu.os_utils.run(r'mf6')
+2025-11-13 19:44:31.716645 WARNING: Discrepancy between number of filenames (2) and number of formatter strings (1). Will repeat first (free)
+2025-11-13 19:44:31.716645 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_0.txt
+2025-11-13 19:44:31.716645 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_0.txt
+2025-11-13 19:44:31.723950 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_0.txt took: 0:00:00.007305
+2025-11-13 19:44:31.723950 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_0.txt' of shape (1423, 5)
+2025-11-13 19:44:31.742115 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_0.txt took: 0:00:00.025470
+2025-11-13 19:44:31.743564 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_2.txt
+2025-11-13 19:44:31.743564 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_2.txt
+2025-11-13 19:44:31.743564 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_2.txt took: 0:00:00
+2025-11-13 19:44:31.743564 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_2.txt' of shape (1423, 5)
+2025-11-13 19:44:31.752115 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_2.txt took: 0:00:00.008551
+2025-11-13 19:44:31.752115 starting: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbconf-head-hg_inst0_grid.csv.tpl'
+2025-11-13 19:44:31.833973 finished: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbconf-head-hg_inst0_grid.csv.tpl' took: 0:00:00.081858
+2025-11-13 19:44:31.845618 finished: adding grid type a style parameters for file(s) ['local_run30.ghb_conf_stress_period_data_0.txt', 'local_run30.ghb_conf_stress_period_data_2.txt'] took: 0:00:00.133494
+2025-11-13 19:44:31.845618 starting: adding constant type a style parameters for file(s) ['local_run30.ghb_conf_stress_period_data_0.txt', 'local_run30.ghb_conf_stress_period_data_2.txt']
+2025-11-13 19:44:31.845618 WARNING: Discrepancy between number of filenames (2) and number of formatter strings (1). Will repeat first (free)
+2025-11-13 19:44:31.845618 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_0.txt
+2025-11-13 19:44:31.845618 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_0.txt
+2025-11-13 19:44:31.853767 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_0.txt took: 0:00:00.008149
+2025-11-13 19:44:31.853767 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_0.txt' of shape (1423, 5)
+2025-11-13 19:44:31.868103 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_0.txt took: 0:00:00.022485
+2025-11-13 19:44:31.868103 starting: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_2.txt
+2025-11-13 19:44:31.868103 starting: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_2.txt
+2025-11-13 19:44:31.873740 finished: reading list-style file: models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_2.txt took: 0:00:00.005637
+2025-11-13 19:44:31.873740 loaded list-style 'models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_2.txt' of shape (1423, 5)
+2025-11-13 19:44:31.892048 finished: loading list-style models\local_run30\pest\local_run30_template\local_run30.ghb_conf_stress_period_data_2.txt took: 0:00:00.023945
+2025-11-13 19:44:31.892048 starting: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbconf-head-cn_inst0_constant.csv.tpl'
+2025-11-13 19:44:31.952520 finished: writing list-style template file 'models\local_run30\pest\local_run30_template\ghbconf-head-cn_inst0_constant.csv.tpl' took: 0:00:00.060472
+2025-11-13 19:44:31.956656 finished: adding constant type a style parameters for file(s) ['local_run30.ghb_conf_stress_period_data_0.txt', 'local_run30.ghb_conf_stress_period_data_2.txt'] took: 0:00:00.111038
+2025-11-13 19:44:31.963578 starting: adding observations from output file output.sample_heads.csv
+2025-11-13 19:44:31.963578 starting: adding observations from tabular output file '['output.sample_heads.csv']'
+2025-11-13 19:44:31.963578 starting: reading list-style file: models\local_run30\pest\local_run30_template\output.sample_heads.csv
+2025-11-13 19:44:31.992319 finished: reading list-style file: models\local_run30\pest\local_run30_template\output.sample_heads.csv took: 0:00:00.028741
+2025-11-13 19:44:31.992319 starting: building insfile for tabular output file output.sample_heads.csv
+2025-11-13 19:44:31.992319 finished: building insfile for tabular output file output.sample_heads.csv took: 0:00:00
+2025-11-13 19:44:31.992319 starting: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.sample_heads.csv.ins'
+2025-11-13 19:44:32.041562 finished: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.sample_heads.csv.ins' took: 0:00:00.049243
+2025-11-13 19:44:32.042177 finished: adding observations from tabular output file '['output.sample_heads.csv']' took: 0:00:00.078599
+2025-11-13 19:44:32.042177 finished: adding observations from output file output.sample_heads.csv took: 0:00:00.078599
+2025-11-13 19:44:32.043553 starting: adding observations from output file output.spring_fluxes.csv
+2025-11-13 19:44:32.043553 starting: adding observations from tabular output file '['output.spring_fluxes.csv']'
+2025-11-13 19:44:32.043553 starting: reading list-style file: models\local_run30\pest\local_run30_template\output.spring_fluxes.csv
+2025-11-13 19:44:32.056621 finished: reading list-style file: models\local_run30\pest\local_run30_template\output.spring_fluxes.csv took: 0:00:00.013068
+2025-11-13 19:44:32.064298 starting: building insfile for tabular output file output.spring_fluxes.csv
+2025-11-13 19:44:32.068487 finished: building insfile for tabular output file output.spring_fluxes.csv took: 0:00:00.004189
+2025-11-13 19:44:32.068487 starting: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.spring_fluxes.csv.ins'
+2025-11-13 19:44:32.093776 finished: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.spring_fluxes.csv.ins' took: 0:00:00.025289
+2025-11-13 19:44:32.093776 finished: adding observations from tabular output file '['output.spring_fluxes.csv']' took: 0:00:00.050223
+2025-11-13 19:44:32.093776 finished: adding observations from output file output.spring_fluxes.csv took: 0:00:00.050223
+2025-11-13 19:44:32.093776 starting: adding observations from output file output.GHB_AW_fluxes.csv
+2025-11-13 19:44:32.093776 starting: adding observations from tabular output file '['output.GHB_AW_fluxes.csv']'
+2025-11-13 19:44:32.093776 starting: reading list-style file: models\local_run30\pest\local_run30_template\output.GHB_AW_fluxes.csv
+2025-11-13 19:44:32.142157 finished: reading list-style file: models\local_run30\pest\local_run30_template\output.GHB_AW_fluxes.csv took: 0:00:00.048381
+2025-11-13 19:44:32.211399 starting: building insfile for tabular output file output.GHB_AW_fluxes.csv
+2025-11-13 19:44:32.486583 finished: building insfile for tabular output file output.GHB_AW_fluxes.csv took: 0:00:00.275184
+2025-11-13 19:44:32.486583 starting: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.GHB_AW_fluxes.csv.ins'
+2025-11-13 19:44:33.483431 finished: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.GHB_AW_fluxes.csv.ins' took: 0:00:00.996848
+2025-11-13 19:44:33.499266 finished: adding observations from tabular output file '['output.GHB_AW_fluxes.csv']' took: 0:00:01.405490
+2025-11-13 19:44:33.499266 finished: adding observations from output file output.GHB_AW_fluxes.csv took: 0:00:01.405490
+2025-11-13 19:44:33.502511 starting: adding observations from output file output.GHB_SP_fluxes.csv
+2025-11-13 19:44:33.502511 starting: adding observations from tabular output file '['output.GHB_SP_fluxes.csv']'
+2025-11-13 19:44:33.502511 starting: reading list-style file: models\local_run30\pest\local_run30_template\output.GHB_SP_fluxes.csv
+2025-11-13 19:44:33.522379 finished: reading list-style file: models\local_run30\pest\local_run30_template\output.GHB_SP_fluxes.csv took: 0:00:00.019868
+2025-11-13 19:44:33.533833 starting: building insfile for tabular output file output.GHB_SP_fluxes.csv
+2025-11-13 19:44:33.572545 finished: building insfile for tabular output file output.GHB_SP_fluxes.csv took: 0:00:00.038712
+2025-11-13 19:44:33.572545 starting: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.GHB_SP_fluxes.csv.ins'
+2025-11-13 19:44:33.682313 finished: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.GHB_SP_fluxes.csv.ins' took: 0:00:00.109768
+2025-11-13 19:44:33.686852 finished: adding observations from tabular output file '['output.GHB_SP_fluxes.csv']' took: 0:00:00.184341
+2025-11-13 19:44:33.686852 finished: adding observations from output file output.GHB_SP_fluxes.csv took: 0:00:00.184341
+2025-11-13 19:44:33.686852 starting: adding observations from output file output.GHB_CONF_fluxes.csv
+2025-11-13 19:44:33.686852 starting: adding observations from tabular output file '['output.GHB_CONF_fluxes.csv']'
+2025-11-13 19:44:33.686852 starting: reading list-style file: models\local_run30\pest\local_run30_template\output.GHB_CONF_fluxes.csv
+2025-11-13 19:44:33.872358 finished: reading list-style file: models\local_run30\pest\local_run30_template\output.GHB_CONF_fluxes.csv took: 0:00:00.185506
+2025-11-13 19:44:34.523787 starting: building insfile for tabular output file output.GHB_CONF_fluxes.csv
+2025-11-13 19:44:36.322210 finished: building insfile for tabular output file output.GHB_CONF_fluxes.csv took: 0:00:01.798423
+2025-11-13 19:44:36.322210 starting: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.GHB_CONF_fluxes.csv.ins'
+2025-11-13 19:44:42.176481 finished: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.GHB_CONF_fluxes.csv.ins' took: 0:00:05.854271
+2025-11-13 19:44:42.303430 finished: adding observations from tabular output file '['output.GHB_CONF_fluxes.csv']' took: 0:00:08.616578
+2025-11-13 19:44:42.312030 finished: adding observations from output file output.GHB_CONF_fluxes.csv took: 0:00:08.625178
+2025-11-13 19:44:42.326563 starting: adding observations from output file output.sample_recession_rates.csv
+2025-11-13 19:44:42.326563 starting: adding observations from tabular output file '['output.sample_recession_rates.csv']'
+2025-11-13 19:44:42.326563 starting: reading list-style file: models\local_run30\pest\local_run30_template\output.sample_recession_rates.csv
+2025-11-13 19:44:42.331570 finished: reading list-style file: models\local_run30\pest\local_run30_template\output.sample_recession_rates.csv took: 0:00:00.005007
+2025-11-13 19:44:42.333493 starting: building insfile for tabular output file output.sample_recession_rates.csv
+2025-11-13 19:44:42.342131 finished: building insfile for tabular output file output.sample_recession_rates.csv took: 0:00:00.008638
+2025-11-13 19:44:42.342131 starting: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.sample_recession_rates.csv.ins'
+2025-11-13 19:44:42.412048 finished: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.sample_recession_rates.csv.ins' took: 0:00:00.069917
+2025-11-13 19:44:42.413451 finished: adding observations from tabular output file '['output.sample_recession_rates.csv']' took: 0:00:00.086888
+2025-11-13 19:44:42.413451 finished: adding observations from output file output.sample_recession_rates.csv took: 0:00:00.086888
+2025-11-13 19:44:42.413451 starting: adding observations from output file output.budget.csv
+2025-11-13 19:44:42.413451 starting: adding observations from tabular output file '['output.budget.csv']'
+2025-11-13 19:44:42.413451 starting: reading list-style file: models\local_run30\pest\local_run30_template\output.budget.csv
+2025-11-13 19:44:42.432318 finished: reading list-style file: models\local_run30\pest\local_run30_template\output.budget.csv took: 0:00:00.018867
+2025-11-13 19:44:42.433551 starting: building insfile for tabular output file output.budget.csv
+2025-11-13 19:44:42.442144 finished: building insfile for tabular output file output.budget.csv took: 0:00:00.008593
+2025-11-13 19:44:42.442144 starting: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.budget.csv.ins'
+2025-11-13 19:44:42.501535 finished: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.budget.csv.ins' took: 0:00:00.059391
+2025-11-13 19:44:42.503698 finished: adding observations from tabular output file '['output.budget.csv']' took: 0:00:00.090247
+2025-11-13 19:44:42.503698 finished: adding observations from output file output.budget.csv took: 0:00:00.090247
+2025-11-13 19:44:42.511323 starting: adding observations from output file output.heads_kper1_kstp1_time1.0.dat
+2025-11-13 19:44:42.511323 starting: adding observations from array output file 'output.heads_kper1_kstp1_time1.0.dat'
+2025-11-13 19:44:42.552102 starting: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper1_kstp1_time1.0.dat.ins'
+2025-11-13 19:44:42.692164 finished: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper1_kstp1_time1.0.dat.ins' took: 0:00:00.140062
+2025-11-13 19:44:42.693552 finished: adding observations from array output file 'output.heads_kper1_kstp1_time1.0.dat' took: 0:00:00.182229
+2025-11-13 19:44:42.693552 finished: adding observations from output file output.heads_kper1_kstp1_time1.0.dat took: 0:00:00.182229
+2025-11-13 19:44:42.693552 starting: adding observations from output file output.heads_kper2_kstp11_time12.0.dat
+2025-11-13 19:44:42.693552 starting: adding observations from array output file 'output.heads_kper2_kstp11_time12.0.dat'
+2025-11-13 19:44:42.722114 starting: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper2_kstp11_time12.0.dat.ins'
+2025-11-13 19:44:42.872129 finished: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper2_kstp11_time12.0.dat.ins' took: 0:00:00.150015
+2025-11-13 19:44:42.882118 finished: adding observations from array output file 'output.heads_kper2_kstp11_time12.0.dat' took: 0:00:00.188566
+2025-11-13 19:44:42.882118 finished: adding observations from output file output.heads_kper2_kstp11_time12.0.dat took: 0:00:00.188566
+2025-11-13 19:44:42.882118 starting: adding observations from output file output.heads_kper2_kstp1_time2.0.dat
+2025-11-13 19:44:42.882118 starting: adding observations from array output file 'output.heads_kper2_kstp1_time2.0.dat'
+2025-11-13 19:44:42.915243 starting: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper2_kstp1_time2.0.dat.ins'
+2025-11-13 19:44:42.982529 finished: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper2_kstp1_time2.0.dat.ins' took: 0:00:00.067286
+2025-11-13 19:44:42.993877 finished: adding observations from array output file 'output.heads_kper2_kstp1_time2.0.dat' took: 0:00:00.111759
+2025-11-13 19:44:42.993877 finished: adding observations from output file output.heads_kper2_kstp1_time2.0.dat took: 0:00:00.111759
+2025-11-13 19:44:42.993877 starting: adding observations from output file output.heads_kper2_kstp21_time22.0.dat
+2025-11-13 19:44:42.993877 starting: adding observations from array output file 'output.heads_kper2_kstp21_time22.0.dat'
+2025-11-13 19:44:43.013817 starting: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper2_kstp21_time22.0.dat.ins'
+2025-11-13 19:44:43.093815 finished: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper2_kstp21_time22.0.dat.ins' took: 0:00:00.079998
+2025-11-13 19:44:43.102076 finished: adding observations from array output file 'output.heads_kper2_kstp21_time22.0.dat' took: 0:00:00.108199
+2025-11-13 19:44:43.102076 finished: adding observations from output file output.heads_kper2_kstp21_time22.0.dat took: 0:00:00.108199
+2025-11-13 19:44:43.102076 starting: adding observations from output file output.heads_kper2_kstp31_time32.0.dat
+2025-11-13 19:44:43.102076 starting: adding observations from array output file 'output.heads_kper2_kstp31_time32.0.dat'
+2025-11-13 19:44:43.136253 starting: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper2_kstp31_time32.0.dat.ins'
+2025-11-13 19:44:43.252219 finished: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper2_kstp31_time32.0.dat.ins' took: 0:00:00.115966
+2025-11-13 19:44:43.262118 finished: adding observations from array output file 'output.heads_kper2_kstp31_time32.0.dat' took: 0:00:00.160042
+2025-11-13 19:44:43.262118 finished: adding observations from output file output.heads_kper2_kstp31_time32.0.dat took: 0:00:00.160042
+2025-11-13 19:44:43.262118 starting: adding observations from output file output.heads_kper2_kstp41_time42.0.dat
+2025-11-13 19:44:43.262118 starting: adding observations from array output file 'output.heads_kper2_kstp41_time42.0.dat'
+2025-11-13 19:44:43.296057 starting: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper2_kstp41_time42.0.dat.ins'
+2025-11-13 19:44:43.442271 finished: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper2_kstp41_time42.0.dat.ins' took: 0:00:00.146214
+2025-11-13 19:44:43.446316 finished: adding observations from array output file 'output.heads_kper2_kstp41_time42.0.dat' took: 0:00:00.184198
+2025-11-13 19:44:43.446316 finished: adding observations from output file output.heads_kper2_kstp41_time42.0.dat took: 0:00:00.184198
+2025-11-13 19:44:43.446316 starting: adding observations from output file output.heads_kper2_kstp51_time52.0.dat
+2025-11-13 19:44:43.446316 starting: adding observations from array output file 'output.heads_kper2_kstp51_time52.0.dat'
+2025-11-13 19:44:43.471271 starting: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper2_kstp51_time52.0.dat.ins'
+2025-11-13 19:44:43.572242 finished: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper2_kstp51_time52.0.dat.ins' took: 0:00:00.100971
+2025-11-13 19:44:43.583884 finished: adding observations from array output file 'output.heads_kper2_kstp51_time52.0.dat' took: 0:00:00.137568
+2025-11-13 19:44:43.583884 finished: adding observations from output file output.heads_kper2_kstp51_time52.0.dat took: 0:00:00.137568
+2025-11-13 19:44:43.583884 starting: adding observations from output file output.heads_kper3_kstp1_time54.0.dat
+2025-11-13 19:44:43.583884 starting: adding observations from array output file 'output.heads_kper3_kstp1_time54.0.dat'
+2025-11-13 19:44:43.622284 starting: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper3_kstp1_time54.0.dat.ins'
+2025-11-13 19:44:43.733862 finished: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper3_kstp1_time54.0.dat.ins' took: 0:00:00.111578
+2025-11-13 19:44:43.742223 finished: adding observations from array output file 'output.heads_kper3_kstp1_time54.0.dat' took: 0:00:00.158339
+2025-11-13 19:44:43.742223 finished: adding observations from output file output.heads_kper3_kstp1_time54.0.dat took: 0:00:00.158339
+2025-11-13 19:44:43.742223 starting: adding observations from output file output.heads_kper4_kstp11_time65.0.dat
+2025-11-13 19:44:43.742223 starting: adding observations from array output file 'output.heads_kper4_kstp11_time65.0.dat'
+2025-11-13 19:44:43.780562 starting: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper4_kstp11_time65.0.dat.ins'
+2025-11-13 19:44:43.892452 finished: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper4_kstp11_time65.0.dat.ins' took: 0:00:00.111890
+2025-11-13 19:44:43.892452 finished: adding observations from array output file 'output.heads_kper4_kstp11_time65.0.dat' took: 0:00:00.150229
+2025-11-13 19:44:43.892452 finished: adding observations from output file output.heads_kper4_kstp11_time65.0.dat took: 0:00:00.150229
+2025-11-13 19:44:43.892452 starting: adding observations from output file output.heads_kper4_kstp1_time55.0.dat
+2025-11-13 19:44:43.892452 starting: adding observations from array output file 'output.heads_kper4_kstp1_time55.0.dat'
+2025-11-13 19:44:43.934029 starting: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper4_kstp1_time55.0.dat.ins'
+2025-11-13 19:44:44.025471 finished: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper4_kstp1_time55.0.dat.ins' took: 0:00:00.091442
+2025-11-13 19:44:44.033620 finished: adding observations from array output file 'output.heads_kper4_kstp1_time55.0.dat' took: 0:00:00.141168
+2025-11-13 19:44:44.033620 finished: adding observations from output file output.heads_kper4_kstp1_time55.0.dat took: 0:00:00.141168
+2025-11-13 19:44:44.033620 starting: adding observations from output file output.heads_kper4_kstp21_time75.0.dat
+2025-11-13 19:44:44.033620 starting: adding observations from array output file 'output.heads_kper4_kstp21_time75.0.dat'
+2025-11-13 19:44:44.062064 starting: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper4_kstp21_time75.0.dat.ins'
+2025-11-13 19:44:44.163409 finished: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper4_kstp21_time75.0.dat.ins' took: 0:00:00.101345
+2025-11-13 19:44:44.168962 finished: adding observations from array output file 'output.heads_kper4_kstp21_time75.0.dat' took: 0:00:00.135342
+2025-11-13 19:44:44.168962 finished: adding observations from output file output.heads_kper4_kstp21_time75.0.dat took: 0:00:00.135342
+2025-11-13 19:44:44.168962 starting: adding observations from output file output.heads_kper4_kstp31_time85.0.dat
+2025-11-13 19:44:44.168962 starting: adding observations from array output file 'output.heads_kper4_kstp31_time85.0.dat'
+2025-11-13 19:44:44.203480 starting: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper4_kstp31_time85.0.dat.ins'
+2025-11-13 19:44:44.326674 finished: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper4_kstp31_time85.0.dat.ins' took: 0:00:00.123194
+2025-11-13 19:44:44.331695 finished: adding observations from array output file 'output.heads_kper4_kstp31_time85.0.dat' took: 0:00:00.162733
+2025-11-13 19:44:44.331695 finished: adding observations from output file output.heads_kper4_kstp31_time85.0.dat took: 0:00:00.162733
+2025-11-13 19:44:44.332231 starting: adding observations from output file output.heads_kper4_kstp41_time95.0.dat
+2025-11-13 19:44:44.332231 starting: adding observations from array output file 'output.heads_kper4_kstp41_time95.0.dat'
+2025-11-13 19:44:44.373243 starting: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper4_kstp41_time95.0.dat.ins'
+2025-11-13 19:44:44.504683 finished: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper4_kstp41_time95.0.dat.ins' took: 0:00:00.131440
+2025-11-13 19:44:44.517708 finished: adding observations from array output file 'output.heads_kper4_kstp41_time95.0.dat' took: 0:00:00.185477
+2025-11-13 19:44:44.517708 finished: adding observations from output file output.heads_kper4_kstp41_time95.0.dat took: 0:00:00.185477
+2025-11-13 19:44:44.517708 starting: adding observations from output file output.heads_kper4_kstp51_time105.0.dat
+2025-11-13 19:44:44.517708 starting: adding observations from array output file 'output.heads_kper4_kstp51_time105.0.dat'
+2025-11-13 19:44:44.552280 starting: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper4_kstp51_time105.0.dat.ins'
+2025-11-13 19:44:44.661991 finished: adding observation from instruction file 'models\local_run30\pest\local_run30_template\output.heads_kper4_kstp51_time105.0.dat.ins' took: 0:00:00.109711
+2025-11-13 19:44:44.666536 finished: adding observations from array output file 'output.heads_kper4_kstp51_time105.0.dat' took: 0:00:00.148828
+2025-11-13 19:44:44.666536 finished: adding observations from output file output.heads_kper4_kstp51_time105.0.dat took: 0:00:00.148828
+2025-11-13 19:44:47.893714 forward_run line:pyemu.os_utils.run(r'mf6')
 
-2025-11-10 19:33:18.533842 starting: building prior covariance matrix
-2025-11-10 19:33:19.359836 saving prior covariance matrix to file models/local_run30/pest/local_run30_template\prior_cov.jcb
-2025-11-10 19:33:19.695311 finished: building prior covariance matrix took: 0:00:01.161469
-2025-11-10 19:34:02.422084 starting: drawing realizations
-2025-11-10 19:34:02.426495 starting: spectral simulation for grid-scale pars
-2025-11-10 19:34:02.447957 starting: SpecSim: drawing 300 realization for group npfklayer1-gr with 191 pars, (log) variance 5.4444444444444455 (sill 5.4444444444444455)
-2025-11-10 19:34:02.737142 finished: SpecSim: drawing 300 realization for group npfklayer1-gr with 191 pars, (log) variance 5.4444444444444455 (sill 5.4444444444444455) took: 0:00:00.289185
-2025-11-10 19:34:02.737142 starting: SpecSim: drawing 300 realization for group stosslayer1-gr with 191 pars, (log) variance 2.25 (sill 2.25)
-2025-11-10 19:34:03.019656 finished: SpecSim: drawing 300 realization for group stosslayer1-gr with 191 pars, (log) variance 2.25 (sill 2.25) took: 0:00:00.282514
-2025-11-10 19:34:03.026903 finished: spectral simulation for grid-scale pars took: 0:00:00.600408
-2025-11-10 19:34:03.026903 starting: Drawing 3916 non-specsim pars
-2025-11-10 19:34:04.999089 finished: Drawing 3916 non-specsim pars took: 0:00:01.972186
-2025-11-10 19:34:04.999089 starting: Joining specsim and non-specsim pars
-2025-11-10 19:34:05.023298 finished: Joining specsim and non-specsim pars took: 0:00:00.024209
-2025-11-10 19:34:05.024306 finished: drawing realizations took: 0:00:02.602222
+2025-11-13 19:45:39.942021 starting: building prior covariance matrix
+2025-11-13 19:45:42.550904 saving prior covariance matrix to file models/local_run30/pest/local_run30_template\prior_cov.jcb
+2025-11-13 19:45:43.050322 finished: building prior covariance matrix took: 0:00:03.108301
+2025-11-13 19:46:34.682926 starting: drawing realizations
+2025-11-13 19:46:34.692057 starting: spectral simulation for grid-scale pars
+2025-11-13 19:46:34.710937 starting: SpecSim: drawing 250 realization for group npfklayer1-gr with 191 pars, (log) variance 5.4444444444444455 (sill 5.4444444444444455)
+2025-11-13 19:46:35.066526 finished: SpecSim: drawing 250 realization for group npfklayer1-gr with 191 pars, (log) variance 5.4444444444444455 (sill 5.4444444444444455) took: 0:00:00.355589
+2025-11-13 19:46:35.067538 starting: SpecSim: drawing 250 realization for group stosslayer1-gr with 191 pars, (log) variance 2.25 (sill 2.25)
+2025-11-13 19:46:35.421844 finished: SpecSim: drawing 250 realization for group stosslayer1-gr with 191 pars, (log) variance 2.25 (sill 2.25) took: 0:00:00.354306
+2025-11-13 19:46:35.433120 finished: spectral simulation for grid-scale pars took: 0:00:00.741063
+2025-11-13 19:46:35.433120 starting: Drawing 3916 non-specsim pars
+2025-11-13 19:46:38.080947 finished: Drawing 3916 non-specsim pars took: 0:00:02.647827
+2025-11-13 19:46:38.080947 starting: Joining specsim and non-specsim pars
+2025-11-13 19:46:38.103734 finished: Joining specsim and non-specsim pars took: 0:00:00.022787
+2025-11-13 19:46:38.103734 finished: drawing realizations took: 0:00:03.420808

@@ -1,4 +1,4 @@
-MODEL_NAME = 'local_run30'  # name of the model
+MODEL_NAME = 'local_run31'  # name of the model
 """
 - Removed recharge from parameterization.
 - Added shapefile for pilot points.
@@ -79,9 +79,9 @@ SS_PRIOR = {
 KH_PRIOR = {
     'initial': 100,
     'lb': 1e-6,
-    'ub': 1e8,
-    'ulb': 1e-6,
-    'uub': 1e4,
+    'ub': 1e2,
+    'ulb': 1e-8,
+    'uub': 1e5,
 }
 
 RCH = {
@@ -96,10 +96,10 @@ RCH = {
 GHB_SW = {
     'initial_cond_aw': 100,
     'initial_cond_pw': 100,
-    'initial_cond_spr': 100,
+    'initial_cond_spr': 1000,
     'cond_lb': 1e-8,
     'cond_ub': 1e8,
-    'cond_ulb': 1e-4,
+    'cond_ulb': 1e-8,
     'cond_uub': 1e8,
     'head_lb': -0.5,
     'head_ub': 0.5,
@@ -131,28 +131,29 @@ GHB_Qstd = 1.8
 GHB_SPRING_Q = -3.0  # m3/d
 
 HEAD_offset = 1 # from top of model domain (water level can't be above this)
-HEAD_std = 0.025  # m  top heads +/- 0.5 cm (assume 4 std is full range) 1/4
+HEAD_std = 0.025  # m
 PK4_std = 0.01  # m +/- 2 cm (assume 4 std is full range) 0.04/4
 
 PHI_OBS = {
-        'arr-h': 0.1, # head obs
+        'arr-h': 0.4, # large penalty for exceeding
         'arr-confq': 0.1, # flux obs
-        'budget': 0.15, # flux obs
-        'arr-spq': 0.15, # flux obs
-        'arr-awq': 0.15, # flux obs
-        'ts-heads': 0.15, # head obs
-        'recession': 0.15, # head obs
+        'budget': 0.2, # flux obs
+        'arr-spq': 0.2, # flux obs
+        'arr-awq': 0.1, # flux obs
+        'ts-heads': 0.3, # head obs
+        'recession': 0.05, # previously very high phi dominance
 }
 
 # Pest options
-NREALS = 300  # number of realizations for parameterization
+NREALS = 250  # number of realizations for parameterization
 NREALS_PRIOR = 50  # number of realizations for parameterization
-REINFLATE_ITERS = [5, 5, 7]  # iterations at which to reinflate
+REINFLATE_ITERS = False  # iterations at which to reinflate
+NOPTMAX = 3
 
 if REINFLATE_ITERS:
-    NOPTMAX = sum(REINFLATE_ITERS)  # number of optimization iterations
+    NOPTMAX = sum(REINFLATE_ITERS) - 1  # number of optimization iterations
 else:
-    NOPTMAX = 17 
+    REINFLATE_ITERS = 0
 
 PEST_PP_OPTIONS = {
     'ies_num_reals': NREALS,
@@ -164,7 +165,7 @@ PEST_PP_OPTIONS = {
     'ies_bad_phi_sigma': 2.5,
     'par_sigma_range': 6,
     # 'ies_save_rescov': True, doesn't scale beyond 20,000 nnzobs
-    # 'ies_reinflate_factor': 1,
+    'ies_reinflate_factor': 1,
     'ies_n_iter_reinflate': REINFLATE_ITERS,
     "ies_reg_factor": 0.25
 }
