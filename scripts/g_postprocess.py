@@ -17,8 +17,8 @@ from g_helpers_run4 import *
 def main():
     """Main post-processing function."""
 
-    run_name = 'local_run30'
-    last_iter = 9
+    run_name = 'local_run31'
+    last_iter = 3
 
     # Setup paths
     paths = setup_paths(run_name, m_d_str='master_ies', m_d_prior='master_ies')
@@ -36,16 +36,16 @@ def main():
     output_dir = paths['output']
 
     # subset_indexes, means = subset_realizations_by_mean_heads(data, 'arr-h')
-    subset_indexes, phis = subset_realizations_by_phi(data, min_threshold=300)
-    # subset_indexes, means = subset_realizations_by_mean_heads(data, 'arr-h', from_iter=9)
+    # subset_indexes, phis = subset_realizations_by_phi(data, min_threshold=300, from_iter=2)
+    # subset_indexes, means = subset_realizations_by_mean_heads(data, min_threshold=300, from_iter=2)
     
-    subset_oe_fn = os.path.join(paths['output'], 'subset_oe.csv')
-    subset_pe_fn = os.path.join(paths['output'], 'subset_pe.csv')
-    if not os.path.exists(subset_oe_fn):
-        subset_oe, subset_pe = get_subset_ensembles(paths, data, run_name, subset_indexes, head_filter=True)
-    else:
-        subset_oe = pd.read_csv(subset_oe_fn)
-        subset_pe = pd.read_csv(subset_pe_fn)
+    # subset_oe_fn = os.path.join(paths['output'], 'subset_oe.csv')
+    # subset_pe_fn = os.path.join(paths['output'], 'subset_pe.csv')
+    # if not os.path.exists(subset_oe_fn):
+    #     subset_oe, subset_pe = get_subset_ensembles(paths, data, run_name, subset_indexes, head_filter=True)
+    # else:
+    #     subset_oe = pd.read_csv(subset_oe_fn)
+    #     subset_pe = pd.read_csv(subset_pe_fn)
 
     # plot_oname_array_statistics(data, subset_oe, output_dir, 'arr-h')
 
@@ -59,23 +59,23 @@ def main():
 
     # plot parameter distributions
     # plot_parameter_distributions(data, output_dir, subset_pe)
-    plot_parameter_distributions_subset(data, output_dir, subset_pe)
+    plot_parameter_distributions_subset(data, output_dir)
     
     print("\n2. Prediction plots...")
-    plot_histograms_spring_flux(data, subset_oe, output_dir, col_startswith='ts-sprflux')
-    plot_timeseries_spring_flux(data, subset_oe, output_dir, col_startswith='ts-sprflux')
+    plot_histograms_spring_flux(data, output=output_dir, col_startswith='ts-sprflux')
+    plot_timeseries_spring_flux(data, output=output_dir, col_startswith='ts-sprflux')
     
     print("\n3. Observation plots...")
     plot_timeseries_obs(
-        data, subset_oe, output_dir, 
+        data, output=output_dir, 
         truth_file='truth/output.sample_heads.truth.csv', 
         col_startswith='ts-heads')
     
-    plot_budgets(data, subset_oe, output_dir, col_startswith='budget')
+    plot_budgets(data, output=output_dir, col_startswith='budget')
     plot_budget_histogram(data, output_dir, col_startswith='budget')
 
     # print("\n3. Parameter histogram plots...")
-    plot_parameter_histograms(data, subset_pe, output_dir)
+    plot_parameter_histograms(data, output=output_dir)
 
     print("\n4. Parameter array statistics (posterior)...")
     # plot_pname_array_statistics(data, output_dir, 'ghbconf-cond-gr')
@@ -86,9 +86,9 @@ def main():
 
     print("\n5. Observation array statistics (posterior)...")
     # plot_oname_array_statistics(data, 'pr_oe_fn', output_dir, 'confq', 'prior_confq')
-    plot_oname_array_statistics(data, subset_oe, output_dir, 'arr-h')
-    plot_oname_array_statistics(data, output_dir, 'arr-confq')
-    plot_oname_array_statistics(data, 'pt_oe_fn', output_dir, 'awq', 'posterior_awq')
+    plot_oname_array_statistics(data, output=output_dir, oname_prefix='arr-h')
+    plot_oname_array_statistics(data, output=output_dir, oname_prefix='arr-confq')
+    plot_oname_array_statistics(data, output=output_dir, oname_prefix='awq')
 
     print("\n6. 1:1 observed vs simulated plot...")
     plot_1to1(data, output_dir)

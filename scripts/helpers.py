@@ -827,16 +827,17 @@ def create_awghb_truth(ghb_dfs, dir):
     df = ghb_dfs['GHB_AW'].copy()
 
     kstps = df['kstp'].unique()
-    kstp_include = np.arange(min(kstps), max(kstps), 10)  # include every 10th kstp
+    kstp_include = np.arange(min(kstps), max(kstps), TIME_SUBSAMPLE)  # include every 10th kstp
 
     # replace all values with GHB_Q
     df['weight'] = 0
     df['std'] = GHB_Qstd
     df['AWq'] = GHB_Q
+    time_space_filter = (df['kper'] < 3) & (df['i'] % SPACE_SUBSAMPLE == 0) & (df['j'] % SPACE_SUBSAMPLE == 0)
     # set std only on kper 1 and kstp 1
     # df.loc[(df['kper'] == 1) & (df['kstp'] == 1), 'weight'] = 1/GHB_Qstd
     df['weight'] = np.where(
-        (df['kper'] < 3) & (df['kstp'].isin(kstp_include)), 
+        time_space_filter & (df['kstp'].isin(kstp_include)), 
         1/GHB_Qstd, 0)
 
     df.to_csv(Path(dir, f"output.GHB_AW_fluxes.truth.csv"), index=False)
@@ -851,14 +852,13 @@ def create_sprghb_truth(ghb_dfs, dir):
     df = ghb_dfs['GHB_SP'].copy()
 
     kstps = df['kstp'].unique()
-    kstp_include = np.arange(min(kstps), max(kstps), 10)  # include every 10th kstp
+    kstp_include = np.arange(min(kstps), max(kstps), TIME_SUBSAMPLE)  # include every 10th kstp
 
     # replace all values with GHB_Q
     df['weight'] = 0
     df['std'] = GHB_Qstd
     df['SPq'] = GHB_SPRING_Q
     # set std only on kper 1 and kstp 1
-    # df.loc[(df['kper'] == 1) & (df['kstp'] == 1), 'weight'] = 1/GHB_Qstd
     df['weight'] = np.where(
         (df['kper'] < 2) & (df['kstp'].isin(kstp_include)), 
         1/GHB_Qstd, 0)
@@ -874,13 +874,13 @@ def create_confghb_truth(ghb_dfs, dir):
     df = ghb_dfs['GHB_CONF'].copy()
     
     kstps = df['kstp'].unique()
-    kstp_include = np.arange(min(kstps), max(kstps), 10)  # include every 10th kstp
-    
+    kstp_include = np.arange(min(kstps), max(kstps), TIME_SUBSAMPLE)  # include every 10th kstp
+    space_filter = (df['i'] % SPACE_SUBSAMPLE == 0) & (df['j'] % SPACE_SUBSAMPLE == 0)
     # replace all values with GHB_Q
     df['std'] = GHB_Qstd
     df['CONFq'] = 0
     df['weight'] = np.where(
-        df['kstp'].isin(kstp_include), 
+        space_filter & (df['kstp'].isin(kstp_include)), 
         1/GHB_Qstd, 0)
     # set std only on kper 1 and kstp 1
 
@@ -897,6 +897,11 @@ def create_head_truth(arr, TRUTHREL_DIR):
 
     # weight
     weight_arr = np.ones_like(arr) * 1/HEAD_std
+    # add subsample weighting
+    for i in range(weight_arr.shape[0]):
+        for j in range(weight_arr.shape[1]):
+            if (i % SPACE_SUBSAMPLE != 0) or (j % SPACE_SUBSAMPLE != 0):
+                weight_arr[i,j] = 0
     np.savetxt(Path(TRUTHREL_DIR, f"output.heads.weight.dat"), weight_arr)
 
     return
@@ -915,7 +920,7 @@ def samples_truth(gwf, TRUTHREL_DIR):
     rec_df = pd.read_csv(recession_fn, index_col='kper')
 
     times = list(df.index)
-    times_include = list(np.arange(1, max(times), 10)) + [2]  # include every 10th kstp
+    times_include = list(np.arange(1, max(times), TIME_SUBSAMPLE)) + [2]  # include every 10th kstp
     
     df.rename(columns={'sm_level_mRL': 'pk4'}, inplace=True)
     df['spring'] = sp_df['sm_level_mRL'].values

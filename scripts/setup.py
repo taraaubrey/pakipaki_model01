@@ -144,10 +144,14 @@ PHI_OBS = {
         'recession': 0.05, # previously very high phi dominance
 }
 
+# parameterization settings (obs)
+TIME_SUBSAMPLE = 10  # time subsampling for pilot points
+SPACE_SUBSAMPLE = 10  # spatial subsampling for pilot points
+
 # Pest options
 NREALS = 250  # number of realizations for parameterization
 NREALS_PRIOR = 50  # number of realizations for parameterization
-REINFLATE_ITERS = 5,5,7  # iterations at which to reinflate
+REINFLATE_ITERS = None # iterations at which to reinflate
 NOPTMAX = 3
 MAXSING = 120
 

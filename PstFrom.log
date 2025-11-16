@@ -1,53 +1,1174 @@
-2025-11-14 17:59:13.965350 starting: opening PstFrom.log for logging
-2025-11-14 17:59:13.965350 starting PstFrom process
-2025-11-14 17:59:13.966798 starting: setting up dirs
-2025-11-14 17:59:13.966798 starting: removing existing new_d 'models\local_run31\pest\local_run31_template'
-2025-11-14 17:59:14.237702 finished: removing existing new_d 'models\local_run31\pest\local_run31_template' took: 0:00:00.270904
-2025-11-14 17:59:14.237702 starting: copying original_d 'models\local_run31\pest\local_run31' to new_d 'models\local_run31\pest\local_run31_template'
-2025-11-14 17:59:14.744139 finished: copying original_d 'models\local_run31\pest\local_run31' to new_d 'models\local_run31\pest\local_run31_template' took: 0:00:00.506437
-2025-11-14 17:59:14.746159 finished: setting up dirs took: 0:00:00.779361
-2025-11-14 17:59:14.787477 starting: adding grid type m style parameters for file(s) ['local_run31.npf_k_layer1.txt']
-2025-11-14 17:59:14.787477 starting: using geostruct:name:struct1,nugget:0.0,structures:
+2025-11-16 10:33:56.343341 starting: opening PstFrom.log for logging
+2025-11-16 10:33:56.343341 starting PstFrom process
+2025-11-16 10:33:56.345339 starting: setting up dirs
+2025-11-16 10:33:56.345339 starting: removing existing new_d 'models\local_run31\pest\local_run31_template'
+2025-11-16 10:33:56.448687 finished: removing existing new_d 'models\local_run31\pest\local_run31_template' took: 0:00:00.103348
+2025-11-16 10:33:56.448687 starting: copying original_d 'models\local_run31\pest\local_run31' to new_d 'models\local_run31\pest\local_run31_template'
+2025-11-16 10:33:56.814211 finished: copying original_d 'models\local_run31\pest\local_run31' to new_d 'models\local_run31\pest\local_run31_template' took: 0:00:00.365524
+2025-11-16 10:33:56.814211 finished: setting up dirs took: 0:00:00.468872
+2025-11-16 10:33:56.877066 starting: adding grid type m style parameters for file(s) ['local_run31.npf_k_layer1.txt']
+2025-11-16 10:33:56.877066 starting: using geostruct:name:struct1,nugget:0.0,structures:
 name:fine_gs,contribution:1.0,a:100.0,anisotropy:1.0,bearing:0.0
 
-2025-11-14 17:59:14.787477 starting: loading array models\local_run31\pest\local_run31_template\local_run31.npf_k_layer1.txt
-2025-11-14 17:59:14.866327 finished: loading array models\local_run31\pest\local_run31_template\local_run31.npf_k_layer1.txt took: 0:00:00.078850
-2025-11-14 17:59:14.866327 loaded array 'models\local_run31\pest\local_run31\local_run31.npf_k_layer1.txt' of shape (47, 57)
-2025-11-14 17:59:14.866327 starting: writing array-style template file 'models\local_run31\pest\local_run31_template\npfklayer1-gr_inst0_grid.csv.tpl'
-2025-11-14 17:59:14.866327 starting: writing template file models\local_run31\pest\local_run31_template\npfklayer1-gr_inst0_grid.csv.tpl for ['npfklayer1-gr_inst:0']
-2025-11-14 17:59:14.882377 finished: writing template file models\local_run31\pest\local_run31_template\npfklayer1-gr_inst0_grid.csv.tpl for ['npfklayer1-gr_inst:0'] took: 0:00:00.016050
-2025-11-14 17:59:14.882377 starting: writing array-based template file 'models\local_run31\pest\local_run31_template\npfklayer1-gr_inst0_grid.csv.tpl'
-2025-11-14 17:59:14.882377 saving zone array models\local_run31\pest\local_run31_template\npfklayer1-gr_inst0_grid.csv.zone for tpl file models\local_run31\pest\local_run31_template\npfklayer1-gr_inst0_grid.csv.tpl
-2025-11-14 17:59:14.900417 finished: adding grid type m style parameters for file(s) ['local_run31.npf_k_layer1.txt'] took: 0:00:00.112940
-2025-11-14 17:59:14.900417 starting: adding pilotpoints type m style parameters for file(s) ['local_run31.npf_k_layer1.txt']
-2025-11-14 17:59:14.900417 starting: using geostruct:name:struct1,nugget:0.0,structures:
+2025-11-16 10:33:56.877066 starting: loading array models\local_run31\pest\local_run31_template\local_run31.npf_k_layer1.txt
+2025-11-16 10:33:56.910461 finished: loading array models\local_run31\pest\local_run31_template\local_run31.npf_k_layer1.txt took: 0:00:00.033395
+2025-11-16 10:33:56.910461 loaded array 'models\local_run31\pest\local_run31\local_run31.npf_k_layer1.txt' of shape (47, 57)
+2025-11-16 10:33:56.925571 starting: writing array-style template file 'models\local_run31\pest\local_run31_template\npfklayer1-gr_inst0_grid.csv.tpl'
+2025-11-16 10:33:56.925571 starting: writing template file models\local_run31\pest\local_run31_template\npfklayer1-gr_inst0_grid.csv.tpl for ['npfklayer1-gr_inst:0']
+2025-11-16 10:33:56.967125 finished: writing template file models\local_run31\pest\local_run31_template\npfklayer1-gr_inst0_grid.csv.tpl for ['npfklayer1-gr_inst:0'] took: 0:00:00.041554
+2025-11-16 10:33:56.967125 starting: writing array-based template file 'models\local_run31\pest\local_run31_template\npfklayer1-gr_inst0_grid.csv.tpl'
+2025-11-16 10:33:56.967397 saving zone array models\local_run31\pest\local_run31_template\npfklayer1-gr_inst0_grid.csv.zone for tpl file models\local_run31\pest\local_run31_template\npfklayer1-gr_inst0_grid.csv.tpl
+2025-11-16 10:33:56.986083 finished: adding grid type m style parameters for file(s) ['local_run31.npf_k_layer1.txt'] took: 0:00:00.109017
+2025-11-16 10:33:56.987079 starting: adding pilotpoints type m style parameters for file(s) ['local_run31.npf_k_layer1.txt']
+2025-11-16 10:33:56.987079 starting: using geostruct:name:struct1,nugget:0.0,structures:
 name:main_gs,contribution:1.0,a:1000.0,anisotropy:1.0,bearing:0.0
 
-2025-11-14 17:59:14.900417 starting: loading array models\local_run31\pest\local_run31_template\local_run31.npf_k_layer1.txt
-2025-11-14 17:59:14.900417 finished: loading array models\local_run31\pest\local_run31_template\local_run31.npf_k_layer1.txt took: 0:00:00
-2025-11-14 17:59:14.900417 loaded array 'models\local_run31\pest\local_run31\local_run31.npf_k_layer1.txt' of shape (47, 57)
-2025-11-14 17:59:14.900417 starting: writing array-style template file 'models\local_run31\pest\local_run31_template\npfklayer1-pp_inst0_pilotpoints.csv.tpl'
-2025-11-14 17:59:14.914440 starting: setting up pilot point parameters
-2025-11-14 17:59:14.914440 'use_pp_zones' not set in pp_options, Setting to default value: [False]
-2025-11-14 17:59:14.914440 'spatial_reference' not set in pp_options, Setting to default value: [None]
-2025-11-14 17:59:14.914440 'try_use_ppu' not set in pp_options, Setting to default value: [True]
-2025-11-14 17:59:14.914440 'num_threads' not set in pp_options, Setting to default value: [10]
-2025-11-14 17:59:14.914440 'minpts_interp' not set in pp_options, Setting to default value: [1]
-2025-11-14 17:59:14.914440 'maxpts_interp' not set in pp_options, Setting to default value: [20]
-2025-11-14 17:59:14.914440 'search_radius' not set in pp_options, Setting to default value: [10000000000.0]
-2025-11-14 17:59:14.914440 'fill_value' not set in pp_options, Setting to default value: [1.0]
-2025-11-14 17:59:14.914440 'lower_limit' not set in pp_options, Setting to default value: [1e-30]
-2025-11-14 17:59:14.914440 'upper_limit' not set in pp_options, Setting to default value: [1e+30]
-2025-11-14 17:59:14.914440 WARNING: `use_ppu` requested but failed to import
+2025-11-16 10:33:56.988106 starting: loading array models\local_run31\pest\local_run31_template\local_run31.npf_k_layer1.txt
+2025-11-16 10:33:56.991175 finished: loading array models\local_run31\pest\local_run31_template\local_run31.npf_k_layer1.txt took: 0:00:00.003069
+2025-11-16 10:33:56.991175 loaded array 'models\local_run31\pest\local_run31\local_run31.npf_k_layer1.txt' of shape (47, 57)
+2025-11-16 10:33:56.998139 starting: writing array-style template file 'models\local_run31\pest\local_run31_template\npfklayer1-pp_inst0_pilotpoints.csv.tpl'
+2025-11-16 10:33:56.998139 starting: setting up pilot point parameters
+2025-11-16 10:33:56.999154 'use_pp_zones' not set in pp_options, Setting to default value: [False]
+2025-11-16 10:33:56.999154 'spatial_reference' not set in pp_options, Setting to default value: [None]
+2025-11-16 10:33:56.999154 'try_use_ppu' not set in pp_options, Setting to default value: [True]
+2025-11-16 10:33:56.999154 'num_threads' not set in pp_options, Setting to default value: [10]
+2025-11-16 10:33:56.999154 'minpts_interp' not set in pp_options, Setting to default value: [1]
+2025-11-16 10:33:56.999154 'maxpts_interp' not set in pp_options, Setting to default value: [20]
+2025-11-16 10:33:56.999154 'search_radius' not set in pp_options, Setting to default value: [10000000000.0]
+2025-11-16 10:33:56.999154 'fill_value' not set in pp_options, Setting to default value: [1.0]
+2025-11-16 10:33:56.999154 'lower_limit' not set in pp_options, Setting to default value: [1e-30]
+2025-11-16 10:33:56.999154 'upper_limit' not set in pp_options, Setting to default value: [1e+30]
+2025-11-16 10:33:57.001703 WARNING: `use_ppu` requested but failed to import
 falling back to pyemu pp methods
-2025-11-14 17:59:14.914440 No spatial reference (containing cell spacing) passed.
-2025-11-14 17:59:14.914440 OK - using spatial reference in parent object.
-2025-11-14 17:59:14.914440 trying to load pilot point location info from shapefile 'models\local_run31\pest\local_run31_template\pilot_points.shp'
-2025-11-14 17:59:14.990000 pilot points found in file 'pilot_points.shp' will be transferred to 'npfklayer1-pp_inst0pp.dat' for parameterization
-2025-11-14 17:59:14.990000 WARNING: 'zone' col not found in pp dataframe, adding generic zone
-2025-11-14 17:59:15.016970 74 pilot point parameters created
-2025-11-14 17:59:15.017960 pilot point 'pargp':n,p,f,k,l,a,y,e,r,1,-,p,p
-2025-11-14 17:59:15.017960 finished: setting up pilot point parameters took: 0:00:00.103520
-2025-11-14 17:59:15.042560 starting: calculating factors for pargp=npfklayer1-pp
-2025-11-14 17:59:15.042560 saving krige variance file:models\local_run31\pest\local_run31_template\npfklayer1-pp_inst0pp.var.dat
-2025-11-14 17:59:15.042560 saving krige factors file:models\local_run31\pest\local_run31_template\npfklayer1-pp_inst0pp.fac
+2025-11-16 10:33:57.002690 No spatial reference (containing cell spacing) passed.
+2025-11-16 10:33:57.002690 OK - using spatial reference in parent object.
+2025-11-16 10:33:57.002690 trying to load pilot point location info from shapefile 'models\local_run31\pest\local_run31_template\pilot_points.shp'
+2025-11-16 10:33:57.153382 pilot points found in file 'pilot_points.shp' will be transferred to 'npfklayer1-pp_inst0pp.dat' for parameterization
+2025-11-16 10:33:57.153382 WARNING: 'zone' col not found in pp dataframe, adding generic zone
+2025-11-16 10:33:57.193587 74 pilot point parameters created
+2025-11-16 10:33:57.193587 pilot point 'pargp':n,p,f,k,l,a,y,e,r,1,-,p,p
+2025-11-16 10:33:57.193587 finished: setting up pilot point parameters took: 0:00:00.195448
+2025-11-16 10:33:57.222485 starting: calculating factors for pargp=npfklayer1-pp
+2025-11-16 10:33:57.222485 saving krige variance file:models\local_run31\pest\local_run31_template\npfklayer1-pp_inst0pp.var.dat
+2025-11-16 10:33:57.222485 saving krige factors file:models\local_run31\pest\local_run31_template\npfklayer1-pp_inst0pp.fac
+2025-11-16 10:34:46.491700 finished: calculating factors for pargp=npfklayer1-pp took: 0:00:49.269215
+2025-11-16 10:34:46.491700 starting: writing array-based template file 'models\local_run31\pest\local_run31_template\npfklayer1-pp_inst0pp.dat.tpl'
+2025-11-16 10:34:46.492704 saving zone array models\local_run31\pest\local_run31_template\npfklayer1-pp_inst0pp.dat.zone for tpl file models\local_run31\pest\local_run31_template\npfklayer1-pp_inst0pp.dat.tpl
+2025-11-16 10:34:46.503670 finished: adding pilotpoints type m style parameters for file(s) ['local_run31.npf_k_layer1.txt'] took: 0:00:49.516591
+2025-11-16 10:34:46.504675 starting: adding constant type m style parameters for file(s) ['local_run31.npf_k_layer1.txt']
+2025-11-16 10:34:46.505673 starting: loading array models\local_run31\pest\local_run31_template\local_run31.npf_k_layer1.txt
+2025-11-16 10:34:46.506676 finished: loading array models\local_run31\pest\local_run31_template\local_run31.npf_k_layer1.txt took: 0:00:00.001003
+2025-11-16 10:34:46.506676 loaded array 'models\local_run31\pest\local_run31\local_run31.npf_k_layer1.txt' of shape (47, 57)
+2025-11-16 10:34:46.510675 starting: writing array-style template file 'models\local_run31\pest\local_run31_template\npfklayer1-cn_inst0_constant.csv.tpl'
+2025-11-16 10:34:46.510675 starting: writing template file models\local_run31\pest\local_run31_template\npfklayer1-cn_inst0_constant.csv.tpl for ['npfklayer1-cn_inst:0']
+2025-11-16 10:34:46.517744 finished: writing template file models\local_run31\pest\local_run31_template\npfklayer1-cn_inst0_constant.csv.tpl for ['npfklayer1-cn_inst:0'] took: 0:00:00.007069
+2025-11-16 10:34:46.517744 starting: writing array-based template file 'models\local_run31\pest\local_run31_template\npfklayer1-cn_inst0_constant.csv.tpl'
+2025-11-16 10:34:46.517744 saving zone array models\local_run31\pest\local_run31_template\npfklayer1-cn_inst0_constant.csv.zone for tpl file models\local_run31\pest\local_run31_template\npfklayer1-cn_inst0_constant.csv.tpl
+2025-11-16 10:34:46.533380 finished: adding constant type m style parameters for file(s) ['local_run31.npf_k_layer1.txt'] took: 0:00:00.028705
+2025-11-16 10:34:46.533380 starting: adding grid type m style parameters for file(s) ['local_run31.sto_ss_layer1.txt']
+2025-11-16 10:34:46.533380 finished: using geostruct:name:struct1,nugget:0.0,structures:
+name:fine_gs,contribution:1.0,a:100.0,anisotropy:1.0,bearing:0.0
+ took: 0:00:49.656314
+2025-11-16 10:34:46.533380 starting: loading array models\local_run31\pest\local_run31_template\local_run31.sto_ss_layer1.txt
+2025-11-16 10:34:46.549084 finished: loading array models\local_run31\pest\local_run31_template\local_run31.sto_ss_layer1.txt took: 0:00:00.015704
+2025-11-16 10:34:46.549084 loaded array 'models\local_run31\pest\local_run31\local_run31.sto_ss_layer1.txt' of shape (47, 57)
+2025-11-16 10:34:46.549084 starting: writing array-style template file 'models\local_run31\pest\local_run31_template\stosslayer1-gr_inst0_grid.csv.tpl'
+2025-11-16 10:34:46.549084 starting: writing template file models\local_run31\pest\local_run31_template\stosslayer1-gr_inst0_grid.csv.tpl for ['stosslayer1-gr_inst:0']
+2025-11-16 10:34:46.568632 finished: writing template file models\local_run31\pest\local_run31_template\stosslayer1-gr_inst0_grid.csv.tpl for ['stosslayer1-gr_inst:0'] took: 0:00:00.019548
+2025-11-16 10:34:46.568632 starting: writing array-based template file 'models\local_run31\pest\local_run31_template\stosslayer1-gr_inst0_grid.csv.tpl'
+2025-11-16 10:34:46.568632 saving zone array models\local_run31\pest\local_run31_template\stosslayer1-gr_inst0_grid.csv.zone for tpl file models\local_run31\pest\local_run31_template\stosslayer1-gr_inst0_grid.csv.tpl
+2025-11-16 10:34:46.568632 finished: adding grid type m style parameters for file(s) ['local_run31.sto_ss_layer1.txt'] took: 0:00:00.035252
+2025-11-16 10:34:46.568632 starting: adding pilotpoints type m style parameters for file(s) ['local_run31.sto_ss_layer1.txt']
+2025-11-16 10:34:46.568632 finished: using geostruct:name:struct1,nugget:0.0,structures:
+name:main_gs,contribution:1.0,a:1000.0,anisotropy:1.0,bearing:0.0
+ took: 0:00:49.581553
+2025-11-16 10:34:46.568632 starting: loading array models\local_run31\pest\local_run31_template\local_run31.sto_ss_layer1.txt
+2025-11-16 10:34:46.568632 finished: loading array models\local_run31\pest\local_run31_template\local_run31.sto_ss_layer1.txt took: 0:00:00
+2025-11-16 10:34:46.568632 loaded array 'models\local_run31\pest\local_run31\local_run31.sto_ss_layer1.txt' of shape (47, 57)
+2025-11-16 10:34:46.580644 starting: writing array-style template file 'models\local_run31\pest\local_run31_template\stosslayer1-pp_inst0_pilotpoints.csv.tpl'
+2025-11-16 10:34:46.580644 starting: setting up pilot point parameters
+2025-11-16 10:34:46.580644 'use_pp_zones' not set in pp_options, Setting to default value: [False]
+2025-11-16 10:34:46.580644 'spatial_reference' not set in pp_options, Setting to default value: [None]
+2025-11-16 10:34:46.580644 'try_use_ppu' not set in pp_options, Setting to default value: [True]
+2025-11-16 10:34:46.580644 'num_threads' not set in pp_options, Setting to default value: [10]
+2025-11-16 10:34:46.580644 'minpts_interp' not set in pp_options, Setting to default value: [1]
+2025-11-16 10:34:46.580644 'maxpts_interp' not set in pp_options, Setting to default value: [20]
+2025-11-16 10:34:46.580644 'search_radius' not set in pp_options, Setting to default value: [10000000000.0]
+2025-11-16 10:34:46.580644 'fill_value' not set in pp_options, Setting to default value: [1.0]
+2025-11-16 10:34:46.580644 'lower_limit' not set in pp_options, Setting to default value: [1e-30]
+2025-11-16 10:34:46.580644 'upper_limit' not set in pp_options, Setting to default value: [1e+30]
+2025-11-16 10:34:46.580644 WARNING: `use_ppu` requested but failed to import
+falling back to pyemu pp methods
+2025-11-16 10:34:46.580644 No spatial reference (containing cell spacing) passed.
+2025-11-16 10:34:46.580644 OK - using spatial reference in parent object.
+2025-11-16 10:34:46.580644 trying to load pilot point location info from shapefile 'models\local_run31\pest\local_run31_template\pilot_points.shp'
+2025-11-16 10:34:46.580644 pilot points found in file 'pilot_points.shp' will be transferred to 'stosslayer1-pp_inst0pp.dat' for parameterization
+2025-11-16 10:34:46.580644 WARNING: 'zone' col not found in pp dataframe, adding generic zone
+2025-11-16 10:34:46.609022 74 pilot point parameters created
+2025-11-16 10:34:46.609022 pilot point 'pargp':s,t,o,s,s,l,a,y,e,r,1,-,p,p
+2025-11-16 10:34:46.609022 finished: setting up pilot point parameters took: 0:00:00.028378
+2025-11-16 10:34:46.617501 reusing factors
+2025-11-16 10:34:46.617501 starting: writing array-based template file 'models\local_run31\pest\local_run31_template\stosslayer1-pp_inst0pp.dat.tpl'
+2025-11-16 10:34:46.617501 saving zone array models\local_run31\pest\local_run31_template\stosslayer1-pp_inst0pp.dat.zone for tpl file models\local_run31\pest\local_run31_template\stosslayer1-pp_inst0pp.dat.tpl
+2025-11-16 10:34:46.634296 finished: adding pilotpoints type m style parameters for file(s) ['local_run31.sto_ss_layer1.txt'] took: 0:00:00.065664
+2025-11-16 10:34:46.634296 starting: adding constant type m style parameters for file(s) ['local_run31.sto_ss_layer1.txt']
+2025-11-16 10:34:46.634296 starting: loading array models\local_run31\pest\local_run31_template\local_run31.sto_ss_layer1.txt
+2025-11-16 10:34:46.634296 finished: loading array models\local_run31\pest\local_run31_template\local_run31.sto_ss_layer1.txt took: 0:00:00
+2025-11-16 10:34:46.634296 loaded array 'models\local_run31\pest\local_run31\local_run31.sto_ss_layer1.txt' of shape (47, 57)
+2025-11-16 10:34:46.634296 starting: writing array-style template file 'models\local_run31\pest\local_run31_template\stosslayer1-cn_inst0_constant.csv.tpl'
+2025-11-16 10:34:46.634296 starting: writing template file models\local_run31\pest\local_run31_template\stosslayer1-cn_inst0_constant.csv.tpl for ['stosslayer1-cn_inst:0']
+2025-11-16 10:34:46.650845 finished: writing template file models\local_run31\pest\local_run31_template\stosslayer1-cn_inst0_constant.csv.tpl for ['stosslayer1-cn_inst:0'] took: 0:00:00.016549
+2025-11-16 10:34:46.650845 starting: writing array-based template file 'models\local_run31\pest\local_run31_template\stosslayer1-cn_inst0_constant.csv.tpl'
+2025-11-16 10:34:46.650845 saving zone array models\local_run31\pest\local_run31_template\stosslayer1-cn_inst0_constant.csv.zone for tpl file models\local_run31\pest\local_run31_template\stosslayer1-cn_inst0_constant.csv.tpl
+2025-11-16 10:34:46.650845 finished: adding constant type m style parameters for file(s) ['local_run31.sto_ss_layer1.txt'] took: 0:00:00.016549
+2025-11-16 10:34:46.666355 transform was not passed, setting default tranform to 'log'
+2025-11-16 10:34:46.666951 starting: adding grid type m style parameters for file(s) ['local_run31.ghbaw_stress_period_data_0.txt', 'local_run31.ghbaw_stress_period_data_1.txt', 'local_run31.ghbaw_stress_period_data_2.txt', 'local_run31.ghbaw_stress_period_data_3.txt']
+2025-11-16 10:34:46.666951 starting: using geostruct:name:struct1,nugget:0.0,structures:
+name:fine_gs,contribution:1.0,a:100.0,anisotropy:1.0,bearing:0.0
+
+2025-11-16 10:34:46.667967 WARNING: Discrepancy between number of filenames (4) and number of formatter strings (1). Will repeat first (free)
+2025-11-16 10:34:46.667967 starting: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_0.txt
+2025-11-16 10:34:46.669041 starting: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_0.txt
+2025-11-16 10:34:46.685124 finished: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_0.txt took: 0:00:00.016083
+2025-11-16 10:34:46.685124 loaded list-style 'models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_0.txt' of shape (121, 5)
+2025-11-16 10:34:46.695700 finished: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_0.txt took: 0:00:00.027733
+2025-11-16 10:34:46.695700 starting: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_1.txt
+2025-11-16 10:34:46.695700 starting: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_1.txt
+2025-11-16 10:34:46.701637 finished: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_1.txt took: 0:00:00.005937
+2025-11-16 10:34:46.701637 loaded list-style 'models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_1.txt' of shape (121, 5)
+2025-11-16 10:34:46.717680 finished: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_1.txt took: 0:00:00.021980
+2025-11-16 10:34:46.717680 starting: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_2.txt
+2025-11-16 10:34:46.717680 starting: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_2.txt
+2025-11-16 10:34:46.734257 finished: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_2.txt took: 0:00:00.016577
+2025-11-16 10:34:46.734257 loaded list-style 'models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_2.txt' of shape (340, 5)
+2025-11-16 10:34:46.734257 finished: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_2.txt took: 0:00:00.016577
+2025-11-16 10:34:46.734257 starting: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_3.txt
+2025-11-16 10:34:46.734257 starting: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_3.txt
+2025-11-16 10:34:46.750833 finished: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_3.txt took: 0:00:00.016576
+2025-11-16 10:34:46.750833 loaded list-style 'models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_3.txt' of shape (340, 5)
+2025-11-16 10:34:46.790024 finished: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_3.txt took: 0:00:00.055767
+2025-11-16 10:34:46.790024 starting: writing list-style template file 'models\local_run31\pest\local_run31_template\ghbaw-cond-gr_inst0_grid.csv.tpl'
+2025-11-16 10:34:46.819031 finished: writing list-style template file 'models\local_run31\pest\local_run31_template\ghbaw-cond-gr_inst0_grid.csv.tpl' took: 0:00:00.029007
+2025-11-16 10:34:46.836826 finished: adding grid type m style parameters for file(s) ['local_run31.ghbaw_stress_period_data_0.txt', 'local_run31.ghbaw_stress_period_data_1.txt', 'local_run31.ghbaw_stress_period_data_2.txt', 'local_run31.ghbaw_stress_period_data_3.txt'] took: 0:00:00.169875
+2025-11-16 10:34:46.836826 transform was not passed, setting default tranform to 'log'
+2025-11-16 10:34:46.837826 starting: adding constant type m style parameters for file(s) ['local_run31.ghbaw_stress_period_data_0.txt', 'local_run31.ghbaw_stress_period_data_1.txt', 'local_run31.ghbaw_stress_period_data_2.txt', 'local_run31.ghbaw_stress_period_data_3.txt']
+2025-11-16 10:34:46.837826 WARNING: Discrepancy between number of filenames (4) and number of formatter strings (1). Will repeat first (free)
+2025-11-16 10:34:46.837826 starting: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_0.txt
+2025-11-16 10:34:46.838826 starting: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_0.txt
+2025-11-16 10:34:46.849828 finished: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_0.txt took: 0:00:00.011002
+2025-11-16 10:34:46.849828 loaded list-style 'models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_0.txt' of shape (121, 5)
+2025-11-16 10:34:46.854076 finished: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_0.txt took: 0:00:00.016250
+2025-11-16 10:34:46.854076 starting: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_1.txt
+2025-11-16 10:34:46.854076 starting: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_1.txt
+2025-11-16 10:34:46.866083 finished: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_1.txt took: 0:00:00.012007
+2025-11-16 10:34:46.866083 loaded list-style 'models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_1.txt' of shape (121, 5)
+2025-11-16 10:34:46.872459 finished: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_1.txt took: 0:00:00.018383
+2025-11-16 10:34:46.872459 starting: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_2.txt
+2025-11-16 10:34:46.872459 starting: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_2.txt
+2025-11-16 10:34:46.885380 finished: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_2.txt took: 0:00:00.012921
+2025-11-16 10:34:46.885380 loaded list-style 'models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_2.txt' of shape (340, 5)
+2025-11-16 10:34:46.885380 finished: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_2.txt took: 0:00:00.012921
+2025-11-16 10:34:46.885380 starting: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_3.txt
+2025-11-16 10:34:46.885380 starting: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_3.txt
+2025-11-16 10:34:46.908524 finished: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_3.txt took: 0:00:00.023144
+2025-11-16 10:34:46.908524 loaded list-style 'models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_3.txt' of shape (340, 5)
+2025-11-16 10:34:46.954057 finished: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_3.txt took: 0:00:00.068677
+2025-11-16 10:34:46.955149 starting: writing list-style template file 'models\local_run31\pest\local_run31_template\ghbaw-cond-cn_inst0_constant.csv.tpl'
+2025-11-16 10:34:46.982740 finished: writing list-style template file 'models\local_run31\pest\local_run31_template\ghbaw-cond-cn_inst0_constant.csv.tpl' took: 0:00:00.027591
+2025-11-16 10:34:46.988921 finished: adding constant type m style parameters for file(s) ['local_run31.ghbaw_stress_period_data_0.txt', 'local_run31.ghbaw_stress_period_data_1.txt', 'local_run31.ghbaw_stress_period_data_2.txt', 'local_run31.ghbaw_stress_period_data_3.txt'] took: 0:00:00.151095
+2025-11-16 10:34:46.989913 transform was not passed, setting default tranform to 'log'
+2025-11-16 10:34:46.990918 starting: adding grid type m style parameters for file(s) ['local_run31.ghb_pw_stress_period_data_0.txt', 'local_run31.ghb_pw_stress_period_data_1.txt', 'local_run31.ghb_pw_stress_period_data_2.txt', 'local_run31.ghb_pw_stress_period_data_3.txt']
+2025-11-16 10:34:46.990918 finished: using geostruct:name:struct1,nugget:0.0,structures:
+name:fine_gs,contribution:1.0,a:100.0,anisotropy:1.0,bearing:0.0
+ took: 0:00:00.323967
+2025-11-16 10:34:46.990918 WARNING: Discrepancy between number of filenames (4) and number of formatter strings (1). Will repeat first (free)
+2025-11-16 10:34:46.991894 starting: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_0.txt
+2025-11-16 10:34:46.992917 starting: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_0.txt
+2025-11-16 10:34:47.005188 finished: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_0.txt took: 0:00:00.012271
+2025-11-16 10:34:47.005188 loaded list-style 'models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_0.txt' of shape (25, 5)
+2025-11-16 10:34:47.005188 finished: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_0.txt took: 0:00:00.013294
+2025-11-16 10:34:47.005188 starting: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_1.txt
+2025-11-16 10:34:47.005188 starting: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_1.txt
+2025-11-16 10:34:47.032087 finished: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_1.txt took: 0:00:00.026899
+2025-11-16 10:34:47.033647 loaded list-style 'models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_1.txt' of shape (25, 5)
+2025-11-16 10:34:47.042912 finished: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_1.txt took: 0:00:00.037724
+2025-11-16 10:34:47.042912 starting: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_2.txt
+2025-11-16 10:34:47.043921 starting: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_2.txt
+2025-11-16 10:34:47.068220 finished: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_2.txt took: 0:00:00.024299
+2025-11-16 10:34:47.068220 loaded list-style 'models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_2.txt' of shape (11, 5)
+2025-11-16 10:34:47.073502 finished: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_2.txt took: 0:00:00.030590
+2025-11-16 10:34:47.073502 starting: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_3.txt
+2025-11-16 10:34:47.074502 starting: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_3.txt
+2025-11-16 10:34:47.090478 finished: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_3.txt took: 0:00:00.015976
+2025-11-16 10:34:47.090478 loaded list-style 'models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_3.txt' of shape (11, 5)
+2025-11-16 10:34:47.102036 finished: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_3.txt took: 0:00:00.028534
+2025-11-16 10:34:47.102036 starting: writing list-style template file 'models\local_run31\pest\local_run31_template\ghbpw-cond-gr_inst0_grid.csv.tpl'
+2025-11-16 10:34:47.117645 finished: writing list-style template file 'models\local_run31\pest\local_run31_template\ghbpw-cond-gr_inst0_grid.csv.tpl' took: 0:00:00.015609
+2025-11-16 10:34:47.134228 finished: adding grid type m style parameters for file(s) ['local_run31.ghb_pw_stress_period_data_0.txt', 'local_run31.ghb_pw_stress_period_data_1.txt', 'local_run31.ghb_pw_stress_period_data_2.txt', 'local_run31.ghb_pw_stress_period_data_3.txt'] took: 0:00:00.143310
+2025-11-16 10:34:47.134228 transform was not passed, setting default tranform to 'log'
+2025-11-16 10:34:47.134228 starting: adding constant type m style parameters for file(s) ['local_run31.ghb_pw_stress_period_data_0.txt', 'local_run31.ghb_pw_stress_period_data_1.txt', 'local_run31.ghb_pw_stress_period_data_2.txt', 'local_run31.ghb_pw_stress_period_data_3.txt']
+2025-11-16 10:34:47.134228 WARNING: Discrepancy between number of filenames (4) and number of formatter strings (1). Will repeat first (free)
+2025-11-16 10:34:47.134228 starting: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_0.txt
+2025-11-16 10:34:47.134228 starting: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_0.txt
+2025-11-16 10:34:47.149245 finished: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_0.txt took: 0:00:00.015017
+2025-11-16 10:34:47.149245 loaded list-style 'models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_0.txt' of shape (25, 5)
+2025-11-16 10:34:47.153340 finished: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_0.txt took: 0:00:00.019112
+2025-11-16 10:34:47.153340 starting: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_1.txt
+2025-11-16 10:34:47.154340 starting: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_1.txt
+2025-11-16 10:34:47.155481 finished: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_1.txt took: 0:00:00.001141
+2025-11-16 10:34:47.155481 loaded list-style 'models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_1.txt' of shape (25, 5)
+2025-11-16 10:34:47.174228 finished: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_1.txt took: 0:00:00.020888
+2025-11-16 10:34:47.174228 starting: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_2.txt
+2025-11-16 10:34:47.174228 starting: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_2.txt
+2025-11-16 10:34:47.186745 finished: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_2.txt took: 0:00:00.012517
+2025-11-16 10:34:47.186745 loaded list-style 'models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_2.txt' of shape (11, 5)
+2025-11-16 10:34:47.190752 finished: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_2.txt took: 0:00:00.016524
+2025-11-16 10:34:47.191809 starting: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_3.txt
+2025-11-16 10:34:47.191809 starting: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_3.txt
+2025-11-16 10:34:47.204658 finished: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_3.txt took: 0:00:00.012849
+2025-11-16 10:34:47.204658 loaded list-style 'models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_3.txt' of shape (11, 5)
+2025-11-16 10:34:47.204658 finished: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_3.txt took: 0:00:00.012849
+2025-11-16 10:34:47.204658 starting: writing list-style template file 'models\local_run31\pest\local_run31_template\ghbpw-cond-cn_inst0_constant.csv.tpl'
+2025-11-16 10:34:47.218992 finished: writing list-style template file 'models\local_run31\pest\local_run31_template\ghbpw-cond-cn_inst0_constant.csv.tpl' took: 0:00:00.014334
+2025-11-16 10:34:47.234012 finished: adding constant type m style parameters for file(s) ['local_run31.ghb_pw_stress_period_data_0.txt', 'local_run31.ghb_pw_stress_period_data_1.txt', 'local_run31.ghb_pw_stress_period_data_2.txt', 'local_run31.ghb_pw_stress_period_data_3.txt'] took: 0:00:00.099784
+2025-11-16 10:34:47.235315 transform was not passed, setting default tranform to 'log'
+2025-11-16 10:34:47.235315 starting: adding grid type m style parameters for file(s) ['local_run31.ghbspr_stress_period_data_0.txt', 'local_run31.ghbspr_stress_period_data_1.txt']
+2025-11-16 10:34:47.235315 starting: using geostruct:name:struct1,nugget:0.0,structures:
+name:fine_gs,contribution:1.0,a:100.0,anisotropy:1.0,bearing:0.0
+
+2025-11-16 10:34:47.235315 WARNING: Discrepancy between number of filenames (2) and number of formatter strings (1). Will repeat first (free)
+2025-11-16 10:34:47.235315 starting: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghbspr_stress_period_data_0.txt
+2025-11-16 10:34:47.235315 starting: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghbspr_stress_period_data_0.txt
+2025-11-16 10:34:47.252903 finished: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghbspr_stress_period_data_0.txt took: 0:00:00.017588
+2025-11-16 10:34:47.252903 loaded list-style 'models\local_run31\pest\local_run31_template\local_run31.ghbspr_stress_period_data_0.txt' of shape (12, 5)
+2025-11-16 10:34:47.257053 finished: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghbspr_stress_period_data_0.txt took: 0:00:00.021738
+2025-11-16 10:34:47.257053 starting: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghbspr_stress_period_data_1.txt
+2025-11-16 10:34:47.257053 starting: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghbspr_stress_period_data_1.txt
+2025-11-16 10:34:47.274159 finished: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghbspr_stress_period_data_1.txt took: 0:00:00.017106
+2025-11-16 10:34:47.274159 loaded list-style 'models\local_run31\pest\local_run31_template\local_run31.ghbspr_stress_period_data_1.txt' of shape (12, 5)
+2025-11-16 10:34:47.276281 finished: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghbspr_stress_period_data_1.txt took: 0:00:00.019228
+2025-11-16 10:34:47.276281 starting: writing list-style template file 'models\local_run31\pest\local_run31_template\ghbspring-cond-gr_inst0_grid.csv.tpl'
+2025-11-16 10:34:47.302224 finished: writing list-style template file 'models\local_run31\pest\local_run31_template\ghbspring-cond-gr_inst0_grid.csv.tpl' took: 0:00:00.025943
+2025-11-16 10:34:47.302224 finished: adding grid type m style parameters for file(s) ['local_run31.ghbspr_stress_period_data_0.txt', 'local_run31.ghbspr_stress_period_data_1.txt'] took: 0:00:00.066909
+2025-11-16 10:34:47.302224 transform was not passed, setting default tranform to 'log'
+2025-11-16 10:34:47.302224 starting: adding constant type m style parameters for file(s) ['local_run31.ghbspr_stress_period_data_0.txt', 'local_run31.ghbspr_stress_period_data_1.txt']
+2025-11-16 10:34:47.302224 WARNING: Discrepancy between number of filenames (2) and number of formatter strings (1). Will repeat first (free)
+2025-11-16 10:34:47.302224 starting: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghbspr_stress_period_data_0.txt
+2025-11-16 10:34:47.302224 starting: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghbspr_stress_period_data_0.txt
+2025-11-16 10:34:47.317689 finished: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghbspr_stress_period_data_0.txt took: 0:00:00.015465
+2025-11-16 10:34:47.317689 loaded list-style 'models\local_run31\pest\local_run31_template\local_run31.ghbspr_stress_period_data_0.txt' of shape (12, 5)
+2025-11-16 10:34:47.317689 finished: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghbspr_stress_period_data_0.txt took: 0:00:00.015465
+2025-11-16 10:34:47.317689 starting: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghbspr_stress_period_data_1.txt
+2025-11-16 10:34:47.317689 starting: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghbspr_stress_period_data_1.txt
+2025-11-16 10:34:47.339141 finished: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghbspr_stress_period_data_1.txt took: 0:00:00.021452
+2025-11-16 10:34:47.339141 loaded list-style 'models\local_run31\pest\local_run31_template\local_run31.ghbspr_stress_period_data_1.txt' of shape (12, 5)
+2025-11-16 10:34:47.339141 finished: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghbspr_stress_period_data_1.txt took: 0:00:00.021452
+2025-11-16 10:34:47.339141 starting: writing list-style template file 'models\local_run31\pest\local_run31_template\ghbspring-cond-cn_inst0_constant.csv.tpl'
+2025-11-16 10:34:47.368130 finished: writing list-style template file 'models\local_run31\pest\local_run31_template\ghbspring-cond-cn_inst0_constant.csv.tpl' took: 0:00:00.028989
+2025-11-16 10:34:47.372178 finished: adding constant type m style parameters for file(s) ['local_run31.ghbspr_stress_period_data_0.txt', 'local_run31.ghbspr_stress_period_data_1.txt'] took: 0:00:00.069954
+2025-11-16 10:34:47.372178 transform was not passed, setting default tranform to 'log'
+2025-11-16 10:34:47.372178 starting: adding grid type m style parameters for file(s) ['local_run31.ghb_conf_stress_period_data_0.txt', 'local_run31.ghb_conf_stress_period_data_1.txt', 'local_run31.ghb_conf_stress_period_data_2.txt', 'local_run31.ghb_conf_stress_period_data_3.txt']
+2025-11-16 10:34:47.372178 starting: using geostruct:name:struct1,nugget:0.0,structures:
+name:main_gs,contribution:1.0,a:1000.0,anisotropy:1.0,bearing:0.0
+
+2025-11-16 10:34:47.372178 WARNING: Discrepancy between number of filenames (4) and number of formatter strings (1). Will repeat first (free)
+2025-11-16 10:34:47.372178 starting: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_0.txt
+2025-11-16 10:34:47.372178 starting: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_0.txt
+2025-11-16 10:34:47.421276 finished: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_0.txt took: 0:00:00.049098
+2025-11-16 10:34:47.421276 loaded list-style 'models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_0.txt' of shape (1423, 5)
+2025-11-16 10:34:47.425296 finished: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_0.txt took: 0:00:00.053118
+2025-11-16 10:34:47.425296 starting: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_1.txt
+2025-11-16 10:34:47.425296 starting: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_1.txt
+2025-11-16 10:34:47.452482 finished: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_1.txt took: 0:00:00.027186
+2025-11-16 10:34:47.452482 loaded list-style 'models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_1.txt' of shape (1423, 5)
+2025-11-16 10:34:47.584734 finished: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_1.txt took: 0:00:00.159438
+2025-11-16 10:34:47.584734 starting: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_2.txt
+2025-11-16 10:34:47.584734 starting: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_2.txt
+2025-11-16 10:34:47.634136 finished: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_2.txt took: 0:00:00.049402
+2025-11-16 10:34:47.634136 loaded list-style 'models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_2.txt' of shape (1423, 5)
+2025-11-16 10:34:47.634136 finished: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_2.txt took: 0:00:00.049402
+2025-11-16 10:34:47.634136 starting: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_3.txt
+2025-11-16 10:34:47.634136 starting: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_3.txt
+2025-11-16 10:34:47.670084 finished: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_3.txt took: 0:00:00.035948
+2025-11-16 10:34:47.670084 loaded list-style 'models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_3.txt' of shape (1423, 5)
+2025-11-16 10:34:47.801670 finished: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_3.txt took: 0:00:00.167534
+2025-11-16 10:34:47.801670 starting: writing list-style template file 'models\local_run31\pest\local_run31_template\ghbconf-cond-gr_inst0_grid.csv.tpl'
+2025-11-16 10:34:47.870232 finished: writing list-style template file 'models\local_run31\pest\local_run31_template\ghbconf-cond-gr_inst0_grid.csv.tpl' took: 0:00:00.068562
+2025-11-16 10:34:47.884331 finished: adding grid type m style parameters for file(s) ['local_run31.ghb_conf_stress_period_data_0.txt', 'local_run31.ghb_conf_stress_period_data_1.txt', 'local_run31.ghb_conf_stress_period_data_2.txt', 'local_run31.ghb_conf_stress_period_data_3.txt'] took: 0:00:00.512153
+2025-11-16 10:34:47.884331 transform was not passed, setting default tranform to 'log'
+2025-11-16 10:34:47.884331 starting: adding constant type m style parameters for file(s) ['local_run31.ghb_conf_stress_period_data_0.txt', 'local_run31.ghb_conf_stress_period_data_1.txt', 'local_run31.ghb_conf_stress_period_data_2.txt', 'local_run31.ghb_conf_stress_period_data_3.txt']
+2025-11-16 10:34:47.884331 WARNING: Discrepancy between number of filenames (4) and number of formatter strings (1). Will repeat first (free)
+2025-11-16 10:34:47.884331 starting: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_0.txt
+2025-11-16 10:34:47.884331 starting: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_0.txt
+2025-11-16 10:34:47.902270 finished: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_0.txt took: 0:00:00.017939
+2025-11-16 10:34:47.903272 loaded list-style 'models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_0.txt' of shape (1423, 5)
+2025-11-16 10:34:47.905713 finished: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_0.txt took: 0:00:00.021382
+2025-11-16 10:34:47.905713 starting: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_1.txt
+2025-11-16 10:34:47.905713 starting: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_1.txt
+2025-11-16 10:34:47.924884 finished: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_1.txt took: 0:00:00.019171
+2025-11-16 10:34:47.924884 loaded list-style 'models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_1.txt' of shape (1423, 5)
+2025-11-16 10:34:48.052512 finished: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_1.txt took: 0:00:00.146799
+2025-11-16 10:34:48.052512 starting: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_2.txt
+2025-11-16 10:34:48.052512 starting: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_2.txt
+2025-11-16 10:34:48.070683 finished: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_2.txt took: 0:00:00.018171
+2025-11-16 10:34:48.070683 loaded list-style 'models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_2.txt' of shape (1423, 5)
+2025-11-16 10:34:48.091256 finished: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_2.txt took: 0:00:00.038744
+2025-11-16 10:34:48.091256 starting: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_3.txt
+2025-11-16 10:34:48.091256 starting: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_3.txt
+2025-11-16 10:34:48.105503 finished: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_3.txt took: 0:00:00.014247
+2025-11-16 10:34:48.105503 loaded list-style 'models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_3.txt' of shape (1423, 5)
+2025-11-16 10:34:48.213149 finished: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_3.txt took: 0:00:00.121893
+2025-11-16 10:34:48.213149 starting: writing list-style template file 'models\local_run31\pest\local_run31_template\ghbconf-cond-cn_inst0_constant.csv.tpl'
+2025-11-16 10:34:48.244416 finished: writing list-style template file 'models\local_run31\pest\local_run31_template\ghbconf-cond-cn_inst0_constant.csv.tpl' took: 0:00:00.031267
+2025-11-16 10:34:48.260036 finished: adding constant type m style parameters for file(s) ['local_run31.ghb_conf_stress_period_data_0.txt', 'local_run31.ghb_conf_stress_period_data_1.txt', 'local_run31.ghb_conf_stress_period_data_2.txt', 'local_run31.ghb_conf_stress_period_data_3.txt'] took: 0:00:00.375705
+2025-11-16 10:34:48.260036 starting: adding grid type a style parameters for file(s) ['local_run31.ghbaw_stress_period_data_0.txt', 'local_run31.ghbaw_stress_period_data_2.txt']
+2025-11-16 10:34:48.260036 starting: using geostruct:name:struct1,nugget:0.0,structures:
+name:head_gs,contribution:1.0,a:100.0,anisotropy:1.0,bearing:0.0
+
+2025-11-16 10:34:48.260036 WARNING: Discrepancy between number of filenames (2) and number of formatter strings (1). Will repeat first (free)
+2025-11-16 10:34:48.260036 starting: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_0.txt
+2025-11-16 10:34:48.260036 starting: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_0.txt
+2025-11-16 10:34:48.278326 finished: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_0.txt took: 0:00:00.018290
+2025-11-16 10:34:48.278326 loaded list-style 'models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_0.txt' of shape (121, 5)
+2025-11-16 10:34:48.282059 finished: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_0.txt took: 0:00:00.022023
+2025-11-16 10:34:48.282059 starting: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_2.txt
+2025-11-16 10:34:48.282059 starting: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_2.txt
+2025-11-16 10:34:48.290940 finished: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_2.txt took: 0:00:00.008881
+2025-11-16 10:34:48.290940 loaded list-style 'models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_2.txt' of shape (340, 5)
+2025-11-16 10:34:48.290940 finished: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_2.txt took: 0:00:00.008881
+2025-11-16 10:34:48.290940 starting: writing list-style template file 'models\local_run31\pest\local_run31_template\ghbaw-head-hg_inst0_grid.csv.tpl'
+2025-11-16 10:34:48.334978 finished: writing list-style template file 'models\local_run31\pest\local_run31_template\ghbaw-head-hg_inst0_grid.csv.tpl' took: 0:00:00.044038
+2025-11-16 10:34:48.354524 finished: adding grid type a style parameters for file(s) ['local_run31.ghbaw_stress_period_data_0.txt', 'local_run31.ghbaw_stress_period_data_2.txt'] took: 0:00:00.094488
+2025-11-16 10:34:48.354524 starting: adding constant type a style parameters for file(s) ['local_run31.ghbaw_stress_period_data_0.txt', 'local_run31.ghbaw_stress_period_data_2.txt']
+2025-11-16 10:34:48.354524 WARNING: Discrepancy between number of filenames (2) and number of formatter strings (1). Will repeat first (free)
+2025-11-16 10:34:48.355524 starting: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_0.txt
+2025-11-16 10:34:48.355524 starting: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_0.txt
+2025-11-16 10:34:48.368474 finished: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_0.txt took: 0:00:00.012950
+2025-11-16 10:34:48.368474 loaded list-style 'models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_0.txt' of shape (121, 5)
+2025-11-16 10:34:48.372027 finished: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_0.txt took: 0:00:00.016503
+2025-11-16 10:34:48.373035 starting: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_2.txt
+2025-11-16 10:34:48.373035 starting: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_2.txt
+2025-11-16 10:34:48.386823 finished: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_2.txt took: 0:00:00.013788
+2025-11-16 10:34:48.386823 loaded list-style 'models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_2.txt' of shape (340, 5)
+2025-11-16 10:34:48.392147 finished: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghbaw_stress_period_data_2.txt took: 0:00:00.019112
+2025-11-16 10:34:48.392147 starting: writing list-style template file 'models\local_run31\pest\local_run31_template\ghbaw-head-cn_inst0_constant.csv.tpl'
+2025-11-16 10:34:48.418565 finished: writing list-style template file 'models\local_run31\pest\local_run31_template\ghbaw-head-cn_inst0_constant.csv.tpl' took: 0:00:00.026418
+2025-11-16 10:34:48.418565 finished: adding constant type a style parameters for file(s) ['local_run31.ghbaw_stress_period_data_0.txt', 'local_run31.ghbaw_stress_period_data_2.txt'] took: 0:00:00.064041
+2025-11-16 10:34:48.418565 starting: adding grid type a style parameters for file(s) ['local_run31.ghb_pw_stress_period_data_0.txt', 'local_run31.ghb_pw_stress_period_data_2.txt']
+2025-11-16 10:34:48.418565 finished: using geostruct:name:struct1,nugget:0.0,structures:
+name:head_gs,contribution:1.0,a:100.0,anisotropy:1.0,bearing:0.0
+ took: 0:00:00.158529
+2025-11-16 10:34:48.418565 WARNING: Discrepancy between number of filenames (2) and number of formatter strings (1). Will repeat first (free)
+2025-11-16 10:34:48.418565 starting: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_0.txt
+2025-11-16 10:34:48.418565 starting: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_0.txt
+2025-11-16 10:34:48.442361 finished: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_0.txt took: 0:00:00.023796
+2025-11-16 10:34:48.442361 loaded list-style 'models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_0.txt' of shape (25, 5)
+2025-11-16 10:34:48.442361 finished: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_0.txt took: 0:00:00.023796
+2025-11-16 10:34:48.442361 starting: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_2.txt
+2025-11-16 10:34:48.442361 starting: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_2.txt
+2025-11-16 10:34:48.454030 finished: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_2.txt took: 0:00:00.011669
+2025-11-16 10:34:48.454030 loaded list-style 'models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_2.txt' of shape (11, 5)
+2025-11-16 10:34:48.454030 finished: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_2.txt took: 0:00:00.011669
+2025-11-16 10:34:48.454030 starting: writing list-style template file 'models\local_run31\pest\local_run31_template\ghbpw-head-hg_inst0_grid.csv.tpl'
+2025-11-16 10:34:48.487715 finished: writing list-style template file 'models\local_run31\pest\local_run31_template\ghbpw-head-hg_inst0_grid.csv.tpl' took: 0:00:00.033685
+2025-11-16 10:34:48.487715 finished: adding grid type a style parameters for file(s) ['local_run31.ghb_pw_stress_period_data_0.txt', 'local_run31.ghb_pw_stress_period_data_2.txt'] took: 0:00:00.069150
+2025-11-16 10:34:48.487715 starting: adding constant type a style parameters for file(s) ['local_run31.ghb_pw_stress_period_data_0.txt', 'local_run31.ghb_pw_stress_period_data_2.txt']
+2025-11-16 10:34:48.487715 WARNING: Discrepancy between number of filenames (2) and number of formatter strings (1). Will repeat first (free)
+2025-11-16 10:34:48.487715 starting: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_0.txt
+2025-11-16 10:34:48.487715 starting: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_0.txt
+2025-11-16 10:34:48.506421 finished: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_0.txt took: 0:00:00.018706
+2025-11-16 10:34:48.506421 loaded list-style 'models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_0.txt' of shape (25, 5)
+2025-11-16 10:34:48.507428 finished: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_0.txt took: 0:00:00.019713
+2025-11-16 10:34:48.507428 starting: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_2.txt
+2025-11-16 10:34:48.507428 starting: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_2.txt
+2025-11-16 10:34:48.519976 finished: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_2.txt took: 0:00:00.012548
+2025-11-16 10:34:48.519976 loaded list-style 'models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_2.txt' of shape (11, 5)
+2025-11-16 10:34:48.519976 finished: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghb_pw_stress_period_data_2.txt took: 0:00:00.012548
+2025-11-16 10:34:48.519976 starting: writing list-style template file 'models\local_run31\pest\local_run31_template\ghbpw-head-cn_inst0_constant.csv.tpl'
+2025-11-16 10:34:48.540962 finished: writing list-style template file 'models\local_run31\pest\local_run31_template\ghbpw-head-cn_inst0_constant.csv.tpl' took: 0:00:00.020986
+2025-11-16 10:34:48.540962 finished: adding constant type a style parameters for file(s) ['local_run31.ghb_pw_stress_period_data_0.txt', 'local_run31.ghb_pw_stress_period_data_2.txt'] took: 0:00:00.053247
+2025-11-16 10:34:48.551558 starting: adding grid type a style parameters for file(s) ['local_run31.ghbspr_stress_period_data_0.txt']
+2025-11-16 10:34:48.551558 starting: using geostruct:name:struct1,nugget:0.0,structures:
+name:head_gs,contribution:1.0,a:100.0,anisotropy:1.0,bearing:0.0
+
+2025-11-16 10:34:48.551558 starting: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghbspr_stress_period_data_0.txt
+2025-11-16 10:34:48.552467 starting: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghbspr_stress_period_data_0.txt
+2025-11-16 10:34:48.553309 finished: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghbspr_stress_period_data_0.txt took: 0:00:00.000842
+2025-11-16 10:34:48.553309 loaded list-style 'models\local_run31\pest\local_run31_template\local_run31.ghbspr_stress_period_data_0.txt' of shape (12, 5)
+2025-11-16 10:34:48.567173 finished: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghbspr_stress_period_data_0.txt took: 0:00:00.015615
+2025-11-16 10:34:48.567173 starting: writing list-style template file 'models\local_run31\pest\local_run31_template\ghbspring-head-hg_inst0_grid.csv.tpl'
+2025-11-16 10:34:48.588619 finished: writing list-style template file 'models\local_run31\pest\local_run31_template\ghbspring-head-hg_inst0_grid.csv.tpl' took: 0:00:00.021446
+2025-11-16 10:34:48.595709 finished: adding grid type a style parameters for file(s) ['local_run31.ghbspr_stress_period_data_0.txt'] took: 0:00:00.044151
+2025-11-16 10:34:48.596706 starting: adding constant type a style parameters for file(s) ['local_run31.ghbspr_stress_period_data_0.txt']
+2025-11-16 10:34:48.596706 starting: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghbspr_stress_period_data_0.txt
+2025-11-16 10:34:48.596706 starting: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghbspr_stress_period_data_0.txt
+2025-11-16 10:34:48.617148 finished: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghbspr_stress_period_data_0.txt took: 0:00:00.020442
+2025-11-16 10:34:48.617148 loaded list-style 'models\local_run31\pest\local_run31_template\local_run31.ghbspr_stress_period_data_0.txt' of shape (12, 5)
+2025-11-16 10:34:48.621342 finished: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghbspr_stress_period_data_0.txt took: 0:00:00.024636
+2025-11-16 10:34:48.621342 starting: writing list-style template file 'models\local_run31\pest\local_run31_template\ghbspring-head-cn_inst0_constant.csv.tpl'
+2025-11-16 10:34:48.637670 finished: writing list-style template file 'models\local_run31\pest\local_run31_template\ghbspring-head-cn_inst0_constant.csv.tpl' took: 0:00:00.016328
+2025-11-16 10:34:48.637670 finished: adding constant type a style parameters for file(s) ['local_run31.ghbspr_stress_period_data_0.txt'] took: 0:00:00.040964
+2025-11-16 10:34:48.637670 starting: adding grid type a style parameters for file(s) ['local_run31.ghb_conf_stress_period_data_0.txt', 'local_run31.ghb_conf_stress_period_data_2.txt']
+2025-11-16 10:34:48.637670 starting: using geostruct:name:struct1,nugget:0.0,structures:
+name:head_gs,contribution:1.0,a:1000.0,anisotropy:1.0,bearing:0.0
+
+2025-11-16 10:34:48.650480 WARNING: Discrepancy between number of filenames (2) and number of formatter strings (1). Will repeat first (free)
+2025-11-16 10:34:48.651176 starting: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_0.txt
+2025-11-16 10:34:48.651176 starting: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_0.txt
+2025-11-16 10:34:48.672015 finished: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_0.txt took: 0:00:00.020839
+2025-11-16 10:34:48.672015 loaded list-style 'models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_0.txt' of shape (1423, 5)
+2025-11-16 10:34:48.674026 finished: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_0.txt took: 0:00:00.022850
+2025-11-16 10:34:48.674026 starting: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_2.txt
+2025-11-16 10:34:48.674026 starting: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_2.txt
+2025-11-16 10:34:48.694241 finished: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_2.txt took: 0:00:00.020215
+2025-11-16 10:34:48.694241 loaded list-style 'models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_2.txt' of shape (1423, 5)
+2025-11-16 10:34:48.706693 finished: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_2.txt took: 0:00:00.032667
+2025-11-16 10:34:48.706693 starting: writing list-style template file 'models\local_run31\pest\local_run31_template\ghbconf-head-hg_inst0_grid.csv.tpl'
+2025-11-16 10:34:48.783793 finished: writing list-style template file 'models\local_run31\pest\local_run31_template\ghbconf-head-hg_inst0_grid.csv.tpl' took: 0:00:00.077100
+2025-11-16 10:34:48.783793 finished: adding grid type a style parameters for file(s) ['local_run31.ghb_conf_stress_period_data_0.txt', 'local_run31.ghb_conf_stress_period_data_2.txt'] took: 0:00:00.146123
+2025-11-16 10:34:48.783793 starting: adding constant type a style parameters for file(s) ['local_run31.ghb_conf_stress_period_data_0.txt', 'local_run31.ghb_conf_stress_period_data_2.txt']
+2025-11-16 10:34:48.783793 WARNING: Discrepancy between number of filenames (2) and number of formatter strings (1). Will repeat first (free)
+2025-11-16 10:34:48.783793 starting: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_0.txt
+2025-11-16 10:34:48.783793 starting: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_0.txt
+2025-11-16 10:34:48.818005 finished: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_0.txt took: 0:00:00.034212
+2025-11-16 10:34:48.818005 loaded list-style 'models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_0.txt' of shape (1423, 5)
+2025-11-16 10:34:48.818005 finished: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_0.txt took: 0:00:00.034212
+2025-11-16 10:34:48.818005 starting: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_2.txt
+2025-11-16 10:34:48.818005 starting: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_2.txt
+2025-11-16 10:34:48.839888 finished: reading list-style file: models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_2.txt took: 0:00:00.021883
+2025-11-16 10:34:48.839888 loaded list-style 'models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_2.txt' of shape (1423, 5)
+2025-11-16 10:34:48.839888 finished: loading list-style models\local_run31\pest\local_run31_template\local_run31.ghb_conf_stress_period_data_2.txt took: 0:00:00.021883
+2025-11-16 10:34:48.850433 starting: writing list-style template file 'models\local_run31\pest\local_run31_template\ghbconf-head-cn_inst0_constant.csv.tpl'
+2025-11-16 10:34:48.888890 finished: writing list-style template file 'models\local_run31\pest\local_run31_template\ghbconf-head-cn_inst0_constant.csv.tpl' took: 0:00:00.038457
+2025-11-16 10:34:48.893877 finished: adding constant type a style parameters for file(s) ['local_run31.ghb_conf_stress_period_data_0.txt', 'local_run31.ghb_conf_stress_period_data_2.txt'] took: 0:00:00.110084
+2025-11-16 10:34:48.905776 starting: adding observations from output file output.sample_heads.csv
+2025-11-16 10:34:48.905776 starting: adding observations from tabular output file '['output.sample_heads.csv']'
+2025-11-16 10:34:48.905776 starting: reading list-style file: models\local_run31\pest\local_run31_template\output.sample_heads.csv
+2025-11-16 10:34:48.954464 finished: reading list-style file: models\local_run31\pest\local_run31_template\output.sample_heads.csv took: 0:00:00.048688
+2025-11-16 10:34:48.954464 starting: building insfile for tabular output file output.sample_heads.csv
+2025-11-16 10:34:48.971617 finished: building insfile for tabular output file output.sample_heads.csv took: 0:00:00.017153
+2025-11-16 10:34:48.971617 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.sample_heads.csv.ins'
+2025-11-16 10:34:49.004113 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.sample_heads.csv.ins' took: 0:00:00.032496
+2025-11-16 10:34:49.005113 finished: adding observations from tabular output file '['output.sample_heads.csv']' took: 0:00:00.099337
+2025-11-16 10:34:49.005113 finished: adding observations from output file output.sample_heads.csv took: 0:00:00.099337
+2025-11-16 10:34:49.005113 starting: adding observations from output file output.spring_fluxes.csv
+2025-11-16 10:34:49.005113 starting: adding observations from tabular output file '['output.spring_fluxes.csv']'
+2025-11-16 10:34:49.005113 starting: reading list-style file: models\local_run31\pest\local_run31_template\output.spring_fluxes.csv
+2025-11-16 10:34:49.017196 finished: reading list-style file: models\local_run31\pest\local_run31_template\output.spring_fluxes.csv took: 0:00:00.012083
+2025-11-16 10:34:49.032829 starting: building insfile for tabular output file output.spring_fluxes.csv
+2025-11-16 10:34:49.032829 finished: building insfile for tabular output file output.spring_fluxes.csv took: 0:00:00
+2025-11-16 10:34:49.032829 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.spring_fluxes.csv.ins'
+2025-11-16 10:34:49.080536 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.spring_fluxes.csv.ins' took: 0:00:00.047707
+2025-11-16 10:34:49.080536 finished: adding observations from tabular output file '['output.spring_fluxes.csv']' took: 0:00:00.075423
+2025-11-16 10:34:49.080536 finished: adding observations from output file output.spring_fluxes.csv took: 0:00:00.075423
+2025-11-16 10:34:49.080536 starting: adding observations from output file output.GHB_AW_fluxes.csv
+2025-11-16 10:34:49.080536 starting: adding observations from tabular output file '['output.GHB_AW_fluxes.csv']'
+2025-11-16 10:34:49.080536 starting: reading list-style file: models\local_run31\pest\local_run31_template\output.GHB_AW_fluxes.csv
+2025-11-16 10:34:49.127424 finished: reading list-style file: models\local_run31\pest\local_run31_template\output.GHB_AW_fluxes.csv took: 0:00:00.046888
+2025-11-16 10:34:49.206350 starting: building insfile for tabular output file output.GHB_AW_fluxes.csv
+2025-11-16 10:34:49.438136 finished: building insfile for tabular output file output.GHB_AW_fluxes.csv took: 0:00:00.231786
+2025-11-16 10:34:49.438136 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.GHB_AW_fluxes.csv.ins'
+2025-11-16 10:34:50.166131 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.GHB_AW_fluxes.csv.ins' took: 0:00:00.727995
+2025-11-16 10:34:50.182155 finished: adding observations from tabular output file '['output.GHB_AW_fluxes.csv']' took: 0:00:01.101619
+2025-11-16 10:34:50.182155 finished: adding observations from output file output.GHB_AW_fluxes.csv took: 0:00:01.101619
+2025-11-16 10:34:50.182155 starting: adding observations from output file output.GHB_SP_fluxes.csv
+2025-11-16 10:34:50.182155 starting: adding observations from tabular output file '['output.GHB_SP_fluxes.csv']'
+2025-11-16 10:34:50.182155 starting: reading list-style file: models\local_run31\pest\local_run31_template\output.GHB_SP_fluxes.csv
+2025-11-16 10:34:50.206313 finished: reading list-style file: models\local_run31\pest\local_run31_template\output.GHB_SP_fluxes.csv took: 0:00:00.024158
+2025-11-16 10:34:50.213836 starting: building insfile for tabular output file output.GHB_SP_fluxes.csv
+2025-11-16 10:34:50.229495 finished: building insfile for tabular output file output.GHB_SP_fluxes.csv took: 0:00:00.015659
+2025-11-16 10:34:50.229495 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.GHB_SP_fluxes.csv.ins'
+2025-11-16 10:34:50.292396 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.GHB_SP_fluxes.csv.ins' took: 0:00:00.062901
+2025-11-16 10:34:50.292396 finished: adding observations from tabular output file '['output.GHB_SP_fluxes.csv']' took: 0:00:00.110241
+2025-11-16 10:34:50.292396 finished: adding observations from output file output.GHB_SP_fluxes.csv took: 0:00:00.110241
+2025-11-16 10:34:50.292396 starting: adding observations from output file output.GHB_CONF_fluxes.csv
+2025-11-16 10:34:50.292396 starting: adding observations from tabular output file '['output.GHB_CONF_fluxes.csv']'
+2025-11-16 10:34:50.292396 starting: reading list-style file: models\local_run31\pest\local_run31_template\output.GHB_CONF_fluxes.csv
+2025-11-16 10:34:50.436898 finished: reading list-style file: models\local_run31\pest\local_run31_template\output.GHB_CONF_fluxes.csv took: 0:00:00.144502
+2025-11-16 10:34:50.875296 starting: building insfile for tabular output file output.GHB_CONF_fluxes.csv
+2025-11-16 10:34:52.455473 finished: building insfile for tabular output file output.GHB_CONF_fluxes.csv took: 0:00:01.580177
+2025-11-16 10:34:52.456471 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.GHB_CONF_fluxes.csv.ins'
+2025-11-16 10:34:56.752555 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.GHB_CONF_fluxes.csv.ins' took: 0:00:04.296084
+2025-11-16 10:34:56.851258 finished: adding observations from tabular output file '['output.GHB_CONF_fluxes.csv']' took: 0:00:06.558862
+2025-11-16 10:34:56.866893 finished: adding observations from output file output.GHB_CONF_fluxes.csv took: 0:00:06.574497
+2025-11-16 10:34:56.866893 starting: adding observations from output file output.sample_recession_rates.csv
+2025-11-16 10:34:56.866893 starting: adding observations from tabular output file '['output.sample_recession_rates.csv']'
+2025-11-16 10:34:56.866893 starting: reading list-style file: models\local_run31\pest\local_run31_template\output.sample_recession_rates.csv
+2025-11-16 10:34:56.886044 finished: reading list-style file: models\local_run31\pest\local_run31_template\output.sample_recession_rates.csv took: 0:00:00.019151
+2025-11-16 10:34:56.898562 starting: building insfile for tabular output file output.sample_recession_rates.csv
+2025-11-16 10:34:56.898562 finished: building insfile for tabular output file output.sample_recession_rates.csv took: 0:00:00
+2025-11-16 10:34:56.898562 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.sample_recession_rates.csv.ins'
+2025-11-16 10:34:56.953465 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.sample_recession_rates.csv.ins' took: 0:00:00.054903
+2025-11-16 10:34:56.958470 finished: adding observations from tabular output file '['output.sample_recession_rates.csv']' took: 0:00:00.091577
+2025-11-16 10:34:56.958470 finished: adding observations from output file output.sample_recession_rates.csv took: 0:00:00.091577
+2025-11-16 10:34:56.958470 starting: adding observations from output file output.budget.csv
+2025-11-16 10:34:56.958470 starting: adding observations from tabular output file '['output.budget.csv']'
+2025-11-16 10:34:56.958470 starting: reading list-style file: models\local_run31\pest\local_run31_template\output.budget.csv
+2025-11-16 10:34:56.978764 finished: reading list-style file: models\local_run31\pest\local_run31_template\output.budget.csv took: 0:00:00.020294
+2025-11-16 10:34:56.980764 starting: building insfile for tabular output file output.budget.csv
+2025-11-16 10:34:56.986457 finished: building insfile for tabular output file output.budget.csv took: 0:00:00.005693
+2025-11-16 10:34:56.986457 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.budget.csv.ins'
+2025-11-16 10:34:57.016193 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.budget.csv.ins' took: 0:00:00.029736
+2025-11-16 10:34:57.031787 finished: adding observations from tabular output file '['output.budget.csv']' took: 0:00:00.073317
+2025-11-16 10:34:57.031787 finished: adding observations from output file output.budget.csv took: 0:00:00.073317
+2025-11-16 10:34:57.078742 starting: adding observations from output file output.heads_kper1_kstp1_time1.0.dat
+2025-11-16 10:34:57.078742 starting: adding observations from array output file 'output.heads_kper1_kstp1_time1.0.dat'
+2025-11-16 10:34:57.094785 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper1_kstp1_time1.0.dat.ins'
+2025-11-16 10:34:57.188946 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper1_kstp1_time1.0.dat.ins' took: 0:00:00.094161
+2025-11-16 10:34:57.204583 finished: adding observations from array output file 'output.heads_kper1_kstp1_time1.0.dat' took: 0:00:00.125841
+2025-11-16 10:34:57.204583 finished: adding observations from output file output.heads_kper1_kstp1_time1.0.dat took: 0:00:00.125841
+2025-11-16 10:34:57.204583 starting: adding observations from output file output.heads_kper2_kstp10_time11.0.dat
+2025-11-16 10:34:57.204583 starting: adding observations from array output file 'output.heads_kper2_kstp10_time11.0.dat'
+2025-11-16 10:34:57.220605 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp10_time11.0.dat.ins'
+2025-11-16 10:34:57.314813 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp10_time11.0.dat.ins' took: 0:00:00.094208
+2025-11-16 10:34:57.314813 finished: adding observations from array output file 'output.heads_kper2_kstp10_time11.0.dat' took: 0:00:00.110230
+2025-11-16 10:34:57.314813 finished: adding observations from output file output.heads_kper2_kstp10_time11.0.dat took: 0:00:00.110230
+2025-11-16 10:34:57.314813 starting: adding observations from output file output.heads_kper2_kstp11_time12.0.dat
+2025-11-16 10:34:57.314813 starting: adding observations from array output file 'output.heads_kper2_kstp11_time12.0.dat'
+2025-11-16 10:34:57.350784 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp11_time12.0.dat.ins'
+2025-11-16 10:34:57.436933 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp11_time12.0.dat.ins' took: 0:00:00.086149
+2025-11-16 10:34:57.453582 finished: adding observations from array output file 'output.heads_kper2_kstp11_time12.0.dat' took: 0:00:00.138769
+2025-11-16 10:34:57.453582 finished: adding observations from output file output.heads_kper2_kstp11_time12.0.dat took: 0:00:00.138769
+2025-11-16 10:34:57.454694 starting: adding observations from output file output.heads_kper2_kstp12_time13.0.dat
+2025-11-16 10:34:57.454694 starting: adding observations from array output file 'output.heads_kper2_kstp12_time13.0.dat'
+2025-11-16 10:34:57.478399 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp12_time13.0.dat.ins'
+2025-11-16 10:34:57.600881 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp12_time13.0.dat.ins' took: 0:00:00.122482
+2025-11-16 10:34:57.617806 finished: adding observations from array output file 'output.heads_kper2_kstp12_time13.0.dat' took: 0:00:00.163112
+2025-11-16 10:34:57.617806 finished: adding observations from output file output.heads_kper2_kstp12_time13.0.dat took: 0:00:00.163112
+2025-11-16 10:34:57.619577 starting: adding observations from output file output.heads_kper2_kstp13_time14.0.dat
+2025-11-16 10:34:57.619577 starting: adding observations from array output file 'output.heads_kper2_kstp13_time14.0.dat'
+2025-11-16 10:34:57.652309 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp13_time14.0.dat.ins'
+2025-11-16 10:34:57.747695 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp13_time14.0.dat.ins' took: 0:00:00.095386
+2025-11-16 10:34:57.763333 finished: adding observations from array output file 'output.heads_kper2_kstp13_time14.0.dat' took: 0:00:00.143756
+2025-11-16 10:34:57.763333 finished: adding observations from output file output.heads_kper2_kstp13_time14.0.dat took: 0:00:00.143756
+2025-11-16 10:34:57.763333 starting: adding observations from output file output.heads_kper2_kstp14_time15.0.dat
+2025-11-16 10:34:57.763333 starting: adding observations from array output file 'output.heads_kper2_kstp14_time15.0.dat'
+2025-11-16 10:34:57.794985 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp14_time15.0.dat.ins'
+2025-11-16 10:34:57.891063 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp14_time15.0.dat.ins' took: 0:00:00.096078
+2025-11-16 10:34:57.895063 finished: adding observations from array output file 'output.heads_kper2_kstp14_time15.0.dat' took: 0:00:00.131730
+2025-11-16 10:34:57.895063 finished: adding observations from output file output.heads_kper2_kstp14_time15.0.dat took: 0:00:00.131730
+2025-11-16 10:34:57.896063 starting: adding observations from output file output.heads_kper2_kstp15_time16.0.dat
+2025-11-16 10:34:57.896063 starting: adding observations from array output file 'output.heads_kper2_kstp15_time16.0.dat'
+2025-11-16 10:34:57.916899 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp15_time16.0.dat.ins'
+2025-11-16 10:34:58.030278 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp15_time16.0.dat.ins' took: 0:00:00.113379
+2025-11-16 10:34:58.037033 finished: adding observations from array output file 'output.heads_kper2_kstp15_time16.0.dat' took: 0:00:00.140970
+2025-11-16 10:34:58.037033 finished: adding observations from output file output.heads_kper2_kstp15_time16.0.dat took: 0:00:00.140970
+2025-11-16 10:34:58.038005 starting: adding observations from output file output.heads_kper2_kstp16_time17.0.dat
+2025-11-16 10:34:58.038005 starting: adding observations from array output file 'output.heads_kper2_kstp16_time17.0.dat'
+2025-11-16 10:34:58.069610 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp16_time17.0.dat.ins'
+2025-11-16 10:34:58.260321 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp16_time17.0.dat.ins' took: 0:00:00.190711
+2025-11-16 10:34:58.261555 finished: adding observations from array output file 'output.heads_kper2_kstp16_time17.0.dat' took: 0:00:00.223550
+2025-11-16 10:34:58.261555 finished: adding observations from output file output.heads_kper2_kstp16_time17.0.dat took: 0:00:00.223550
+2025-11-16 10:34:58.267084 starting: adding observations from output file output.heads_kper2_kstp17_time18.0.dat
+2025-11-16 10:34:58.267084 starting: adding observations from array output file 'output.heads_kper2_kstp17_time18.0.dat'
+2025-11-16 10:34:58.319093 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp17_time18.0.dat.ins'
+2025-11-16 10:34:58.438068 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp17_time18.0.dat.ins' took: 0:00:00.118975
+2025-11-16 10:34:58.450363 finished: adding observations from array output file 'output.heads_kper2_kstp17_time18.0.dat' took: 0:00:00.183279
+2025-11-16 10:34:58.450363 finished: adding observations from output file output.heads_kper2_kstp17_time18.0.dat took: 0:00:00.183279
+2025-11-16 10:34:58.450914 starting: adding observations from output file output.heads_kper2_kstp18_time19.0.dat
+2025-11-16 10:34:58.450914 starting: adding observations from array output file 'output.heads_kper2_kstp18_time19.0.dat'
+2025-11-16 10:34:58.475714 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp18_time19.0.dat.ins'
+2025-11-16 10:34:58.588298 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp18_time19.0.dat.ins' took: 0:00:00.112584
+2025-11-16 10:34:58.588298 finished: adding observations from array output file 'output.heads_kper2_kstp18_time19.0.dat' took: 0:00:00.137384
+2025-11-16 10:34:58.588298 finished: adding observations from output file output.heads_kper2_kstp18_time19.0.dat took: 0:00:00.137384
+2025-11-16 10:34:58.588298 starting: adding observations from output file output.heads_kper2_kstp19_time20.0.dat
+2025-11-16 10:34:58.588298 starting: adding observations from array output file 'output.heads_kper2_kstp19_time20.0.dat'
+2025-11-16 10:34:58.620109 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp19_time20.0.dat.ins'
+2025-11-16 10:34:58.726172 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp19_time20.0.dat.ins' took: 0:00:00.106063
+2025-11-16 10:34:58.726172 finished: adding observations from array output file 'output.heads_kper2_kstp19_time20.0.dat' took: 0:00:00.137874
+2025-11-16 10:34:58.726172 finished: adding observations from output file output.heads_kper2_kstp19_time20.0.dat took: 0:00:00.137874
+2025-11-16 10:34:58.726172 starting: adding observations from output file output.heads_kper2_kstp1_time2.0.dat
+2025-11-16 10:34:58.726172 starting: adding observations from array output file 'output.heads_kper2_kstp1_time2.0.dat'
+2025-11-16 10:34:58.751007 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp1_time2.0.dat.ins'
+2025-11-16 10:34:58.853136 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp1_time2.0.dat.ins' took: 0:00:00.102129
+2025-11-16 10:34:58.868989 finished: adding observations from array output file 'output.heads_kper2_kstp1_time2.0.dat' took: 0:00:00.142817
+2025-11-16 10:34:58.868989 finished: adding observations from output file output.heads_kper2_kstp1_time2.0.dat took: 0:00:00.142817
+2025-11-16 10:34:58.868989 starting: adding observations from output file output.heads_kper2_kstp20_time21.0.dat
+2025-11-16 10:34:58.868989 starting: adding observations from array output file 'output.heads_kper2_kstp20_time21.0.dat'
+2025-11-16 10:34:58.901444 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp20_time21.0.dat.ins'
+2025-11-16 10:34:59.000470 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp20_time21.0.dat.ins' took: 0:00:00.099026
+2025-11-16 10:34:59.015579 finished: adding observations from array output file 'output.heads_kper2_kstp20_time21.0.dat' took: 0:00:00.146590
+2025-11-16 10:34:59.015579 finished: adding observations from output file output.heads_kper2_kstp20_time21.0.dat took: 0:00:00.146590
+2025-11-16 10:34:59.015579 starting: adding observations from output file output.heads_kper2_kstp21_time22.0.dat
+2025-11-16 10:34:59.015579 starting: adding observations from array output file 'output.heads_kper2_kstp21_time22.0.dat'
+2025-11-16 10:34:59.047876 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp21_time22.0.dat.ins'
+2025-11-16 10:34:59.142225 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp21_time22.0.dat.ins' took: 0:00:00.094349
+2025-11-16 10:34:59.149081 finished: adding observations from array output file 'output.heads_kper2_kstp21_time22.0.dat' took: 0:00:00.133502
+2025-11-16 10:34:59.149081 finished: adding observations from output file output.heads_kper2_kstp21_time22.0.dat took: 0:00:00.133502
+2025-11-16 10:34:59.149081 starting: adding observations from output file output.heads_kper2_kstp22_time23.0.dat
+2025-11-16 10:34:59.150085 starting: adding observations from array output file 'output.heads_kper2_kstp22_time23.0.dat'
+2025-11-16 10:34:59.193506 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp22_time23.0.dat.ins'
+2025-11-16 10:34:59.300903 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp22_time23.0.dat.ins' took: 0:00:00.107397
+2025-11-16 10:34:59.300903 finished: adding observations from array output file 'output.heads_kper2_kstp22_time23.0.dat' took: 0:00:00.150818
+2025-11-16 10:34:59.300903 finished: adding observations from output file output.heads_kper2_kstp22_time23.0.dat took: 0:00:00.151822
+2025-11-16 10:34:59.300903 starting: adding observations from output file output.heads_kper2_kstp23_time24.0.dat
+2025-11-16 10:34:59.300903 starting: adding observations from array output file 'output.heads_kper2_kstp23_time24.0.dat'
+2025-11-16 10:34:59.334643 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp23_time24.0.dat.ins'
+2025-11-16 10:34:59.452890 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp23_time24.0.dat.ins' took: 0:00:00.118247
+2025-11-16 10:34:59.467138 finished: adding observations from array output file 'output.heads_kper2_kstp23_time24.0.dat' took: 0:00:00.166235
+2025-11-16 10:34:59.468153 finished: adding observations from output file output.heads_kper2_kstp23_time24.0.dat took: 0:00:00.167250
+2025-11-16 10:34:59.469154 starting: adding observations from output file output.heads_kper2_kstp24_time25.0.dat
+2025-11-16 10:34:59.469154 starting: adding observations from array output file 'output.heads_kper2_kstp24_time25.0.dat'
+2025-11-16 10:34:59.493348 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp24_time25.0.dat.ins'
+2025-11-16 10:34:59.583764 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp24_time25.0.dat.ins' took: 0:00:00.090416
+2025-11-16 10:34:59.588257 finished: adding observations from array output file 'output.heads_kper2_kstp24_time25.0.dat' took: 0:00:00.119103
+2025-11-16 10:34:59.588470 finished: adding observations from output file output.heads_kper2_kstp24_time25.0.dat took: 0:00:00.119316
+2025-11-16 10:34:59.588470 starting: adding observations from output file output.heads_kper2_kstp25_time26.0.dat
+2025-11-16 10:34:59.588470 starting: adding observations from array output file 'output.heads_kper2_kstp25_time26.0.dat'
+2025-11-16 10:34:59.613147 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp25_time26.0.dat.ins'
+2025-11-16 10:34:59.697790 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp25_time26.0.dat.ins' took: 0:00:00.084643
+2025-11-16 10:34:59.700427 finished: adding observations from array output file 'output.heads_kper2_kstp25_time26.0.dat' took: 0:00:00.111957
+2025-11-16 10:34:59.700427 finished: adding observations from output file output.heads_kper2_kstp25_time26.0.dat took: 0:00:00.111957
+2025-11-16 10:34:59.700427 starting: adding observations from output file output.heads_kper2_kstp26_time27.0.dat
+2025-11-16 10:34:59.700427 starting: adding observations from array output file 'output.heads_kper2_kstp26_time27.0.dat'
+2025-11-16 10:34:59.733934 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp26_time27.0.dat.ins'
+2025-11-16 10:34:59.831525 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp26_time27.0.dat.ins' took: 0:00:00.097591
+2025-11-16 10:34:59.836219 finished: adding observations from array output file 'output.heads_kper2_kstp26_time27.0.dat' took: 0:00:00.135792
+2025-11-16 10:34:59.836219 finished: adding observations from output file output.heads_kper2_kstp26_time27.0.dat took: 0:00:00.135792
+2025-11-16 10:34:59.836219 starting: adding observations from output file output.heads_kper2_kstp27_time28.0.dat
+2025-11-16 10:34:59.837218 starting: adding observations from array output file 'output.heads_kper2_kstp27_time28.0.dat'
+2025-11-16 10:34:59.858775 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp27_time28.0.dat.ins'
+2025-11-16 10:34:59.937422 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp27_time28.0.dat.ins' took: 0:00:00.078647
+2025-11-16 10:34:59.954570 finished: adding observations from array output file 'output.heads_kper2_kstp27_time28.0.dat' took: 0:00:00.117352
+2025-11-16 10:34:59.954570 finished: adding observations from output file output.heads_kper2_kstp27_time28.0.dat took: 0:00:00.118351
+2025-11-16 10:34:59.955486 starting: adding observations from output file output.heads_kper2_kstp28_time29.0.dat
+2025-11-16 10:34:59.955486 starting: adding observations from array output file 'output.heads_kper2_kstp28_time29.0.dat'
+2025-11-16 10:34:59.977590 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp28_time29.0.dat.ins'
+2025-11-16 10:35:00.065049 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp28_time29.0.dat.ins' took: 0:00:00.087459
+2025-11-16 10:35:00.065049 finished: adding observations from array output file 'output.heads_kper2_kstp28_time29.0.dat' took: 0:00:00.109563
+2025-11-16 10:35:00.065049 finished: adding observations from output file output.heads_kper2_kstp28_time29.0.dat took: 0:00:00.109563
+2025-11-16 10:35:00.065049 starting: adding observations from output file output.heads_kper2_kstp29_time30.0.dat
+2025-11-16 10:35:00.065049 starting: adding observations from array output file 'output.heads_kper2_kstp29_time30.0.dat'
+2025-11-16 10:35:00.107161 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp29_time30.0.dat.ins'
+2025-11-16 10:35:00.206472 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp29_time30.0.dat.ins' took: 0:00:00.099311
+2025-11-16 10:35:00.213482 finished: adding observations from array output file 'output.heads_kper2_kstp29_time30.0.dat' took: 0:00:00.148433
+2025-11-16 10:35:00.213482 finished: adding observations from output file output.heads_kper2_kstp29_time30.0.dat took: 0:00:00.148433
+2025-11-16 10:35:00.214489 starting: adding observations from output file output.heads_kper2_kstp2_time3.0.dat
+2025-11-16 10:35:00.214489 starting: adding observations from array output file 'output.heads_kper2_kstp2_time3.0.dat'
+2025-11-16 10:35:00.263963 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp2_time3.0.dat.ins'
+2025-11-16 10:35:00.367135 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp2_time3.0.dat.ins' took: 0:00:00.103172
+2025-11-16 10:35:00.368925 finished: adding observations from array output file 'output.heads_kper2_kstp2_time3.0.dat' took: 0:00:00.154436
+2025-11-16 10:35:00.368925 finished: adding observations from output file output.heads_kper2_kstp2_time3.0.dat took: 0:00:00.154436
+2025-11-16 10:35:00.368925 starting: adding observations from output file output.heads_kper2_kstp30_time31.0.dat
+2025-11-16 10:35:00.368925 starting: adding observations from array output file 'output.heads_kper2_kstp30_time31.0.dat'
+2025-11-16 10:35:00.400436 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp30_time31.0.dat.ins'
+2025-11-16 10:35:00.493186 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp30_time31.0.dat.ins' took: 0:00:00.092750
+2025-11-16 10:35:00.498187 finished: adding observations from array output file 'output.heads_kper2_kstp30_time31.0.dat' took: 0:00:00.129262
+2025-11-16 10:35:00.498187 finished: adding observations from output file output.heads_kper2_kstp30_time31.0.dat took: 0:00:00.129262
+2025-11-16 10:35:00.498187 starting: adding observations from output file output.heads_kper2_kstp31_time32.0.dat
+2025-11-16 10:35:00.498187 starting: adding observations from array output file 'output.heads_kper2_kstp31_time32.0.dat'
+2025-11-16 10:35:00.520157 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp31_time32.0.dat.ins'
+2025-11-16 10:35:00.598590 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp31_time32.0.dat.ins' took: 0:00:00.078433
+2025-11-16 10:35:00.598590 finished: adding observations from array output file 'output.heads_kper2_kstp31_time32.0.dat' took: 0:00:00.100403
+2025-11-16 10:35:00.598590 finished: adding observations from output file output.heads_kper2_kstp31_time32.0.dat took: 0:00:00.100403
+2025-11-16 10:35:00.598590 starting: adding observations from output file output.heads_kper2_kstp32_time33.0.dat
+2025-11-16 10:35:00.598590 starting: adding observations from array output file 'output.heads_kper2_kstp32_time33.0.dat'
+2025-11-16 10:35:00.629861 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp32_time33.0.dat.ins'
+2025-11-16 10:35:00.718115 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp32_time33.0.dat.ins' took: 0:00:00.088254
+2025-11-16 10:35:00.722119 finished: adding observations from array output file 'output.heads_kper2_kstp32_time33.0.dat' took: 0:00:00.123529
+2025-11-16 10:35:00.723117 finished: adding observations from output file output.heads_kper2_kstp32_time33.0.dat took: 0:00:00.124527
+2025-11-16 10:35:00.723117 starting: adding observations from output file output.heads_kper2_kstp33_time34.0.dat
+2025-11-16 10:35:00.723117 starting: adding observations from array output file 'output.heads_kper2_kstp33_time34.0.dat'
+2025-11-16 10:35:00.733900 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp33_time34.0.dat.ins'
+2025-11-16 10:35:00.845437 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp33_time34.0.dat.ins' took: 0:00:00.111537
+2025-11-16 10:35:00.849447 finished: adding observations from array output file 'output.heads_kper2_kstp33_time34.0.dat' took: 0:00:00.126330
+2025-11-16 10:35:00.849447 finished: adding observations from output file output.heads_kper2_kstp33_time34.0.dat took: 0:00:00.126330
+2025-11-16 10:35:00.850634 starting: adding observations from output file output.heads_kper2_kstp34_time35.0.dat
+2025-11-16 10:35:00.850634 starting: adding observations from array output file 'output.heads_kper2_kstp34_time35.0.dat'
+2025-11-16 10:35:00.877273 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp34_time35.0.dat.ins'
+2025-11-16 10:35:00.969470 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp34_time35.0.dat.ins' took: 0:00:00.092197
+2025-11-16 10:35:00.973472 finished: adding observations from array output file 'output.heads_kper2_kstp34_time35.0.dat' took: 0:00:00.122838
+2025-11-16 10:35:00.973472 finished: adding observations from output file output.heads_kper2_kstp34_time35.0.dat took: 0:00:00.122838
+2025-11-16 10:35:00.974479 starting: adding observations from output file output.heads_kper2_kstp35_time36.0.dat
+2025-11-16 10:35:00.974479 starting: adding observations from array output file 'output.heads_kper2_kstp35_time36.0.dat'
+2025-11-16 10:35:00.991693 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp35_time36.0.dat.ins'
+2025-11-16 10:35:01.083616 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp35_time36.0.dat.ins' took: 0:00:00.091923
+2025-11-16 10:35:01.084747 finished: adding observations from array output file 'output.heads_kper2_kstp35_time36.0.dat' took: 0:00:00.110268
+2025-11-16 10:35:01.084747 finished: adding observations from output file output.heads_kper2_kstp35_time36.0.dat took: 0:00:00.110268
+2025-11-16 10:35:01.084747 starting: adding observations from output file output.heads_kper2_kstp36_time37.0.dat
+2025-11-16 10:35:01.084747 starting: adding observations from array output file 'output.heads_kper2_kstp36_time37.0.dat'
+2025-11-16 10:35:01.100350 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp36_time37.0.dat.ins'
+2025-11-16 10:35:01.194516 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp36_time37.0.dat.ins' took: 0:00:00.094166
+2025-11-16 10:35:01.194516 finished: adding observations from array output file 'output.heads_kper2_kstp36_time37.0.dat' took: 0:00:00.109769
+2025-11-16 10:35:01.194516 finished: adding observations from output file output.heads_kper2_kstp36_time37.0.dat took: 0:00:00.109769
+2025-11-16 10:35:01.194516 starting: adding observations from output file output.heads_kper2_kstp37_time38.0.dat
+2025-11-16 10:35:01.194516 starting: adding observations from array output file 'output.heads_kper2_kstp37_time38.0.dat'
+2025-11-16 10:35:01.225775 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp37_time38.0.dat.ins'
+2025-11-16 10:35:01.320144 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp37_time38.0.dat.ins' took: 0:00:00.094369
+2025-11-16 10:35:01.324150 finished: adding observations from array output file 'output.heads_kper2_kstp37_time38.0.dat' took: 0:00:00.129634
+2025-11-16 10:35:01.324150 finished: adding observations from output file output.heads_kper2_kstp37_time38.0.dat took: 0:00:00.129634
+2025-11-16 10:35:01.325146 starting: adding observations from output file output.heads_kper2_kstp38_time39.0.dat
+2025-11-16 10:35:01.325146 starting: adding observations from array output file 'output.heads_kper2_kstp38_time39.0.dat'
+2025-11-16 10:35:01.351804 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp38_time39.0.dat.ins'
+2025-11-16 10:35:01.459522 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp38_time39.0.dat.ins' took: 0:00:00.107718
+2025-11-16 10:35:01.464526 finished: adding observations from array output file 'output.heads_kper2_kstp38_time39.0.dat' took: 0:00:00.139380
+2025-11-16 10:35:01.464526 finished: adding observations from output file output.heads_kper2_kstp38_time39.0.dat took: 0:00:00.139380
+2025-11-16 10:35:01.464526 starting: adding observations from output file output.heads_kper2_kstp39_time40.0.dat
+2025-11-16 10:35:01.464526 starting: adding observations from array output file 'output.heads_kper2_kstp39_time40.0.dat'
+2025-11-16 10:35:01.485158 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp39_time40.0.dat.ins'
+2025-11-16 10:35:01.563579 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp39_time40.0.dat.ins' took: 0:00:00.078421
+2025-11-16 10:35:01.580264 finished: adding observations from array output file 'output.heads_kper2_kstp39_time40.0.dat' took: 0:00:00.115738
+2025-11-16 10:35:01.580264 finished: adding observations from output file output.heads_kper2_kstp39_time40.0.dat took: 0:00:00.115738
+2025-11-16 10:35:01.580264 starting: adding observations from output file output.heads_kper2_kstp3_time4.0.dat
+2025-11-16 10:35:01.580264 starting: adding observations from array output file 'output.heads_kper2_kstp3_time4.0.dat'
+2025-11-16 10:35:01.606041 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp3_time4.0.dat.ins'
+2025-11-16 10:35:01.697923 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp3_time4.0.dat.ins' took: 0:00:00.091882
+2025-11-16 10:35:01.702764 finished: adding observations from array output file 'output.heads_kper2_kstp3_time4.0.dat' took: 0:00:00.122500
+2025-11-16 10:35:01.702764 finished: adding observations from output file output.heads_kper2_kstp3_time4.0.dat took: 0:00:00.122500
+2025-11-16 10:35:01.703670 starting: adding observations from output file output.heads_kper2_kstp40_time41.0.dat
+2025-11-16 10:35:01.703670 starting: adding observations from array output file 'output.heads_kper2_kstp40_time41.0.dat'
+2025-11-16 10:35:01.725796 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp40_time41.0.dat.ins'
+2025-11-16 10:35:01.830275 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp40_time41.0.dat.ins' took: 0:00:00.104479
+2025-11-16 10:35:01.835107 finished: adding observations from array output file 'output.heads_kper2_kstp40_time41.0.dat' took: 0:00:00.131437
+2025-11-16 10:35:01.835107 finished: adding observations from output file output.heads_kper2_kstp40_time41.0.dat took: 0:00:00.131437
+2025-11-16 10:35:01.836236 starting: adding observations from output file output.heads_kper2_kstp41_time42.0.dat
+2025-11-16 10:35:01.836236 starting: adding observations from array output file 'output.heads_kper2_kstp41_time42.0.dat'
+2025-11-16 10:35:01.859122 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp41_time42.0.dat.ins'
+2025-11-16 10:35:01.972158 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp41_time42.0.dat.ins' took: 0:00:00.113036
+2025-11-16 10:35:01.976266 finished: adding observations from array output file 'output.heads_kper2_kstp41_time42.0.dat' took: 0:00:00.140030
+2025-11-16 10:35:01.976266 finished: adding observations from output file output.heads_kper2_kstp41_time42.0.dat took: 0:00:00.140030
+2025-11-16 10:35:01.977243 starting: adding observations from output file output.heads_kper2_kstp42_time43.0.dat
+2025-11-16 10:35:01.977243 starting: adding observations from array output file 'output.heads_kper2_kstp42_time43.0.dat'
+2025-11-16 10:35:02.003094 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp42_time43.0.dat.ins'
+2025-11-16 10:35:02.094563 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp42_time43.0.dat.ins' took: 0:00:00.091469
+2025-11-16 10:35:02.098557 finished: adding observations from array output file 'output.heads_kper2_kstp42_time43.0.dat' took: 0:00:00.121314
+2025-11-16 10:35:02.099456 finished: adding observations from output file output.heads_kper2_kstp42_time43.0.dat took: 0:00:00.122213
+2025-11-16 10:35:02.099456 starting: adding observations from output file output.heads_kper2_kstp43_time44.0.dat
+2025-11-16 10:35:02.099456 starting: adding observations from array output file 'output.heads_kper2_kstp43_time44.0.dat'
+2025-11-16 10:35:02.125263 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp43_time44.0.dat.ins'
+2025-11-16 10:35:02.215220 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp43_time44.0.dat.ins' took: 0:00:00.089957
+2025-11-16 10:35:02.215220 finished: adding observations from array output file 'output.heads_kper2_kstp43_time44.0.dat' took: 0:00:00.115764
+2025-11-16 10:35:02.215220 finished: adding observations from output file output.heads_kper2_kstp43_time44.0.dat took: 0:00:00.115764
+2025-11-16 10:35:02.215220 starting: adding observations from output file output.heads_kper2_kstp44_time45.0.dat
+2025-11-16 10:35:02.215220 starting: adding observations from array output file 'output.heads_kper2_kstp44_time45.0.dat'
+2025-11-16 10:35:02.261993 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp44_time45.0.dat.ins'
+2025-11-16 10:35:02.356201 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp44_time45.0.dat.ins' took: 0:00:00.094208
+2025-11-16 10:35:02.356201 finished: adding observations from array output file 'output.heads_kper2_kstp44_time45.0.dat' took: 0:00:00.140981
+2025-11-16 10:35:02.356201 finished: adding observations from output file output.heads_kper2_kstp44_time45.0.dat took: 0:00:00.140981
+2025-11-16 10:35:02.356201 starting: adding observations from output file output.heads_kper2_kstp45_time46.0.dat
+2025-11-16 10:35:02.356201 starting: adding observations from array output file 'output.heads_kper2_kstp45_time46.0.dat'
+2025-11-16 10:35:02.387369 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp45_time46.0.dat.ins'
+2025-11-16 10:35:02.480919 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp45_time46.0.dat.ins' took: 0:00:00.093550
+2025-11-16 10:35:02.485106 finished: adding observations from array output file 'output.heads_kper2_kstp45_time46.0.dat' took: 0:00:00.128905
+2025-11-16 10:35:02.485106 finished: adding observations from output file output.heads_kper2_kstp45_time46.0.dat took: 0:00:00.128905
+2025-11-16 10:35:02.485106 starting: adding observations from output file output.heads_kper2_kstp46_time47.0.dat
+2025-11-16 10:35:02.485106 starting: adding observations from array output file 'output.heads_kper2_kstp46_time47.0.dat'
+2025-11-16 10:35:02.531315 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp46_time47.0.dat.ins'
+2025-11-16 10:35:02.636171 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp46_time47.0.dat.ins' took: 0:00:00.104856
+2025-11-16 10:35:02.636171 finished: adding observations from array output file 'output.heads_kper2_kstp46_time47.0.dat' took: 0:00:00.151065
+2025-11-16 10:35:02.636171 finished: adding observations from output file output.heads_kper2_kstp46_time47.0.dat took: 0:00:00.151065
+2025-11-16 10:35:02.636171 starting: adding observations from output file output.heads_kper2_kstp47_time48.0.dat
+2025-11-16 10:35:02.636171 starting: adding observations from array output file 'output.heads_kper2_kstp47_time48.0.dat'
+2025-11-16 10:35:02.673043 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp47_time48.0.dat.ins'
+2025-11-16 10:35:02.764606 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp47_time48.0.dat.ins' took: 0:00:00.091563
+2025-11-16 10:35:02.764606 finished: adding observations from array output file 'output.heads_kper2_kstp47_time48.0.dat' took: 0:00:00.128435
+2025-11-16 10:35:02.764606 finished: adding observations from output file output.heads_kper2_kstp47_time48.0.dat took: 0:00:00.128435
+2025-11-16 10:35:02.764606 starting: adding observations from output file output.heads_kper2_kstp48_time49.0.dat
+2025-11-16 10:35:02.764606 starting: adding observations from array output file 'output.heads_kper2_kstp48_time49.0.dat'
+2025-11-16 10:35:02.796390 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp48_time49.0.dat.ins'
+2025-11-16 10:35:02.874841 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp48_time49.0.dat.ins' took: 0:00:00.078451
+2025-11-16 10:35:02.890480 finished: adding observations from array output file 'output.heads_kper2_kstp48_time49.0.dat' took: 0:00:00.125874
+2025-11-16 10:35:02.890480 finished: adding observations from output file output.heads_kper2_kstp48_time49.0.dat took: 0:00:00.125874
+2025-11-16 10:35:02.890480 starting: adding observations from output file output.heads_kper2_kstp49_time50.0.dat
+2025-11-16 10:35:02.890480 starting: adding observations from array output file 'output.heads_kper2_kstp49_time50.0.dat'
+2025-11-16 10:35:02.906609 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp49_time50.0.dat.ins'
+2025-11-16 10:35:03.001411 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp49_time50.0.dat.ins' took: 0:00:00.094802
+2025-11-16 10:35:03.016445 finished: adding observations from array output file 'output.heads_kper2_kstp49_time50.0.dat' took: 0:00:00.125965
+2025-11-16 10:35:03.016445 finished: adding observations from output file output.heads_kper2_kstp49_time50.0.dat took: 0:00:00.125965
+2025-11-16 10:35:03.016445 starting: adding observations from output file output.heads_kper2_kstp4_time5.0.dat
+2025-11-16 10:35:03.016445 starting: adding observations from array output file 'output.heads_kper2_kstp4_time5.0.dat'
+2025-11-16 10:35:03.052571 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp4_time5.0.dat.ins'
+2025-11-16 10:35:03.232801 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp4_time5.0.dat.ins' took: 0:00:00.180230
+2025-11-16 10:35:03.234951 finished: adding observations from array output file 'output.heads_kper2_kstp4_time5.0.dat' took: 0:00:00.218506
+2025-11-16 10:35:03.234951 finished: adding observations from output file output.heads_kper2_kstp4_time5.0.dat took: 0:00:00.218506
+2025-11-16 10:35:03.234951 starting: adding observations from output file output.heads_kper2_kstp50_time51.0.dat
+2025-11-16 10:35:03.234951 starting: adding observations from array output file 'output.heads_kper2_kstp50_time51.0.dat'
+2025-11-16 10:35:03.266216 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp50_time51.0.dat.ins'
+2025-11-16 10:35:03.360467 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp50_time51.0.dat.ins' took: 0:00:00.094251
+2025-11-16 10:35:03.376452 finished: adding observations from array output file 'output.heads_kper2_kstp50_time51.0.dat' took: 0:00:00.141501
+2025-11-16 10:35:03.376452 finished: adding observations from output file output.heads_kper2_kstp50_time51.0.dat took: 0:00:00.141501
+2025-11-16 10:35:03.376452 starting: adding observations from output file output.heads_kper2_kstp51_time52.0.dat
+2025-11-16 10:35:03.376452 starting: adding observations from array output file 'output.heads_kper2_kstp51_time52.0.dat'
+2025-11-16 10:35:03.395978 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp51_time52.0.dat.ins'
+2025-11-16 10:35:03.496095 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp51_time52.0.dat.ins' took: 0:00:00.100117
+2025-11-16 10:35:03.500627 finished: adding observations from array output file 'output.heads_kper2_kstp51_time52.0.dat' took: 0:00:00.124175
+2025-11-16 10:35:03.500627 finished: adding observations from output file output.heads_kper2_kstp51_time52.0.dat took: 0:00:00.124175
+2025-11-16 10:35:03.500627 starting: adding observations from output file output.heads_kper2_kstp52_time53.0.dat
+2025-11-16 10:35:03.500627 starting: adding observations from array output file 'output.heads_kper2_kstp52_time53.0.dat'
+2025-11-16 10:35:03.516284 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp52_time53.0.dat.ins'
+2025-11-16 10:35:03.643586 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp52_time53.0.dat.ins' took: 0:00:00.127302
+2025-11-16 10:35:03.646859 finished: adding observations from array output file 'output.heads_kper2_kstp52_time53.0.dat' took: 0:00:00.146232
+2025-11-16 10:35:03.646859 finished: adding observations from output file output.heads_kper2_kstp52_time53.0.dat took: 0:00:00.146232
+2025-11-16 10:35:03.650311 starting: adding observations from output file output.heads_kper2_kstp5_time6.0.dat
+2025-11-16 10:35:03.650311 starting: adding observations from array output file 'output.heads_kper2_kstp5_time6.0.dat'
+2025-11-16 10:35:03.684472 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp5_time6.0.dat.ins'
+2025-11-16 10:35:03.831018 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp5_time6.0.dat.ins' took: 0:00:00.146546
+2025-11-16 10:35:03.846680 finished: adding observations from array output file 'output.heads_kper2_kstp5_time6.0.dat' took: 0:00:00.196369
+2025-11-16 10:35:03.846680 finished: adding observations from output file output.heads_kper2_kstp5_time6.0.dat took: 0:00:00.196369
+2025-11-16 10:35:03.846680 starting: adding observations from output file output.heads_kper2_kstp6_time7.0.dat
+2025-11-16 10:35:03.846680 starting: adding observations from array output file 'output.heads_kper2_kstp6_time7.0.dat'
+2025-11-16 10:35:03.862299 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp6_time7.0.dat.ins'
+2025-11-16 10:35:04.000659 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp6_time7.0.dat.ins' took: 0:00:00.138360
+2025-11-16 10:35:04.000659 finished: adding observations from array output file 'output.heads_kper2_kstp6_time7.0.dat' took: 0:00:00.153979
+2025-11-16 10:35:04.000659 finished: adding observations from output file output.heads_kper2_kstp6_time7.0.dat took: 0:00:00.153979
+2025-11-16 10:35:04.000659 starting: adding observations from output file output.heads_kper2_kstp7_time8.0.dat
+2025-11-16 10:35:04.000659 starting: adding observations from array output file 'output.heads_kper2_kstp7_time8.0.dat'
+2025-11-16 10:35:04.031928 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp7_time8.0.dat.ins'
+2025-11-16 10:35:04.142307 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp7_time8.0.dat.ins' took: 0:00:00.110379
+2025-11-16 10:35:04.142307 finished: adding observations from array output file 'output.heads_kper2_kstp7_time8.0.dat' took: 0:00:00.141648
+2025-11-16 10:35:04.142307 finished: adding observations from output file output.heads_kper2_kstp7_time8.0.dat took: 0:00:00.141648
+2025-11-16 10:35:04.157916 starting: adding observations from output file output.heads_kper2_kstp8_time9.0.dat
+2025-11-16 10:35:04.157916 starting: adding observations from array output file 'output.heads_kper2_kstp8_time9.0.dat'
+2025-11-16 10:35:04.188952 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp8_time9.0.dat.ins'
+2025-11-16 10:35:04.318299 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp8_time9.0.dat.ins' took: 0:00:00.129347
+2025-11-16 10:35:04.337790 finished: adding observations from array output file 'output.heads_kper2_kstp8_time9.0.dat' took: 0:00:00.179874
+2025-11-16 10:35:04.337790 finished: adding observations from output file output.heads_kper2_kstp8_time9.0.dat took: 0:00:00.179874
+2025-11-16 10:35:04.338699 starting: adding observations from output file output.heads_kper2_kstp9_time10.0.dat
+2025-11-16 10:35:04.338699 starting: adding observations from array output file 'output.heads_kper2_kstp9_time10.0.dat'
+2025-11-16 10:35:04.367761 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp9_time10.0.dat.ins'
+2025-11-16 10:35:04.501058 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper2_kstp9_time10.0.dat.ins' took: 0:00:00.133297
+2025-11-16 10:35:04.501058 finished: adding observations from array output file 'output.heads_kper2_kstp9_time10.0.dat' took: 0:00:00.162359
+2025-11-16 10:35:04.501058 finished: adding observations from output file output.heads_kper2_kstp9_time10.0.dat took: 0:00:00.162359
+2025-11-16 10:35:04.501058 starting: adding observations from output file output.heads_kper3_kstp1_time54.0.dat
+2025-11-16 10:35:04.501058 starting: adding observations from array output file 'output.heads_kper3_kstp1_time54.0.dat'
+2025-11-16 10:35:04.548595 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper3_kstp1_time54.0.dat.ins'
+2025-11-16 10:35:04.755725 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper3_kstp1_time54.0.dat.ins' took: 0:00:00.207130
+2025-11-16 10:35:04.760727 finished: adding observations from array output file 'output.heads_kper3_kstp1_time54.0.dat' took: 0:00:00.259669
+2025-11-16 10:35:04.761727 finished: adding observations from output file output.heads_kper3_kstp1_time54.0.dat took: 0:00:00.260669
+2025-11-16 10:35:04.761727 starting: adding observations from output file output.heads_kper4_kstp10_time64.0.dat
+2025-11-16 10:35:04.761727 starting: adding observations from array output file 'output.heads_kper4_kstp10_time64.0.dat'
+2025-11-16 10:35:04.790790 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp10_time64.0.dat.ins'
+2025-11-16 10:35:04.880631 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp10_time64.0.dat.ins' took: 0:00:00.089841
+2025-11-16 10:35:04.896650 finished: adding observations from array output file 'output.heads_kper4_kstp10_time64.0.dat' took: 0:00:00.134923
+2025-11-16 10:35:04.896650 finished: adding observations from output file output.heads_kper4_kstp10_time64.0.dat took: 0:00:00.134923
+2025-11-16 10:35:04.896650 starting: adding observations from output file output.heads_kper4_kstp11_time65.0.dat
+2025-11-16 10:35:04.896650 starting: adding observations from array output file 'output.heads_kper4_kstp11_time65.0.dat'
+2025-11-16 10:35:04.912293 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp11_time65.0.dat.ins'
+2025-11-16 10:35:05.050550 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp11_time65.0.dat.ins' took: 0:00:00.138257
+2025-11-16 10:35:05.050550 finished: adding observations from array output file 'output.heads_kper4_kstp11_time65.0.dat' took: 0:00:00.153900
+2025-11-16 10:35:05.050550 finished: adding observations from output file output.heads_kper4_kstp11_time65.0.dat took: 0:00:00.153900
+2025-11-16 10:35:05.050550 starting: adding observations from output file output.heads_kper4_kstp12_time66.0.dat
+2025-11-16 10:35:05.050550 starting: adding observations from array output file 'output.heads_kper4_kstp12_time66.0.dat'
+2025-11-16 10:35:05.065651 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp12_time66.0.dat.ins'
+2025-11-16 10:35:05.206660 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp12_time66.0.dat.ins' took: 0:00:00.141009
+2025-11-16 10:35:05.206660 finished: adding observations from array output file 'output.heads_kper4_kstp12_time66.0.dat' took: 0:00:00.156110
+2025-11-16 10:35:05.206660 finished: adding observations from output file output.heads_kper4_kstp12_time66.0.dat took: 0:00:00.156110
+2025-11-16 10:35:05.222393 starting: adding observations from output file output.heads_kper4_kstp13_time67.0.dat
+2025-11-16 10:35:05.222393 starting: adding observations from array output file 'output.heads_kper4_kstp13_time67.0.dat'
+2025-11-16 10:35:05.250674 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp13_time67.0.dat.ins'
+2025-11-16 10:35:05.351548 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp13_time67.0.dat.ins' took: 0:00:00.100874
+2025-11-16 10:35:05.367244 finished: adding observations from array output file 'output.heads_kper4_kstp13_time67.0.dat' took: 0:00:00.144851
+2025-11-16 10:35:05.367244 finished: adding observations from output file output.heads_kper4_kstp13_time67.0.dat took: 0:00:00.144851
+2025-11-16 10:35:05.367244 starting: adding observations from output file output.heads_kper4_kstp14_time68.0.dat
+2025-11-16 10:35:05.368250 starting: adding observations from array output file 'output.heads_kper4_kstp14_time68.0.dat'
+2025-11-16 10:35:05.389195 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp14_time68.0.dat.ins'
+2025-11-16 10:35:05.501314 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp14_time68.0.dat.ins' took: 0:00:00.112119
+2025-11-16 10:35:05.501314 finished: adding observations from array output file 'output.heads_kper4_kstp14_time68.0.dat' took: 0:00:00.133064
+2025-11-16 10:35:05.501314 finished: adding observations from output file output.heads_kper4_kstp14_time68.0.dat took: 0:00:00.134070
+2025-11-16 10:35:05.501314 starting: adding observations from output file output.heads_kper4_kstp15_time69.0.dat
+2025-11-16 10:35:05.501314 starting: adding observations from array output file 'output.heads_kper4_kstp15_time69.0.dat'
+2025-11-16 10:35:05.532574 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp15_time69.0.dat.ins'
+2025-11-16 10:35:05.626893 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp15_time69.0.dat.ins' took: 0:00:00.094319
+2025-11-16 10:35:05.626893 finished: adding observations from array output file 'output.heads_kper4_kstp15_time69.0.dat' took: 0:00:00.125579
+2025-11-16 10:35:05.626893 finished: adding observations from output file output.heads_kper4_kstp15_time69.0.dat took: 0:00:00.125579
+2025-11-16 10:35:05.626893 starting: adding observations from output file output.heads_kper4_kstp16_time70.0.dat
+2025-11-16 10:35:05.626893 starting: adding observations from array output file 'output.heads_kper4_kstp16_time70.0.dat'
+2025-11-16 10:35:05.658155 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp16_time70.0.dat.ins'
+2025-11-16 10:35:05.759585 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp16_time70.0.dat.ins' took: 0:00:00.101430
+2025-11-16 10:35:05.765591 finished: adding observations from array output file 'output.heads_kper4_kstp16_time70.0.dat' took: 0:00:00.138698
+2025-11-16 10:35:05.765591 finished: adding observations from output file output.heads_kper4_kstp16_time70.0.dat took: 0:00:00.138698
+2025-11-16 10:35:05.765591 starting: adding observations from output file output.heads_kper4_kstp17_time71.0.dat
+2025-11-16 10:35:05.765591 starting: adding observations from array output file 'output.heads_kper4_kstp17_time71.0.dat'
+2025-11-16 10:35:05.801806 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp17_time71.0.dat.ins'
+2025-11-16 10:35:05.883751 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp17_time71.0.dat.ins' took: 0:00:00.081945
+2025-11-16 10:35:05.899803 finished: adding observations from array output file 'output.heads_kper4_kstp17_time71.0.dat' took: 0:00:00.134212
+2025-11-16 10:35:05.899803 finished: adding observations from output file output.heads_kper4_kstp17_time71.0.dat took: 0:00:00.134212
+2025-11-16 10:35:05.899803 starting: adding observations from output file output.heads_kper4_kstp18_time72.0.dat
+2025-11-16 10:35:05.899803 starting: adding observations from array output file 'output.heads_kper4_kstp18_time72.0.dat'
+2025-11-16 10:35:05.915498 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp18_time72.0.dat.ins'
+2025-11-16 10:35:06.016290 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp18_time72.0.dat.ins' took: 0:00:00.100792
+2025-11-16 10:35:06.016290 finished: adding observations from array output file 'output.heads_kper4_kstp18_time72.0.dat' took: 0:00:00.116487
+2025-11-16 10:35:06.016290 finished: adding observations from output file output.heads_kper4_kstp18_time72.0.dat took: 0:00:00.116487
+2025-11-16 10:35:06.016290 starting: adding observations from output file output.heads_kper4_kstp19_time73.0.dat
+2025-11-16 10:35:06.016290 starting: adding observations from array output file 'output.heads_kper4_kstp19_time73.0.dat'
+2025-11-16 10:35:06.064059 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp19_time73.0.dat.ins'
+2025-11-16 10:35:06.157773 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp19_time73.0.dat.ins' took: 0:00:00.093714
+2025-11-16 10:35:06.157773 finished: adding observations from array output file 'output.heads_kper4_kstp19_time73.0.dat' took: 0:00:00.141483
+2025-11-16 10:35:06.157773 finished: adding observations from output file output.heads_kper4_kstp19_time73.0.dat took: 0:00:00.141483
+2025-11-16 10:35:06.157773 starting: adding observations from output file output.heads_kper4_kstp1_time55.0.dat
+2025-11-16 10:35:06.157773 starting: adding observations from array output file 'output.heads_kper4_kstp1_time55.0.dat'
+2025-11-16 10:35:06.189024 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp1_time55.0.dat.ins'
+2025-11-16 10:35:06.300005 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp1_time55.0.dat.ins' took: 0:00:00.110981
+2025-11-16 10:35:06.300005 finished: adding observations from array output file 'output.heads_kper4_kstp1_time55.0.dat' took: 0:00:00.142232
+2025-11-16 10:35:06.300005 finished: adding observations from output file output.heads_kper4_kstp1_time55.0.dat took: 0:00:00.142232
+2025-11-16 10:35:06.300005 starting: adding observations from output file output.heads_kper4_kstp20_time74.0.dat
+2025-11-16 10:35:06.300005 starting: adding observations from array output file 'output.heads_kper4_kstp20_time74.0.dat'
+2025-11-16 10:35:06.340265 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp20_time74.0.dat.ins'
+2025-11-16 10:35:06.437214 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp20_time74.0.dat.ins' took: 0:00:00.096949
+2025-11-16 10:35:06.437214 finished: adding observations from array output file 'output.heads_kper4_kstp20_time74.0.dat' took: 0:00:00.137209
+2025-11-16 10:35:06.437214 finished: adding observations from output file output.heads_kper4_kstp20_time74.0.dat took: 0:00:00.137209
+2025-11-16 10:35:06.450495 starting: adding observations from output file output.heads_kper4_kstp21_time75.0.dat
+2025-11-16 10:35:06.450495 starting: adding observations from array output file 'output.heads_kper4_kstp21_time75.0.dat'
+2025-11-16 10:35:06.472379 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp21_time75.0.dat.ins'
+2025-11-16 10:35:06.562585 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp21_time75.0.dat.ins' took: 0:00:00.090206
+2025-11-16 10:35:06.562585 finished: adding observations from array output file 'output.heads_kper4_kstp21_time75.0.dat' took: 0:00:00.112090
+2025-11-16 10:35:06.562585 finished: adding observations from output file output.heads_kper4_kstp21_time75.0.dat took: 0:00:00.112090
+2025-11-16 10:35:06.562585 starting: adding observations from output file output.heads_kper4_kstp22_time76.0.dat
+2025-11-16 10:35:06.562585 starting: adding observations from array output file 'output.heads_kper4_kstp22_time76.0.dat'
+2025-11-16 10:35:06.600045 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp22_time76.0.dat.ins'
+2025-11-16 10:35:06.704373 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp22_time76.0.dat.ins' took: 0:00:00.104328
+2025-11-16 10:35:06.704373 finished: adding observations from array output file 'output.heads_kper4_kstp22_time76.0.dat' took: 0:00:00.141788
+2025-11-16 10:35:06.704373 finished: adding observations from output file output.heads_kper4_kstp22_time76.0.dat took: 0:00:00.141788
+2025-11-16 10:35:06.704373 starting: adding observations from output file output.heads_kper4_kstp23_time77.0.dat
+2025-11-16 10:35:06.704373 starting: adding observations from array output file 'output.heads_kper4_kstp23_time77.0.dat'
+2025-11-16 10:35:06.720035 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp23_time77.0.dat.ins'
+2025-11-16 10:35:06.830262 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp23_time77.0.dat.ins' took: 0:00:00.110227
+2025-11-16 10:35:06.850337 finished: adding observations from array output file 'output.heads_kper4_kstp23_time77.0.dat' took: 0:00:00.145964
+2025-11-16 10:35:06.850337 finished: adding observations from output file output.heads_kper4_kstp23_time77.0.dat took: 0:00:00.145964
+2025-11-16 10:35:06.850337 starting: adding observations from output file output.heads_kper4_kstp24_time78.0.dat
+2025-11-16 10:35:06.850337 starting: adding observations from array output file 'output.heads_kper4_kstp24_time78.0.dat'
+2025-11-16 10:35:06.869241 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp24_time78.0.dat.ins'
+2025-11-16 10:35:06.986452 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp24_time78.0.dat.ins' took: 0:00:00.117211
+2025-11-16 10:35:07.001121 finished: adding observations from array output file 'output.heads_kper4_kstp24_time78.0.dat' took: 0:00:00.150784
+2025-11-16 10:35:07.001121 finished: adding observations from output file output.heads_kper4_kstp24_time78.0.dat took: 0:00:00.150784
+2025-11-16 10:35:07.001121 starting: adding observations from output file output.heads_kper4_kstp25_time79.0.dat
+2025-11-16 10:35:07.001121 starting: adding observations from array output file 'output.heads_kper4_kstp25_time79.0.dat'
+2025-11-16 10:35:07.016628 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp25_time79.0.dat.ins'
+2025-11-16 10:35:07.126491 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp25_time79.0.dat.ins' took: 0:00:00.109863
+2025-11-16 10:35:07.126491 finished: adding observations from array output file 'output.heads_kper4_kstp25_time79.0.dat' took: 0:00:00.125370
+2025-11-16 10:35:07.126491 finished: adding observations from output file output.heads_kper4_kstp25_time79.0.dat took: 0:00:00.125370
+2025-11-16 10:35:07.126491 starting: adding observations from output file output.heads_kper4_kstp26_time80.0.dat
+2025-11-16 10:35:07.126491 starting: adding observations from array output file 'output.heads_kper4_kstp26_time80.0.dat'
+2025-11-16 10:35:07.173385 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp26_time80.0.dat.ins'
+2025-11-16 10:35:07.268060 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp26_time80.0.dat.ins' took: 0:00:00.094675
+2025-11-16 10:35:07.283688 finished: adding observations from array output file 'output.heads_kper4_kstp26_time80.0.dat' took: 0:00:00.157197
+2025-11-16 10:35:07.283688 finished: adding observations from output file output.heads_kper4_kstp26_time80.0.dat took: 0:00:00.157197
+2025-11-16 10:35:07.283688 starting: adding observations from output file output.heads_kper4_kstp27_time81.0.dat
+2025-11-16 10:35:07.283688 starting: adding observations from array output file 'output.heads_kper4_kstp27_time81.0.dat'
+2025-11-16 10:35:07.301725 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp27_time81.0.dat.ins'
+2025-11-16 10:35:07.402917 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp27_time81.0.dat.ins' took: 0:00:00.101192
+2025-11-16 10:35:07.417146 finished: adding observations from array output file 'output.heads_kper4_kstp27_time81.0.dat' took: 0:00:00.133458
+2025-11-16 10:35:07.417146 finished: adding observations from output file output.heads_kper4_kstp27_time81.0.dat took: 0:00:00.133458
+2025-11-16 10:35:07.418258 starting: adding observations from output file output.heads_kper4_kstp28_time82.0.dat
+2025-11-16 10:35:07.418258 starting: adding observations from array output file 'output.heads_kper4_kstp28_time82.0.dat'
+2025-11-16 10:35:07.437715 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp28_time82.0.dat.ins'
+2025-11-16 10:35:07.535217 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp28_time82.0.dat.ins' took: 0:00:00.097502
+2025-11-16 10:35:07.556272 finished: adding observations from array output file 'output.heads_kper4_kstp28_time82.0.dat' took: 0:00:00.138014
+2025-11-16 10:35:07.556272 finished: adding observations from output file output.heads_kper4_kstp28_time82.0.dat took: 0:00:00.138014
+2025-11-16 10:35:07.556272 starting: adding observations from output file output.heads_kper4_kstp29_time83.0.dat
+2025-11-16 10:35:07.556272 starting: adding observations from array output file 'output.heads_kper4_kstp29_time83.0.dat'
+2025-11-16 10:35:07.581176 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp29_time83.0.dat.ins'
+2025-11-16 10:35:07.678579 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp29_time83.0.dat.ins' took: 0:00:00.097403
+2025-11-16 10:35:07.678579 finished: adding observations from array output file 'output.heads_kper4_kstp29_time83.0.dat' took: 0:00:00.122307
+2025-11-16 10:35:07.678579 finished: adding observations from output file output.heads_kper4_kstp29_time83.0.dat took: 0:00:00.122307
+2025-11-16 10:35:07.678579 starting: adding observations from output file output.heads_kper4_kstp2_time56.0.dat
+2025-11-16 10:35:07.678579 starting: adding observations from array output file 'output.heads_kper4_kstp2_time56.0.dat'
+2025-11-16 10:35:07.702185 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp2_time56.0.dat.ins'
+2025-11-16 10:35:07.805083 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp2_time56.0.dat.ins' took: 0:00:00.102898
+2025-11-16 10:35:07.805083 finished: adding observations from array output file 'output.heads_kper4_kstp2_time56.0.dat' took: 0:00:00.126504
+2025-11-16 10:35:07.805083 finished: adding observations from output file output.heads_kper4_kstp2_time56.0.dat took: 0:00:00.126504
+2025-11-16 10:35:07.805083 starting: adding observations from output file output.heads_kper4_kstp30_time84.0.dat
+2025-11-16 10:35:07.805083 starting: adding observations from array output file 'output.heads_kper4_kstp30_time84.0.dat'
+2025-11-16 10:35:07.851968 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp30_time84.0.dat.ins'
+2025-11-16 10:35:07.953366 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp30_time84.0.dat.ins' took: 0:00:00.101398
+2025-11-16 10:35:07.959368 finished: adding observations from array output file 'output.heads_kper4_kstp30_time84.0.dat' took: 0:00:00.154285
+2025-11-16 10:35:07.959368 finished: adding observations from output file output.heads_kper4_kstp30_time84.0.dat took: 0:00:00.154285
+2025-11-16 10:35:07.959368 starting: adding observations from output file output.heads_kper4_kstp31_time85.0.dat
+2025-11-16 10:35:07.959368 starting: adding observations from array output file 'output.heads_kper4_kstp31_time85.0.dat'
+2025-11-16 10:35:07.988337 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp31_time85.0.dat.ins'
+2025-11-16 10:35:08.102693 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp31_time85.0.dat.ins' took: 0:00:00.114356
+2025-11-16 10:35:08.102693 finished: adding observations from array output file 'output.heads_kper4_kstp31_time85.0.dat' took: 0:00:00.143325
+2025-11-16 10:35:08.102693 finished: adding observations from output file output.heads_kper4_kstp31_time85.0.dat took: 0:00:00.143325
+2025-11-16 10:35:08.102693 starting: adding observations from output file output.heads_kper4_kstp32_time86.0.dat
+2025-11-16 10:35:08.102693 starting: adding observations from array output file 'output.heads_kper4_kstp32_time86.0.dat'
+2025-11-16 10:35:08.135823 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp32_time86.0.dat.ins'
+2025-11-16 10:35:08.230173 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp32_time86.0.dat.ins' took: 0:00:00.094350
+2025-11-16 10:35:08.238183 finished: adding observations from array output file 'output.heads_kper4_kstp32_time86.0.dat' took: 0:00:00.135490
+2025-11-16 10:35:08.238183 finished: adding observations from output file output.heads_kper4_kstp32_time86.0.dat took: 0:00:00.135490
+2025-11-16 10:35:08.246196 starting: adding observations from output file output.heads_kper4_kstp33_time87.0.dat
+2025-11-16 10:35:08.246196 starting: adding observations from array output file 'output.heads_kper4_kstp33_time87.0.dat'
+2025-11-16 10:35:08.293110 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp33_time87.0.dat.ins'
+2025-11-16 10:35:08.388092 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp33_time87.0.dat.ins' took: 0:00:00.094982
+2025-11-16 10:35:08.403134 finished: adding observations from array output file 'output.heads_kper4_kstp33_time87.0.dat' took: 0:00:00.156938
+2025-11-16 10:35:08.403134 finished: adding observations from output file output.heads_kper4_kstp33_time87.0.dat took: 0:00:00.156938
+2025-11-16 10:35:08.403134 starting: adding observations from output file output.heads_kper4_kstp34_time88.0.dat
+2025-11-16 10:35:08.403134 starting: adding observations from array output file 'output.heads_kper4_kstp34_time88.0.dat'
+2025-11-16 10:35:08.439025 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp34_time88.0.dat.ins'
+2025-11-16 10:35:08.555295 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp34_time88.0.dat.ins' took: 0:00:00.116270
+2025-11-16 10:35:08.560296 finished: adding observations from array output file 'output.heads_kper4_kstp34_time88.0.dat' took: 0:00:00.157162
+2025-11-16 10:35:08.560296 finished: adding observations from output file output.heads_kper4_kstp34_time88.0.dat took: 0:00:00.157162
+2025-11-16 10:35:08.561207 starting: adding observations from output file output.heads_kper4_kstp35_time89.0.dat
+2025-11-16 10:35:08.561207 starting: adding observations from array output file 'output.heads_kper4_kstp35_time89.0.dat'
+2025-11-16 10:35:08.569541 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp35_time89.0.dat.ins'
+2025-11-16 10:35:08.680338 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp35_time89.0.dat.ins' took: 0:00:00.110797
+2025-11-16 10:35:08.686348 finished: adding observations from array output file 'output.heads_kper4_kstp35_time89.0.dat' took: 0:00:00.125141
+2025-11-16 10:35:08.686348 finished: adding observations from output file output.heads_kper4_kstp35_time89.0.dat took: 0:00:00.125141
+2025-11-16 10:35:08.686348 starting: adding observations from output file output.heads_kper4_kstp36_time90.0.dat
+2025-11-16 10:35:08.686348 starting: adding observations from array output file 'output.heads_kper4_kstp36_time90.0.dat'
+2025-11-16 10:35:08.715873 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp36_time90.0.dat.ins'
+2025-11-16 10:35:08.811272 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp36_time90.0.dat.ins' took: 0:00:00.095399
+2025-11-16 10:35:08.826297 finished: adding observations from array output file 'output.heads_kper4_kstp36_time90.0.dat' took: 0:00:00.139949
+2025-11-16 10:35:08.826297 finished: adding observations from output file output.heads_kper4_kstp36_time90.0.dat took: 0:00:00.139949
+2025-11-16 10:35:08.826297 starting: adding observations from output file output.heads_kper4_kstp37_time91.0.dat
+2025-11-16 10:35:08.826297 starting: adding observations from array output file 'output.heads_kper4_kstp37_time91.0.dat'
+2025-11-16 10:35:08.841952 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp37_time91.0.dat.ins'
+2025-11-16 10:35:08.952662 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp37_time91.0.dat.ins' took: 0:00:00.110710
+2025-11-16 10:35:08.959670 finished: adding observations from array output file 'output.heads_kper4_kstp37_time91.0.dat' took: 0:00:00.133373
+2025-11-16 10:35:08.959670 finished: adding observations from output file output.heads_kper4_kstp37_time91.0.dat took: 0:00:00.133373
+2025-11-16 10:35:08.959670 starting: adding observations from output file output.heads_kper4_kstp38_time92.0.dat
+2025-11-16 10:35:08.960672 starting: adding observations from array output file 'output.heads_kper4_kstp38_time92.0.dat'
+2025-11-16 10:35:08.979596 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp38_time92.0.dat.ins'
+2025-11-16 10:35:09.082647 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp38_time92.0.dat.ins' took: 0:00:00.103051
+2025-11-16 10:35:09.082647 finished: adding observations from array output file 'output.heads_kper4_kstp38_time92.0.dat' took: 0:00:00.121975
+2025-11-16 10:35:09.082647 finished: adding observations from output file output.heads_kper4_kstp38_time92.0.dat took: 0:00:00.122977
+2025-11-16 10:35:09.082647 starting: adding observations from output file output.heads_kper4_kstp39_time93.0.dat
+2025-11-16 10:35:09.082647 starting: adding observations from array output file 'output.heads_kper4_kstp39_time93.0.dat'
+2025-11-16 10:35:09.134534 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp39_time93.0.dat.ins'
+2025-11-16 10:35:09.235354 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp39_time93.0.dat.ins' took: 0:00:00.100820
+2025-11-16 10:35:09.242202 finished: adding observations from array output file 'output.heads_kper4_kstp39_time93.0.dat' took: 0:00:00.159555
+2025-11-16 10:35:09.250349 finished: adding observations from output file output.heads_kper4_kstp39_time93.0.dat took: 0:00:00.167702
+2025-11-16 10:35:09.250349 starting: adding observations from output file output.heads_kper4_kstp3_time57.0.dat
+2025-11-16 10:35:09.250349 starting: adding observations from array output file 'output.heads_kper4_kstp3_time57.0.dat'
+2025-11-16 10:35:09.271162 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp3_time57.0.dat.ins'
+2025-11-16 10:35:09.363393 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp3_time57.0.dat.ins' took: 0:00:00.092231
+2025-11-16 10:35:09.379035 finished: adding observations from array output file 'output.heads_kper4_kstp3_time57.0.dat' took: 0:00:00.128686
+2025-11-16 10:35:09.379035 finished: adding observations from output file output.heads_kper4_kstp3_time57.0.dat took: 0:00:00.128686
+2025-11-16 10:35:09.379035 starting: adding observations from output file output.heads_kper4_kstp40_time94.0.dat
+2025-11-16 10:35:09.379035 starting: adding observations from array output file 'output.heads_kper4_kstp40_time94.0.dat'
+2025-11-16 10:35:09.395317 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp40_time94.0.dat.ins'
+2025-11-16 10:35:09.501022 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp40_time94.0.dat.ins' took: 0:00:00.105705
+2025-11-16 10:35:09.505645 finished: adding observations from array output file 'output.heads_kper4_kstp40_time94.0.dat' took: 0:00:00.126610
+2025-11-16 10:35:09.505645 finished: adding observations from output file output.heads_kper4_kstp40_time94.0.dat took: 0:00:00.126610
+2025-11-16 10:35:09.505645 starting: adding observations from output file output.heads_kper4_kstp41_time95.0.dat
+2025-11-16 10:35:09.505645 starting: adding observations from array output file 'output.heads_kper4_kstp41_time95.0.dat'
+2025-11-16 10:35:09.517161 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp41_time95.0.dat.ins'
+2025-11-16 10:35:09.643909 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp41_time95.0.dat.ins' took: 0:00:00.126748
+2025-11-16 10:35:09.652446 finished: adding observations from array output file 'output.heads_kper4_kstp41_time95.0.dat' took: 0:00:00.146801
+2025-11-16 10:35:09.652446 finished: adding observations from output file output.heads_kper4_kstp41_time95.0.dat took: 0:00:00.146801
+2025-11-16 10:35:09.653643 starting: adding observations from output file output.heads_kper4_kstp42_time96.0.dat
+2025-11-16 10:35:09.653643 starting: adding observations from array output file 'output.heads_kper4_kstp42_time96.0.dat'
+2025-11-16 10:35:09.690604 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp42_time96.0.dat.ins'
+2025-11-16 10:35:09.843597 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp42_time96.0.dat.ins' took: 0:00:00.152993
+2025-11-16 10:35:09.843597 finished: adding observations from array output file 'output.heads_kper4_kstp42_time96.0.dat' took: 0:00:00.189954
+2025-11-16 10:35:09.843597 finished: adding observations from output file output.heads_kper4_kstp42_time96.0.dat took: 0:00:00.189954
+2025-11-16 10:35:09.843597 starting: adding observations from output file output.heads_kper4_kstp43_time97.0.dat
+2025-11-16 10:35:09.843597 starting: adding observations from array output file 'output.heads_kper4_kstp43_time97.0.dat'
+2025-11-16 10:35:09.874801 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp43_time97.0.dat.ins'
+2025-11-16 10:35:10.000423 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp43_time97.0.dat.ins' took: 0:00:00.125622
+2025-11-16 10:35:10.005962 finished: adding observations from array output file 'output.heads_kper4_kstp43_time97.0.dat' took: 0:00:00.162365
+2025-11-16 10:35:10.005962 finished: adding observations from output file output.heads_kper4_kstp43_time97.0.dat took: 0:00:00.162365
+2025-11-16 10:35:10.005962 starting: adding observations from output file output.heads_kper4_kstp44_time98.0.dat
+2025-11-16 10:35:10.005962 starting: adding observations from array output file 'output.heads_kper4_kstp44_time98.0.dat'
+2025-11-16 10:35:10.032292 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp44_time98.0.dat.ins'
+2025-11-16 10:35:10.146744 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp44_time98.0.dat.ins' took: 0:00:00.114452
+2025-11-16 10:35:10.161788 finished: adding observations from array output file 'output.heads_kper4_kstp44_time98.0.dat' took: 0:00:00.155826
+2025-11-16 10:35:10.161788 finished: adding observations from output file output.heads_kper4_kstp44_time98.0.dat took: 0:00:00.155826
+2025-11-16 10:35:10.161788 starting: adding observations from output file output.heads_kper4_kstp45_time99.0.dat
+2025-11-16 10:35:10.161788 starting: adding observations from array output file 'output.heads_kper4_kstp45_time99.0.dat'
+2025-11-16 10:35:10.196781 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp45_time99.0.dat.ins'
+2025-11-16 10:35:10.339000 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp45_time99.0.dat.ins' took: 0:00:00.142219
+2025-11-16 10:35:10.339000 finished: adding observations from array output file 'output.heads_kper4_kstp45_time99.0.dat' took: 0:00:00.177212
+2025-11-16 10:35:10.339000 finished: adding observations from output file output.heads_kper4_kstp45_time99.0.dat took: 0:00:00.177212
+2025-11-16 10:35:10.339000 starting: adding observations from output file output.heads_kper4_kstp46_time100.0.dat
+2025-11-16 10:35:10.339000 starting: adding observations from array output file 'output.heads_kper4_kstp46_time100.0.dat'
+2025-11-16 10:35:10.375491 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp46_time100.0.dat.ins'
+2025-11-16 10:35:10.491695 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp46_time100.0.dat.ins' took: 0:00:00.116204
+2025-11-16 10:35:10.499743 finished: adding observations from array output file 'output.heads_kper4_kstp46_time100.0.dat' took: 0:00:00.160743
+2025-11-16 10:35:10.499743 finished: adding observations from output file output.heads_kper4_kstp46_time100.0.dat took: 0:00:00.160743
+2025-11-16 10:35:10.499743 starting: adding observations from output file output.heads_kper4_kstp47_time101.0.dat
+2025-11-16 10:35:10.499743 starting: adding observations from array output file 'output.heads_kper4_kstp47_time101.0.dat'
+2025-11-16 10:35:10.515789 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp47_time101.0.dat.ins'
+2025-11-16 10:35:10.634194 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp47_time101.0.dat.ins' took: 0:00:00.118405
+2025-11-16 10:35:10.649855 finished: adding observations from array output file 'output.heads_kper4_kstp47_time101.0.dat' took: 0:00:00.150112
+2025-11-16 10:35:10.649855 finished: adding observations from output file output.heads_kper4_kstp47_time101.0.dat took: 0:00:00.150112
+2025-11-16 10:35:10.649855 starting: adding observations from output file output.heads_kper4_kstp48_time102.0.dat
+2025-11-16 10:35:10.649855 starting: adding observations from array output file 'output.heads_kper4_kstp48_time102.0.dat'
+2025-11-16 10:35:10.665462 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp48_time102.0.dat.ins'
+2025-11-16 10:35:10.778686 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp48_time102.0.dat.ins' took: 0:00:00.113224
+2025-11-16 10:35:10.794306 finished: adding observations from array output file 'output.heads_kper4_kstp48_time102.0.dat' took: 0:00:00.144451
+2025-11-16 10:35:10.794306 finished: adding observations from output file output.heads_kper4_kstp48_time102.0.dat took: 0:00:00.144451
+2025-11-16 10:35:10.794306 starting: adding observations from output file output.heads_kper4_kstp49_time103.0.dat
+2025-11-16 10:35:10.794306 starting: adding observations from array output file 'output.heads_kper4_kstp49_time103.0.dat'
+2025-11-16 10:35:10.810417 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp49_time103.0.dat.ins'
+2025-11-16 10:35:10.933773 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp49_time103.0.dat.ins' took: 0:00:00.123356
+2025-11-16 10:35:10.940409 finished: adding observations from array output file 'output.heads_kper4_kstp49_time103.0.dat' took: 0:00:00.146103
+2025-11-16 10:35:10.940409 finished: adding observations from output file output.heads_kper4_kstp49_time103.0.dat took: 0:00:00.146103
+2025-11-16 10:35:10.940409 starting: adding observations from output file output.heads_kper4_kstp4_time58.0.dat
+2025-11-16 10:35:10.940409 starting: adding observations from array output file 'output.heads_kper4_kstp4_time58.0.dat'
+2025-11-16 10:35:10.968731 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp4_time58.0.dat.ins'
+2025-11-16 10:35:11.080940 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp4_time58.0.dat.ins' took: 0:00:00.112209
+2025-11-16 10:35:11.080940 finished: adding observations from array output file 'output.heads_kper4_kstp4_time58.0.dat' took: 0:00:00.140531
+2025-11-16 10:35:11.080940 finished: adding observations from output file output.heads_kper4_kstp4_time58.0.dat took: 0:00:00.140531
+2025-11-16 10:35:11.080940 starting: adding observations from output file output.heads_kper4_kstp50_time104.0.dat
+2025-11-16 10:35:11.080940 starting: adding observations from array output file 'output.heads_kper4_kstp50_time104.0.dat'
+2025-11-16 10:35:11.113318 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp50_time104.0.dat.ins'
+2025-11-16 10:35:11.214467 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp50_time104.0.dat.ins' took: 0:00:00.101149
+2025-11-16 10:35:11.214467 finished: adding observations from array output file 'output.heads_kper4_kstp50_time104.0.dat' took: 0:00:00.133527
+2025-11-16 10:35:11.214467 finished: adding observations from output file output.heads_kper4_kstp50_time104.0.dat took: 0:00:00.133527
+2025-11-16 10:35:11.214467 starting: adding observations from output file output.heads_kper4_kstp51_time105.0.dat
+2025-11-16 10:35:11.214467 starting: adding observations from array output file 'output.heads_kper4_kstp51_time105.0.dat'
+2025-11-16 10:35:11.246226 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp51_time105.0.dat.ins'
+2025-11-16 10:35:11.340883 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp51_time105.0.dat.ins' took: 0:00:00.094657
+2025-11-16 10:35:11.356511 finished: adding observations from array output file 'output.heads_kper4_kstp51_time105.0.dat' took: 0:00:00.142044
+2025-11-16 10:35:11.356511 finished: adding observations from output file output.heads_kper4_kstp51_time105.0.dat took: 0:00:00.142044
+2025-11-16 10:35:11.356511 starting: adding observations from output file output.heads_kper4_kstp52_time106.0.dat
+2025-11-16 10:35:11.356511 starting: adding observations from array output file 'output.heads_kper4_kstp52_time106.0.dat'
+2025-11-16 10:35:11.403386 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp52_time106.0.dat.ins'
+2025-11-16 10:35:11.519487 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp52_time106.0.dat.ins' took: 0:00:00.116101
+2025-11-16 10:35:11.527455 finished: adding observations from array output file 'output.heads_kper4_kstp52_time106.0.dat' took: 0:00:00.170944
+2025-11-16 10:35:11.527455 finished: adding observations from output file output.heads_kper4_kstp52_time106.0.dat took: 0:00:00.170944
+2025-11-16 10:35:11.528456 starting: adding observations from output file output.heads_kper4_kstp5_time59.0.dat
+2025-11-16 10:35:11.528456 starting: adding observations from array output file 'output.heads_kper4_kstp5_time59.0.dat'
+2025-11-16 10:35:11.551036 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp5_time59.0.dat.ins'
+2025-11-16 10:35:11.664629 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp5_time59.0.dat.ins' took: 0:00:00.113593
+2025-11-16 10:35:11.673506 finished: adding observations from array output file 'output.heads_kper4_kstp5_time59.0.dat' took: 0:00:00.145050
+2025-11-16 10:35:11.673506 finished: adding observations from output file output.heads_kper4_kstp5_time59.0.dat took: 0:00:00.145050
+2025-11-16 10:35:11.673506 starting: adding observations from output file output.heads_kper4_kstp6_time60.0.dat
+2025-11-16 10:35:11.673506 starting: adding observations from array output file 'output.heads_kper4_kstp6_time60.0.dat'
+2025-11-16 10:35:11.700828 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp6_time60.0.dat.ins'
+2025-11-16 10:35:11.794891 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp6_time60.0.dat.ins' took: 0:00:00.094063
+2025-11-16 10:35:11.809022 finished: adding observations from array output file 'output.heads_kper4_kstp6_time60.0.dat' took: 0:00:00.135516
+2025-11-16 10:35:11.809022 finished: adding observations from output file output.heads_kper4_kstp6_time60.0.dat took: 0:00:00.135516
+2025-11-16 10:35:11.809022 starting: adding observations from output file output.heads_kper4_kstp7_time61.0.dat
+2025-11-16 10:35:11.809022 starting: adding observations from array output file 'output.heads_kper4_kstp7_time61.0.dat'
+2025-11-16 10:35:11.826399 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp7_time61.0.dat.ins'
+2025-11-16 10:35:11.920767 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp7_time61.0.dat.ins' took: 0:00:00.094368
+2025-11-16 10:35:11.941277 finished: adding observations from array output file 'output.heads_kper4_kstp7_time61.0.dat' took: 0:00:00.132255
+2025-11-16 10:35:11.941916 finished: adding observations from output file output.heads_kper4_kstp7_time61.0.dat took: 0:00:00.132894
+2025-11-16 10:35:11.942306 starting: adding observations from output file output.heads_kper4_kstp8_time62.0.dat
+2025-11-16 10:35:11.942306 starting: adding observations from array output file 'output.heads_kper4_kstp8_time62.0.dat'
+2025-11-16 10:35:11.963588 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp8_time62.0.dat.ins'
+2025-11-16 10:35:12.068988 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp8_time62.0.dat.ins' took: 0:00:00.105400
+2025-11-16 10:35:12.076992 finished: adding observations from array output file 'output.heads_kper4_kstp8_time62.0.dat' took: 0:00:00.134686
+2025-11-16 10:35:12.077076 finished: adding observations from output file output.heads_kper4_kstp8_time62.0.dat took: 0:00:00.134770
+2025-11-16 10:35:12.077076 starting: adding observations from output file output.heads_kper4_kstp9_time63.0.dat
+2025-11-16 10:35:12.077076 starting: adding observations from array output file 'output.heads_kper4_kstp9_time63.0.dat'
+2025-11-16 10:35:12.102037 starting: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp9_time63.0.dat.ins'
+2025-11-16 10:35:12.217228 finished: adding observation from instruction file 'models\local_run31\pest\local_run31_template\output.heads_kper4_kstp9_time63.0.dat.ins' took: 0:00:00.115191
+2025-11-16 10:35:12.232839 finished: adding observations from array output file 'output.heads_kper4_kstp9_time63.0.dat' took: 0:00:00.155763
+2025-11-16 10:35:12.232839 finished: adding observations from output file output.heads_kper4_kstp9_time63.0.dat took: 0:00:00.155763
+2025-11-16 10:35:12.327699 starting: Converting parameters to shortnames
+2025-11-16 10:35:12.343329 starting: Renaming parameters for shortnames
+2025-11-16 10:35:26.128212 finished: Renaming parameters for shortnames took: 0:00:13.784883
+2025-11-16 10:35:26.159483 finished: Converting parameters to shortnames took: 0:00:13.831784
+2025-11-16 10:35:26.190840 starting: Converting observations to shortnames
+2025-11-16 10:35:26.881180 starting: Renaming observations for shortnames
+2025-11-16 10:35:49.658493 finished: Renaming observations for shortnames took: 0:00:22.777313
+2025-11-16 10:35:50.831759 finished: Converting observations to shortnames took: 0:00:24.640919
+2025-11-16 10:35:54.433850 forward_run line:pyemu.os_utils.run(r'mf6')
+
+2025-11-16 10:41:52.985362 starting: building prior covariance matrix
+2025-11-16 10:41:55.352885 saving prior covariance matrix to file models/local_run31/pest/local_run31_template\prior_cov.jcb
+2025-11-16 10:41:55.765583 finished: building prior covariance matrix took: 0:00:02.780221
+2025-11-16 10:42:59.540434 starting: drawing realizations
+2025-11-16 10:42:59.552502 starting: spectral simulation for grid-scale pars
+2025-11-16 10:42:59.598682 starting: SpecSim: drawing 250 realization for group npfklayer1-gr with 191 pars, (log) variance 1.7777777777777777 (sill 1.7777777777777777)
+2025-11-16 10:42:59.856395 finished: SpecSim: drawing 250 realization for group npfklayer1-gr with 191 pars, (log) variance 1.7777777777777777 (sill 1.7777777777777777) took: 0:00:00.257713
+2025-11-16 10:42:59.856395 starting: SpecSim: drawing 250 realization for group stosslayer1-gr with 191 pars, (log) variance 2.25 (sill 2.25)
+2025-11-16 10:43:00.093711 finished: SpecSim: drawing 250 realization for group stosslayer1-gr with 191 pars, (log) variance 2.25 (sill 2.25) took: 0:00:00.237316
+2025-11-16 10:43:00.093711 finished: spectral simulation for grid-scale pars took: 0:00:00.541209
+2025-11-16 10:43:00.093711 starting: Drawing 3916 non-specsim pars
+2025-11-16 10:43:02.982145 finished: Drawing 3916 non-specsim pars took: 0:00:02.888434
+2025-11-16 10:43:02.982145 starting: Joining specsim and non-specsim pars
+2025-11-16 10:43:02.997772 finished: Joining specsim and non-specsim pars took: 0:00:00.015627
+2025-11-16 10:43:02.997772 finished: drawing realizations took: 0:00:03.457338

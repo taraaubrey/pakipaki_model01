@@ -25,6 +25,8 @@ def main():
         worker_root= os.path.join(TEMP_DIR, '..'),
         master_dir=m_d, #the manager directory
         )
+    
+    pst.plot()
 
 
 if __name__ == "__main__":

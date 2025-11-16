@@ -109,10 +109,10 @@ def load_data(paths, run_name, last_iter=None, use_prior_only=False, restart=Fal
     pr_oe = pyemu.ObservationEnsemble.from_csv(pst=pst, filename=pr_oe_fn)
 
     # For prior-only mode, pt_oe is same as pr_oe
-    # if use_prior_only:
-    #     pt_oe = pr_oe
-    # else:
-    #     pt_oe = pyemu.ObservationEnsemble.from_csv(pst=pst, filename=pt_oe_fn)
+    if use_prior_only:
+        pt_oe = pr_oe
+    else:
+        pt_oe = pyemu.ObservationEnsemble.from_csv(pst=pst, filename=pt_oe_fn)
 
     noise = pyemu.ObservationEnsemble.from_csv(pst=pst, filename=noise_fn)
 
@@ -120,10 +120,10 @@ def load_data(paths, run_name, last_iter=None, use_prior_only=False, restart=Fal
     pr_pe = pyemu.ParameterEnsemble.from_csv(pst=pst, filename=pr_pe_fn)
 
     # For prior-only mode, pt_pe is same as pr_pe
-    # if use_prior_only:
-    #     pt_pe = pr_pe
-    # else:
-    #     pt_pe = pyemu.ParameterEnsemble.from_csv(pst=pst, filename=pt_pe_fn)
+    if use_prior_only:
+        pt_pe = pr_pe
+    else:
+        pt_pe = pyemu.ParameterEnsemble.from_csv(pst=pst, filename=pt_pe_fn)
 
     # Get headers
     headers = obs_data.index.to_list()
@@ -141,10 +141,10 @@ def load_data(paths, run_name, last_iter=None, use_prior_only=False, restart=Fal
         'obs_data': obs_data,
         'par_data': par_data,
         'pr_oe': pr_oe,
-        # 'pt_oe': pt_oe,
+        'pt_oe': pt_oe,
         'noise': noise,
         'pr_pe': pr_pe,
-        # 'pt_pe': pt_pe,
+        'pt_pe': pt_pe,
         'headers': headers,
         'param_headers': param_headers,
         'use_prior_only': use_prior_only,
@@ -323,16 +323,20 @@ def plot_phi_boxplot(data, output):
     plt.close()
     print(f"Saved: {fig_fn}")
 
-def format_tsdf(df):
+def format_tsdf(df, obs_data):
     """Format time series dataframe."""
     tdf = df.transpose()
-    tdf['time'] = tdf.index.map(extract_time)
-    tdf['kper'] = tdf.index.map(extract_kper)
-    tdf['kstp'] = tdf.index.map(extract_kstp)
-    tdf['usecol'] = tdf.index.map(extract_usecol)
+    
+    # map time, kper, kstp, usecol from obs_data index
+    tdf = pd.merge(tdf, obs_data[['time', 'kper', 'kstp', 'usecol']], left_index=True, right_index=True, how='left')
+
+    # tdf['time'] = tdf.index.map(extract_time)
+    # tdf['kper'] = tdf.index.map(extract_kper)
+    # tdf['kstp'] = tdf.index.map(extract_kstp)
+    # tdf['usecol'] = tdf.index.map(extract_usecol)
     return tdf
 
-def plot_timeseries_obs(data, subset_oe, output, truth_file=None, col_startswith='oname:ts-heads'):
+def plot_timeseries_obs(data, subset_oe=None, output=None, truth_file=None, col_startswith='oname:ts-heads'):
     """Plot time series observations - prior vs posterior vs truth.
 
     Creates two separate plots:
@@ -341,6 +345,7 @@ def plot_timeseries_obs(data, subset_oe, output, truth_file=None, col_startswith
     """
     headers = data['headers']
     pr_oe_fn = data['pr_oe_fn']
+    pt_oe_fn = data['pt_oe_fn']
     noise_fn = data['noise_fn']
 
     # Load truth data
@@ -354,19 +359,25 @@ def plot_timeseries_obs(data, subset_oe, output, truth_file=None, col_startswith
             truth_df = None
 
     # Get time series head observations
-    desired_cols = [col for col in headers if col.startswith(f'oname:{col_startswith}')]
+    obs_data = data['obs_data'][data['obs_data']['oname'] == col_startswith]
+    desired_cols = list(obs_data.index)
 
     if len(desired_cols) == 0:
         print("No time series head observations found, skipping plot")
         return
 
     pre_oe_ts = pd.read_csv(pr_oe_fn, usecols=desired_cols)
-    pt_oe_ts = subset_oe.loc[:, list(desired_cols)]
+
+    if subset_oe:
+        pt_oe_ts = subset_oe.loc[:, desired_cols]
+    else:
+        pt_oe_ts = pd.read_csv(pt_oe_fn, usecols=desired_cols)
+
     noise_ts = pd.read_csv(noise_fn, usecols=desired_cols)
 
-    ts_df = format_tsdf(pre_oe_ts)
-    ts_pt_df = format_tsdf(pt_oe_ts)
-    ts_noise_df = format_tsdf(noise_ts)
+    ts_df = format_tsdf(pre_oe_ts, obs_data)
+    ts_pt_df = format_tsdf(pt_oe_ts, obs_data)
+    ts_noise_df = format_tsdf(noise_ts, obs_data)
 
     unique_usecols = ts_df['usecol'].unique()
     n = len(unique_usecols)
@@ -645,7 +656,7 @@ def plot_budget_histogram(data, output, col_startswith='budget'):
     headers = data['headers']
 
     # Get budget observations
-    desired_cols = [col for col in headers if col.startswith(f'oname:{col_startswith}')]
+    desired_cols = list(data['obs_data'][data['obs_data']['oname'] == col_startswith].index)
 
     if len(desired_cols) == 0:
         print("No budget observations found, skipping plot")
@@ -738,7 +749,8 @@ def plot_budgets(data, subset_oe=None, output=None, col_startswith='budget'):
     headers = data['headers']
 
     # Get budget observations
-    desired_cols = [col for col in headers if col.startswith(f'oname:{col_startswith}')]
+    obs_data = data['obs_data'][data['obs_data']['oname'] == col_startswith]
+    desired_cols = list(obs_data.index)
 
     if len(desired_cols) == 0:
         print("No budget observations found, skipping plot")
@@ -753,9 +765,11 @@ def plot_budgets(data, subset_oe=None, output=None, col_startswith='budget'):
 
     # Format the dataframe to extract usecol and kper
     budget_df = pt_oe_budget.transpose()
-    budget_df['usecol'] = budget_df.index.map(extract_usecol)
-    budget_df['kper'] = budget_df.index.map(
-        lambda x: int([s for s in x.split('_') if s.startswith('kper:')][0].split(':')[1])if any(s.startswith('kper:') for s in x.split('_')) else 0)
+    budget_df = pd.merge(budget_df, obs_data[['usecol', 'kper']], left_index=True, right_index=True, how='left')
+
+    # budget_df['usecol'] = budget_df.index.map(extract_usecol)
+    # budget_df['kper'] = budget_df.index.map(
+    #     lambda x: int([s for s in x.split('_') if s.startswith('kper:')][0].split(':')[1])if any(s.startswith('kper:') for s in x.split('_')) else 0)
 
     # Create 'surface water' as sum of awanui, poukawa, and spring
     sw_components = ['awanui', 'poukawa', 'spring']
@@ -954,10 +968,16 @@ def plot_budgets(data, subset_oe=None, output=None, col_startswith='budget'):
     for stat in outlier_stats:
         print(f"{stat['usecol']:<30} {stat['kper']:<6} {stat['removed']:<10} {stat['original']:<10} {stat['percent']:<10.1f}%")
 
-def plot_parameter_histograms(data, subset_pe, output):
+def plot_parameter_histograms(data, subset_pe=None, output=None):
     """Plot parameter histograms by group - prior vs posterior."""
     par_data = data['par_data']
     pr_pe = data['pr_pe']
+
+    if subset_pe:
+        pt_pe = subset_pe
+    else:
+        pt_pe = data['pt_pe']
+
     pt_pe = subset_pe
 
     # Get parameter groups (excluding those starting with 's_1_' which are pilot points)
@@ -1367,8 +1387,9 @@ def get_array_statistics(rdf):
     
     return get_arrs_stats(df, reals, is_kper=True)
 
-def plot_oname_array_statistics(data, subset_pe, output, oname_prefix):
-    desired_cols = [col for col in data['headers'] if col.startswith(f'oname:{oname_prefix}')]
+def plot_oname_array_statistics(data, subset_pe=None, output=None, oname_prefix=None):
+    
+    desired_cols = list(data['obs_data'][data['obs_data']['oname'] == oname_prefix].index)
     
     # rdf = pd.read_csv(data[fn], usecols=desired_cols, index_col=0)
     
@@ -1384,7 +1405,7 @@ def plot_oname_array_statistics(data, subset_pe, output, oname_prefix):
     if subset_pe is not None:
         pe_df = subset_pe.loc[:, desired_cols]
     else:
-        pe_df = pd.read_csv(data['pr_oe_fn'], usecols=desired_cols, index_col=0)
+        pe_df = pd.read_csv(data['pt_oe_fn'], usecols=desired_cols, index_col=0)
 
     dfs = {
         'pe': pr_df,
@@ -1616,24 +1637,31 @@ def plot_pdc_budget_confined(data, output_dir):
     print(f"Saved: {fig_fn}")
 
 
-def plot_histograms_spring_flux(data, subset_oe, output, col_startswith='ts-flux'):
+def plot_histograms_spring_flux(data, subset_oe=None, output=None, col_startswith='ts-flux'):
     """Plot time series observations - prior vs posterior vs truth."""
     headers = data['headers']
+
     pr_oe_fn = data['pr_oe_fn']
-    # pt_oe_fn = data['pt_oe_fn']
+    pt_oe_fn = data['pt_oe_fn']
 
     # Get time series head observations
-    desired_cols = [col for col in headers if col.startswith(f'oname:{col_startswith}')]
+    obs_data = data['obs_data'][data['obs_data']['oname'] == col_startswith]
+    desired_cols = list(obs_data.index)
 
     if len(desired_cols) == 0:
         print("No time series head observations found, skipping plot")
         return
 
     pre_oe_ts = pd.read_csv(pr_oe_fn, usecols=desired_cols)
-    pt_oe_ts = subset_oe.loc[:, desired_cols]
 
-    ts_df = format_tsdf(pre_oe_ts)
-    ts_pt_df = format_tsdf(pt_oe_ts)
+    if subset_oe:
+        pt_oe_ts = subset_oe.loc[:, desired_cols]
+    else:
+        pt_oe_ts = pd.read_csv(pt_oe_fn, usecols=desired_cols)
+    
+
+    ts_df = format_tsdf(pre_oe_ts, obs_data)
+    ts_pt_df = format_tsdf(pt_oe_ts, obs_data)
 
     usecol = ts_df['usecol'].unique()[0]
 
@@ -1701,23 +1729,29 @@ def plot_histograms_spring_flux(data, subset_oe, output, col_startswith='ts-flux
     plt.close()
     print(f"Saved: {fig_fn}")
 
-def plot_timeseries_spring_flux(data, subset_oe, output, col_startswith='ts-flux'):
+def plot_timeseries_spring_flux(data, subset_oe=None, output=None, col_startswith='ts-flux'):
     """Plot time series observations - prior vs posterior vs truth."""
     headers = data['headers']
     pr_oe_fn = data['pr_oe_fn']
+    pt_oe_fn = data['pt_oe_fn']
 
     # Get time series head observations
-    desired_cols = [col for col in headers if col.startswith(f'oname:{col_startswith}')]
+    obs_data = data['obs_data'][data['obs_data']['oname'] == col_startswith]
+    desired_cols = list(obs_data.index)
 
     if len(desired_cols) == 0:
         print("No time series head observations found, skipping plot")
         return
 
     pre_oe_ts = pd.read_csv(pr_oe_fn, usecols=desired_cols)
-    pt_oe_ts = subset_oe.loc[:, desired_cols]
+    
+    if subset_oe:
+        pt_oe_ts = subset_oe.loc[:, desired_cols]
+    else:
+        pt_oe_ts = pd.read_csv(pt_oe_fn, usecols=desired_cols)
 
-    ts_df = format_tsdf(pre_oe_ts)
-    ts_pt_df = format_tsdf(pt_oe_ts)
+    ts_df = format_tsdf(pre_oe_ts, obs_data)
+    ts_pt_df = format_tsdf(pt_oe_ts, obs_data)
 
     usecol = ts_df['usecol'].unique()[0]
     n = 2 # two predicted periods
@@ -1903,7 +1937,10 @@ def plot_parameter_distributions_subset(data, output_dir, subset_pe=None):
     
     par_data = data['par_data']
     pr_pe = data['pr_pe']
-    pt_pe = subset_pe
+    if subset_pe:
+        pt_pe = subset_pe
+    else:
+        pt_pe = data['pt_pe']
 
     # Get parameter groups (excluding those starting with 's_1_')
     all_groups = par_data['pargp'].unique()
