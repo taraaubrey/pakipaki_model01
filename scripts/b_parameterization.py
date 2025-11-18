@@ -165,7 +165,7 @@ def main():
         {
             'type': 'pilotpoints',
             'gs': coarse_gs,
-            'pp_space': 'pilot_points.shp',
+            'pp_space': 8,
             'zone_array': np.where(ib[0] > 0, 1, 0),
             'name_suffix': '-pp'
         },
@@ -197,15 +197,14 @@ def main():
         )
 
     # RECHARGE ------------------------------------------------------
-    # define_mult_array(
-    #     pf, TEMP_DIR,
-    #     tag=f'{MODEL_NAME}.rcha_recharge',
-    #     ib=ib,
-    #     p_ins = K_ins,
-    #     lb=RCH['lb'], ub=RCH['ub'],
-    #     ulb=RCH['ulb'], uub=RCH['uub'],
-    #     lays=[0, 2]
-    #     )
+    rcha(
+        pf, TEMP_DIR,
+        tag=f'{MODEL_NAME}.rcha_recharge',
+        ib=ib,
+        p_ins = K_ins,
+        lb=RCH['lb'], ub=RCH['ub'],
+        ulb=RCH['ulb'], uub=RCH['uub'],
+        )
     
     # GHBS ------------------------------------------------------
     ghb_cond(pf, TEMP_DIR,
@@ -694,12 +693,12 @@ def main():
     for idx, pargp in enumerate(sorted(pst.parameter_data['pargp'].unique())):
         par_group_data = pst.parameter_data[pst.parameter_data['pargp'] == pargp]
         count = len(par_group_data)
-        # Get first 3 parameter names as examples
-        example_parnmes = par_group_data.index[:min(3, count)].tolist()
+        # Get the pname from the parameter data
+        pname = par_group_data['pname'].values[0] if 'pname' in par_group_data.columns else pargp
         par_group_mapping.append({
             'index': idx,
             'pargp': pargp,
-            'parnme_examples': ', '.join(example_parnmes),
+            'pname': pname,
             'count': count
         })
 
