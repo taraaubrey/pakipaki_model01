@@ -187,16 +187,19 @@ def subset_realizations_by_phi(data, min_threshold=None, percentile=None, from_i
         vals = [int(phi_filter.iloc[r, c]) for r, c in indexes]
     return indexes, vals
 
-def subset_realizations_by_mean_heads(data, oname_prefix):
+def subset_realizations_by_mean_heads(data, oname_prefix, min_threshold, from_iter=None):
     desired_cols = [col for col in data['headers'] if col.startswith(f'oname:{oname_prefix}')]
-    
-    rdf = pd.read_csv(data['pr_oe_fn'], usecols=desired_cols, index_col=0)
+
+    rdf = pd.read_csv(data['pt_oe_fn'], usecols=desired_cols, index_col=0)
 
     arrs = get_array_statistics(rdf)
 
     realization_mean = [(i, np.mean([n for n in list(arr.flatten()) if ~np.isnan(n)])) for i, arr in enumerate(arrs[(1,1)]['pr_stack'])]
     means = [s[1] for s in realization_mean if (s[1] < 15)]
-    subset_indexes = [(0, s[0]) for s in realization_mean if (s[1] < 15)]
+
+    # Use from_iter if provided, otherwise default to 0
+    iter_num = from_iter if from_iter is not None else 0
+    subset_indexes = [(iter_num, s[0]) for s in realization_mean if (s[1] < min_threshold)]
     return subset_indexes, means
 
 def get_subset_ensembles(paths, data, run_name, subset_indexes, head_filter=False, output_suffix=''):
