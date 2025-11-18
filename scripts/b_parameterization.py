@@ -660,6 +660,58 @@ def main():
 
     pst.write(final_pst, version=2)
 
+    # CREATE OBSERVATION GROUP TO OBSERVATION NAME MAPPING ----------------
+    print('\n' + '='*60)
+    print('CREATING OBSERVATION GROUP MAPPING')
+    print('='*60)
+
+    obs_group_mapping = []
+    for idx, obgnme in enumerate(sorted(pst.observation_data['obgnme'].unique())):
+        obs_group_data = pst.observation_data[pst.observation_data['obgnme'] == obgnme]
+        oname = obs_group_data['oname'].values[0]
+        count = len(obs_group_data)
+        obs_group_mapping.append({
+            'index': idx,
+            'obgnme': obgnme,
+            'oname': oname,
+            'count': count
+        })
+
+    obs_mapping_df = pd.DataFrame(obs_group_mapping)
+    obs_mapping_file = os.path.join(TEMP_DIR, 'obs_group_mapping.csv')
+    obs_mapping_df.to_csv(obs_mapping_file, index=False)
+    print(f'\nObservation group mapping saved to: {obs_mapping_file}')
+    print(f'Total observation groups: {len(obs_mapping_df)}')
+    print('\nObservation group mapping preview:')
+    print(obs_mapping_df.to_string(index=False))
+
+    # CREATE PARAMETER GROUP TO PARAMETER NAME MAPPING --------------------
+    print('\n' + '='*60)
+    print('CREATING PARAMETER GROUP MAPPING')
+    print('='*60)
+
+    par_group_mapping = []
+    for idx, pargp in enumerate(sorted(pst.parameter_data['pargp'].unique())):
+        par_group_data = pst.parameter_data[pst.parameter_data['pargp'] == pargp]
+        count = len(par_group_data)
+        # Get first 3 parameter names as examples
+        example_parnmes = par_group_data.index[:min(3, count)].tolist()
+        par_group_mapping.append({
+            'index': idx,
+            'pargp': pargp,
+            'parnme_examples': ', '.join(example_parnmes),
+            'count': count
+        })
+
+    par_mapping_df = pd.DataFrame(par_group_mapping)
+    par_mapping_file = os.path.join(TEMP_DIR, 'par_group_mapping.csv')
+    par_mapping_df.to_csv(par_mapping_file, index=False)
+    print(f'\nParameter group mapping saved to: {par_mapping_file}')
+    print(f'Total parameter groups: {len(par_mapping_df)}')
+    print('\nParameter group mapping preview:')
+    print(par_mapping_df.to_string(index=False))
+    print('='*60 + '\n')
+
     # OBSERVATION COVARIANCE ---------------------------------------------
 
     def update_time_covariance_direct(grp_data, v_time, var_dict, cov_matrix, name_to_idx):
