@@ -19,7 +19,7 @@ def main():
     print(f'Model directory: {os.path.abspath(MODEL_DIR)}')
 
     # create directories if they do not exist
-    for d in [SPATIAL_DIR, FIG_DIR]:
+    for d in [SPATIAL_DIR, FIG_DIR, POST_DIR]:
         if not os.path.exists(d):
             os.makedirs(d)
     # if dir exists delete it

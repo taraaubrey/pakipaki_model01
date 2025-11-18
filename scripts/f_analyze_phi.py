@@ -90,7 +90,11 @@ def analyze_phi(model_name):
         elif 'head' in oname_lower or 'ts-heads' in oname_lower:
             head_groups[obgnme] = oname
         elif 'rec' in oname_lower or 'recession' in oname_lower:
-            recession_groups[obgnme] = oname
+            # Exclude budget:recharge from recession group
+            if 'budget' not in oname_lower:
+                recession_groups[obgnme] = oname
+            else:
+                budget_groups[obgnme] = oname
         elif 'flux' in oname_lower or 'flow' in oname_lower or 'sprflux' in oname_lower:
             flux_groups[obgnme] = oname
         elif 'budget' in oname_lower:
@@ -261,7 +265,7 @@ def analyze_phi(model_name):
         else:
             return '#95a5a6'  # Gray for other
 
-    # Plots 2-4: Phi evolution by group type
+    # Plots 2-4: Phi evolution by group type (only non-zero weights)
     group_configs = [
         (arr_h_groups, 'ARR-H Observations', 'o', gs[1, 0]),
         (head_groups, 'Head Observations', 's', gs[1, 1]),
@@ -273,9 +277,13 @@ def analyze_phi(model_name):
         if len(groups) > 0:
             for group, oname in groups.items():
                 if group in phi_by_iter.columns:
-                    color = get_obs_color(oname)
-                    ax.plot(phi_by_iter.index, phi_by_iter[group], marker=marker,
-                           linewidth=2, label=f"{oname}", markersize=5, alpha=0.8, color=color)
+                    # Only plot groups with non-zero weights
+                    weight = phi_factors[phi_factors['group'] == group]['weight'].values
+                    weight_val = weight[0] if len(weight) > 0 else 0.0
+                    if weight_val > 0:
+                        color = get_obs_color(oname)
+                        ax.plot(phi_by_iter.index, phi_by_iter[group], marker=marker,
+                               linewidth=2, label=f"{oname}", markersize=5, alpha=0.8, color=color)
 
             for iter_num in reinflate_iters:
                 ax.axvline(x=iter_num, color='red', linestyle='--', linewidth=1, alpha=0.3)
@@ -291,17 +299,21 @@ def analyze_phi(model_name):
         ax.grid(True, alpha=0.3)
         ax.set_yscale('log')
 
-    # Plot 5: Normalized phi comparison
+    # Plot 5: Normalized phi comparison (only non-zero weights)
     ax5 = fig.add_subplot(gs[2, :2])
     all_groups = {**arr_h_groups, **head_groups, **recession_groups}
 
     for group, oname in all_groups.items():
         if group in phi_by_iter.columns:
-            initial = phi_by_iter.loc[0, group]
-            normalized = phi_by_iter[group] / initial if initial > 0 else phi_by_iter[group]
-            color = get_obs_color(oname)
-            ax5.plot(phi_by_iter.index, normalized, linewidth=2, label=oname,
-                    color=color, alpha=0.7)
+            # Only plot groups with non-zero weights
+            weight = phi_factors[phi_factors['group'] == group]['weight'].values
+            weight_val = weight[0] if len(weight) > 0 else 0.0
+            if weight_val > 0:
+                initial = phi_by_iter.loc[0, group]
+                normalized = phi_by_iter[group] / initial if initial > 0 else phi_by_iter[group]
+                color = get_obs_color(oname)
+                ax5.plot(phi_by_iter.index, normalized, linewidth=2, label=oname,
+                        color=color, alpha=0.7)
 
     for iter_num in reinflate_iters:
         ax5.axvline(x=iter_num, color='red', linestyle='--', linewidth=1, alpha=0.3)

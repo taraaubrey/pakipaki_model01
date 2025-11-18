@@ -54,6 +54,7 @@ CONF_TS = r"data/1501_Harrisons.csv" # mabgl
 BIN_DIR = f'bin/' # relative from model_dir
 SCRIPTS_DIR = r'scripts'
 FIG_DIR = f'models/{MODEL_NAME}/figures'  # directory for figures
+POST_DIR = f'models/{MODEL_NAME}/postprocessing'  # directory for post-processed files
 MODEL_DIR = f'models/{MODEL_NAME}/{MODEL_NAME}' # model workspace to be used
 SPATIAL_DIR = f'models/{MODEL_NAME}/spatial'  # directory for spatial ./data
 PEST_DIR = f'models/{MODEL_NAME}/pest/{MODEL_NAME}'  # directory for pest files

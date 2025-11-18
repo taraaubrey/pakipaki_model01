@@ -6,7 +6,8 @@
       "Bash(python3:*)",
       "Bash(source .venv/Scripts/activate)",
       "Bash(awk:*)",
-      "Bash(source ../../../../.venv/Scripts/activate)"
+      "Bash(source ../../../../.venv/Scripts/activate)",
+      "Bash(mv:*)"
     ],
     "deny": [],
     "ask": []
