@@ -833,7 +833,8 @@ def create_awghb_truth(ghb_dfs, dir):
     df['weight'] = 0
     df['std'] = GHB_Qstd
     df['AWq'] = GHB_Q
-    time_space_filter = (df['kper'] < 3) & (df['i'] % SPACE_SUBSAMPLE == 0) & (df['j'] % SPACE_SUBSAMPLE == 0)
+    # time_space_filter = (df['kper'] < 3) & (df['i'] % SPACE_SUBSAMPLE == 0) & (df['j'] % SPACE_SUBSAMPLE == 0)
+    time_space_filter = (df['kper'] < 3)
     # set std only on kper 1 and kstp 1
     # df.loc[(df['kper'] == 1) & (df['kstp'] == 1), 'weight'] = 1/GHB_Qstd
     df['weight'] = np.where(

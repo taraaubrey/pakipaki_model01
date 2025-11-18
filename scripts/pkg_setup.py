@@ -551,10 +551,11 @@ def wel_inout_setup(grid, idomain, mbr_df, fn_out):
     
     return fn_out
 
-def npf_setup(idomain, fn_out):
+def npf_setup(grid, idomain, fn_out):
     all_k = []
     for i in range(NLAY):
-        k = np.ones_like(idomain[0]) * KH_PRIOR['initial']  # horizontal hydraulic conductivity in m/day
+        k = grid.array_from_raster(INTIAL_K, resampling='nearest').data
+        # k = np.ones_like(idomain[0]) * KH_PRIOR['initial']  # horizontal hydraulic conductivity in m/day
         # if i == 1:
         #     k = np.ones_like(idomain[0]) * 0.001  # horizontal hydraulic conductivity in m/day
         # else:

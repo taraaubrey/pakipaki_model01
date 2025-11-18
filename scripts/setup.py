@@ -1,4 +1,4 @@
-MODEL_NAME = 'local_run31'  # name of the model
+MODEL_NAME = 'local_run34'  # name of the model
 """
 - Removed recharge from parameterization.
 - Added shapefile for pilot points.
@@ -24,6 +24,7 @@ DRAIN_ZONES = r"data/drain_zones.shp"
 MBR = r"data/model2_mbr.shp"
 LIMESTONE_INACTIVE = r"data/model2_limestone_inactive_bottom.shp"
 CONF_AREA_ACTIVE = r"data/confining_area.shp"
+INTIAL_K = r"data/20250616_KH_initial_6mbgl.tif"
 
 #past
 PW_PAST = r"data/poukawa_past.shp"
@@ -70,27 +71,27 @@ GR_SHP = r"data/pp_grid.shp" # polygon of grid zone
 # model parameters
 SS_PRIOR = {
     'initial': 1e-1,
-    'lb': 1e-4,
-    'ub': 1e5,
+    'lb': 1e-3,
+    'ub': 1e3,
     'ulb': 1e-6,
     'uub': 1,
 }
 
 KH_PRIOR = {
     'initial': 100,
-    'lb': 1e-6,
+    'lb': 1e-2,
     'ub': 1e2,
     'ulb': 1e-8,
-    'uub': 1e5,
+    'uub': 1e8,
 }
 
 RCH = {
     'initial_rf': 2.5e-4, # rainfall recharge 0.00025
-    'initial_mbr': 1.6e-3, # mbr recharge
-    'lb': 7.2e-1,
-    'ub': 1.8,
-    'ulb': 1.3e-3,
-    'uub': 2.4e-3,
+    'initial_mbr': 1.6e-4, # mbr recharge
+    'lb': 1e-2,
+    'ub': 1e2,
+    'ulb': 1e-6,
+    'uub': 1e6,
 }
 
 GHB_SW = {
@@ -99,8 +100,8 @@ GHB_SW = {
     'initial_cond_spr': 1000,
     'cond_lb': 1e-8,
     'cond_ub': 1e8,
-    'cond_ulb': 1e-8,
-    'cond_uub': 1e8,
+    'cond_ulb': 1e-10,
+    'cond_uub': 1e10,
     'head_lb': -0.5,
     'head_ub': 0.5,
     'head_ulb': 5,
@@ -113,8 +114,8 @@ GHB_CONF = {
     'initial_head_min': 14,
     'cond_lb': 1e-8,
     'cond_ub': 1e8,
-    'cond_ulb': 1e-4,
-    'cond_uub': 1e6,
+    'cond_ulb': 1e-10,
+    'cond_uub': 1e10,
     'head_lb': -0.5,
     'head_ub': 0.5,
     'head_ulb': 10,
@@ -135,18 +136,18 @@ HEAD_std = 0.025  # m
 PK4_std = 0.01  # m +/- 2 cm (assume 4 std is full range) 0.04/4
 
 PHI_OBS = {
-        'arr-h': 0.4, # large penalty for exceeding
+        'arr-h': 0.3, # large penalty for exceeding
         'arr-confq': 0.1, # flux obs
         'budget': 0.2, # flux obs
-        'arr-spq': 0.2, # flux obs
-        'arr-awq': 0.1, # flux obs
+        'arr-spq': 0.05, # flux obs
+        'arr-awq': 0.05, # flux obs
         'ts-heads': 0.3, # head obs
-        'recession': 0.05, # previously very high phi dominance
+        'recession': 0.005,
 }
 
 # parameterization settings (obs)
 TIME_SUBSAMPLE = 10  # time subsampling for pilot points
-SPACE_SUBSAMPLE = 10  # spatial subsampling for pilot points
+SPACE_SUBSAMPLE = 5  # spatial subsampling for pilot points
 
 # Pest options
 NREALS = 250  # number of realizations for parameterization
@@ -169,8 +170,6 @@ PEST_PP_OPTIONS = {
     'overdue_giveup_minutes': 15,
     'ies_bad_phi_sigma': 2.5,
     'par_sigma_range': 6,
-    # 'ies_save_rescov': True, doesn't scale beyond 20,000 nnzobs
     'ies_reinflate_factor': 1,
     'ies_n_iter_reinflate': REINFLATE_ITERS,
-    "ies_reg_factor": 0.25
 }

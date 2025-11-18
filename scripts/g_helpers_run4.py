@@ -152,7 +152,7 @@ def load_data(paths, run_name, last_iter=None, use_prior_only=False, restart=Fal
 
     return data
 
-def subset_realizations_by_phi(data, min_threshold=100, from_iter=None):
+def subset_realizations_by_phi(data, min_threshold=None, percentile=None, from_iter=None):
     phi = pd.read_csv(data['f_act'], index_col=0)
     if from_iter is None:
         phi_filter = phi.iloc[:,5:-1]
@@ -160,9 +160,22 @@ def subset_realizations_by_phi(data, min_threshold=100, from_iter=None):
         phi_filter = phi.iloc[from_iter,5:-1]
     
     flat_values = phi_filter.values.flatten()
-    flat_indexes = np.argsort(flat_values)[:min_threshold]
+    if min_threshold:
+        flat_indexes = np.argsort(flat_values)[:min_threshold]
+    elif percentile:
+        flat_nan = flat_values[~np.isnan(flat_values)]
+        threshold_min = np.percentile(flat_nan, percentile[0])
+        threshold_max = np.percentile(flat_nan, percentile[1])
+        flat_indexes = np.where((flat_values >= threshold_min) & (flat_values <= threshold_max))[0]
+    else:
+        return
+    
     # Convert flat indexes back to DataFrame row/column positions
     rows, cols = np.unravel_index(flat_indexes, phi.iloc[:,5:-1].shape)
+    if from_iter:
+        rows = [from_iter]*len(cols)
+    else:
+        rows = rows
     int_rows = [int(row) for row in rows] # iterations
     int_cols = [int(col) for col in cols] # realizations
     indexes = list(zip(int_rows, int_cols))
@@ -186,7 +199,7 @@ def subset_realizations_by_mean_heads(data, oname_prefix):
     subset_indexes = [(0, s[0]) for s in realization_mean if (s[1] < 15)]
     return subset_indexes, means
 
-def get_subset_ensembles(paths, data, run_name, subset_indexes, head_filter=False):
+def get_subset_ensembles(paths, data, run_name, subset_indexes, head_filter=False, output_suffix=''):
     m_d = paths['m_d']
     unique_iterations = set(i[0] for i in subset_indexes)
     desired_cols = [col for col in data['headers'] if col.startswith(f'oname:arr-h')]
@@ -230,8 +243,8 @@ def get_subset_ensembles(paths, data, run_name, subset_indexes, head_filter=Fals
     subset_pe = pd.concat(pe_list)
 
     # save
-    subset_oe.to_csv(os.path.join(paths['output'], 'subset_oe.csv'))
-    subset_pe.to_csv(os.path.join(paths['output'], 'subset_pe.csv'))
+    subset_oe.to_csv(os.path.join(paths['output'], f'subset_oe{output_suffix}.csv'))
+    subset_pe.to_csv(os.path.join(paths['output'], f'subset_pe{output_suffix}.csv'))
 
     return subset_oe, subset_pe
 
@@ -274,6 +287,17 @@ def plot_phi_comparison(data, output):
     plt.savefig(fig_fn, dpi=300)
     plt.close()
     print(f"Saved: {fig_fn}")
+
+def plot_phi_pie(data, output_dir):
+    """
+    Plot phi pie by parameter group (but pgpnme)
+    """
+    obs_data = data['obs_data']
+    f_act = r"C:\Users\tfo46\e_Python\e_projects\pakipaki_01\models\local_run33\pest\master_ies\local_run33.phi.group.csv"
+    phi_act = pd.read_csv(f_act, index_col=0)
+
+    phi_act = pd.merge(phi_act.transpose(), obs_data[['obgnme']], left_index=True, right_index=True, how='left')
+
 
 def plot_phi_boxplot(data, output):
     """Plot boxplot of phi distribution by iteration.
@@ -656,7 +680,8 @@ def plot_budget_histogram(data, output, col_startswith='budget'):
     headers = data['headers']
 
     # Get budget observations
-    desired_cols = list(data['obs_data'][data['obs_data']['oname'] == col_startswith].index)
+    obs_data = data['obs_data'][data['obs_data']['oname'] == col_startswith]
+    desired_cols = list(obs_data.index)
 
     if len(desired_cols) == 0:
         print("No budget observations found, skipping plot")
@@ -670,8 +695,9 @@ def plot_budget_histogram(data, output, col_startswith='budget'):
     # Format the dataframe to extract usecol and kper
     for name, df in budget.items():
         df = df.transpose()
-        df['usecol'] = df.index.map(extract_usecol)
-        df['kper'] = df.index.map(extract_kper)
+        df = pd.merge(df, obs_data[['usecol', 'kper']], left_index=True, right_index=True, how='left')
+        # df['usecol'] = df.index.map(extract_usecol)
+        # df['kper'] = df.index.map(extract_kper)
         budget[name] = df
     
     pe_value_cols = [col for col in budget['pr'].columns if col not in ['usecol', 'kper']]
@@ -973,12 +999,10 @@ def plot_parameter_histograms(data, subset_pe=None, output=None):
     par_data = data['par_data']
     pr_pe = data['pr_pe']
 
-    if subset_pe:
+    if subset_pe is not None:
         pt_pe = subset_pe
     else:
         pt_pe = data['pt_pe']
-
-    pt_pe = subset_pe
 
     # Get parameter groups (excluding those starting with 's_1_' which are pilot points)
     all_groups = par_data['pargp'].unique()
@@ -1276,14 +1300,6 @@ def plot_1to1_boxplots(data, output):
     print(f"Saved: {fig_fn}")
 
 
-def extract_index(df, extract_dict):
-    input_df = df.transpose()
-
-    for col, func in extract_dict.items():
-        input_df[col] = input_df.index.map(func).to_list()
-
-    return input_df
-
 def get_arr_list(df, col_names):
     # create a dummy array
     dummy_arr = np.full((47,57), np.nan)
@@ -1387,10 +1403,10 @@ def get_array_statistics(rdf):
     
     return get_arrs_stats(df, reals, is_kper=True)
 
-def plot_oname_array_statistics(data, subset_pe=None, output=None, oname_prefix=None):
+def plot_oname_array_statistics(data, subset_oe=None, output=None, oname_prefix=None):
     
     desired_cols = list(data['obs_data'][data['obs_data']['oname'] == oname_prefix].index)
-    
+    obs_data = data['obs_data'].loc[desired_cols]
     # rdf = pd.read_csv(data[fn], usecols=desired_cols, index_col=0)
     
     extract_dict = {
@@ -1400,15 +1416,15 @@ def plot_oname_array_statistics(data, subset_pe=None, output=None, oname_prefix=
         'kstp': extract_kstp,
     }
 
-    pr_df = pd.read_csv(data['pr_oe_fn'], usecols=desired_cols, index_col=0)
+    # pr_df = pd.read_csv(data['pr_oe_fn'], usecols=desired_cols)
 
-    if subset_pe is not None:
-        pe_df = subset_pe.loc[:, desired_cols]
+    if subset_oe is not None:
+        pe_df = subset_oe.loc[:, desired_cols]
     else:
-        pe_df = pd.read_csv(data['pt_oe_fn'], usecols=desired_cols, index_col=0)
+        pe_df = pd.read_csv(data['pt_oe_fn'], usecols=desired_cols)
 
     dfs = {
-        'pe': pr_df,
+        # 'pe': pr_df,
         'pt': pe_df,
     }
     
@@ -1416,7 +1432,8 @@ def plot_oname_array_statistics(data, subset_pe=None, output=None, oname_prefix=
     for name, rdf in dfs.items():
         reals = rdf.index.tolist()
 
-        df = extract_index(rdf, extract_dict)
+        rdf = rdf.transpose()
+        df = pd.merge(rdf, obs_data[['i', 'j' ,'kper', 'kstp']], left_index=True, right_index=True, how='left')
     
         arrs[name] = get_arrs_stats(df, reals, is_kper=True)
 
@@ -1434,6 +1451,30 @@ def plot_oname_array_statistics(data, subset_pe=None, output=None, oname_prefix=
     plt.savefig(fig_fn, dpi=300, bbox_inches='tight')
     plt.close()  
 
+def print_statistics(data, subset_oe=None, output=None, oname=None):
+    desired_cols = list(data['obs_data'][data['obs_data']['oname'] == oname].index)
+    obs_data = data['obs_data'].loc[desired_cols]
+
+    print('posterior head statistics:')
+    if subset_oe is not None:
+        pe_df = subset_oe.loc[:, desired_cols]
+    else:
+        pe_df = pd.read_csv(data['pt_oe_fn'], usecols=desired_cols)
+    
+    rdf = pe_df.transpose()
+    df = pd.merge(rdf, obs_data[['kper', 'kstp']], left_index=True, right_index=True, how='left')
+
+    melt_df = df.melt(id_vars=['kper', 'kstp'], var_name='realization', value_name='head')
+
+    melt_df.groupby(['kper', 'kstp']).agg(['mean', 'std', 'min', 'max']).to_csv(os.path.join(output, f'output.{oname}_statistics.csv'))
+
+    print(f'Stats per kper:')
+    for kper, group in melt_df.groupby(['kper']):
+        mean_head = group['head'].mean()
+        std_head = group['head'].std()
+        min_head = group['head'].min()
+        max_head = group['head'].max()
+        print(f'  kper {kper[0]}: mean={mean_head:.2f}, std={std_head:.2f}, min={min_head:.2f}, max={max_head:.2f}')
 
 def plot_heads_oname_array_statistics(data, fn, output, oname_prefix, out_name):
     desired_cols = [col for col in data['headers'] if col.startswith(f'oname:{oname_prefix}')]
@@ -1654,7 +1695,7 @@ def plot_histograms_spring_flux(data, subset_oe=None, output=None, col_startswit
 
     pre_oe_ts = pd.read_csv(pr_oe_fn, usecols=desired_cols)
 
-    if subset_oe:
+    if subset_oe is not None:
         pt_oe_ts = subset_oe.loc[:, desired_cols]
     else:
         pt_oe_ts = pd.read_csv(pt_oe_fn, usecols=desired_cols)
@@ -1745,7 +1786,7 @@ def plot_timeseries_spring_flux(data, subset_oe=None, output=None, col_startswit
 
     pre_oe_ts = pd.read_csv(pr_oe_fn, usecols=desired_cols)
     
-    if subset_oe:
+    if subset_oe is not None:
         pt_oe_ts = subset_oe.loc[:, desired_cols]
     else:
         pt_oe_ts = pd.read_csv(pt_oe_fn, usecols=desired_cols)
@@ -1937,13 +1978,13 @@ def plot_parameter_distributions_subset(data, output_dir, subset_pe=None):
     
     par_data = data['par_data']
     pr_pe = data['pr_pe']
-    if subset_pe:
+    if subset_pe is not None:
         pt_pe = subset_pe
     else:
         pt_pe = data['pt_pe']
 
     # Get parameter groups (excluding those starting with 's_1_')
-    all_groups = par_data['pargp'].unique()
+    all_groups = par_data['pname'].unique()
     par_groups = [g for g in all_groups if not g.startswith('s_1_')]
     print(f"\nParameter groups to plot ({len(par_groups)}):")
     for g in sorted(par_groups):
@@ -1961,9 +2002,10 @@ def plot_parameter_distributions_subset(data, output_dir, subset_pe=None):
         ax = axes[idx]
 
         # Get parameters in this group
-        pars_in_group = par_data[par_data['pargp'] == pargp].index.tolist()
+        pars_in_group = par_data[par_data['pname'] == pargp].index.tolist()
         # get parameter transform
         transform = par_data.loc[pars_in_group]['partrans'][0]
+        pname = par_data.loc[pars_in_group]['pname'][0]
 
         if len(pars_in_group) == 0:
             ax.text(0.5, 0.5, f'No parameters\nin {pargp}',
@@ -2009,7 +2051,7 @@ def plot_parameter_distributions_subset(data, output_dir, subset_pe=None):
     print("SUMMARY STATISTICS")
     print("="*70)
     for pargp in sorted(par_groups):
-        pars_in_group = par_data[par_data['pargp'] == pargp].index.tolist()
+        pars_in_group = par_data[par_data['pname'] == pargp].index.tolist()
         if len(pars_in_group) == 0:
             continue
 

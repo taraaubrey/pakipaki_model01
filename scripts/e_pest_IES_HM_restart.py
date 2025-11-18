@@ -6,24 +6,34 @@ from setup import *
 
 def main():
 
-    TEMP_DIR = r"C:\Users\tfo46\e_Python\e_projects\pakipaki_01\models\local_run30\pest\local_run30_restart_temp"
+    # the master directory
+    m_d=os.path.join(os.path.join(TEMP_DIR, '..'), 'master_ies')
 
-    pst_name = f"local_run30.pst"
+    pst_name = f"local_run32.pst"
     pst = pyemu.Pst(os.path.join(TEMP_DIR, pst_name))
 
-    # pest options
-    pst.pestpp_options['ies_parameter_ensemble'] = 'local_run30.19.par.csv'
-    pst.pestpp_options['ies_observation_ensemble'] = 'local_run30.obs+noise.csv'
-    pst.pestpp_options["ies_restart_observation_ensemble"] = 'local_run30.19.obs.csv'
-    pst.pestpp_options['overdue_giveup_fac'] = 10
-    pst.pestpp_options['overdue_giveup_minutes'] = 15
-    # pst.pestpp_options["ies_n_iter_reinflate"] = 5, 7
-    # pst.pestpp_options["ies_reinflate_factor"] = 1.1
+    for filename, argname in zip([
+        'local_run32.16.par.csv',
+        'local_run32.16.obs.csv'
+        'local_run32.obs+noise.csv',
+        ],[
+            "ies_parameter_ensemble",
+            "ies_restart_observation_ensemble",
+            "ies_observation_ensemble"]):
 
+        renamed_filename = "restart_"+filename
+        # copy the original restart file from the prior master dir to the renamed filename in the template dir
+        shutil.copy2(
+            os.path.join(m_d, filename),
+            os.path.join(TEMP_DIR, renamed_filename))
+        #modify/set the pestpp option
+        pst.pestpp_options[argname] = renamed_filename
+
+    # pest options
     pst.control_data.noptmax = 3
 
     # write a new pst file
-    new_pst = f"local_run30_restart.pst"
+    new_pst = f"{MODEL_NAME}_restart.pst"
     pst.write(os.path.join(TEMP_DIR, new_pst))
     
     num_workers = os.cpu_count()

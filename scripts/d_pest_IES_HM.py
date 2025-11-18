@@ -26,7 +26,7 @@ def main():
         master_dir=m_d, #the manager directory
         )
     
-    pst.plot()
+    # pst.plot()
 
 
 if __name__ == "__main__":

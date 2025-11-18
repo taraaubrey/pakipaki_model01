@@ -82,7 +82,7 @@ def main():
     # fn_out, mbr_df = wel_mbr_setup(grid, idomain, fn_out, ghb_pw_kper0)
     # fn_out = wel_inout_setup(grid, idomain, mbr_df, fn_out)
     # npf
-    fn_out = npf_setup(active_domain, fn_out)
+    fn_out = npf_setup(grid, active_domain, fn_out)
     # sto
     fn_out = sto_ss_setup(active_domain, fn_out)
     # rch

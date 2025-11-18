@@ -405,6 +405,11 @@ def main():
 
     pst = pf.build_pst()
 
+    # # Add preferred-value regularization
+    # pyemu.helpers.zero_order_tikhonov(
+    #     pst, parbounds=True, reset=False
+    # )
+
     ###############################################################################
     print('ADDING OBSERVATION VALUES AND WEIGHTS FROM TRUTH...')
     # load truth data
@@ -504,16 +509,17 @@ def main():
             idom = ib[0, i-1, j-1]
 
             if (kper < 3) and (kstp in np.arange(1,53, 10)):
+                # if idom == 1 & (i % 10 == 0) & (j % 10 == 0):
+                #     pst.observation_data.at[row.name, 'obsval'] = heads[i, j] - (HEAD_offset*2) # 1m below ground level
+                #     pst.observation_data.at[row.name, 'standard_deviation'] = heads_std[i, j]*20
+                #     pst.observation_data.at[row.name, 'weight'] = 1/(heads_std[i, j]*20)
+                # else:
                 pst.observation_data.at[row.name, 'obsval'] = heads[i, j]
                 pst.observation_data.at[row.name, 'standard_deviation'] = heads_std[i, j]
                 pst.observation_data.at[row.name, 'weight'] = heads_weight[i, j]
                 pst.observation_data.at[row.name, 'obgnme'] = 'less_' + row['obgnme']
             
-            # if idom == 1: # zone away from the spring
-            #     if (kper < 3):
-            #         pst.observation_data.at[row.name, 'obsval'] = heads[i, j] - (HEAD_offset*2) # 1m below ground level
-            #         pst.observation_data.at[row.name, 'standard_deviation'] = heads_std[i, j]*20
-            #         pst.observation_data.at[row.name, 'weight'] = 1/(heads_std[i, j]*20)
+                
             # else: # elsewhere in the model domain (less penalty on heads here; more uncertain about heads here)
             #     if (kper < 3) & (i % 10) & (j % 10):
             #         pst.observation_data.at[row.name, 'obsval'] = heads[i, j]
@@ -624,8 +630,6 @@ def main():
     df = df.sort_values('obgnme')
     df.to_csv(os.path.join(TEMP_DIR, 'phi_factors.csv'), index=False, header=False)
     pst.pestpp_options['ies_phi_factor_file'] = 'phi_factors.csv'
-
-    pst.plot(kind='phi_pie')
 
 
     ## ADD FORECASTS ------------------------------------------------------
@@ -770,37 +774,39 @@ def main():
         if len(grp_data) == 0:
             continue
 
-        print(f"\nProcessing group: {obgnme} ({len(grp_data)} obs)")
+        print(f"\nProcessing group: {oname} ({obgnme}) ({len(grp_data)} obs)")
 
         # Array observations - temporal and spatial correlation with subsampling
-        if oname in ['arr-awq', 'arr-spq', 'greater_arr-confq', 'less_arr-h', 'arr-h']:
-            i_list = [int(i) for i in grp_data['i'].unique()]
-            j_list = [int(j) for j in grp_data['j'].unique()]
+        if oname in ['arr-awq', 'arr-spq']:
+            # create (i, j) subsampling lists
+            i_j_list = list(zip(grp_data['i'], grp_data['j']))
+            # i_list = [int(i) for i in grp_data['i'].unique()]
+            # j_list = [int(j) for j in grp_data['j'].unique()]
             times_unique = [int(t) for t in grp_data['time'].unique()]
             
-            print(f"  Original grid: {len(i_list)} x {len(j_list)} = {len(i_list)*len(j_list)} cells")
+            print(f"  Original grid: {len(i_j_list)} locations")
+            # print(f"  Original grid: {len(i_list)} x {len(j_list)} = {len(i_list)*len(j_list)} cells")
             
             # Temporal correlation within each subsampled (i,j) location
             n_temporal = 0
-            for i in i_list:
-                for j in j_list:
-                    mask_ij = (grp_data['i'] == i) & (grp_data['j'] == j)
-                    grp_data_ij = grp_data[mask_ij]
-                    
-                    if len(grp_data_ij) > 0:
-                        update_time_covariance_direct(
-                            grp_data_ij, v_time, var_dict, cov_matrix, name_to_idx
-                        )
-                        n_temporal += 1
+            for i, j in i_j_list:
+                mask_ij = (grp_data['i'] == i) & (grp_data['j'] == j)
+                grp_data_ij = grp_data[mask_ij]
+                
+                if len(grp_data_ij) > 0:
+                    update_time_covariance_direct(
+                        grp_data_ij, v_time, var_dict, cov_matrix, name_to_idx
+                    )
+                    n_temporal += 1
+
             
             print(f"  Processed temporal correlation for {n_temporal} locations")
             
             # Spatial correlation at each time step (using subsampled cells)
             n_spatial = 0
             for time in times_unique:
-                mask_time = grp_data['time'] == time
+                mask_time = grp_data['time'] == str(time)
                 grp_data_time = grp_data[mask_time]
-                
                 
                 if len(grp_data_time) > 0:
                     update_spatial_covariance_direct(
