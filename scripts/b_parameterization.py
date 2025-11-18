@@ -165,7 +165,7 @@ def main():
         {
             'type': 'pilotpoints',
             'gs': coarse_gs,
-            'pp_space': 'pilot_points.shp',
+            'pp_space': 8,
             'zone_array': np.where(ib[0] > 0, 1, 0),
             'name_suffix': '-pp'
         },
@@ -197,15 +197,15 @@ def main():
         )
 
     # RECHARGE ------------------------------------------------------
-    # define_mult_array(
-    #     pf, TEMP_DIR,
-    #     tag=f'{MODEL_NAME}.rcha_recharge',
-    #     ib=ib,
-    #     p_ins = K_ins,
-    #     lb=RCH['lb'], ub=RCH['ub'],
-    #     ulb=RCH['ulb'], uub=RCH['uub'],
-    #     lays=[0, 2]
-    #     )
+    rcha(
+        pf, TEMP_DIR,
+        tag=f'{MODEL_NAME}.rcha_recharge',
+        ib=ib,
+        p_ins = K_ins,
+        lb=RCH['lb'], ub=RCH['ub'],
+        ulb=RCH['ulb'], uub=RCH['uub'],
+        # lays=[0, 2]
+        )
     
     # GHBS ------------------------------------------------------
     ghb_cond(pf, TEMP_DIR,
@@ -660,8 +660,60 @@ def main():
 
     pst.write(final_pst, version=2)
 
-    # OBSERVATION COVARIANCE ---------------------------------------------
+    # CREATE OBSERVATION GROUP TO OBSERVATION NAME MAPPING ----------------
+    print('\n' + '='*60)
+    print('CREATING OBSERVATION GROUP MAPPING')
+    print('='*60)
 
+    obs_group_mapping = []
+    for idx, obgnme in enumerate(sorted(pst.observation_data['obgnme'].unique())):
+        obs_group_data = pst.observation_data[pst.observation_data['obgnme'] == obgnme]
+        oname = obs_group_data['oname'].values[0]
+        count = len(obs_group_data)
+        obs_group_mapping.append({
+            'index': idx,
+            'obgnme': obgnme,
+            'oname': oname,
+            'count': count
+        })
+
+    obs_mapping_df = pd.DataFrame(obs_group_mapping)
+    obs_mapping_file = os.path.join(TEMP_DIR, 'obs_group_mapping.csv')
+    obs_mapping_df.to_csv(obs_mapping_file, index=False)
+    print(f'\nObservation group mapping saved to: {obs_mapping_file}')
+    print(f'Total observation groups: {len(obs_mapping_df)}')
+    print('\nObservation group mapping preview:')
+    print(obs_mapping_df.to_string(index=False))
+
+    # CREATE PARAMETER GROUP TO PARAMETER NAME MAPPING --------------------
+    print('\n' + '='*60)
+    print('CREATING PARAMETER GROUP MAPPING')
+    print('='*60)
+
+    par_group_mapping = []
+    for idx, pargp in enumerate(sorted(pst.parameter_data['pargp'].unique())):
+        par_group_data = pst.parameter_data[pst.parameter_data['pargp'] == pargp]
+        count = len(par_group_data)
+        # Get the pname from the parameter data
+        pname = par_group_data['pname'].values[0] if 'pname' in par_group_data.columns else pargp
+        par_group_mapping.append({
+            'index': idx,
+            'pargp': pargp,
+            'pname': pname,
+            'count': count
+        })
+
+    par_mapping_df = pd.DataFrame(par_group_mapping)
+    par_mapping_file = os.path.join(TEMP_DIR, 'par_group_mapping.csv')
+    par_mapping_df.to_csv(par_mapping_file, index=False)
+    print(f'\nParameter group mapping saved to: {par_mapping_file}')
+    print(f'Total parameter groups: {len(par_mapping_df)}')
+    print('\nParameter group mapping preview:')
+    print(par_mapping_df.to_string(index=False))
+    print('='*60 + '\n')
+
+
+    # OBSERVATION COVARIANCE ---------------------------------------------
     def update_time_covariance_direct(grp_data, v_time, var_dict, cov_matrix, name_to_idx):
         """Add temporal covariance directly to matrix"""
         onames = grp_data.obsnme.tolist()

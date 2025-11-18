@@ -136,13 +136,13 @@ HEAD_std = 0.025  # m
 PK4_std = 0.01  # m +/- 2 cm (assume 4 std is full range) 0.04/4
 
 PHI_OBS = {
-        'arr-h': 0.3, # large penalty for exceeding
-        'arr-confq': 0.1, # flux obs
-        'budget': 0.2, # flux obs
-        'arr-spq': 0.05, # flux obs
-        'arr-awq': 0.05, # flux obs
-        'ts-heads': 0.3, # head obs
-        'recession': 0.005,
+        'arr-h': 0.3,
+        'arr-confq': 0.1, 
+        'budget': 0.2, 
+        'arr-spq': 0.05, 
+        'arr-awq': 0.05, 
+        'ts-heads': 0.3,
+        'recession': 0.0005, 
 }
 
 # parameterization settings (obs)
@@ -152,12 +152,12 @@ SPACE_SUBSAMPLE = 5  # spatial subsampling for pilot points
 # Pest options
 NREALS = 250  # number of realizations for parameterization
 NREALS_PRIOR = 50  # number of realizations for parameterization
-REINFLATE_ITERS = None # iterations at which to reinflate
+REINFLATE_ITERS = 3, 3, 3, 7 # iterations at which to reinflate
 NOPTMAX = 3
 MAXSING = 120
 
 if REINFLATE_ITERS:
-    NOPTMAX = sum(REINFLATE_ITERS) - 1  # number of optimization iterations
+    NOPTMAX = sum(REINFLATE_ITERS)  # number of optimization iterations
 else:
     REINFLATE_ITERS = 0
 
