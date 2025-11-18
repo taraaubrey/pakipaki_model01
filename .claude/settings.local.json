@@ -7,7 +7,8 @@
       "Bash(source .venv/Scripts/activate)",
       "Bash(awk:*)",
       "Bash(source ../../../../.venv/Scripts/activate)",
-      "Bash(mv:*)"
+      "Bash(mv:*)",
+      "Bash(pip install:*)"
     ],
     "deny": [],
     "ask": []

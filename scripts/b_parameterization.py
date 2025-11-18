@@ -165,7 +165,7 @@ def main():
         {
             'type': 'pilotpoints',
             'gs': coarse_gs,
-            'pp_space': 8,
+            'pp_space': 'pilot_points.shp',
             'zone_array': np.where(ib[0] > 0, 1, 0),
             'name_suffix': '-pp'
         },
@@ -204,6 +204,7 @@ def main():
         p_ins = K_ins,
         lb=RCH['lb'], ub=RCH['ub'],
         ulb=RCH['ulb'], uub=RCH['uub'],
+        # lays=[0, 2]
         )
     
     # GHBS ------------------------------------------------------
