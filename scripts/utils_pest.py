@@ -210,10 +210,8 @@ def ghb_heads(
         ult_bounds=[None, None],
         ):
     
-    if tag.split('.')[-1].startswith('ghbspr'):
-        kper_files = [f for f in os.listdir(ws) if tag in f.lower() and f.endswith("0.txt")]
-    else:
-        kper_files = [f for f in os.listdir(ws) if tag in f.lower() and (f.endswith("0.txt") or f.endswith("2.txt"))]
+    kper_files = [f for f in os.listdir(ws) if tag in f.lower() and (f.endswith("0.txt") or f.endswith("2.txt"))]
+
     name = name.replace('-', '')
     # head but only in the kper 1, and 3 (ss) 
     if head_bounds:

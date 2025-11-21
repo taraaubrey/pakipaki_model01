@@ -1407,11 +1407,10 @@ def get_array_statistics(rdf):
     return get_arrs_stats(df, reals, is_kper=True)
 
 def plot_oname_array_statistics(data, subset_oe=None, output=None, oname_prefix=None):
-    
+
     desired_cols = list(data['obs_data'][data['obs_data']['oname'] == oname_prefix].index)
     obs_data = data['obs_data'].loc[desired_cols]
-    # rdf = pd.read_csv(data[fn], usecols=desired_cols, index_col=0)
-    
+
     extract_dict = {
         'i': extract_i,
         'j': extract_j,
@@ -1419,25 +1418,27 @@ def plot_oname_array_statistics(data, subset_oe=None, output=None, oname_prefix=
         'kstp': extract_kstp,
     }
 
-    # pr_df = pd.read_csv(data['pr_oe_fn'], usecols=desired_cols)
+    # Load prior data
+    pr_df = pd.read_csv(data['pr_oe_fn'], usecols=desired_cols)
 
+    # Load posterior data (from subset or file)
     if subset_oe is not None:
-        pe_df = subset_oe.loc[:, desired_cols]
+        pt_df = subset_oe.loc[:, desired_cols]
     else:
-        pe_df = pd.read_csv(data['pt_oe_fn'], usecols=desired_cols)
+        pt_df = pd.read_csv(data['pt_oe_fn'], usecols=desired_cols)
 
     dfs = {
-        # 'pe': pr_df,
-        'pt': pe_df,
+        'pe': pr_df,
+        'pt': pt_df,
     }
-    
+
     arrs = {}
     for name, rdf in dfs.items():
         reals = rdf.index.tolist()
 
         rdf = rdf.transpose()
         df = pd.merge(rdf, obs_data[['i', 'j' ,'kper', 'kstp']], left_index=True, right_index=True, how='left')
-    
+
         arrs[name] = get_arrs_stats(df, reals, is_kper=True)
 
         # plot & save

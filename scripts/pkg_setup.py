@@ -100,7 +100,15 @@ def ghb_aw_setup(grid, idomain, start, end, fn_out, save=True):
     riv_kper0 = extract_value_with_indices(
         riv_stage_arr, layer=0, val_col='head', mask_value=0
         )
-    riv_kper0['cond'] = GHB_SW['initial_cond_aw']
+    
+    # riv_kper0['cond'] = GHB_SW['initial_cond_aw']
+    # conf_kper0['head'] = GHB_CONF['initial_head']
+    cond = grid.array_from_raster(SHALLOW_K).data
+    cond = (cond * 2 * 25) / 2 # calculating conductance from K (m/d) and cell length & 2m width (m2) & thickness (m)
+    cond_df = extract_value_with_indices(
+            cond, layer=0, val_col='cond', mask_value=0
+            )
+    riv_kper0 = pd.merge(riv_kper0, cond_df, left_on='index', right_on='index')
 
     # time series for riv elevations ###########################################################
     # riv absolute values during recession
@@ -135,7 +143,7 @@ def ghb_aw_setup(grid, idomain, start, end, fn_out, save=True):
     riv_kper2 = extract_value_with_indices(
         past_h, layer=0, val_col='head', mask_value=0
         )
-    riv_kper2['cond'] = GHB_SW['initial_cond_aw']
+    riv_kper2 = pd.merge(riv_kper2, cond_df, left_on='index', right_on='index')
 
     ts_0 = river_stage(riv_kper0, [0, 0], start_t = 0)
     ts_1 = river_stage(riv_kper0, riv_ts_values, start_t = ts_0.index[-1]+1)
@@ -165,7 +173,7 @@ def ghb_aw_setup(grid, idomain, start, end, fn_out, save=True):
     rivstage_ts.columns.to_series().to_csv(Path(MODEL_DIR, f'{MODEL_NAME}.ghb_aw_head_names.csv'), index=False, header=False)
     fn_out['ghb_aw_ts'] = tomf6tsinput(riv_ts_fn, rivstage_ts)
 
-    return fn_out, riv_ts_values, wetland_water_level
+    return fn_out, riv_ts_values, wetland_water_level, riv_stage_arr, past_h
 
 
 def get_awanui_timeseries(start, end):
@@ -243,7 +251,7 @@ def conf_stage(ghb_cells, riv_ts_values, start_t = 1):
     return riv_df
 
 
-def ghb_spring_setup(grid, idomain, start, end, aw_ts, wetland_WL, fn_out, save=True):
+def ghb_spring_setup(grid, idomain, start, end, aw_ts, wetland_WL, aw_present_arr, aw_past_arr, fn_out, save=True):
     spring_mask = ~grid.array_from_vector(SPRING_DRAIN).mask
     spring_mask = np.where(idomain[0] > 0, spring_mask, 0)
     zones = grid.array_from_vector(DRAIN_ZONES, attribute='elev_ss_0')
@@ -252,10 +260,12 @@ def ghb_spring_setup(grid, idomain, start, end, aw_ts, wetland_WL, fn_out, save=
     # adjust riv elevations absed on survey data
     spring_stage_arr = np.where(spring_stage_zones, zones.data, spring_rbot + 0.3) * spring_mask
     spring_stage_arr[spring_stage_arr > 7.59] = 7.59 # correct to no higher than surveyed max
+    spring_stage_arr = np.where(aw_present_arr>0, 0, spring_stage_arr)  # remove areas also covered by awanui ghb
 
     # past spring_stage
     past_spring_stage = np.where(spring_mask, spring_rbot + 2, 0)
     past_spring_stage = np.where(past_spring_stage > wetland_WL, wetland_WL, past_spring_stage)
+    past_spring_stage = np.where(aw_past_arr>0, 0, past_spring_stage)  # remove areas also covered by awanui ghb
 
     # save to spatial
     if save:
@@ -266,11 +276,19 @@ def ghb_spring_setup(grid, idomain, start, end, aw_ts, wetland_WL, fn_out, save=
     spring_kper0 = extract_value_with_indices(
         spring_stage_arr, layer=0, val_col='head', mask_value=0
         )
-    spring_kper0['cond'] = GHB_SW['initial_cond_spr']
+    #conductance
+    cond = grid.array_from_raster(SHALLOW_K).data
+    cond = (cond * 2 * 25) / 2 # calculating conductance from K (m/d) and cell length & 2m width (m2) & thickness (m)
+    cond_df = extract_value_with_indices(
+            cond, layer=0, val_col='cond', mask_value=0
+            )
+    spring_kper0 = pd.merge(spring_kper0, cond_df, left_on='index', right_on='index')
+
+    # spring_kper0['cond'] = GHB_SW['initial_cond_spr']
     spring_kper2 = extract_value_with_indices(
         past_spring_stage, layer=0, val_col='head', mask_value=0
         )
-    spring_kper2['cond'] = GHB_SW['initial_cond_pw']
+    spring_kper2 = pd.merge(spring_kper2, cond_df, left_on='index', right_on='index')
 
 
     # time series for riv elevations ###########################################################
@@ -324,7 +342,7 @@ def ghb_spring_setup(grid, idomain, start, end, aw_ts, wetland_WL, fn_out, save=
     spring_h_ts.columns.to_series().to_csv(Path(MODEL_DIR, f'{MODEL_NAME}.ghb_spring_head_names.csv'), index=False, header=False)
     fn_out['ghb_sp_ts'] = tomf6tsinput(spring_ts_fn, spring_h_ts)
 
-    return fn_out
+    return fn_out, spring_stage_arr, past_spring_stage
 
 def ghb_pw_setup(grid, idomain, start, end, fn_out, save=True):
     top_min = grid.array_from_raster(TOP, resampling='min')
@@ -344,7 +362,14 @@ def ghb_pw_setup(grid, idomain, start, end, fn_out, save=True):
 
     ghb_pw_kper0 = pd.DataFrame({'index': [i[0] for i in ghb_pw_indices]})
     ghb_pw_kper0['head'] = [i[1] for i in ghb_pw_indices]  # head for Poukawa boundary
-    ghb_pw_kper0['cond'] = GHB_SW['initial_cond_pw']
+    # ghb_pw_kper0['cond'] = GHB_SW['initial_cond_pw']
+    #conductance
+    cond = grid.array_from_raster(SHALLOW_K).data
+    cond = (cond * 2 * 25) / 2 # calculating conductance from K (m/d) and cell length & 2m width (m2) & thickness (m)
+    cond_df = extract_value_with_indices(
+            cond, layer=0, val_col='cond', mask_value=0
+            )
+    ghb_pw_kper0 = pd.merge(ghb_pw_kper0, cond_df, left_on='index', right_on='index')
 
     # TS ##########################################################################
     pw_ts_values = get_poukawa_timeseries(start, end)
@@ -360,13 +385,13 @@ def ghb_pw_setup(grid, idomain, start, end, fn_out, save=True):
     ghb_pw_arr = ~grid.array_from_vector(PW_PAST).mask
     active_domain = np.where(idomain[0] > 0, 1, 0)
     in_idomarr, idom_i = get_interior_indices(active_domain, layer=0)  # get edges of idomain
-    ghb_pw_active = np.logical_and(ghb_pw_arr.data, in_idomarr)
-    ghb_pw_active = ghb_pw_active * wetland_water_level
-    ghb_pw_indices = get_indices(ghb_pw_active, layer=0, value=True)
+    ghb_pw_past = np.logical_and(ghb_pw_arr.data, in_idomarr)
+    ghb_pw_past = ghb_pw_past * wetland_water_level
+    ghb_pw_indices = get_indices(ghb_pw_past, layer=0, value=True)
 
     ghb_pw_kper2 = pd.DataFrame({'index': [i[0] for i in ghb_pw_indices]})
     ghb_pw_kper2['head'] = [i[1] for i in ghb_pw_indices]  # head for Poukawa boundary
-    ghb_pw_kper2['cond'] = 1
+    ghb_pw_kper2 = pd.merge(ghb_pw_kper2, cond_df, left_on='index', right_on='index')
 
     ts_0 = river_stage(ghb_pw_kper0, [0, 0], start_t = 0)
     ts_1 = river_stage(ghb_pw_kper0, pw_ts_values, start_t = ts_0.index[-1]+1)
@@ -395,7 +420,7 @@ def ghb_pw_setup(grid, idomain, start, end, fn_out, save=True):
     pwelev_ts.to_csv(pwelev_ts_fn, header=False)
     pwelev_ts.columns.to_series().to_csv(Path(MODEL_DIR, f'{MODEL_NAME}.ghb_pw_head_names.csv'), index=False, header=False)
     fn_out['ghb_pw_ts'] = tomf6tsinput(pwelev_ts_fn, pwelev_ts)
-    return fn_out, ghb_pw_kper0
+    return fn_out, ghb_pw_kper0, ghb_pw_active, ghb_pw_past
 
 
 def get_confined_timeseries(start, end):
@@ -445,7 +470,7 @@ def get_confined_timeseries(start, end):
 
 def ghb_conf_setup(grid, idomain, start, end, model_thickness, fn_out):
     conf_arr = ~grid.array_from_vector(CONF_AREA_ACTIVE).mask * idomain[0]
-    conf_arr = np.where(model_thickness >= 15, conf_arr, 0)
+    conf_arr = np.where(model_thickness < 15, 0, conf_arr)
 
     # elev_max = grid.array_from_raster(TOP).data
     # conf_h = elev_max + GHB_CONF['initial_head_offset']
@@ -457,7 +482,14 @@ def ghb_conf_setup(grid, idomain, start, end, model_thickness, fn_out):
         conf_arr, layer=0, val_col='head', mask_value=0
         )
     # conf_kper0['head'] = GHB_CONF['initial_head']
-    conf_kper0['cond'] = GHB_CONF['initial_cond']
+    conf_cond = grid.array_from_raster(CONF_K).data
+    conf_cond = (conf_cond * RES * RES) / CONF_THICKNESS # calculating conductance from K (m/d) and cell area (m2) & thickness (m)
+    conf_cond = np.where(conf_arr > 0, conf_cond, 0)
+    conf_cond_df = extract_value_with_indices(
+            conf_cond, layer=0, val_col='cond', mask_value=0
+            )
+
+    conf_kper0 = pd.merge(conf_kper0, conf_cond_df, left_on='index', right_on='index')
     conf_kper2 = conf_kper0.copy()
 
     conf_ts1, conf_ts3 = get_confined_timeseries(start, end)
@@ -490,7 +522,7 @@ def ghb_conf_setup(grid, idomain, start, end, model_thickness, fn_out):
     conf_ts.to_csv(conf_ts_fn, header=False)
     # conf_ts.name.to_series().to_csv(Path(MODEL_DIR, f'{MODEL_NAME}.ghb_conf_head_names.csv'), index=False, header=False)
     fn_out['ghb_conf_ts'] = tomf6tsinput(conf_ts_fn, conf_ts)
-    return fn_out
+    return fn_out, conf_arr
 
 def wel_mbr_setup(grid, idomain, fn_out, ghb_pw_kper0):
     mbr_arr = ~grid.array_from_vector(MBR).mask
@@ -554,7 +586,7 @@ def wel_inout_setup(grid, idomain, mbr_df, fn_out):
 def npf_setup(grid, idomain, fn_out):
     all_k = []
     for i in range(NLAY):
-        k = grid.array_from_raster(INTIAL_K, resampling='nearest').data
+        k = grid.array_from_raster(SHALLOW_K).data
         # k = np.ones_like(idomain[0]) * KH_PRIOR['initial']  # horizontal hydraulic conductivity in m/day
         # if i == 1:
         #     k = np.ones_like(idomain[0]) * 0.001  # horizontal hydraulic conductivity in m/day
@@ -570,7 +602,7 @@ def npf_setup(grid, idomain, fn_out):
         fn = Path(MODEL_DIR, f'{MODEL_NAME}.npf_k_layer{ilay}.txt').as_posix()
         fn_out['npf_k'].append(tomf6input(fn))
         np.savetxt(fn, k_hor[i])
-    return fn_out
+    return fn_out, k_hor
 
 def sto_ss_setup(idomain, fn_out):
     sto_ss = np.ones_like(idomain) * SS_PRIOR['initial']

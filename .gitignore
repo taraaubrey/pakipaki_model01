@@ -2,3 +2,4 @@ models/*/figures/*
 models/*/spatial/*
 models/*/pest/*
 *.xlsx
+models/manual_from_swarm/run34_rch250_rr/*

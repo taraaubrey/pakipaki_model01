@@ -736,7 +736,10 @@ def extract_model_heads(model_name, gwf=None, sample_path=None):
 
         all_samples.fillna(-999, inplace=True)
 
-        recession_rates = all_samples.groupby(['kper']).last() - all_samples.groupby(['kper']).first()
+        recession_rates = (all_samples.groupby(['kper']).last() - all_samples.groupby(['kper']).first())
+        recession_rates['pk4'] = recession_rates['pk4'] / (recession_rates.loc[2,'time']+1)
+        recession_rates['pk4-spr-diff'] = recession_rates['pk4-spr-diff'] / (recession_rates.loc[2,'time']+1)
+        recession_rates['pk4-conf-diff'] = recession_rates['pk4-conf-diff'] / (recession_rates.loc[2,'time']+1)
         
         # get days to regime switch
         recession_rates['fliptime'] = -1
@@ -937,9 +940,9 @@ def samples_truth(gwf, TRUTHREL_DIR):
     df.fillna(0, inplace=True)
 
     # truth values
-    rec_df.loc[2, 'pk4'] = df['pk4'].iloc[-1] - df['pk4'].iloc[1]
-    rec_df.loc[2, 'pk4-spr-diff'] = df['pk4-spr-diff'].iloc[-1] - df['pk4-spr-diff'].iloc[1]
-    rec_df.loc[2, 'pk4-conf-diff'] = df['pk4-conf-diff'].iloc[-1] - df['pk4-conf-diff'].iloc[1]
+    rec_df.loc[2, 'pk4'] = (df['pk4'].iloc[-1] - df['pk4'].iloc[1]) / (rec_df.loc[2, 'time']+1)
+    rec_df.loc[2, 'pk4-spr-diff'] = (df['pk4-spr-diff'].iloc[-1] - df['pk4-spr-diff'].iloc[1]) / (rec_df.loc[2, 'time']+1)
+    rec_df.loc[2, 'pk4-conf-diff'] = (df['pk4-conf-diff'].iloc[-1] - df['pk4-conf-diff'].iloc[1]) / (rec_df.loc[2, 'time']+1)
     
     # default values
     rec_df['std'] = 0.

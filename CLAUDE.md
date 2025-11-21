@@ -126,3 +126,5 @@ The `notebooks/` directory contains:
 - `results_post_proc.ipynb` - Additional post-processing analysis
 
 These notebooks can access the master directories for ensemble analysis and plotting beyond the automated post-processing script.
+- this file i just added needs to be run on a linux. sbatch: error: Batch script contains DOS line breaks (\r\n)
+sbatch: error: instead of expected UNIX line breaks (\n).

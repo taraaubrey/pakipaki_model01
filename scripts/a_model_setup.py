@@ -68,21 +68,17 @@ def main():
     
     # dis
     grid, idomain, top, nrow, ncol, delr, delc, fn_out, model_thickness = dis_setup(fn_out)
-    elev_constraint = grid.array_from_raster(TOP)
-    grid_gpd = grid.cell_geodataframe()
-    grid_gpd['idomain'] = idomain[0].flatten()
-    grid_gpd.to_file(Path(SPATIAL_DIR, f'{MODEL_NAME}_grid.shp'), driver='ESRI Shapefile')
     # ghbs
     active_domain = np.where(idomain > 0, 1, 0)
-    fn_out, aw_ts, wetland_WL = ghb_aw_setup(grid, active_domain, start, end, fn_out)
-    fn_out = ghb_spring_setup(grid, active_domain, start, end, aw_ts, wetland_WL, fn_out)
-    fn_out, ghb_pw_kper0 = ghb_pw_setup(grid, active_domain, start, end, fn_out)
-    fn_out = ghb_conf_setup(grid, active_domain, start, end, model_thickness, fn_out)
+    fn_out, aw_ts, wetland_WL, aw_present_arr, aw_past_arr = ghb_aw_setup(grid, active_domain, start, end, fn_out)
+    fn_out, spr_present_arr, spr_past_arr = ghb_spring_setup(grid, active_domain, start, end, aw_ts, wetland_WL, aw_present_arr, aw_past_arr, fn_out)
+    fn_out, ghb_pw_kper0, pw_present_arr, pw_past_arr = ghb_pw_setup(grid, active_domain, start, end, fn_out)
+    fn_out, conf_arr = ghb_conf_setup(grid, active_domain, start, end, model_thickness, fn_out)
     # wel
     # fn_out, mbr_df = wel_mbr_setup(grid, idomain, fn_out, ghb_pw_kper0)
     # fn_out = wel_inout_setup(grid, idomain, mbr_df, fn_out)
     # npf
-    fn_out = npf_setup(grid, active_domain, fn_out)
+    fn_out, k_hor = npf_setup(grid, active_domain, fn_out)
     # sto
     fn_out = sto_ss_setup(active_domain, fn_out)
     # rch
@@ -98,6 +94,18 @@ def main():
         src_file = pp_shp_path.with_suffix(ext)
         if src_file.exists():
             shutil.copy2(src_file, MODEL_DIR)
+
+    sw_present_arr = aw_present_arr + pw_present_arr + spr_present_arr
+    sw_past_arr = aw_past_arr + pw_past_arr + spr_past_arr
+
+    elev_constraint = grid.array_from_raster(TOP)
+    grid_gpd = grid.cell_geodataframe()
+    grid_gpd['idomain'] = idomain[0].flatten()
+    grid_gpd['sw_present'] = sw_present_arr.flatten()
+    grid_gpd['sw_past'] = sw_past_arr.flatten()
+    grid_gpd['model_thickness'] = model_thickness.flatten()
+    grid_gpd['conf'] = conf_arr.flatten()
+    grid_gpd.to_file(Path(SPATIAL_DIR, f'{MODEL_NAME}_grid.shp'), driver='ESRI Shapefile')
 
     # other model parameters
     init_h = np.stack([top] * NLAY)  # initial head, based on average riv elevation

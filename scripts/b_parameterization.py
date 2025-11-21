@@ -251,13 +251,13 @@ def main():
         head_bounds=[GHB_SW['head_lb'], GHB_SW['head_ub']],
         ult_bounds=[GHB_SW['head_ulb'], GHB_SW['head_uub']],
         )
-    ghb_heads(pf, TEMP_DIR,
-        name='ghb-spring',
-        tag=f'{MODEL_NAME}.ghbspr_stress_period_data',
-        head_gs={'hg': h_fine_gs},
-        head_bounds=[GHB_SW['head_lb'], GHB_SW['head_ub']],
-        ult_bounds=[GHB_SW['head_ulb'], GHB_SW['head_uub']],
-        )
+    # ghb_heads(pf, TEMP_DIR,
+    #     name='ghb-spring',
+    #     tag=f'{MODEL_NAME}.ghbspr_stress_period_data',
+    #     head_gs={'hg': h_fine_gs},
+    #     head_bounds=[GHB_SW['head_lb'], GHB_SW['head_ub']],
+    #     ult_bounds=[GHB_SW['head_ulb'], GHB_SW['head_uub']],
+    #     )
     ghb_heads(pf, TEMP_DIR,
         name='ghb-conf',
         tag=f'{MODEL_NAME}.ghb_conf_stress_period_data',
@@ -542,13 +542,13 @@ def main():
             kper = int(row['kper'])
             col = row['usecol']
 
-            if (col in ['confined']): # needs to be greater than recharge because negative
+            if (col in ['confined']): 
                 pst.observation_data.at[row.name, 'obsval'] = budget.loc[kper, col]
                 pst.observation_data.at[row.name, 'obgnme'] = 'greater_' + row['obgnme']
                 pst.observation_data.at[row.name, 'standard_deviation'] = budget.loc[kper, 'conf-std']
                 pst.observation_data.at[row.name, 'weight'] = budget.loc[kper, 'conf-weight']
                 
-            elif (col in ['inflow']) & (kper < 3): # recharge plus confined less than awanui max flows
+            elif (col in ['inflow']) & (kper < 3): # recharge plus confined
                 pst.observation_data.at[row.name, 'obsval'] = budget.loc[kper, col]
                 pst.observation_data.at[row.name, 'obgnme'] = 'less_' + row['obgnme']
                 pst.observation_data.at[row.name, 'standard_deviation'] = budget.loc[kper, 'inflow-std']
