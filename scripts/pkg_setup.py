@@ -520,7 +520,7 @@ def ghb_conf_setup(grid, idomain, start, end, model_thickness, fn_out):
     conf_ts_fn = Path(MODEL_DIR, f'{MODEL_NAME}.ghb_conf_heads.csv')
     conf_ts.index.name = '#time'
     conf_ts.to_csv(conf_ts_fn, header=False)
-    # conf_ts.name.to_series().to_csv(Path(MODEL_DIR, f'{MODEL_NAME}.ghb_conf_head_names.csv'), index=False, header=False)
+    conf_ts.columns.to_series().to_csv(Path(MODEL_DIR, f'{MODEL_NAME}.ghb_conf_head_names.csv'), index=False, header=False)
     fn_out['ghb_conf_ts'] = tomf6tsinput(conf_ts_fn, conf_ts)
     return fn_out, conf_arr
 

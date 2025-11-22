@@ -102,56 +102,10 @@ def main():
     # get the IDOMAIN array
     ib = gwf.dis.idomain.array
 
-
-    # TIMESERIES data ------------------------------------
-    aw_df = pd.read_csv(os.path.join(TEMP_DIR, f'{MODEL_NAME}.ghb_aw_head_names.csv'), header=None)
-    sp_df = pd.read_csv(os.path.join(TEMP_DIR, f'{MODEL_NAME}.ghb_spring_head_names.csv'), header=None)
-    pw_df = pd.read_csv(os.path.join(TEMP_DIR, f'{MODEL_NAME}.ghb_pw_head_names.csv'), header=None)
-
     dts = pd.to_datetime(start_datetime) + pd.to_timedelta(np.cumsum(sim.tdis.perioddata.array["perlen"]),unit='d')
     dts = dts.to_list()
 
-    # add ts data
-    # add_ts_parameters(
-    #     pf, TEMP_DIR,
-    #     datetimes=dts,
-    #     name='ghb-ts-aw',
-    #     f=f'{MODEL_NAME}.ghb_aw_heads.csv',
-    #     bounds=[-1e-1, 1e-1],
-    #     parnames=list(aw_df[0]),
-    #     use_cols=np.arange(1, aw_df.shape[0]+1).tolist(),
-    #     time_gs={'tgs': time_gs},
-    #     )
-    # add_ts_parameters(
-    #     pf, TEMP_DIR,
-    #     datetimes=dts,
-    #     name='ghb-ts-pw',
-    #     f=f'{MODEL_NAME}.ghb_pw_heads.csv',
-    #     bounds=[-1e-1, 1e-1],
-    #     parnames=list(pw_df[0]),
-    #     use_cols=np.arange(1, pw_df.shape[0]+1).tolist(),
-    #     time_gs={'tgs': time_gs},
-    #     )
-    # add_ts_parameters(
-    #     pf, TEMP_DIR,
-    #     datetimes=dts,
-    #     name='ghb-ts-spring',
-    #     f=f'{MODEL_NAME}.ghb_spring_heads.csv',
-    #     bounds=[-1e-1, 1e-1],
-    #     parnames=list(sp_df[0]),
-    #     use_cols=np.arange(1, sp_df.shape[0]+1).tolist(),
-    #     time_gs={'tgs': time_gs},
-    #     )
-    # add_ts_parameters(
-    #     pf, TEMP_DIR,
-    #     datetimes=dts,
-    #     name='ghb-ts-conf',
-    #     f=f'{MODEL_NAME}.ghb_conf_heads.csv',
-    #     bounds=[-1e-1, 1e-1],
-    #     parnames=['head_ts'],
-    #     use_cols=[1],
-    #     time_gs={'tgs': time_gs},
-    #     )
+
     # # set up pst file
     # K ----------------------------------------------
     # shallow aquifer
@@ -237,35 +191,157 @@ def main():
         ult_bounds=[GHB_CONF['cond_ulb'], GHB_CONF['cond_uub']],
         )
     
+    # GHB heads ------------------------------------------------------
+    # TIMESERIES data 
+    aw_df = pd.read_csv(os.path.join(TEMP_DIR, f'{MODEL_NAME}.ghb_aw_head_names.csv'), header=None)
+    sp_df = pd.read_csv(os.path.join(TEMP_DIR, f'{MODEL_NAME}.ghb_spring_head_names.csv'), header=None)
+    pw_df = pd.read_csv(os.path.join(TEMP_DIR, f'{MODEL_NAME}.ghb_pw_head_names.csv'), header=None)
+    conf_df = pd.read_csv(os.path.join(TEMP_DIR, f'{MODEL_NAME}.ghb_conf_head_names.csv'), header=None)
+    
     ghb_heads(pf, TEMP_DIR,
-        name='ghb-aw',
-        tag=f'{MODEL_NAME}.ghbaw_stress_period_data',
+        name='ghbaw1',
+        tag=f'{MODEL_NAME}.ghbaw_stress_period_data_0',
         head_gs={'hg': h_fine_gs},
         head_bounds=[GHB_SW['head_lb'], GHB_SW['head_ub']],
         ult_bounds=[GHB_SW['head_ulb'], GHB_SW['head_uub']],
         )
     ghb_heads(pf, TEMP_DIR,
-        name='ghb-pw',
-        tag=f'{MODEL_NAME}.ghb_pw_stress_period_data',
+        name='ghbaw3',
+        tag=f'{MODEL_NAME}.ghbaw_stress_period_data_2',
         head_gs={'hg': h_fine_gs},
         head_bounds=[GHB_SW['head_lb'], GHB_SW['head_ub']],
         ult_bounds=[GHB_SW['head_ulb'], GHB_SW['head_uub']],
         )
-    # ghb_heads(pf, TEMP_DIR,
-    #     name='ghb-spring',
-    #     tag=f'{MODEL_NAME}.ghbspr_stress_period_data',
-    #     head_gs={'hg': h_fine_gs},
-    #     head_bounds=[GHB_SW['head_lb'], GHB_SW['head_ub']],
-    #     ult_bounds=[GHB_SW['head_ulb'], GHB_SW['head_uub']],
-    #     )
+    idxes = [idx.split('_') for idx in aw_df[0].to_list()]
+    add_ts_parameters(
+        pf, TEMP_DIR,
+        datetimes=dts,
+        name='ghbaw1-head-ts',
+        f=f'{MODEL_NAME}.ghb_aw_heads.csv',
+        bounds=[GHB_SW['head_lb'], GHB_SW['head_ub']],
+        parnames=list(aw_df[0]),
+        use_cols=np.arange(1, aw_df.shape[0]+1).tolist(),
+        use_rows=np.arange(0, 54).tolist(),
+        )
+    add_ts_parameters(
+        pf, TEMP_DIR,
+        datetimes=dts,
+        name='ghbaw3-head-ts',
+        f=f'{MODEL_NAME}.ghb_aw_heads.csv',
+        bounds=[GHB_SW['head_lb'], GHB_SW['head_ub']],
+        parnames=list(aw_df[0]),
+        use_cols=np.arange(1, aw_df.shape[0]+1).tolist(),
+        use_rows=np.arange(54, 107).tolist(),
+        )
+
     ghb_heads(pf, TEMP_DIR,
-        name='ghb-conf',
-        tag=f'{MODEL_NAME}.ghb_conf_stress_period_data',
+        name='ghbpw1',
+        tag=f'{MODEL_NAME}.ghb_pw_stress_period_data_0',
+        head_gs={'hg': h_fine_gs},
+        head_bounds=[GHB_SW['head_lb'], GHB_SW['head_ub']],
+        ult_bounds=[GHB_SW['head_ulb'], GHB_SW['head_uub']],
+        )
+    ghb_heads(pf, TEMP_DIR,
+        name='ghbpw3',
+        tag=f'{MODEL_NAME}.ghb_pw_stress_period_data_2',
+        head_gs={'hg': h_fine_gs},
+        head_bounds=[GHB_SW['head_lb'], GHB_SW['head_ub']],
+        ult_bounds=[GHB_SW['head_ulb'], GHB_SW['head_uub']],
+        )
+    idxes = [idx.split('_') for idx in pw_df[0].to_list()]
+    add_ts_parameters(
+        pf, TEMP_DIR,
+        datetimes=dts,
+        name='ghbpw1-head-ts',
+        f=f'{MODEL_NAME}.ghb_pw_heads.csv',
+        bounds=[GHB_SW['head_lb'], GHB_SW['head_ub']],
+        parnames=list(pw_df[0]),
+        use_cols=np.arange(1, pw_df.shape[0]+1).tolist(),
+        use_rows=np.arange(0, 54).tolist(),
+    )
+    add_ts_parameters(
+        pf, TEMP_DIR,
+        datetimes=dts,
+        name='ghbpw3-head-ts',
+        f=f'{MODEL_NAME}.ghb_pw_heads.csv',
+        bounds=[GHB_SW['head_lb'], GHB_SW['head_ub']],
+        parnames=list(pw_df[0]),
+        use_cols=np.arange(1, pw_df.shape[0]+1).tolist(),
+        use_rows=np.arange(54, 107).tolist(),
+        )
+    
+    ghb_heads(pf, TEMP_DIR,
+        name='ghbspring1',
+        tag=f'{MODEL_NAME}.ghbspr_stress_period_data_0',
+        head_gs={'hg': h_fine_gs},
+        head_bounds=[GHB_SW['head_lb']/5, GHB_SW['head_ub']/5],
+        ult_bounds=[GHB_SW['head_ulb'], GHB_SW['head_uub']],
+        )
+    ghb_heads(pf, TEMP_DIR,
+        name='ghbspring3',
+        tag=f'{MODEL_NAME}.ghbspr_stress_period_data_2',
+        head_gs={'hg': h_fine_gs},
+        head_bounds=[GHB_SW['head_lb'], GHB_SW['head_ub']],
+        ult_bounds=[GHB_SW['head_ulb'], GHB_SW['head_uub']],
+        )
+    idxes = [idx.split('_') for idx in sp_df[0].to_list()]
+    add_ts_parameters(
+        pf, TEMP_DIR,
+        datetimes=dts,
+        name='ghbspring1-head-ts',
+        f=f'{MODEL_NAME}.ghb_spring_heads.csv',
+        bounds=[GHB_SW['head_lb']/5, GHB_SW['head_ub']/5],
+        parnames=list(sp_df[0]),
+        use_cols=np.arange(1, sp_df.shape[0]+1).tolist(),
+        use_rows=np.arange(0,54).tolist(),
+        )
+    add_ts_parameters(
+        pf, TEMP_DIR,
+        datetimes=dts,
+        name='ghbspring3-head-ts',
+        f=f'{MODEL_NAME}.ghb_spring_heads.csv',
+        bounds=[GHB_SW['head_lb'], GHB_SW['head_ub']],
+        parnames=list(sp_df[0]),
+        use_cols=np.arange(1, sp_df.shape[0]+1).tolist(),
+        use_rows=np.arange(54, 107).tolist(),
+        )
+    
+    ghb_heads(pf, TEMP_DIR,
+        name='ghbconf1',
+        tag=f'{MODEL_NAME}.ghb_conf_stress_period_data_0',
         head_gs={'hg': h_coarse_gs},
         head_bounds=[GHB_CONF['head_lb'], GHB_CONF['head_ub']],
         ult_bounds=[GHB_CONF['head_ulb'], GHB_CONF['head_uub']]
         )
-
+    ghb_heads(pf, TEMP_DIR,
+        name='ghbconf3',
+        tag=f'{MODEL_NAME}.ghb_conf_stress_period_data_2',
+        head_gs={'hg': h_coarse_gs},
+        head_bounds=[GHB_CONF['head_lb'], GHB_CONF['head_ub']],
+        ult_bounds=[GHB_CONF['head_ulb'], GHB_CONF['head_uub']]
+        )
+    idxes = [idx.split('_') for idx in conf_df[0].to_list()]
+    add_ts_parameters(
+        pf, TEMP_DIR,
+        datetimes=dts,
+        name='ghbconf1-head-ts',
+        f=f'{MODEL_NAME}.ghb_conf_heads.csv',
+        bounds=[GHB_SW['head_lb'], GHB_SW['head_ub']],
+        parnames=list(conf_df[0]),
+        use_cols=np.arange(1, conf_df.shape[0]+1).tolist(),
+        use_rows=np.arange(0,54).tolist(),
+        )
+    add_ts_parameters(
+        pf, TEMP_DIR,
+        datetimes=dts,
+        name='ghbconf3-head-ts',
+        f=f'{MODEL_NAME}.ghb_conf_heads.csv',
+        bounds=[GHB_SW['head_lb'], GHB_SW['head_ub']],
+        parnames=list(conf_df[0]),
+        use_cols=np.arange(1, conf_df.shape[0]+1).tolist(),
+        use_rows=np.arange(54, 107).tolist(),
+        )
+    
     print('*' * 40)
     par_info = [(df['pargp'].unique(), df.shape[0]) for df in pf.par_dfs]
     total_pars = sum([npar for grp, npar in par_info])
@@ -409,6 +485,57 @@ def main():
     # pyemu.helpers.zero_order_tikhonov(
     #     pst, parbounds=True, reset=False
     # )
+
+    # ## UPDATE PARAMETER data with indices for covariance matching
+    # Parse cell locations from index names (e.g., 'head_0_10_20' -> k=0, i=10, j=20)
+    aw_idxes = [idx.split('_') for idx in aw_df[0].to_list()]
+    sp_idxes = [idx.split('_') for idx in sp_df[0].to_list()]
+    pw_idxes = [idx.split('_') for idx in pw_df[0].to_list()]
+    conf_idxes = [idx.split('_') for idx in conf_df[0].to_list()]
+
+    # Map GHB types to their index lists
+    # use_col is 1-indexed, so use_col - 1 gives the iloc into idxes
+    ghb_idx_map = {
+        'aw': aw_idxes,
+        'pw': pw_idxes,
+        'spring': sp_idxes,
+        'conf': conf_idxes
+    }
+
+    print('\nUpdating parameter data with indices...')
+    for ghb_type, idxes in ghb_idx_map.items():
+        for num in [1, 3]:
+            # Parameter groups to update
+            pargp_list = [
+                f'ghb{ghb_type}{num}-head-ts-cn',
+                f'ghb{ghb_type}{num}-head-ts-hg',
+            ]
+
+            for pargp in pargp_list:
+                mask = pst.parameter_data['pglong'] == pargp
+                params = pst.parameter_data[mask]
+
+                if len(params) == 0:
+                    continue
+
+                n_updated = 0
+                for pname in params.index:
+                    row = pst.parameter_data.loc[pname]
+                    # Get use_col from parameter data (1-indexed)
+                    use_col = row.get('usecol', None)
+                    if use_col is not None:
+                        # Convert to 0-indexed iloc
+                        iloc = int(use_col) - 1
+                        if 0 <= iloc < len(idxes):
+                            idx = idxes[iloc]
+                            if len(idx) >= 4:
+                                pst.parameter_data.at[pname, 'k'] = idx[1]  # k
+                                pst.parameter_data.at[pname, 'i'] = idx[2]  # i
+                                pst.parameter_data.at[pname, 'j'] = idx[3]  # j
+                                n_updated += 1
+
+                if n_updated > 0:
+                    print(f"  {pargp}: {n_updated} params with indices")
 
     ###############################################################################
     print('ADDING OBSERVATION VALUES AND WEIGHTS FROM TRUTH...')
@@ -643,8 +770,140 @@ def main():
     # PARAMETER COVARIANCE ---------------------------------------------
     cov_file = os.path.join(TEMP_DIR, 'prior_cov.jcb')
     cov = pf.build_prior(
-        fmt='coo', 
+        fmt='coo',
         filename=cov_file)
+
+    # ===================================================================
+    # ADD DIRECT CORRELATION BETWEEN GHB HEAD PARAMETERS
+    # ===================================================================
+    print('\n' + '='*60)
+    print('ADDING DIRECT CORRELATIONS TO PARAMETER COVARIANCE')
+    print('='*60)
+
+    # Get parameter data from pst (includes idx0, idx1, idx2 columns)
+    par_data = pst.parameter_data.copy()
+
+    # Convert covariance matrix to dense array
+    cov_x = cov.x.toarray() if hasattr(cov.x, 'toarray') else cov.x.copy()
+
+    # Define the GHB types and period numbers
+    ghb_types = ['aw', 'pw', 'spring', 'conf']
+    period_nums = [1, 3]  # periods 0 and 2 correspond to nums 1 and 3
+
+    # For each GHB type and period, correlate:
+    # 1. ts-cn with cn (all to all, correlation = 1)
+    # 2. ts-hg with hg (matched by idx0, idx1, idx2, correlation = 1)
+    for ghb_type in ghb_types:
+        for num in period_nums:
+            # Parameter group names
+            ts_cn_pargp = f'ghb{ghb_type}{num}-head-ts-cn'
+            cn_pargp = f'ghb{ghb_type}{num}-head-cn'
+            ts_hg_pargp = f'ghb{ghb_type}{num}-head-ts-hg'
+            hg_pargp = f'ghb{ghb_type}{num}-head-hg'
+
+            # Get parameters from each group using pglong
+            ts_cn_mask = par_data['pglong'] == ts_cn_pargp
+            cn_mask = par_data['pglong'] == cn_pargp
+            ts_hg_mask = par_data['pglong'] == ts_hg_pargp
+            hg_mask = par_data['pglong'] == hg_pargp
+
+            ts_cn_params = par_data[ts_cn_mask]
+            cn_params = par_data[cn_mask]
+            ts_hg_params = par_data[ts_hg_mask]
+            hg_params = par_data[hg_mask]
+
+            ts_cn_param_names = ts_cn_params.index.tolist() if len(ts_cn_params) > 0 else []
+            cn_param_names = cn_params.index.tolist() if len(cn_params) > 0 else []
+            ts_hg_param_names = ts_hg_params.index.tolist() if len(ts_hg_params) > 0 else []
+            hg_param_names = hg_params.index.tolist() if len(hg_params) > 0 else []
+
+            print(f"\nProcessing {ghb_type.upper()}{num}:")
+            print(f"  TS-CN params: {len(ts_cn_param_names)} in {ts_cn_pargp}")
+            print(f"  CN params: {len(cn_param_names)} in {cn_pargp}")
+            print(f"  TS-HG params: {len(ts_hg_param_names)} in {ts_hg_pargp}")
+            print(f"  HG params: {len(hg_param_names)} in {hg_pargp}")
+
+            # 1. Add perfect correlation between ts-cn and cn (all to all)
+            if len(ts_cn_param_names) > 0 and len(cn_param_names) > 0:
+                n_cn_corr = 0
+                for ts_pname in ts_cn_param_names:
+                    if ts_pname not in cov.row_names:
+                        continue
+                    ts_idx = cov.row_names.index(ts_pname)
+                    ts_var = cov_x[ts_idx, ts_idx]
+                    ts_std = np.sqrt(ts_var) if ts_var > 0 else 1.0
+
+                    for cn_pname in cn_param_names:
+                        if cn_pname not in cov.row_names:
+                            continue
+                        cn_idx = cov.row_names.index(cn_pname)
+                        cn_var = cov_x[cn_idx, cn_idx]
+                        cn_std = np.sqrt(cn_var) if cn_var > 0 else 1.0
+
+                        # Covariance for correlation = 1: cov = std1 * std2
+                        cov_val = ts_std * cn_std
+                        cov_x[ts_idx, cn_idx] = cov_val
+                        cov_x[cn_idx, ts_idx] = cov_val  # Symmetric
+                        n_cn_corr += 1
+
+                print(f"  Added {n_cn_corr} CN correlations")
+
+            # 2. Add perfect correlation between ts-hg and hg (matched by indices)
+            # Both ts-hg and hg use k, i, j columns
+            if len(ts_hg_param_names) > 0 and len(hg_param_names) > 0:
+                # Build index lookup for ts-hg parameters using k, i, j columns
+                ts_hg_by_idx = {}
+                for ts_hg_pname in ts_hg_param_names:
+                    row = par_data.loc[ts_hg_pname]
+                    if row.get('i') is not None:
+                        idx = (str(row['k']), str(row['i']), str(row['j']))
+                        ts_hg_by_idx[idx] = ts_hg_pname
+
+                # Match hg with ts-hg by indices
+                # hg params have k, i, j from ghb_heads index_cols
+                n_hg_corr = 0
+                for hg_pname in hg_param_names:
+                    row = par_data.loc[hg_pname]
+                    # hg uses k, i, j columns from index_cols
+                    k_val = row.get('idx0', None)
+                    i_val = row.get('idx1', None)
+                    j_val = row.get('idx2', None)
+
+                    if k_val is None or i_val is None or j_val is None:
+                        continue
+                    idx = (str(int(k_val)+1), str(int(i_val)+1), str(int(j_val)+1))
+
+                    if idx not in ts_hg_by_idx:
+                        continue
+                    ts_hg_pname = ts_hg_by_idx[idx]
+
+                    if hg_pname not in cov.row_names or ts_hg_pname not in cov.row_names:
+                        continue
+
+                    hg_idx = cov.row_names.index(hg_pname)
+                    ts_hg_idx = cov.row_names.index(ts_hg_pname)
+
+                    hg_var = cov_x[hg_idx, hg_idx]
+                    ts_hg_var = cov_x[ts_hg_idx, ts_hg_idx]
+
+                    hg_std = np.sqrt(hg_var) if hg_var > 0 else 1.0
+                    ts_hg_std = np.sqrt(ts_hg_var) if ts_hg_var > 0 else 1.0
+
+                    # Covariance for correlation = 1: cov = std1 * std2
+                    cov_val = hg_std * ts_hg_std
+                    cov_x[hg_idx, ts_hg_idx] = cov_val
+                    cov_x[ts_hg_idx, hg_idx] = cov_val  # Symmetric
+                    n_hg_corr += 1
+
+                print(f"  Added {n_hg_corr} HG correlations (index-matched)")
+
+    # Update the covariance object
+    cov = pyemu.Cov(x=cov_x, names=cov.row_names, isdiagonal=False)
+
+    print('\n' + '='*60)
+    print('DIRECT CORRELATIONS ADDED TO PARAMETER COVARIANCE')
+    print('='*60 + '\n')
+
     cov.to_binary(cov_file)
     print(f"Saved covariance matrix to {cov_file}")
 

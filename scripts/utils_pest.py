@@ -312,6 +312,7 @@ def add_ts_parameters(
         bounds,
         parnames,
         use_cols,
+        use_rows,
         time_gs=None,
         ):
     import numpy as np
@@ -319,7 +320,6 @@ def add_ts_parameters(
 
     # constant
     iname = name + '-cn'
-
     pf.add_parameters(
         f,
         par_type="constant",
@@ -327,12 +327,26 @@ def add_ts_parameters(
         pargp=[iname] * len(parnames),
         index_cols=0,
         use_cols=use_cols,
-        # use_rows=use_rows_indexes,
+        use_rows=use_rows,
         par_style="a",
         transform="none",
         lower_bound=bounds[0],
         upper_bound=bounds[1],
-        geostruct=None,  # explicitly set geostruct for constant parameters
+        )
+    # constant (which matches grid scale)
+    iname = name + '-hg'
+    pf.add_parameters(
+        f,
+        par_type="constant",
+        par_name_base=parnames,
+        pargp=[iname] * len(parnames),
+        index_cols=0,
+        use_cols=use_cols,
+        use_rows=use_rows,
+        par_style="a",
+        transform="none",
+        lower_bound=bounds[0],
+        upper_bound=bounds[1],
         )
     
     return

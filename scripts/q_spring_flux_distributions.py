@@ -90,7 +90,7 @@ def create_spring_distribution_plot(run_name, model_name, post_iter=19, filter_f
 
     # Setup paths
     master_dir = os.path.join('models', run_name, 'pest', 'master_ies')
-    output_dir = os.path.join('models', run_name, 'pp_prediction_springflux')
+    output_dir = os.path.join('models', run_name, 'pp_predictions_springflux')
 
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
@@ -228,87 +228,122 @@ def create_spring_distribution_plot(run_name, model_name, post_iter=19, filter_f
     spring_data_df.to_csv(spring_data_file, index=False)
     print(f"  Saved: {spring_data_file}")
 
-    # Create figure
+    # Create figure with 2 rows: top (present: kper 1-2), bottom (past: kper 3-4)
     print("\nCreating plot...")
-    fig, axes = plt.subplots(1, 3, figsize=(14, 4.5))
+    fig, axes = plt.subplots(2, 3, figsize=(14, 8))
 
     colors = {
-        'prior_present': '#1f77b4',    # blue
-        'prior_future': '#aec7e8',     # light blue
-        'post_present': '#ff7f0e',     # orange
-        'post_future': '#ffbb78',      # light orange
+        'prior': '#1f77b4',      # blue
+        'posterior': '#ff7f0e',  # orange
     }
 
-    for idx, (ax, comp) in enumerate(zip(axes, comparisons)):
+    for col_idx, comp in enumerate(comparisons):
         present_obs = comp['present_obs']
         future_obs = comp['future_obs']
 
+        # Top row: present (kper 1-2)
+        ax_top = axes[0, col_idx]
+        # Bottom row: past (kper 3-4)
+        ax_bottom = axes[1, col_idx]
+
         if present_obs is None or future_obs is None:
-            ax.text(0.5, 0.5, 'Data not available', ha='center', va='center')
-            ax.set_title(comp['name'])
+            ax_top.text(0.5, 0.5, 'Data not available', ha='center', va='center')
+            ax_bottom.text(0.5, 0.5, 'Data not available', ha='center', va='center')
+            ax_top.set_title(comp['name'])
             continue
 
         # Get data
-        prior_present = prior_oe[present_obs].values if present_obs in prior_oe.columns else []
-        prior_future = prior_oe[future_obs].values if future_obs in prior_oe.columns else []
-        post_present = post_oe[present_obs].values if present_obs in post_oe.columns else []
-        post_future = post_oe[future_obs].values if future_obs in post_oe.columns else []
+        prior_present = prior_oe[present_obs].values if present_obs in prior_oe.columns else np.array([])
+        prior_past = prior_oe[future_obs].values if future_obs in prior_oe.columns else np.array([])
+        post_present = post_oe[present_obs].values if present_obs in post_oe.columns else np.array([])
+        post_past = post_oe[future_obs].values if future_obs in post_oe.columns else np.array([])
 
-        # Determine bins
-        all_vals = np.concatenate([prior_present, prior_future, post_present, post_future])
-        bins = np.linspace(np.min(all_vals), np.max(all_vals), 25)
+        alpha = 0.6
 
-        # Plot histograms
-        alpha = 0.5
-
-        # Prior distributions
-        ax.hist(prior_present, bins=bins, alpha=alpha, color=colors['prior_present'],
-               label=f'Prior present', edgecolor='black', linewidth=0.3)
-        ax.hist(prior_future, bins=bins, alpha=alpha, color=colors['prior_future'],
-               label=f'Prior future', edgecolor='black', linewidth=0.3)
-
-        # Posterior distributions
-        ax.hist(post_present, bins=bins, alpha=alpha, color=colors['post_present'],
-               label=f'Post present', edgecolor='black', linewidth=0.3)
-        ax.hist(post_future, bins=bins, alpha=alpha, color=colors['post_future'],
-               label=f'Post future', edgecolor='black', linewidth=0.3)
-
-        # Add mean lines
-        ymin, ymax = ax.get_ylim()
-        line_height = ymax * 0.9
-
-        if len(prior_present) > 0:
-            mean_pp = np.mean(prior_present)
-            ax.axvline(mean_pp, color=colors['prior_present'], linestyle='--', linewidth=2)
-            ax.text(mean_pp, line_height, f'{mean_pp:.1f}', fontsize=7, color=colors['prior_present'],
-                   ha='center', va='bottom')
-
-        if len(prior_future) > 0:
-            mean_pf = np.mean(prior_future)
-            ax.axvline(mean_pf, color=colors['prior_future'], linestyle='--', linewidth=2)
-            ax.text(mean_pf, line_height * 0.85, f'{mean_pf:.1f}', fontsize=7, color=colors['prior_future'],
-                   ha='center', va='bottom')
-
+        # --- Top row: Present (kper 1-2) ---
         if len(post_present) > 0:
-            mean_op = np.mean(post_present)
-            ax.axvline(mean_op, color=colors['post_present'], linestyle='-', linewidth=2)
-            ax.text(mean_op, line_height * 0.7, f'{mean_op:.1f}', fontsize=7, color=colors['post_present'],
-                   ha='center', va='bottom')
+            # Set x-axis limits based on posterior
+            post_min = np.min(post_present)
+            post_max = np.max(post_present)
+            x_margin = (post_max - post_min) * 0.1
+            xlim_present = (post_min - x_margin, post_max + x_margin)
 
-        if len(post_future) > 0:
-            mean_of = np.mean(post_future)
-            ax.axvline(mean_of, color=colors['post_future'], linestyle='-', linewidth=2)
-            ax.text(mean_of, line_height * 0.55, f'{mean_of:.1f}', fontsize=7, color=colors['post_future'],
-                   ha='center', va='bottom')
+            # Separate bins for prior and posterior
+            bins_prior_present = np.linspace(np.min(prior_present), np.max(prior_present), 25)
+            bins_post_present = np.linspace(post_min, post_max, 25)
 
-        ax.set_xlabel('Spring Flux (m³/d)', fontsize=9)
-        ax.set_ylabel('Frequency', fontsize=9)
-        ax.set_title(comp['name'], fontsize=10, fontweight='bold')
-        ax.grid(True, alpha=0.3)
-        ax.tick_params(labelsize=8)
+            # Plot histograms
+            ax_top.hist(prior_present, bins=bins_prior_present, alpha=alpha, color=colors['prior'],
+                       label='Prior', edgecolor='black', linewidth=0.3)
+            ax_top.hist(post_present, bins=bins_post_present, alpha=alpha, color=colors['posterior'],
+                       label='Posterior', edgecolor='black', linewidth=0.3)
 
-        if idx == 0:
-            ax.legend(fontsize=7, loc='upper right')
+            # Set x-axis limits based on posterior
+            ax_top.set_xlim(xlim_present)
+
+            # Add median lines
+            ymin, ymax = ax_top.get_ylim()
+            line_height = ymax * 0.9
+
+            median_prior = np.median(prior_present)
+            ax_top.axvline(median_prior, color=colors['prior'], linestyle='--', linewidth=2)
+            ax_top.text(median_prior, line_height, f'{median_prior:.1f}', fontsize=7, color=colors['prior'],
+                       ha='center', va='bottom')
+
+            median_post = np.median(post_present)
+            ax_top.axvline(median_post, color=colors['posterior'], linestyle='-', linewidth=2)
+            ax_top.text(median_post, line_height * 0.75, f'{median_post:.1f}', fontsize=7, color=colors['posterior'],
+                       ha='center', va='bottom')
+
+        ax_top.set_xlabel('Spring Flux (m³/d)', fontsize=9)
+        ax_top.set_ylabel('Frequency', fontsize=9)
+        ax_top.set_title(f"{comp['name']}\nPresent (kper 1-2)", fontsize=10, fontweight='bold')
+        ax_top.grid(True, alpha=0.3)
+        ax_top.tick_params(labelsize=8)
+
+        if col_idx == 0:
+            ax_top.legend(fontsize=8, loc='upper right')
+
+        # --- Bottom row: Past (kper 3-4) ---
+        if len(post_past) > 0:
+            # Set x-axis limits based on posterior
+            post_min = np.min(post_past)
+            post_max = np.max(post_past)
+            x_margin = (post_max - post_min) * 0.1
+            xlim_past = (post_min - x_margin, post_max + x_margin)
+
+            # Separate bins for prior and posterior
+            bins_prior_past = np.linspace(np.min(prior_past), np.max(prior_past), 25)
+            bins_post_past = np.linspace(post_min, post_max, 25)
+
+            # Plot histograms
+            ax_bottom.hist(prior_past, bins=bins_prior_past, alpha=alpha, color=colors['prior'],
+                          label='Prior', edgecolor='black', linewidth=0.3)
+            ax_bottom.hist(post_past, bins=bins_post_past, alpha=alpha, color=colors['posterior'],
+                          label='Posterior', edgecolor='black', linewidth=0.3)
+
+            # Set x-axis limits based on posterior
+            ax_bottom.set_xlim(xlim_past)
+
+            # Add median lines
+            ymin, ymax = ax_bottom.get_ylim()
+            line_height = ymax * 0.9
+
+            median_prior = np.median(prior_past)
+            ax_bottom.axvline(median_prior, color=colors['prior'], linestyle='--', linewidth=2)
+            ax_bottom.text(median_prior, line_height, f'{median_prior:.1f}', fontsize=7, color=colors['prior'],
+                          ha='center', va='bottom')
+
+            median_post = np.median(post_past)
+            ax_bottom.axvline(median_post, color=colors['posterior'], linestyle='-', linewidth=2)
+            ax_bottom.text(median_post, line_height * 0.75, f'{median_post:.1f}', fontsize=7, color=colors['posterior'],
+                          ha='center', va='bottom')
+
+        ax_bottom.set_xlabel('Spring Flux (m³/d)', fontsize=9)
+        ax_bottom.set_ylabel('Frequency', fontsize=9)
+        ax_bottom.set_title(f"Past (kper 3-4)", fontsize=10, fontweight='bold')
+        ax_bottom.grid(True, alpha=0.3)
+        ax_bottom.tick_params(labelsize=8)
 
     plt.tight_layout()
 

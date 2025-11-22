@@ -1,0 +1,2953 @@
+comparison,period,realization,iteration,value
+A. Steady state,present,0,prior,-19.265738335117007
+A. Steady state,present,1,prior,-0.2173843383789062
+A. Steady state,present,2,prior,-2.2560247865116265e-06
+A. Steady state,present,3,prior,-32.389583239521016
+A. Steady state,present,4,prior,0.0539770199179256
+A. Steady state,present,5,prior,-22.18005145402276
+A. Steady state,present,6,prior,-1.3516772979917275
+A. Steady state,present,7,prior,-5.932431150070864
+A. Steady state,present,8,prior,-5.0687928199768075
+A. Steady state,present,9,prior,-4.465430763115413e-10
+A. Steady state,present,10,prior,-16.733977500349283
+A. Steady state,present,11,prior,-0.0981100158824119
+A. Steady state,present,12,prior,-0.598541259765625
+A. Steady state,present,13,prior,-0.0150312067578288
+A. Steady state,present,14,prior,-1.1149397480294992e-05
+A. Steady state,present,15,prior,-0.0045016264226604
+A. Steady state,present,16,prior,-5.892791360616684
+A. Steady state,present,17,prior,-43.9094310331202
+A. Steady state,present,18,prior,0.6931740915533737
+A. Steady state,present,19,prior,-0.5053822128565741
+A. Steady state,present,20,prior,-4.747395418584347
+A. Steady state,present,21,prior,-0.3782680621479812
+A. Steady state,present,22,prior,-0.4530616998672485
+A. Steady state,present,23,prior,-1.259450912475586
+A. Steady state,present,24,prior,-3.959475158335408
+A. Steady state,present,25,prior,-44.153045982122414
+A. Steady state,present,26,prior,-12.126419067382812
+A. Steady state,present,27,prior,0.0047306548438754
+A. Steady state,present,28,prior,-12.47637080034474
+A. Steady state,present,29,prior,-3.5800578705966473
+A. Steady state,present,30,prior,-87.46597088521116
+A. Steady state,present,31,prior,-14.468840290890569
+A. Steady state,present,32,prior,5.224803805351256
+A. Steady state,present,33,prior,-3.792838121298701
+A. Steady state,present,34,prior,-0.0010747888071861
+A. Steady state,present,35,prior,-1.1105214208364487
+A. Steady state,present,36,prior,-0.0602497480715775
+A. Steady state,present,37,prior,-2.0585975646972656
+A. Steady state,present,38,prior,-0.3112338674327475
+A. Steady state,present,39,prior,-0.2559062216176318
+A. Steady state,present,40,prior,-0.563872626516968
+A. Steady state,present,41,prior,-2.1878323704004288
+A. Steady state,present,42,prior,-53.74767827987671
+A. Steady state,present,43,prior,-0.0140218114918953
+A. Steady state,present,44,prior,-7.069944880437106
+A. Steady state,present,45,prior,-3.592281647026539
+A. Steady state,present,46,prior,-13.622757530891363
+A. Steady state,present,47,prior,-3.0267679066164415
+A. Steady state,present,48,prior,-0.1496717698879397
+A. Steady state,present,49,prior,-23.71398149486123
+A. Steady state,present,50,prior,-0.0315270642302313
+A. Steady state,present,51,prior,-10.951238870396242
+A. Steady state,present,52,prior,-19.93026123966417
+A. Steady state,present,53,prior,-1.5548211336135864
+A. Steady state,present,54,prior,-28.288115722616368
+A. Steady state,present,55,prior,-3.590649110466984
+A. Steady state,present,56,prior,-20.95883739994315
+A. Steady state,present,57,prior,-0.4296221007664442
+A. Steady state,present,58,prior,-1.6010629517804773
+A. Steady state,present,59,prior,-0.1362529209291096
+A. Steady state,present,60,prior,-2.6437197015865763
+A. Steady state,present,61,prior,-5.367445674724877
+A. Steady state,present,62,prior,-11.494936232789769
+A. Steady state,present,63,prior,-0.0104935167951994
+A. Steady state,present,64,prior,-1.399163189193712
+A. Steady state,present,65,prior,-0.0150414071977138
+A. Steady state,present,66,prior,-0.5521284563759314
+A. Steady state,present,67,prior,-5.208523243665695
+A. Steady state,present,68,prior,-1.7508004903793335
+A. Steady state,present,69,prior,-8.541184216905094
+A. Steady state,present,70,prior,-0.0008362559674424
+A. Steady state,present,71,prior,-103.86400377750395
+A. Steady state,present,72,prior,-13.460691587675916
+A. Steady state,present,73,prior,-59.833892822265625
+A. Steady state,present,74,prior,-51.875855345395394
+A. Steady state,present,75,prior,-743.9450578947706
+A. Steady state,present,76,prior,-0.0810015453708388
+A. Steady state,present,77,prior,-3.8572736004649495
+A. Steady state,present,78,prior,-0.1784274604269739
+A. Steady state,present,79,prior,-0.6083610543289807
+A. Steady state,present,80,prior,-1.5754746090338467e-06
+A. Steady state,present,81,prior,-10.786757900496012
+A. Steady state,present,82,prior,-11.795405124161334
+A. Steady state,present,83,prior,-2.165414810180664
+A. Steady state,present,84,prior,-10.390275157464202
+A. Steady state,present,85,prior,-14.47902639210224
+A. Steady state,present,86,prior,-0.2223529815673828
+A. Steady state,present,87,prior,-1.1501444447785616
+A. Steady state,present,88,prior,-5.379079930949956
+A. Steady state,present,89,prior,-0.0002102148107934
+A. Steady state,present,90,prior,-4.663095134776086
+A. Steady state,present,91,prior,-1.3201703290396836
+A. Steady state,present,92,prior,-2.9523630853126974
+A. Steady state,present,93,prior,-36.34294685810312
+A. Steady state,present,94,prior,-2.4693369081771834
+A. Steady state,present,95,prior,-4.102104806308956e-05
+A. Steady state,present,96,prior,-82.99919143626556
+A. Steady state,present,97,prior,-19.355775633242047
+A. Steady state,present,98,prior,-67.02701164159225
+A. Steady state,present,99,prior,-3.6997388780088727
+A. Steady state,present,100,prior,-5.827218472957611
+A. Steady state,present,101,prior,-7.623773901639199
+A. Steady state,present,102,prior,-0.1018975838629359
+A. Steady state,present,103,prior,2.8674897437867912
+A. Steady state,present,104,prior,-17.4095780076932
+A. Steady state,present,105,prior,-0.1462806240457368
+A. Steady state,present,106,prior,-0.1557289585471153
+A. Steady state,present,107,prior,58.99007732979908
+A. Steady state,present,108,prior,-0.0012993549578599
+A. Steady state,present,109,prior,-229.23557263612747
+A. Steady state,present,110,prior,-4.07174251973629
+A. Steady state,present,111,prior,-2.0627619698643684
+A. Steady state,present,112,prior,-0.0522603313322604
+A. Steady state,present,113,prior,-11.394698975142092
+A. Steady state,present,114,prior,-33.86394960643337
+A. Steady state,present,115,prior,-0.2549730612873872
+A. Steady state,present,116,prior,-135.12678774353117
+A. Steady state,present,117,prior,-10.743945820257068
+A. Steady state,present,118,prior,-278.3169371971604
+A. Steady state,present,119,prior,-0.5360832214355468
+A. Steady state,present,120,prior,-9.28287688788052
+A. Steady state,present,121,prior,-107.02596053148655
+A. Steady state,present,122,prior,-20.100922878956567
+A. Steady state,present,123,prior,-57.676012519486896
+A. Steady state,present,124,prior,-9.662925575891679
+A. Steady state,present,125,prior,-2.8211622238159175
+A. Steady state,present,126,prior,-28.182791262865063
+A. Steady state,present,127,prior,-24.7796685743906
+A. Steady state,present,128,prior,-7.793079133756692
+A. Steady state,present,129,prior,-21.375527881085873
+A. Steady state,present,130,prior,-3.36665683996398
+A. Steady state,present,131,prior,-0.4053401619509365
+A. Steady state,present,132,prior,-1.516648292541504
+A. Steady state,present,133,prior,1.326961046710494
+A. Steady state,present,134,prior,-89.17670014197938
+A. Steady state,present,135,prior,-0.9763877758364194
+A. Steady state,present,136,prior,-5.551774024963378
+A. Steady state,present,137,prior,-2.6985955549682217
+A. Steady state,present,138,prior,-0.0064397618263059
+A. Steady state,present,139,prior,-2.9177012834698033
+A. Steady state,present,140,prior,-7.113891685473192
+A. Steady state,present,141,prior,-9.774824142456055
+A. Steady state,present,142,prior,-110.951394323079
+A. Steady state,present,143,prior,0.0598595940419652
+A. Steady state,present,144,prior,-0.2569238736177794
+A. Steady state,present,145,prior,-0.0069721482510987
+A. Steady state,present,146,prior,-129.80911616422236
+A. Steady state,present,147,prior,-0.2037649961765497
+A. Steady state,present,148,prior,-0.0170952657115346
+A. Steady state,present,149,prior,-2.5971176435693906
+A. Steady state,present,150,prior,-0.0011859568767249
+A. Steady state,present,151,prior,-20.1157647615737
+A. Steady state,present,152,prior,-21.887701654019203
+A. Steady state,present,153,prior,-73.81910535600035
+A. Steady state,present,154,prior,-6.432428716866525
+A. Steady state,present,155,prior,-1.5922310238347634
+A. Steady state,present,156,prior,-0.1073039541952311
+A. Steady state,present,157,prior,-0.4290550575181555
+A. Steady state,present,158,prior,-200.66189807653427
+A. Steady state,present,159,prior,0.1476281804275458
+A. Steady state,present,160,prior,-1.901221131649549
+A. Steady state,present,161,prior,-0.1612587686835445
+A. Steady state,present,162,prior,7.317038536071777
+A. Steady state,present,163,prior,-33.20776001950435
+A. Steady state,present,164,prior,-11.269749492174924
+A. Steady state,present,165,prior,-4.454292446414911
+A. Steady state,present,166,prior,-13.281034717496368
+A. Steady state,present,167,prior,-0.1646702065344296
+A. Steady state,present,168,prior,-0.0377405331553317
+A. Steady state,present,169,prior,-0.0706306956574089
+A. Steady state,present,170,prior,-0.0498252643970322
+A. Steady state,present,171,prior,-2.576072879630374
+A. Steady state,present,172,prior,-28.382132637663744
+A. Steady state,present,173,prior,-2.891384132850334
+A. Steady state,present,174,prior,-1.827986786141992
+A. Steady state,present,175,prior,-1.2450974236162435
+A. Steady state,present,176,prior,-3.910257221876236
+A. Steady state,present,177,prior,-0.2022681447313452
+A. Steady state,present,178,prior,-7.847213715314866
+A. Steady state,present,179,prior,-0.8893835001562705
+A. Steady state,present,180,prior,-0.0290893791502199
+A. Steady state,present,181,prior,-1.8772102164332976
+A. Steady state,present,182,prior,-2.990855626761913
+A. Steady state,present,183,prior,-3.953427643262444
+A. Steady state,present,184,prior,-0.1216554477920999
+A. Steady state,present,185,prior,-1196.316203460461
+A. Steady state,present,186,prior,0.8850616336548551
+A. Steady state,present,187,prior,-3.9668841757811606
+A. Steady state,present,188,prior,-6.552093505859375
+A. Steady state,present,189,prior,-0.0836357810506452
+A. Steady state,present,190,prior,-0.5093986834835958
+A. Steady state,present,191,prior,-6.067520999815315
+A. Steady state,present,192,prior,-0.0017620997565415
+A. Steady state,present,193,prior,5.362391841912427
+A. Steady state,present,194,prior,-2.235015473328531
+A. Steady state,present,195,prior,-0.0681359476078923
+A. Steady state,present,196,prior,-10.601947231218219
+A. Steady state,present,197,prior,-22.487605139400785
+A. Steady state,present,198,prior,-1.5282092406414447
+A. Steady state,present,199,prior,-2.6234257629936364
+A. Steady state,present,200,prior,-17.605394950125174
+A. Steady state,present,201,prior,-1.050587268920026
+A. Steady state,present,202,prior,-31.97860791534185
+A. Steady state,present,203,prior,-433.366278211528
+A. Steady state,present,204,prior,-0.0014899142830288
+A. Steady state,present,205,prior,-26.74876530840993
+A. Steady state,present,206,prior,-174.5797746470198
+A. Steady state,present,207,prior,-2.287357612560797
+A. Steady state,present,208,prior,-1.2315404787659645
+A. Steady state,present,209,prior,-3.70656932919519
+A. Steady state,present,210,prior,-0.9444956206716596
+A. Steady state,present,211,prior,-44.656391897139
+A. Steady state,present,212,prior,-126.45822319947185
+A. Steady state,present,213,prior,-19.97283539190903
+A. Steady state,present,214,prior,-2.166366577148437
+A. Steady state,present,215,prior,-1.1928086460867081e-05
+A. Steady state,present,216,prior,-12.041641333606094
+A. Steady state,present,217,prior,-5.093314112833468
+A. Steady state,present,218,prior,-0.006344444475002
+A. Steady state,present,219,prior,88.01774613931775
+A. Steady state,present,220,prior,-0.79954232032469
+A. Steady state,present,221,prior,-0.9333544302317022
+A. Steady state,present,222,prior,-46.523367792367935
+A. Steady state,present,223,prior,-369.11208648478816
+A. Steady state,present,224,prior,-0.9910168647766112
+A. Steady state,present,225,prior,-8.754325726738898
+A. Steady state,present,226,prior,-1.9783414140110835
+A. Steady state,present,227,prior,-3.718686990060228
+A. Steady state,present,228,prior,0.0053347624233193
+A. Steady state,present,229,prior,-0.8947864882247814
+A. Steady state,present,230,prior,-24.728525154758245
+A. Steady state,present,231,prior,-5.604625388981604
+A. Steady state,present,232,prior,-1.9045572839677332
+A. Steady state,present,233,prior,0.0449314368174613
+A. Steady state,present,234,prior,-7.246981723070348
+A. Steady state,present,235,prior,-0.095398964939342
+A. Steady state,present,236,prior,-75.53851683052768
+A. Steady state,present,237,prior,-637.0993819484213
+A. Steady state,present,238,prior,-51.64148159277775
+A. Steady state,present,239,prior,-0.186930981369457
+A. Steady state,present,240,prior,-0.00051594324629
+A. Steady state,present,241,prior,-21.592637493657094
+A. Steady state,present,242,prior,-0.8772743528664932
+A. Steady state,present,243,prior,-1.2346142814094492
+A. Steady state,present,244,prior,-1.3099616832623724
+A. Steady state,present,245,prior,-3.5476877618420986
+A. Steady state,present,246,prior,0.026829765280631
+A. Steady state,present,247,prior,-1.4002880156040192
+A. Steady state,present,248,prior,-15.729164465196106
+A. Steady state,present,base,prior,-2.0373308670423285
+A. Steady state,present,0,posterior,-3.1513035226259727
+A. Steady state,present,1,posterior,-0.8438262939453125
+A. Steady state,present,2,posterior,-9.509931178091088e-08
+A. Steady state,present,3,posterior,4.483992148889229
+A. Steady state,present,4,posterior,0.2509044397143531
+A. Steady state,present,5,posterior,-138.0664079686103
+A. Steady state,present,6,posterior,-1.8345626168310785
+A. Steady state,present,7,posterior,-0.1899261753173551
+A. Steady state,present,8,posterior,1.5845711231231687
+A. Steady state,present,9,posterior,-5.812787027451988e-10
+A. Steady state,present,10,posterior,-104.20052737742662
+A. Steady state,present,11,posterior,-0.1250361433605959
+A. Steady state,present,12,posterior,0.3944091796875
+A. Steady state,present,13,posterior,-0.0005412251419677
+A. Steady state,present,14,posterior,-1.6257094626209846e-06
+A. Steady state,present,15,posterior,-0.0028963396936837
+A. Steady state,present,16,posterior,-3.2197047695517536
+A. Steady state,present,17,posterior,-1.4764972393932112
+A. Steady state,present,18,posterior,5.895562722165778
+A. Steady state,present,19,posterior,0.2244348434287388
+A. Steady state,present,20,posterior,0.6163520850241184
+A. Steady state,present,21,posterior,-0.7439379713450762
+A. Steady state,present,22,posterior,0.6253161430358886
+A. Steady state,present,23,posterior,-2.0590076446533203
+A. Steady state,present,24,posterior,-7.132668375430633
+A. Steady state,present,25,posterior,-8.906589776277542
+A. Steady state,present,26,posterior,-1.0455780029296875
+A. Steady state,present,27,posterior,-0.134213802302014
+A. Steady state,present,28,posterior,-8.843947435336304
+A. Steady state,present,29,posterior,-53.313528227154166
+A. Steady state,present,30,posterior,-7.377544568935263
+A. Steady state,present,31,posterior,-6.389088501814513
+A. Steady state,present,32,posterior,134.83518588542938
+A. Steady state,present,33,posterior,140.3530320553109
+A. Steady state,present,34,posterior,-0.0007456041037045
+A. Steady state,present,35,posterior,9.788394570350649
+A. Steady state,present,36,posterior,-0.3415139930762052
+A. Steady state,present,37,posterior,-0.7726955413818359
+A. Steady state,present,38,posterior,1.131224912351172
+A. Steady state,present,39,posterior,-0.0078699665338703
+A. Steady state,present,40,posterior,-6.134933260269463
+A. Steady state,present,41,posterior,-0.255859300494194
+A. Steady state,present,42,posterior,-2.334767371416092
+A. Steady state,present,43,posterior,0.0044241758461062
+A. Steady state,present,44,posterior,34.42039656499401
+A. Steady state,present,45,posterior,-1.4736853949725628
+A. Steady state,present,46,posterior,-5.1003206693636685
+A. Steady state,present,47,posterior,-0.4507712987251579
+A. Steady state,present,48,posterior,-0.0653514978083968
+A. Steady state,present,49,posterior,-15.069218922239315
+A. Steady state,present,50,posterior,-0.0235967119877507
+A. Steady state,present,51,posterior,-0.9761391990790856
+A. Steady state,present,52,posterior,-0.8042046459052417
+A. Steady state,present,53,posterior,-0.2879961133003234
+A. Steady state,present,54,posterior,-5.085254934964809
+A. Steady state,present,55,posterior,-2.568659965005281
+A. Steady state,present,56,posterior,-8.070912272560236
+A. Steady state,present,57,posterior,-1.3333290592205316
+A. Steady state,present,58,posterior,2.6620563093565575
+A. Steady state,present,59,posterior,-0.3808169397525489
+A. Steady state,present,61,posterior,-48.84422093490139
+A. Steady state,present,62,posterior,-2.5548487180494703
+A. Steady state,present,63,posterior,-0.001420050825128
+A. Steady state,present,64,posterior,0.0813886496451896
+A. Steady state,present,65,posterior,0.0528175681829452
+A. Steady state,present,66,posterior,-0.0903347834047007
+A. Steady state,present,67,posterior,-1.2118891086429355
+A. Steady state,present,68,posterior,29.489675760269165
+A. Steady state,present,69,posterior,-60.13690270535881
+A. Steady state,present,70,posterior,0.1631745033519109
+A. Steady state,present,71,posterior,-12.551959216594696
+A. Steady state,present,72,posterior,-0.6257214943749431
+A. Steady state,present,73,posterior,-5.056896209716797
+A. Steady state,present,74,posterior,27.805676449796007
+A. Steady state,present,75,posterior,-1.7408934285722353
+A. Steady state,present,76,posterior,0.1148742784127989
+A. Steady state,present,77,posterior,-0.9097360974091372
+A. Steady state,present,78,posterior,0.1707002820007801
+A. Steady state,present,79,posterior,-0.3992692484290216
+A. Steady state,present,80,posterior,-8.648174839521361e-08
+A. Steady state,present,81,posterior,-77.49889583216282
+A. Steady state,present,82,posterior,33.39933793848468
+A. Steady state,present,83,posterior,-116.35182762145996
+A. Steady state,present,84,posterior,-2.74916081543779
+A. Steady state,present,85,posterior,-71.45234817266464
+A. Steady state,present,87,posterior,24.00406501954421
+A. Steady state,present,88,posterior,-0.8587351682363077
+A. Steady state,present,89,posterior,-2.3012741042436373e-07
+A. Steady state,present,90,posterior,-19.823810725472867
+A. Steady state,present,91,posterior,-0.4953961816208902
+A. Steady state,present,92,posterior,-0.4602692800245336
+A. Steady state,present,93,posterior,-15.553615651643552
+A. Steady state,present,94,posterior,-2.700746984605168
+A. Steady state,present,95,posterior,7.714138051316717e-06
+A. Steady state,present,96,posterior,-3.467898790284835
+A. Steady state,present,97,posterior,-18.790877096384065
+A. Steady state,present,98,posterior,-67.86107462100335
+A. Steady state,present,99,posterior,-3.0856663628126735
+A. Steady state,present,100,posterior,-9.523316264152529
+A. Steady state,present,101,posterior,9.614048931341129
+A. Steady state,present,102,posterior,-0.0020495818128818
+A. Steady state,present,103,posterior,95.92149407621582
+A. Steady state,present,104,posterior,-6.157436445715575
+A. Steady state,present,105,posterior,-0.9744851459182016
+A. Steady state,present,106,posterior,0.2755154371261596
+A. Steady state,present,107,posterior,129.55996472355355
+A. Steady state,present,108,posterior,-0.0002091700473247
+A. Steady state,present,109,posterior,-298.719544672349
+A. Steady state,present,110,posterior,-15.729884833097456
+A. Steady state,present,111,posterior,-1.1737286336719988
+A. Steady state,present,112,posterior,-0.0351264983317246
+A. Steady state,present,113,posterior,-8.460098281502724
+A. Steady state,present,114,posterior,10.910009845232707
+A. Steady state,present,115,posterior,0.2872145051845507
+A. Steady state,present,116,posterior,4.0458277666475615
+A. Steady state,present,117,posterior,-3.4568440122529864
+A. Steady state,present,118,posterior,-0.0727481196433927
+A. Steady state,present,119,posterior,0.5661633014678955
+A. Steady state,present,120,posterior,-0.4780118143677878
+A. Steady state,present,121,posterior,-10.006639000500911
+A. Steady state,present,122,posterior,-2.419880036229188
+A. Steady state,present,123,posterior,-12.677630294647315
+A. Steady state,present,124,posterior,-6.472510856073768
+A. Steady state,present,125,posterior,-11.496789932250977
+A. Steady state,present,126,posterior,-274.6443786015734
+A. Steady state,present,127,posterior,-16.69628003856633
+A. Steady state,present,128,posterior,-4.3867252508662204
+A. Steady state,present,129,posterior,-148.20776391867548
+A. Steady state,present,130,posterior,-0.6765297678066416
+A. Steady state,present,131,posterior,-0.0226099072396268
+A. Steady state,present,132,posterior,-6.649124622344971
+A. Steady state,present,133,posterior,0.4621901966265795
+A. Steady state,present,134,posterior,-94.6286393639166
+A. Steady state,present,135,posterior,-0.0351600892002279
+A. Steady state,present,136,posterior,-2.8292388916015625
+A. Steady state,present,137,posterior,6.969972247244641
+A. Steady state,present,138,posterior,-0.0051244769105096
+A. Steady state,present,139,posterior,-0.2554864134780032
+A. Steady state,present,140,posterior,-1.600199463868364
+A. Steady state,present,141,posterior,-2.5094356536865234
+A. Steady state,present,142,posterior,-13.4635821981106
+A. Steady state,present,143,posterior,0.1772390516627471
+A. Steady state,present,144,posterior,1.0515233951300615
+A. Steady state,present,145,posterior,-0.0012333779916194
+A. Steady state,present,146,posterior,-41.78667869931087
+A. Steady state,present,147,posterior,-0.0163610762512351
+A. Steady state,present,148,posterior,-0.0216072737998418
+A. Steady state,present,149,posterior,-0.6187268377675536
+A. Steady state,present,150,posterior,-0.307482638861984
+A. Steady state,present,151,posterior,-6.630482359862072
+A. Steady state,present,154,posterior,-0.1588991689436468
+A. Steady state,present,156,posterior,-0.0517162752803415
+A. Steady state,present,157,posterior,0.1240588229360923
+A. Steady state,present,158,posterior,-109.33471393585204
+A. Steady state,present,159,posterior,6.395173117633931
+A. Steady state,present,160,posterior,-0.6697493052124627
+A. Steady state,present,161,posterior,-4.5581202392688806e-05
+A. Steady state,present,162,posterior,106.59151184558868
+A. Steady state,present,163,posterior,59.35863631613029
+A. Steady state,present,164,posterior,1.88482168375549
+A. Steady state,present,165,posterior,-5.606487004144583
+A. Steady state,present,166,posterior,-53.83106032584328
+A. Steady state,present,167,posterior,0.3526655487526033
+A. Steady state,present,168,posterior,0.1059214889151967
+A. Steady state,present,169,posterior,-0.0280851840315842
+A. Steady state,present,170,posterior,0.0054792659322543
+A. Steady state,present,171,posterior,54.394530779551125
+A. Steady state,present,172,posterior,-7.134483727859333
+A. Steady state,present,173,posterior,1.5785430464058692
+A. Steady state,present,174,posterior,-33.40642153285444
+A. Steady state,present,175,posterior,8.856046773523758
+A. Steady state,present,176,posterior,-32.84412427667121
+A. Steady state,present,177,posterior,-0.0994250256651234
+A. Steady state,present,178,posterior,2.263929784297943
+A. Steady state,present,179,posterior,0.4085735941715142
+A. Steady state,present,180,posterior,-0.0005074041683655
+A. Steady state,present,181,posterior,-0.4899972883708993
+A. Steady state,present,182,posterior,-29.84973280876875
+A. Steady state,present,183,posterior,2.766269095201352
+A. Steady state,present,184,posterior,0.0001214286416431
+A. Steady state,present,185,posterior,0.0516983142424431
+A. Steady state,present,186,posterior,1.4475155870759675
+A. Steady state,present,188,posterior,-66.92488098144531
+A. Steady state,present,189,posterior,-0.0254761474656134
+A. Steady state,present,190,posterior,-0.2685364550852682
+A. Steady state,present,191,posterior,-2.1259049847722054
+A. Steady state,present,192,posterior,-0.0015875507777576
+A. Steady state,present,193,posterior,11.247576041131651
+A. Steady state,present,194,posterior,0.4824287992960307
+A. Steady state,present,195,posterior,-0.015971008945934
+A. Steady state,present,197,posterior,-2.8441083217734326
+A. Steady state,present,198,posterior,22.086594321765006
+A. Steady state,present,199,posterior,-0.3181546074053835
+A. Steady state,present,200,posterior,5.29400178310425
+A. Steady state,present,201,posterior,1.4557507469578468
+A. Steady state,present,202,posterior,-8.773108709603548
+A. Steady state,present,203,posterior,9.497947346086223
+A. Steady state,present,204,posterior,-0.0033037627773376
+A. Steady state,present,205,posterior,-12.596487380564213
+A. Steady state,present,206,posterior,103.62244672040468
+A. Steady state,present,207,posterior,1.1591963233623233
+A. Steady state,present,208,posterior,-0.8001141146523877
+A. Steady state,present,209,posterior,-2.1551705671590753
+A. Steady state,present,210,posterior,-5.858252412523143
+A. Steady state,present,211,posterior,-3.689484156404869e-05
+A. Steady state,present,212,posterior,-1037.5224843053147
+A. Steady state,present,213,posterior,-10.86024054911013
+A. Steady state,present,214,posterior,-1.7685546875
+A. Steady state,present,215,posterior,-5.967801396835834e-06
+A. Steady state,present,216,posterior,-1.434882439119974
+A. Steady state,present,217,posterior,2.165345319546759
+A. Steady state,present,218,posterior,-0.0012950032194578
+A. Steady state,present,219,posterior,638.9681442528963
+A. Steady state,present,220,posterior,-3.4312569791363785
+A. Steady state,present,221,posterior,-0.2250817025742435
+A. Steady state,present,222,posterior,-23.034836918115612
+A. Steady state,present,223,posterior,-44.220316587836805
+A. Steady state,present,224,posterior,-0.6174540519714355
+A. Steady state,present,225,posterior,-9.771204854767348
+A. Steady state,present,226,posterior,-18.008800990937743
+A. Steady state,present,227,posterior,0.9661924593008564
+A. Steady state,present,228,posterior,0.0222600111643409
+A. Steady state,present,230,posterior,7.723051500375731
+A. Steady state,present,231,posterior,-0.009707222034354
+A. Steady state,present,232,posterior,5.4162397903273805
+A. Steady state,present,233,posterior,0.0322995264038912
+A. Steady state,present,234,posterior,2.4443101996985206
+A. Steady state,present,235,posterior,-0.0382981862506769
+A. Steady state,present,236,posterior,-42.05305105299749
+A. Steady state,present,237,posterior,-2.386408183025196
+A. Steady state,present,238,posterior,-10.95282861579119
+A. Steady state,present,239,posterior,-0.2344103638821013
+A. Steady state,present,240,posterior,-0.0002565966822308
+A. Steady state,present,241,posterior,0.4334192565148669
+A. Steady state,present,242,posterior,-1.383047422355844
+A. Steady state,present,243,posterior,-0.5779006060256506
+A. Steady state,present,244,posterior,-0.8622320666763698
+A. Steady state,present,245,posterior,-2.3517177875037305
+A. Steady state,present,246,posterior,-10.703062900655937
+A. Steady state,present,247,posterior,2.3901028484106064
+A. Steady state,present,248,posterior,-1.6150204598095854
+A. Steady state,present,base,posterior,-0.8711334453582821
+A. Steady state,future,0,prior,-7.121159528041924
+A. Steady state,future,1,prior,-0.4609174728393554
+A. Steady state,future,2,prior,-9.87350137262705e-07
+A. Steady state,future,3,prior,-61.843712949732435
+A. Steady state,future,4,prior,-0.0050301049855914
+A. Steady state,future,5,prior,-10.582316171128696
+A. Steady state,future,6,prior,-0.2704419668233626
+A. Steady state,future,7,prior,-12.01204315506737
+A. Steady state,future,8,prior,-5.721434980630875
+A. Steady state,future,9,prior,-1.0895583223592972e-09
+A. Steady state,future,10,prior,-21.654041887260973
+A. Steady state,future,11,prior,-0.3282884637847018
+A. Steady state,future,12,prior,-1.3524551391601562
+A. Steady state,future,13,prior,-0.0018141692621819
+A. Steady state,future,14,prior,-4.528830390276208e-06
+A. Steady state,future,15,prior,-0.0011838033415211
+A. Steady state,future,16,prior,-21.4803419560194
+A. Steady state,future,17,prior,-46.5491126529696
+A. Steady state,future,18,prior,-2.22730556278475
+A. Steady state,future,19,prior,-0.1984937521625909
+A. Steady state,future,20,prior,-4.863125609233976
+A. Steady state,future,21,prior,-0.3388241983939224
+A. Steady state,future,22,prior,-0.6579991728067398
+A. Steady state,future,23,prior,-2.4687356948852535
+A. Steady state,future,24,prior,-4.630408734541561
+A. Steady state,future,25,prior,-49.317008811980486
+A. Steady state,future,26,prior,-12.48431396484375
+A. Steady state,future,27,prior,-0.0626979833648864
+A. Steady state,future,28,prior,-19.248000063166277
+A. Steady state,future,29,prior,-15.773119017947463
+A. Steady state,future,30,prior,-58.1897527336163
+A. Steady state,future,31,prior,-6.81971887015164
+A. Steady state,future,32,prior,-54.42363419011235
+A. Steady state,future,33,prior,100.18756552465491
+A. Steady state,future,34,prior,-0.0004033808203122
+A. Steady state,future,35,prior,-1.8326512593775988
+A. Steady state,future,36,prior,-0.0141596160210396
+A. Steady state,future,37,prior,-2.9053964614868164
+A. Steady state,future,38,prior,-0.7056340803665079
+A. Steady state,future,39,prior,-0.0425952268613255
+A. Steady state,future,40,prior,-0.4825419832486659
+A. Steady state,future,41,prior,-2.1104091284796596
+A. Steady state,future,42,prior,-59.19597219675779
+A. Steady state,future,43,prior,-0.002948338923526
+A. Steady state,future,44,prior,-19.09735261258902
+A. Steady state,future,45,prior,-7.56626982940361
+A. Steady state,future,46,prior,-23.47612814338844
+A. Steady state,future,47,prior,-3.851201728000888
+A. Steady state,future,48,prior,-0.0834763431560201
+A. Steady state,future,49,prior,-72.93244123880211
+A. Steady state,future,50,prior,-0.0085398789094531
+A. Steady state,future,51,prior,-1.7272532536449816
+A. Steady state,future,52,prior,-2.8789689480582688
+A. Steady state,future,53,prior,-2.248766822041944
+A. Steady state,future,54,prior,-20.56211794052436
+A. Steady state,future,55,prior,-3.9171292143807928
+A. Steady state,future,56,prior,-22.823603485408057
+A. Steady state,future,57,prior,-0.3420883257058404
+A. Steady state,future,58,prior,-2.440572565670664
+A. Steady state,future,59,prior,-0.1664083083705918
+A. Steady state,future,60,prior,-6.120749096385714
+A. Steady state,future,61,prior,-23.044573343300726
+A. Steady state,future,62,prior,-12.21685374642402
+A. Steady state,future,63,prior,-0.0272643639481031
+A. Steady state,future,64,prior,-0.4377149917466125
+A. Steady state,future,65,prior,-0.040122746489942
+A. Steady state,future,66,prior,-1.0615522128590051
+A. Steady state,future,67,prior,-10.08562505361624
+A. Steady state,future,68,prior,-8.450118944048882
+A. Steady state,future,69,prior,-18.468791395475815
+A. Steady state,future,70,prior,-0.0543984347650621
+A. Steady state,future,71,prior,-81.42446857690811
+A. Steady state,future,72,prior,-3.526241926469509
+A. Steady state,future,73,prior,-46.800561428070075
+A. Steady state,future,74,prior,-60.210055418731834
+A. Steady state,future,75,prior,-384.4442379577923
+A. Steady state,future,76,prior,-0.1773912710624401
+A. Steady state,future,77,prior,-1.827780578562873
+A. Steady state,future,78,prior,-0.3726690718517033
+A. Steady state,future,79,prior,-0.1852081277639232
+A. Steady state,future,80,prior,-1.2357539141001754e-06
+A. Steady state,future,81,prior,-7.683279119257349
+A. Steady state,future,82,prior,-24.727545786917744
+A. Steady state,future,83,prior,-117.80672311782835
+A. Steady state,future,84,prior,-8.01391459502338
+A. Steady state,future,85,prior,-14.231848631054161
+A. Steady state,future,86,prior,-0.0200836658477783
+A. Steady state,future,87,prior,-5.174227141687879
+A. Steady state,future,88,prior,-6.192289810263901
+A. Steady state,future,89,prior,-5.7233569627824e-05
+A. Steady state,future,90,prior,-4.848268445697613
+A. Steady state,future,91,prior,-1.4714641722357555
+A. Steady state,future,92,prior,-4.6618154902575455
+A. Steady state,future,93,prior,-7.973472198729101
+A. Steady state,future,94,prior,-6.705023595905857
+A. Steady state,future,95,prior,-0.000159070226385
+A. Steady state,future,96,prior,-35.574329608036514
+A. Steady state,future,97,prior,-5.84388332011622
+A. Steady state,future,98,prior,-67.8145863879181
+A. Steady state,future,99,prior,-2.601759537237605
+A. Steady state,future,100,prior,-10.455307178199291
+A. Steady state,future,101,prior,-3.639864477738996
+A. Steady state,future,102,prior,-0.0729485310996638
+A. Steady state,future,103,prior,-20.725392698069527
+A. Steady state,future,104,prior,-25.775835390305016
+A. Steady state,future,105,prior,-0.2210913667424891
+A. Steady state,future,106,prior,-0.3094673622399568
+A. Steady state,future,107,prior,-21.846435281118204
+A. Steady state,future,108,prior,-0.0008259415106102
+A. Steady state,future,109,prior,-413.7717356272042
+A. Steady state,future,110,prior,-13.738443365320563
+A. Steady state,future,111,prior,-2.390488911420107
+A. Steady state,future,112,prior,-0.0053822217849563
+A. Steady state,future,113,prior,-14.94144083413994
+A. Steady state,future,114,prior,-45.19213299177363
+A. Steady state,future,115,prior,-0.1694817607594716
+A. Steady state,future,116,prior,-136.15539832242212
+A. Steady state,future,117,prior,-15.22529978491366
+A. Steady state,future,118,prior,-272.6348015073873
+A. Steady state,future,119,prior,-1.2167906761169431
+A. Steady state,future,120,prior,-13.727129635335094
+A. Steady state,future,121,prior,-112.73108868068869
+A. Steady state,future,122,prior,-19.548259558228157
+A. Steady state,future,123,prior,-94.99633283070179
+A. Steady state,future,124,prior,-8.880515546967075
+A. Steady state,future,125,prior,-3.613412857055664
+A. Steady state,future,126,prior,-19.63746187929064
+A. Steady state,future,127,prior,-11.223315993887354
+A. Steady state,future,128,prior,-11.596941219937092
+A. Steady state,future,129,prior,-65.81256720190868
+A. Steady state,future,130,prior,-4.770260649078409
+A. Steady state,future,131,prior,-0.0870137676459654
+A. Steady state,future,132,prior,-2.064532160758972
+A. Steady state,future,133,prior,-0.3518236462747665
+A. Steady state,future,134,prior,-85.99551786835946
+A. Steady state,future,135,prior,-0.2074920416352825
+A. Steady state,future,136,prior,-5.4620513916015625
+A. Steady state,future,137,prior,-1.2581437848608024
+A. Steady state,future,138,prior,-0.0026718322368996
+A. Steady state,future,139,prior,-0.8172632163619821
+A. Steady state,future,140,prior,-5.280795070629875
+A. Steady state,future,141,prior,-10.20222520828247
+A. Steady state,future,142,prior,-226.11970225044587
+A. Steady state,future,143,prior,0.0030210478335797
+A. Steady state,future,144,prior,-1.0936002195230683
+A. Steady state,future,145,prior,-0.002144127249873
+A. Steady state,future,146,prior,-135.12570428871547
+A. Steady state,future,147,prior,-0.6144416963796552
+A. Steady state,future,148,prior,-0.0186128243017271
+A. Steady state,future,149,prior,-3.752360818576648
+A. Steady state,future,150,prior,-1.4379579368396662
+A. Steady state,future,151,prior,-27.982826603008164
+A. Steady state,future,152,prior,-12.100190142503115
+A. Steady state,future,153,prior,-74.37181811442133
+A. Steady state,future,154,prior,-2.149788266318211
+A. Steady state,future,155,prior,-0.1857385585148625
+A. Steady state,future,156,prior,-0.1322729026724118
+A. Steady state,future,157,prior,-0.3834241855594378
+A. Steady state,future,158,prior,-495.7138326466084
+A. Steady state,future,159,prior,-1.3721000097434055
+A. Steady state,future,160,prior,-2.876701097050983
+A. Steady state,future,161,prior,-0.0651777822883946
+A. Steady state,future,162,prior,-15.922013774514198
+A. Steady state,future,163,prior,-34.54846967038793
+A. Steady state,future,164,prior,-10.402419149718298
+A. Steady state,future,165,prior,-7.084821668954192
+A. Steady state,future,166,prior,-8.352477355663721
+A. Steady state,future,167,prior,-0.0377996679950872
+A. Steady state,future,168,prior,-0.0195212862201818
+A. Steady state,future,169,prior,-0.0101746914613383
+A. Steady state,future,170,prior,-0.41288710366468
+A. Steady state,future,171,prior,-6.5435119546637
+A. Steady state,future,172,prior,-33.549836535792565
+A. Steady state,future,173,prior,-1.1823656377302123
+A. Steady state,future,174,prior,-10.65195098822005
+A. Steady state,future,175,prior,-6.705891558431745
+A. Steady state,future,176,prior,-6.569836806984313
+A. Steady state,future,177,prior,-0.1225263344760025
+A. Steady state,future,178,prior,-8.542912971228361
+A. Steady state,future,179,prior,-0.7407653491699122
+A. Steady state,future,180,prior,-0.0226840081106746
+A. Steady state,future,181,prior,-6.16961338153522
+A. Steady state,future,182,prior,-2.802826420404017
+A. Steady state,future,183,prior,-5.393362878557017
+A. Steady state,future,184,prior,-0.0245672597914288
+A. Steady state,future,185,prior,-198.32754451698617
+A. Steady state,future,186,prior,-0.1464024202366263
+A. Steady state,future,187,prior,-1.5653178486973047
+A. Steady state,future,188,prior,-3.5587158203125
+A. Steady state,future,189,prior,-0.0096972811253345
+A. Steady state,future,190,prior,-0.5307584267920901
+A. Steady state,future,191,prior,-6.116501268596039
+A. Steady state,future,192,prior,-0.001687242220924
+A. Steady state,future,193,prior,-0.2156925429654847
+A. Steady state,future,194,prior,-2.396390588080976
+A. Steady state,future,195,prior,-0.0096924856438242
+A. Steady state,future,196,prior,-9.398529807804152
+A. Steady state,future,197,prior,-13.332498019285415
+A. Steady state,future,198,prior,-7.558795645600184
+A. Steady state,future,199,prior,-0.9612335056099746
+A. Steady state,future,200,prior,-26.67325016562808
+A. Steady state,future,201,prior,-1.5051161602792715
+A. Steady state,future,202,prior,-56.228121170774095
+A. Steady state,future,203,prior,-808.8144801811131
+A. Steady state,future,204,prior,-0.0002091713471261
+A. Steady state,future,205,prior,-36.54152296530082
+A. Steady state,future,206,prior,-201.53247233691036
+A. Steady state,future,207,prior,-1.1444921469746632
+A. Steady state,future,208,prior,-2.16978379432112
+A. Steady state,future,209,prior,-3.072215502599647
+A. Steady state,future,210,prior,-3.0001450330019
+A. Steady state,future,211,prior,-7.582904049060802
+A. Steady state,future,212,prior,-117.07573556317948
+A. Steady state,future,213,prior,-16.0200222043552
+A. Steady state,future,214,prior,-2.3961181640625
+A. Steady state,future,215,prior,-0.0002769320587165
+A. Steady state,future,216,prior,-12.25709731830284
+A. Steady state,future,217,prior,-9.058862105379376
+A. Steady state,future,218,prior,-0.0021378587389493
+A. Steady state,future,219,prior,-82.31511773588134
+A. Steady state,future,220,prior,-1.6268568314349068
+A. Steady state,future,221,prior,-1.5872455969740713
+A. Steady state,future,222,prior,-52.298461217433214
+A. Steady state,future,223,prior,-410.4494291903218
+A. Steady state,future,224,prior,-1.3110728859901428
+A. Steady state,future,225,prior,-8.677530828141016
+A. Steady state,future,226,prior,-14.043018208161811
+A. Steady state,future,227,prior,-1.1024664265893238
+A. Steady state,future,228,prior,-0.0110818497753744
+A. Steady state,future,229,prior,-0.9169211230990868
+A. Steady state,future,230,prior,-26.242047640112105
+A. Steady state,future,231,prior,-0.5920226124381786
+A. Steady state,future,232,prior,-2.5071535794995725
+A. Steady state,future,233,prior,-0.005131058648677
+A. Steady state,future,234,prior,-66.043923664781
+A. Steady state,future,235,prior,-0.1655179735507714
+A. Steady state,future,236,prior,-163.79281238324452
+A. Steady state,future,237,prior,-1196.1825155494003
+A. Steady state,future,238,prior,-49.2668156314386
+A. Steady state,future,239,prior,-0.030991307725548
+A. Steady state,future,240,prior,-0.0001417605497553
+A. Steady state,future,241,prior,-20.51589778896323
+A. Steady state,future,242,prior,-3.3638982248525764
+A. Steady state,future,243,prior,-1.8276064560577647
+A. Steady state,future,244,prior,-1.6599634905851417
+A. Steady state,future,245,prior,-5.622162704288712
+A. Steady state,future,246,prior,-0.3000531258388403
+A. Steady state,future,247,prior,-1.7463689614087343
+A. Steady state,future,248,prior,-1.9737371061088067
+A. Steady state,future,base,prior,-3.1086764165335126
+A. Steady state,future,0,posterior,-0.5829494404167201
+A. Steady state,future,1,posterior,-1.0312366485595703
+A. Steady state,future,2,posterior,-1.1511088659633641e-07
+A. Steady state,future,3,posterior,-186.76759367618067
+A. Steady state,future,4,posterior,0.0075191304546781
+A. Steady state,future,5,posterior,-0.1994041083416959
+A. Steady state,future,6,posterior,-0.1130911778134588
+A. Steady state,future,7,posterior,-0.5068494587168159
+A. Steady state,future,8,posterior,-10.907240867614746
+A. Steady state,future,9,posterior,-2.083876827369101e-09
+A. Steady state,future,10,posterior,-164.52469875290987
+A. Steady state,future,11,posterior,-0.11961187051621
+A. Steady state,future,12,posterior,-2.1649932861328125
+A. Steady state,future,13,posterior,-0.0001377796855425
+A. Steady state,future,14,posterior,-1.4261395617881064e-06
+A. Steady state,future,15,posterior,-0.0002024351850544
+A. Steady state,future,16,posterior,-43.54316453915089
+A. Steady state,future,17,posterior,-0.3899143120964936
+A. Steady state,future,18,posterior,-15.937933978365436
+A. Steady state,future,19,posterior,-0.0731287638998736
+A. Steady state,future,20,posterior,-1.5241232132539153
+A. Steady state,future,21,posterior,-0.4927390151954114
+A. Steady state,future,22,posterior,-1.6646766364574432
+A. Steady state,future,23,posterior,-2.26379919052124
+A. Steady state,future,24,posterior,-2.787112174304342
+A. Steady state,future,25,posterior,-17.60875142365694
+A. Steady state,future,26,posterior,-3.340240478515625
+A. Steady state,future,27,posterior,-0.005485437553486
+A. Steady state,future,28,posterior,-37.35504406973087
+A. Steady state,future,29,posterior,-190.1435208014445
+A. Steady state,future,30,posterior,-4.684342894634425
+A. Steady state,future,31,posterior,-0.5971045800867926
+A. Steady state,future,32,posterior,-498.8576203584671
+A. Steady state,future,33,posterior,801.1662070128368
+A. Steady state,future,34,posterior,-3.8659841180261646e-05
+A. Steady state,future,35,posterior,-19.54418087378144
+A. Steady state,future,36,posterior,-3.254743316204696
+A. Steady state,future,37,posterior,-1.2813220024108887
+A. Steady state,future,38,posterior,-1.8887843608672483
+A. Steady state,future,39,posterior,-0.001703690572136
+A. Steady state,future,40,posterior,-4.58639361418318
+A. Steady state,future,41,posterior,-0.4350215420126914
+A. Steady state,future,42,posterior,-18.4754623696208
+A. Steady state,future,43,posterior,-0.0006939076954211
+A. Steady state,future,44,posterior,-89.53710646851687
+A. Steady state,future,45,posterior,-2.870060304179788
+A. Steady state,future,46,posterior,-2.105485084739186
+A. Steady state,future,47,posterior,-1.4791051316133235
+A. Steady state,future,48,posterior,-0.0270965366582514
+A. Steady state,future,49,posterior,-10.886551045402896
+A. Steady state,future,50,posterior,-0.0030924268859715
+A. Steady state,future,51,posterior,-0.0860846045042507
+A. Steady state,future,52,posterior,-0.1439916095797212
+A. Steady state,future,53,posterior,0.926175408065319
+A. Steady state,future,54,posterior,-1.867469732817764
+A. Steady state,future,55,posterior,-2.176355195895667
+A. Steady state,future,56,posterior,-7.390421712165335
+A. Steady state,future,57,posterior,-0.4534090937191574
+A. Steady state,future,58,posterior,-6.669738362467342
+A. Steady state,future,59,posterior,-0.9912853283822188
+A. Steady state,future,61,posterior,-275.61693549552
+A. Steady state,future,62,posterior,-4.757126209794251
+A. Steady state,future,63,posterior,-0.00827298019243
+A. Steady state,future,64,posterior,-0.0758310621035076
+A. Steady state,future,65,posterior,-0.0913798115216195
+A. Steady state,future,66,posterior,-0.0695184766206534
+A. Steady state,future,67,posterior,-4.738478810992092
+A. Steady state,future,68,posterior,-27.642569303512573
+A. Steady state,future,69,posterior,-53.621065006545
+A. Steady state,future,70,posterior,-0.1132908789149951
+A. Steady state,future,71,posterior,-24.585438057780262
+A. Steady state,future,72,posterior,-0.2048773037910596
+A. Steady state,future,73,posterior,-6.089031457901001
+A. Steady state,future,74,posterior,-2.233828313432241
+A. Steady state,future,75,posterior,-7.595112497344645
+A. Steady state,future,76,posterior,0.1049180450462365
+A. Steady state,future,77,posterior,-0.5279211386053859
+A. Steady state,future,78,posterior,-0.4451419927400479
+A. Steady state,future,79,posterior,-0.2165612687253855
+A. Steady state,future,80,posterior,-1.3174986885616634e-07
+A. Steady state,future,81,posterior,-50.39821259685414
+A. Steady state,future,82,posterior,-13.478096279814965
+A. Steady state,future,83,posterior,-1352.9411351680756
+A. Steady state,future,84,posterior,-2.2001066091834214
+A. Steady state,future,85,posterior,-31.20599042251706
+A. Steady state,future,87,posterior,-2.1635021150577813
+A. Steady state,future,88,posterior,-1.8364914169214896
+A. Steady state,future,89,posterior,-4.051982783976945e-07
+A. Steady state,future,90,posterior,-23.70667653169949
+A. Steady state,future,91,posterior,-1.4015858578841287
+A. Steady state,future,92,posterior,-0.9103052542396738
+A. Steady state,future,93,posterior,-1.2610436330481747
+A. Steady state,future,94,posterior,-0.362000147518966
+A. Steady state,future,95,posterior,-2.8598110927922023e-05
+A. Steady state,future,96,posterior,-4.957915072904072
+A. Steady state,future,97,posterior,-18.36352453801828
+A. Steady state,future,98,posterior,-51.917954870565154
+A. Steady state,future,99,posterior,-1.038012858301833
+A. Steady state,future,100,posterior,-48.37462201714516
+A. Steady state,future,101,posterior,-2.2472800434426006
+A. Steady state,future,102,posterior,-0.0213254380384634
+A. Steady state,future,103,posterior,-21.35666291894768
+A. Steady state,future,104,posterior,-7.752941790676687
+A. Steady state,future,105,posterior,-0.3061528097866572
+A. Steady state,future,106,posterior,-0.4830728508532047
+A. Steady state,future,107,posterior,-11.424346109407052
+A. Steady state,future,108,posterior,-0.0004068161781605
+A. Steady state,future,109,posterior,-344.7037185620575
+A. Steady state,future,110,posterior,-97.3451616168022
+A. Steady state,future,111,posterior,-0.9947215477004648
+A. Steady state,future,112,posterior,-0.004811853612494
+A. Steady state,future,113,posterior,-19.125116165378127
+A. Steady state,future,114,posterior,-80.3428321454312
+A. Steady state,future,115,posterior,-0.0363762395121085
+A. Steady state,future,116,posterior,-14.967265859857434
+A. Steady state,future,117,posterior,-12.061466216226108
+A. Steady state,future,118,posterior,-0.0065233011695192
+A. Steady state,future,119,posterior,-3.389569878578186
+A. Steady state,future,120,posterior,-0.5940026399013103
+A. Steady state,future,121,posterior,-3.867206292384804
+A. Steady state,future,122,posterior,-1.0100757938299247
+A. Steady state,future,123,posterior,-19.942006204255616
+A. Steady state,future,124,posterior,-1.4933322205701527
+A. Steady state,future,125,posterior,-17.398406982421875
+A. Steady state,future,126,posterior,-55.01779625576455
+A. Steady state,future,127,posterior,-8.794643629888242
+A. Steady state,future,128,posterior,-6.930224005968171
+A. Steady state,future,129,posterior,-669.6589418823132
+A. Steady state,future,130,posterior,-1.4366678113146916
+A. Steady state,future,131,posterior,-0.0067614068702294
+A. Steady state,future,132,posterior,-20.737360298633572
+A. Steady state,future,133,posterior,-0.5719296582276456
+A. Steady state,future,134,posterior,-60.537851105356815
+A. Steady state,future,135,posterior,-0.0062095807210207
+A. Steady state,future,136,posterior,-3.2952635288238525
+A. Steady state,future,137,posterior,0.4208106452347522
+A. Steady state,future,138,posterior,-0.0004182527615177
+A. Steady state,future,139,posterior,-0.0738674774989327
+A. Steady state,future,140,posterior,-0.6314578796666303
+A. Steady state,future,141,posterior,-2.84232234954834
+A. Steady state,future,142,posterior,-29.130626290672943
+A. Steady state,future,143,posterior,0.0049663414326053
+A. Steady state,future,144,posterior,-2.4445861445137775
+A. Steady state,future,145,posterior,-0.0010402305074938
+A. Steady state,future,146,posterior,-59.51762400130974
+A. Steady state,future,147,posterior,-0.0300608715521505
+A. Steady state,future,148,posterior,-0.0067588675921346
+A. Steady state,future,149,posterior,-1.2460522989676974
+A. Steady state,future,150,posterior,-10.433504233369604
+A. Steady state,future,151,posterior,-6.3904180022539085
+A. Steady state,future,154,posterior,-0.0119932963643186
+A. Steady state,future,156,posterior,-0.0551339883531909
+A. Steady state,future,157,posterior,-0.1315663939877822
+A. Steady state,future,158,posterior,-262.6498481184244
+A. Steady state,future,159,posterior,-2.6401665183773844
+A. Steady state,future,160,posterior,-1.1621399576897316
+A. Steady state,future,161,posterior,-0.0010614262975831
+A. Steady state,future,162,posterior,-216.30280263721943
+A. Steady state,future,163,posterior,-30.803186132952305
+A. Steady state,future,164,posterior,0.4118786204749653
+A. Steady state,future,165,posterior,-6.811606674707491
+A. Steady state,future,166,posterior,-23.41323522033417
+A. Steady state,future,167,posterior,-0.0494464106776518
+A. Steady state,future,168,posterior,-0.0150010969390104
+A. Steady state,future,169,posterior,-0.0049209000057767
+A. Steady state,future,170,posterior,-0.0226265722697056
+A. Steady state,future,171,posterior,11.908404674273696
+A. Steady state,future,172,posterior,-16.91215612454107
+A. Steady state,future,173,posterior,-0.0311663715851313
+A. Steady state,future,174,posterior,-85.21962595242076
+A. Steady state,future,175,posterior,-7.444189329048811
+A. Steady state,future,176,posterior,-40.75632988448706
+A. Steady state,future,177,posterior,-0.044844292233902
+A. Steady state,future,178,posterior,-3.0566800236701965
+A. Steady state,future,179,posterior,-0.0502991386606126
+A. Steady state,future,180,posterior,-0.0023148721454967
+A. Steady state,future,181,posterior,-0.8497819753119479
+A. Steady state,future,182,posterior,-13.97575368732214
+A. Steady state,future,183,posterior,-1.4380028286397604
+A. Steady state,future,184,posterior,-0.0077690917809449
+A. Steady state,future,185,posterior,-0.0018115087472171
+A. Steady state,future,186,posterior,-0.0253708153514211
+A. Steady state,future,188,posterior,-31.098403930664062
+A. Steady state,future,189,posterior,6.180776489220219e-05
+A. Steady state,future,190,posterior,-0.8150464083428232
+A. Steady state,future,191,posterior,-2.191650652210228
+A. Steady state,future,192,posterior,-0.0004541040273656
+A. Steady state,future,193,posterior,-0.5686188797348563
+A. Steady state,future,194,posterior,-1.2389772125316083
+A. Steady state,future,195,posterior,-0.0004367873806271
+A. Steady state,future,197,posterior,-0.9577489173492512
+A. Steady state,future,198,posterior,-48.76326653864817
+A. Steady state,future,199,posterior,-0.0949852852083667
+A. Steady state,future,200,posterior,-1.7890943822370955
+A. Steady state,future,201,posterior,-1.5452536466651452
+A. Steady state,future,202,posterior,-15.67270179465413
+A. Steady state,future,203,posterior,-48.62117630963712
+A. Steady state,future,204,posterior,-0.00025750568367
+A. Steady state,future,205,posterior,-71.60775830596685
+A. Steady state,future,206,posterior,7.625933257272094
+A. Steady state,future,207,posterior,-0.4423510520616247
+A. Steady state,future,208,posterior,-6.5639155764947645
+A. Steady state,future,209,posterior,-2.3736477853708493
+A. Steady state,future,210,posterior,-19.440304607371218
+A. Steady state,future,211,posterior,-3.4269309199197475e-06
+A. Steady state,future,212,posterior,-862.961029005586
+A. Steady state,future,213,posterior,-9.3833465222001
+A. Steady state,future,214,posterior,-2.404296875
+A. Steady state,future,215,posterior,-4.9478188740645295e-05
+A. Steady state,future,216,posterior,-3.8036646388063673
+A. Steady state,future,217,posterior,-15.498313805961516
+A. Steady state,future,218,posterior,-0.0007531148894269
+A. Steady state,future,219,posterior,-387.5490583963692
+A. Steady state,future,220,posterior,-10.982169824847915
+A. Steady state,future,221,posterior,-1.0141087598826743
+A. Steady state,future,222,posterior,-46.16021266207098
+A. Steady state,future,223,posterior,-79.06726613138053
+A. Steady state,future,224,posterior,-2.641045093536377
+A. Steady state,future,225,posterior,-8.28919485614938
+A. Steady state,future,226,posterior,-23.38311415632052
+A. Steady state,future,227,posterior,-0.2249150144100746
+A. Steady state,future,228,posterior,-0.0041575336009747
+A. Steady state,future,230,posterior,-15.18048915602958
+A. Steady state,future,231,posterior,-0.0019385008813474
+A. Steady state,future,232,posterior,-8.510733751263617
+A. Steady state,future,233,posterior,-0.0045694879200722
+A. Steady state,future,234,posterior,-39.17791024832536
+A. Steady state,future,235,posterior,-0.0129830055577576
+A. Steady state,future,236,posterior,-31.377955134264823
+A. Steady state,future,237,posterior,-13.779625079769175
+A. Steady state,future,238,posterior,-9.854748254176636
+A. Steady state,future,239,posterior,-0.0229185026172148
+A. Steady state,future,240,posterior,-2.7663865729049032e-05
+A. Steady state,future,241,posterior,-0.4182292610232707
+A. Steady state,future,242,posterior,-2.2522199902671503
+A. Steady state,future,243,posterior,-0.8815099702387669
+A. Steady state,future,244,posterior,-4.992203890009478
+A. Steady state,future,245,posterior,-2.7042706434385764
+A. Steady state,future,246,posterior,0.2952974865192317
+A. Steady state,future,247,posterior,0.0746184326708316
+A. Steady state,future,248,posterior,-0.0882247317092641
+A. Steady state,future,base,posterior,-5.245087955604731
+B. Transient (first kstp),present,0,prior,-18.109118247922357
+B. Transient (first kstp),present,1,prior,7.41070556640625
+B. Transient (first kstp),present,2,prior,-2.2123345021961e-06
+B. Transient (first kstp),present,3,prior,-120.77529817543108
+B. Transient (first kstp),present,4,prior,-0.0701058533804128
+B. Transient (first kstp),present,5,prior,-10.886903140315551
+B. Transient (first kstp),present,6,prior,13.497857446453452
+B. Transient (first kstp),present,7,prior,-5.965128406053204
+B. Transient (first kstp),present,8,prior,-2407.4177167415614
+B. Transient (first kstp),present,9,prior,-5.6035268446585836e-09
+B. Transient (first kstp),present,10,prior,8.538603246212006
+B. Transient (first kstp),present,11,prior,-1466.2331872915092
+B. Transient (first kstp),present,12,prior,119.3852081298828
+B. Transient (first kstp),present,13,prior,-0.0150591506124681
+B. Transient (first kstp),present,14,prior,-1.151300948573687e-05
+B. Transient (first kstp),present,15,prior,-0.0013477522340565
+B. Transient (first kstp),present,16,prior,-577.6963104307652
+B. Transient (first kstp),present,17,prior,-41.645932917854225
+B. Transient (first kstp),present,18,prior,170.39997708824376
+B. Transient (first kstp),present,19,prior,-1.870268767942136
+B. Transient (first kstp),present,20,prior,-303.38491513580084
+B. Transient (first kstp),present,21,prior,95.17281884787187
+B. Transient (first kstp),present,22,prior,-4.073926568031311
+B. Transient (first kstp),present,23,prior,-10.595521926879883
+B. Transient (first kstp),present,24,prior,1817.084790325316
+B. Transient (first kstp),present,25,prior,-1544.511175364256
+B. Transient (first kstp),present,26,prior,-108.72775268554688
+B. Transient (first kstp),present,27,prior,-1.162549547942092
+B. Transient (first kstp),present,28,prior,-85.0497470575392
+B. Transient (first kstp),present,29,prior,-158.9652528502047
+B. Transient (first kstp),present,30,prior,-100.12157625069858
+B. Transient (first kstp),present,31,prior,16.682746981793628
+B. Transient (first kstp),present,32,prior,-88.12177699804306
+B. Transient (first kstp),present,33,prior,-18.25629103370011
+B. Transient (first kstp),present,34,prior,-0.0006249030057707
+B. Transient (first kstp),present,35,prior,52.42589457333088
+B. Transient (first kstp),present,36,prior,-0.0418159994195685
+B. Transient (first kstp),present,37,prior,146.58035850524902
+B. Transient (first kstp),present,38,prior,-360.0889383355243
+B. Transient (first kstp),present,39,prior,-0.2544162101905955
+B. Transient (first kstp),present,40,prior,2535.979704974685
+B. Transient (first kstp),present,41,prior,219.34878772497177
+B. Transient (first kstp),present,42,prior,575.9835252165793
+B. Transient (first kstp),present,43,prior,-0.0199821461528715
+B. Transient (first kstp),present,44,prior,-1.5401224405504763
+B. Transient (first kstp),present,45,prior,-9.583115581423042
+B. Transient (first kstp),present,46,prior,-10.883531934844484
+B. Transient (first kstp),present,47,prior,-291.86809899820946
+B. Transient (first kstp),present,48,prior,0.1895699306511051
+B. Transient (first kstp),present,49,prior,-21.684520255237715
+B. Transient (first kstp),present,50,prior,-0.011470688329631
+B. Transient (first kstp),present,51,prior,-9.15376890456923
+B. Transient (first kstp),present,52,prior,-19.829743256049095
+B. Transient (first kstp),present,53,prior,-1930.673638999462
+B. Transient (first kstp),present,54,prior,-29.597311565064015
+B. Transient (first kstp),present,55,prior,37.48296705365647
+B. Transient (first kstp),present,56,prior,-9.313338950662
+B. Transient (first kstp),present,57,prior,-2.092920754485725
+B. Transient (first kstp),present,58,prior,-536.0357460036685
+B. Transient (first kstp),present,59,prior,83.11642170511186
+B. Transient (first kstp),present,60,prior,-6.734916360786258
+B. Transient (first kstp),present,61,prior,2354.11673184298
+B. Transient (first kstp),present,62,prior,-385.8557969668
+B. Transient (first kstp),present,63,prior,-0.0105302433003364
+B. Transient (first kstp),present,64,prior,-1.4102799568013307
+B. Transient (first kstp),present,65,prior,-2028.4302397184076
+B. Transient (first kstp),present,66,prior,-0.5474812542858873
+B. Transient (first kstp),present,67,prior,-262.8661727588624
+B. Transient (first kstp),present,68,prior,155.9791603088379
+B. Transient (first kstp),present,69,prior,-12.931928363424959
+B. Transient (first kstp),present,70,prior,0.2143999478139448
+B. Transient (first kstp),present,71,prior,-101.0809770822525
+B. Transient (first kstp),present,72,prior,-13.210357268636471
+B. Transient (first kstp),present,73,prior,-14.86771774291992
+B. Transient (first kstp),present,74,prior,-65.65363319471362
+B. Transient (first kstp),present,75,prior,-776.5173797129465
+B. Transient (first kstp),present,76,prior,-1.9517552737364667
+B. Transient (first kstp),present,77,prior,0.4646397106324258
+B. Transient (first kstp),present,78,prior,-75.1533706745322
+B. Transient (first kstp),present,79,prior,-1.5299533762873807
+B. Transient (first kstp),present,80,prior,-1.584876639558407e-06
+B. Transient (first kstp),present,81,prior,260.2257231804542
+B. Transient (first kstp),present,82,prior,-128.26026018402627
+B. Transient (first kstp),present,83,prior,-1719.6750907897947
+B. Transient (first kstp),present,84,prior,-1432.9673825306816
+B. Transient (first kstp),present,85,prior,877.2664173394442
+B. Transient (first kstp),present,86,prior,1639.8305773735046
+B. Transient (first kstp),present,87,prior,2027.5745451736727
+B. Transient (first kstp),present,88,prior,-4.471275973075535
+B. Transient (first kstp),present,89,prior,-0.0002099431036423
+B. Transient (first kstp),present,90,prior,61.0707095079124
+B. Transient (first kstp),present,91,prior,50.66409225637472
+B. Transient (first kstp),present,92,prior,-17.841380328405364
+B. Transient (first kstp),present,93,prior,-21.1930773666426
+B. Transient (first kstp),present,94,prior,113.28811648451779
+B. Transient (first kstp),present,95,prior,-1.756651645598746e-05
+B. Transient (first kstp),present,96,prior,-63.99384843200011
+B. Transient (first kstp),present,97,prior,-6.668375501100854
+B. Transient (first kstp),present,98,prior,-208.83855910267448
+B. Transient (first kstp),present,99,prior,-1.7093040126151775
+B. Transient (first kstp),present,100,prior,-3170.2430174946785
+B. Transient (first kstp),present,101,prior,-55.413911246105954
+B. Transient (first kstp),present,102,prior,-0.088057008339839
+B. Transient (first kstp),present,103,prior,-219.2739002644812
+B. Transient (first kstp),present,104,prior,-46.96584667641218
+B. Transient (first kstp),present,105,prior,-0.333076770066782
+B. Transient (first kstp),present,106,prior,28.314488738775253
+B. Transient (first kstp),present,107,prior,4.647467530537142
+B. Transient (first kstp),present,108,prior,-0.0012956371521645
+B. Transient (first kstp),present,109,prior,456.9135147929192
+B. Transient (first kstp),present,110,prior,-24.414136439561844
+B. Transient (first kstp),present,111,prior,208.59742308035487
+B. Transient (first kstp),present,112,prior,-0.0307635552015452
+B. Transient (first kstp),present,113,prior,152.9154085898772
+B. Transient (first kstp),present,114,prior,186.78943953852104
+B. Transient (first kstp),present,115,prior,-2.050895591702073
+B. Transient (first kstp),present,116,prior,-105.28012789721832
+B. Transient (first kstp),present,117,prior,-416.45317495148635
+B. Transient (first kstp),present,118,prior,-203.46804933969696
+B. Transient (first kstp),present,119,prior,-693.4610452651978
+B. Transient (first kstp),present,120,prior,-9.05957543051235
+B. Transient (first kstp),present,121,prior,-109.68591872122371
+B. Transient (first kstp),present,122,prior,-38.86237714847789
+B. Transient (first kstp),present,123,prior,-91.05697624556068
+B. Transient (first kstp),present,124,prior,-29.716943802681495
+B. Transient (first kstp),present,125,prior,1116.181233406067
+B. Transient (first kstp),present,126,prior,90.65840681828558
+B. Transient (first kstp),present,127,prior,-10.376999717827855
+B. Transient (first kstp),present,128,prior,-59.81905895979799
+B. Transient (first kstp),present,129,prior,-10.078921483829616
+B. Transient (first kstp),present,130,prior,-408.0525937122293
+B. Transient (first kstp),present,131,prior,-0.4062292151457318
+B. Transient (first kstp),present,132,prior,632.3474655151367
+B. Transient (first kstp),present,133,prior,-13.214317397648529
+B. Transient (first kstp),present,134,prior,-1376.0630184732145
+B. Transient (first kstp),present,135,prior,-0.9398558034219175
+B. Transient (first kstp),present,136,prior,35.70036220550537
+B. Transient (first kstp),present,137,prior,2.693041981105324
+B. Transient (first kstp),present,138,prior,-0.001150780462176
+B. Transient (first kstp),present,139,prior,-3.163173803115221
+B. Transient (first kstp),present,140,prior,-5.129668789988784
+B. Transient (first kstp),present,141,prior,-10.240274429321287
+B. Transient (first kstp),present,142,prior,-112.5071613060295
+B. Transient (first kstp),present,143,prior,0.1564832553081938
+B. Transient (first kstp),present,144,prior,306.294366713264
+B. Transient (first kstp),present,145,prior,-0.0071494690641079
+B. Transient (first kstp),present,146,prior,-307.29517782106996
+B. Transient (first kstp),present,147,prior,-0.1678181198834156
+B. Transient (first kstp),present,148,prior,-0.0296827590486895
+B. Transient (first kstp),present,149,prior,-58.61312211572863
+B. Transient (first kstp),present,150,prior,-191.98677064059305
+B. Transient (first kstp),present,151,prior,49.57629338009065
+B. Transient (first kstp),present,152,prior,-22.787312921616348
+B. Transient (first kstp),present,153,prior,877.5375886540861
+B. Transient (first kstp),present,154,prior,22.48657556077489
+B. Transient (first kstp),present,155,prior,-0.0622660087611421
+B. Transient (first kstp),present,156,prior,2062.621230144752
+B. Transient (first kstp),present,157,prior,0.9093531916806796
+B. Transient (first kstp),present,158,prior,87.35003268718718
+B. Transient (first kstp),present,159,prior,-6.725402886381744
+B. Transient (first kstp),present,160,prior,-1.803792471414681
+B. Transient (first kstp),present,161,prior,-0.1613613846922768
+B. Transient (first kstp),present,162,prior,-1.288221836090088
+B. Transient (first kstp),present,163,prior,-87.71759409587683
+B. Transient (first kstp),present,164,prior,-16.12906143656801
+B. Transient (first kstp),present,165,prior,42.48022154957289
+B. Transient (first kstp),present,166,prior,391.49991067922383
+B. Transient (first kstp),present,167,prior,-0.2036934930726164
+B. Transient (first kstp),present,168,prior,-0.1423263033239918
+B. Transient (first kstp),present,169,prior,-0.0756148323389114
+B. Transient (first kstp),present,170,prior,-0.0502107024805209
+B. Transient (first kstp),present,171,prior,-165.473711308965
+B. Transient (first kstp),present,172,prior,797.9439467685297
+B. Transient (first kstp),present,173,prior,-3.665659486501681
+B. Transient (first kstp),present,174,prior,-27.84967071376741
+B. Transient (first kstp),present,175,prior,-9.866454331182467
+B. Transient (first kstp),present,176,prior,44.44316690078631
+B. Transient (first kstp),present,177,prior,0.353055140234753
+B. Transient (first kstp),present,178,prior,-12.746786952018736
+B. Transient (first kstp),present,179,prior,-3.975040965090841
+B. Transient (first kstp),present,180,prior,-0.0288248076971268
+B. Transient (first kstp),present,181,prior,-2.1882119526031807
+B. Transient (first kstp),present,182,prior,137.46465292572975
+B. Transient (first kstp),present,183,prior,-2.7607235535136283
+B. Transient (first kstp),present,184,prior,-0.0658752494575391
+B. Transient (first kstp),present,185,prior,-1193.5210716125112
+B. Transient (first kstp),present,186,prior,0.0362718538177801
+B. Transient (first kstp),present,187,prior,100.98755635600536
+B. Transient (first kstp),present,188,prior,4953.218109130859
+B. Transient (first kstp),present,189,prior,-0.0935592120534812
+B. Transient (first kstp),present,190,prior,317.5258315883548
+B. Transient (first kstp),present,191,prior,4.295526619069278
+B. Transient (first kstp),present,192,prior,-0.0013693386649286
+B. Transient (first kstp),present,193,prior,-6.51799414083996
+B. Transient (first kstp),present,194,prior,-2880.8489836514927
+B. Transient (first kstp),present,195,prior,-0.0565754044075785
+B. Transient (first kstp),present,196,prior,-8.55285978503525
+B. Transient (first kstp),present,197,prior,-27.3121676414694
+B. Transient (first kstp),present,198,prior,-23.72735022660345
+B. Transient (first kstp),present,199,prior,-2.462553544995022
+B. Transient (first kstp),present,200,prior,-49.711050691640594
+B. Transient (first kstp),present,201,prior,4.930686651152655
+B. Transient (first kstp),present,202,prior,-18.700545690953728
+B. Transient (first kstp),present,203,prior,-547.9009323649516
+B. Transient (first kstp),present,204,prior,0.0011209383914963
+B. Transient (first kstp),present,205,prior,-1520.1972752325237
+B. Transient (first kstp),present,206,prior,-167.14110941058607
+B. Transient (first kstp),present,207,prior,-3.7210614321373607
+B. Transient (first kstp),present,208,prior,228.2375153377652
+B. Transient (first kstp),present,209,prior,215.85231863046647
+B. Transient (first kstp),present,210,prior,-290.5922501379391
+B. Transient (first kstp),present,211,prior,-42.81944186429178
+B. Transient (first kstp),present,212,prior,-30.17210458777845
+B. Transient (first kstp),present,213,prior,-27.309136042296814
+B. Transient (first kstp),present,214,prior,-1.8754425048828125
+B. Transient (first kstp),present,215,prior,-3.166666095047422e-06
+B. Transient (first kstp),present,216,prior,57.89010139601305
+B. Transient (first kstp),present,217,prior,-50.7470812338579
+B. Transient (first kstp),present,218,prior,-0.0069869728187051
+B. Transient (first kstp),present,219,prior,-3762.299101918936
+B. Transient (first kstp),present,220,prior,243.2409373280716
+B. Transient (first kstp),present,221,prior,200.37453849415212
+B. Transient (first kstp),present,222,prior,-81.52243068814276
+B. Transient (first kstp),present,223,prior,-343.03877410766506
+B. Transient (first kstp),present,224,prior,-4041.83469581604
+B. Transient (first kstp),present,225,prior,26.03445209881829
+B. Transient (first kstp),present,226,prior,-2191.149399715592
+B. Transient (first kstp),present,227,prior,-4.0663213997381895
+B. Transient (first kstp),present,228,prior,-0.0099602933067854
+B. Transient (first kstp),present,229,prior,-18.821800867038288
+B. Transient (first kstp),present,230,prior,-234.7295489309108
+B. Transient (first kstp),present,231,prior,-5.582160001573476
+B. Transient (first kstp),present,232,prior,-46.35384004190564
+B. Transient (first kstp),present,233,prior,-0.0619804091783264
+B. Transient (first kstp),present,234,prior,-169.78105120547843
+B. Transient (first kstp),present,235,prior,-0.0792944198948147
+B. Transient (first kstp),present,236,prior,-19.87163736250545
+B. Transient (first kstp),present,237,prior,-637.1718074668804
+B. Transient (first kstp),present,238,prior,-47.92971650446474
+B. Transient (first kstp),present,239,prior,-0.0920288591474422
+B. Transient (first kstp),present,240,prior,-0.0005029551989018
+B. Transient (first kstp),present,241,prior,17.1490467757867
+B. Transient (first kstp),present,242,prior,10.05098258886204
+B. Transient (first kstp),present,243,prior,296.0069603389675
+B. Transient (first kstp),present,244,prior,56.77584902595845
+B. Transient (first kstp),present,245,prior,-132.97865655204075
+B. Transient (first kstp),present,246,prior,0.000566379381885
+B. Transient (first kstp),present,247,prior,0.3579699844121932
+B. Transient (first kstp),present,248,prior,-13.217354857148692
+B. Transient (first kstp),present,base,prior,-1.9563844975300528
+B. Transient (first kstp),present,0,posterior,-1.2676684852020728
+B. Transient (first kstp),present,1,posterior,3.528060913085937
+B. Transient (first kstp),present,2,posterior,-3.9356341809327194e-08
+B. Transient (first kstp),present,3,posterior,-40.1522447134048
+B. Transient (first kstp),present,4,posterior,0.0537455061647884
+B. Transient (first kstp),present,5,posterior,-83.71464579840541
+B. Transient (first kstp),present,6,posterior,11.640575169364183
+B. Transient (first kstp),present,7,posterior,-0.2038065130310435
+B. Transient (first kstp),present,8,posterior,-703.2093224525452
+B. Transient (first kstp),present,9,posterior,-1.0408506606092604e-08
+B. Transient (first kstp),present,10,posterior,5.247272055596113
+B. Transient (first kstp),present,11,posterior,-0.0557110135003102
+B. Transient (first kstp),present,12,posterior,34.00465393066406
+B. Transient (first kstp),present,13,posterior,-0.0005534292321053
+B. Transient (first kstp),present,14,posterior,-2.290596598961819e-06
+B. Transient (first kstp),present,15,posterior,-0.0002629077388599
+B. Transient (first kstp),present,16,posterior,-220.0141588449478
+B. Transient (first kstp),present,17,posterior,14.75345792441567
+B. Transient (first kstp),present,18,posterior,146.95944849367515
+B. Transient (first kstp),present,19,posterior,-0.9608633490837732
+B. Transient (first kstp),present,20,posterior,-861.4808622524142
+B. Transient (first kstp),present,21,posterior,117.13218374029202
+B. Transient (first kstp),present,22,posterior,-2.4145222902297974
+B. Transient (first kstp),present,23,posterior,-7.89417839050293
+B. Transient (first kstp),present,24,posterior,-1.8759408441340495
+B. Transient (first kstp),present,25,posterior,-347.3186965286732
+B. Transient (first kstp),present,26,posterior,-107.97059631347656
+B. Transient (first kstp),present,27,posterior,-1.0838098473921107
+B. Transient (first kstp),present,28,posterior,-99.47335206235584
+B. Transient (first kstp),present,29,posterior,-139.24285395955667
+B. Transient (first kstp),present,30,posterior,-21.721144895573612
+B. Transient (first kstp),present,31,posterior,44.51909217846935
+B. Transient (first kstp),present,32,posterior,-235.3259597122669
+B. Transient (first kstp),present,33,posterior,-110.77620218740776
+B. Transient (first kstp),present,34,posterior,-0.0002427403817673
+B. Transient (first kstp),present,35,posterior,51.39987833797932
+B. Transient (first kstp),present,36,posterior,1.8392999255825089
+B. Transient (first kstp),present,37,posterior,39.656227111816406
+B. Transient (first kstp),present,38,posterior,-122.88573922732756
+B. Transient (first kstp),present,39,posterior,-0.0057651649152608
+B. Transient (first kstp),present,40,posterior,2715.646547499113
+B. Transient (first kstp),present,41,posterior,97.92293064296243
+B. Transient (first kstp),present,42,posterior,902.4106782376766
+B. Transient (first kstp),present,43,posterior,-0.0040143067930669
+B. Transient (first kstp),present,44,posterior,49.745549195911735
+B. Transient (first kstp),present,45,posterior,-5.42563234642148
+B. Transient (first kstp),present,46,posterior,-0.8644390399151689
+B. Transient (first kstp),present,47,posterior,-66.8722197554307
+B. Transient (first kstp),present,48,posterior,0.7017627777740464
+B. Transient (first kstp),present,49,posterior,-8.564925005584142
+B. Transient (first kstp),present,50,posterior,0.0093744992177469
+B. Transient (first kstp),present,51,posterior,-0.4554359804538776
+B. Transient (first kstp),present,52,posterior,-0.6601792222397335
+B. Transient (first kstp),present,53,posterior,-1654.9689459707588
+B. Transient (first kstp),present,54,posterior,-6.317056442846962
+B. Transient (first kstp),present,55,posterior,13.4505274383082
+B. Transient (first kstp),present,56,posterior,-5.04587787060882
+B. Transient (first kstp),present,57,posterior,-4.56754084961689
+B. Transient (first kstp),present,58,posterior,-354.8332335844316
+B. Transient (first kstp),present,59,posterior,28.46467438497348
+B. Transient (first kstp),present,61,posterior,980.1161800627597
+B. Transient (first kstp),present,62,posterior,-88.4662420624827
+B. Transient (first kstp),present,63,posterior,-0.0015166001458904
+B. Transient (first kstp),present,64,posterior,0.0858590996407784
+B. Transient (first kstp),present,65,posterior,-1022.4773869663476
+B. Transient (first kstp),present,66,posterior,-0.0833793754245309
+B. Transient (first kstp),present,67,posterior,-73.03401279635726
+B. Transient (first kstp),present,68,posterior,335.3192563056946
+B. Transient (first kstp),present,69,posterior,-12.830067010210769
+B. Transient (first kstp),present,70,posterior,0.3104942838908755
+B. Transient (first kstp),present,71,posterior,-15.597679555416107
+B. Transient (first kstp),present,72,posterior,-0.5444764394015209
+B. Transient (first kstp),present,73,posterior,24.623188018798828
+B. Transient (first kstp),present,74,posterior,-24.113891872533717
+B. Transient (first kstp),present,75,posterior,15.857742918777149
+B. Transient (first kstp),present,76,posterior,-2.032719045849319
+B. Transient (first kstp),present,77,posterior,3.476686510754405
+B. Transient (first kstp),present,78,posterior,-35.52477457442819
+B. Transient (first kstp),present,79,posterior,-1.1110495908610571
+B. Transient (first kstp),present,80,posterior,-1.0607490634562317e-07
+B. Transient (first kstp),present,81,posterior,114.76290856214472
+B. Transient (first kstp),present,82,posterior,-3.4687784613415715
+B. Transient (first kstp),present,83,posterior,-1518.3393669128416
+B. Transient (first kstp),present,84,posterior,-670.3311663013883
+B. Transient (first kstp),present,85,posterior,535.1608217656612
+B. Transient (first kstp),present,87,posterior,2058.5213684896007
+B. Transient (first kstp),present,88,posterior,1.8207927407929676
+B. Transient (first kstp),present,89,posterior,-1.6394398411198935e-07
+B. Transient (first kstp),present,90,posterior,42.360919328406446
+B. Transient (first kstp),present,91,posterior,18.196062610746598
+B. Transient (first kstp),present,92,posterior,-14.578441631632584
+B. Transient (first kstp),present,93,posterior,10.263902328278675
+B. Transient (first kstp),present,94,posterior,1.4652475140828543
+B. Transient (first kstp),present,95,posterior,5.900284957887237e-05
+B. Transient (first kstp),present,96,posterior,-3.098079953581987
+B. Transient (first kstp),present,97,posterior,17.263004302365516
+B. Transient (first kstp),present,98,posterior,-97.98720966867405
+B. Transient (first kstp),present,99,posterior,-0.5825306455939198
+B. Transient (first kstp),present,100,posterior,-3010.595524907112
+B. Transient (first kstp),present,101,posterior,-34.67668932423794
+B. Transient (first kstp),present,102,posterior,0.0228402497386639
+B. Transient (first kstp),present,103,posterior,-56.46774849639223
+B. Transient (first kstp),present,104,posterior,-15.770752394342708
+B. Transient (first kstp),present,105,posterior,-0.5479154596970232
+B. Transient (first kstp),present,106,posterior,9.82414738833904
+B. Transient (first kstp),present,107,posterior,17.52441891891931
+B. Transient (first kstp),present,108,posterior,-0.0002030803157985
+B. Transient (first kstp),present,109,posterior,-298.77430515974993
+B. Transient (first kstp),present,110,posterior,-80.46095085144043
+B. Transient (first kstp),present,111,posterior,51.584403237327926
+B. Transient (first kstp),present,112,posterior,-0.0085311774526247
+B. Transient (first kstp),present,113,posterior,149.7987139862962
+B. Transient (first kstp),present,114,posterior,280.6252527800243
+B. Transient (first kstp),present,115,posterior,-1.254049213226807
+B. Transient (first kstp),present,116,posterior,-15.889318751986139
+B. Transient (first kstp),present,117,posterior,-106.8025007052347
+B. Transient (first kstp),present,118,posterior,-0.0519300245508147
+B. Transient (first kstp),present,119,posterior,-454.28316879272467
+B. Transient (first kstp),present,120,posterior,-0.2502842661656305
+B. Transient (first kstp),present,121,posterior,-12.216832074941564
+B. Transient (first kstp),present,122,posterior,-4.825106644123707
+B. Transient (first kstp),present,123,posterior,-44.92590791382963
+B. Transient (first kstp),present,124,posterior,-30.105645918045862
+B. Transient (first kstp),present,125,posterior,305.1485729217529
+B. Transient (first kstp),present,126,posterior,-54.12233650684357
+B. Transient (first kstp),present,127,posterior,-8.714194499289079
+B. Transient (first kstp),present,128,posterior,-41.54092258563377
+B. Transient (first kstp),present,129,posterior,-116.63387421425432
+B. Transient (first kstp),present,130,posterior,-136.21810762165114
+B. Transient (first kstp),present,131,posterior,-0.0230431845223906
+B. Transient (first kstp),present,132,posterior,1120.4112558364868
+B. Transient (first kstp),present,133,posterior,-15.259999977983624
+B. Transient (first kstp),present,134,posterior,-1235.3494102472905
+B. Transient (first kstp),present,135,posterior,-0.0204780959950056
+B. Transient (first kstp),present,136,posterior,11.283906936645508
+B. Transient (first kstp),present,137,posterior,13.476400545216393
+B. Transient (first kstp),present,138,posterior,0.0027007706547081
+B. Transient (first kstp),present,139,posterior,-0.546253027394087
+B. Transient (first kstp),present,140,posterior,1.8135459878701847
+B. Transient (first kstp),present,141,posterior,-4.135808944702148
+B. Transient (first kstp),present,142,posterior,-14.691247435887531
+B. Transient (first kstp),present,143,posterior,0.1373173087765096
+B. Transient (first kstp),present,144,posterior,152.9404687523056
+B. Transient (first kstp),present,145,posterior,-0.000988361032716
+B. Transient (first kstp),present,146,posterior,-64.27513144351542
+B. Transient (first kstp),present,147,posterior,0.0486656507442286
+B. Transient (first kstp),present,148,posterior,-0.0410281846016813
+B. Transient (first kstp),present,149,posterior,-87.92330505236077
+B. Transient (first kstp),present,150,posterior,-37.49862984009087
+B. Transient (first kstp),present,151,posterior,32.13595153428196
+B. Transient (first kstp),present,154,posterior,-0.1441916337153534
+B. Transient (first kstp),present,156,posterior,2298.775619935943
+B. Transient (first kstp),present,157,posterior,3.103419941649236
+B. Transient (first kstp),present,158,posterior,97.10082089900969
+B. Transient (first kstp),present,159,posterior,-9.975262963078876
+B. Transient (first kstp),present,160,posterior,-0.5363652868391
+B. Transient (first kstp),present,161,posterior,5.254203094925969e-06
+B. Transient (first kstp),present,162,posterior,-11.862174987792969
+B. Transient (first kstp),present,163,posterior,57.87465678561421
+B. Transient (first kstp),present,164,posterior,0.3507833944413505
+B. Transient (first kstp),present,165,posterior,17.427680567921925
+B. Transient (first kstp),present,166,posterior,257.0640216105967
+B. Transient (first kstp),present,167,posterior,0.2507839158858322
+B. Transient (first kstp),present,168,posterior,-0.0882649286613963
+B. Transient (first kstp),present,169,posterior,-0.0261769139454032
+B. Transient (first kstp),present,170,posterior,0.005234293345719
+B. Transient (first kstp),present,171,posterior,30.47124278383853
+B. Transient (first kstp),present,172,posterior,241.9957120507024
+B. Transient (first kstp),present,173,posterior,-0.9628066825782752
+B. Transient (first kstp),present,174,posterior,-105.75999484956264
+B. Transient (first kstp),present,175,posterior,-1.1346477159627284
+B. Transient (first kstp),present,176,posterior,40.84497016191744
+B. Transient (first kstp),present,177,posterior,0.7474110580110107
+B. Transient (first kstp),present,178,posterior,-6.7828064262866965
+B. Transient (first kstp),present,179,posterior,-3.4035895952648616
+B. Transient (first kstp),present,180,posterior,-4.55776593897006e-05
+B. Transient (first kstp),present,181,posterior,-0.8020213968223561
+B. Transient (first kstp),present,182,posterior,36.528824895620346
+B. Transient (first kstp),present,183,posterior,0.1523175617126071
+B. Transient (first kstp),present,184,posterior,0.083596157220688
+B. Transient (first kstp),present,185,posterior,0.0653199773377692
+B. Transient (first kstp),present,186,posterior,0.3136056844416792
+B. Transient (first kstp),present,188,posterior,5170.002670288086
+B. Transient (first kstp),present,189,posterior,-0.0358931032020664
+B. Transient (first kstp),present,190,posterior,103.8277825625264
+B. Transient (first kstp),present,191,posterior,2.018367053475231
+B. Transient (first kstp),present,192,posterior,-0.0010920110939452
+B. Transient (first kstp),present,193,posterior,3.8579144229239546
+B. Transient (first kstp),present,194,posterior,-454.87374698987696
+B. Transient (first kstp),present,195,posterior,0.0062116730857919
+B. Transient (first kstp),present,197,posterior,-6.93297103091561
+B. Transient (first kstp),present,198,posterior,-15.3251949835103
+B. Transient (first kstp),present,199,posterior,-0.0498925295946541
+B. Transient (first kstp),present,200,posterior,7.690938489572545
+B. Transient (first kstp),present,201,posterior,12.45144089737937
+B. Transient (first kstp),present,202,posterior,-3.0378455482423306
+B. Transient (first kstp),present,203,posterior,24.585000083070558
+B. Transient (first kstp),present,204,posterior,0.0005864822863041
+B. Transient (first kstp),present,205,posterior,-1335.4797231853008
+B. Transient (first kstp),present,206,posterior,82.35522594196118
+B. Transient (first kstp),present,207,posterior,-0.7399962955659304
+B. Transient (first kstp),present,208,posterior,129.4609529873123
+B. Transient (first kstp),present,209,posterior,57.098512466880486
+B. Transient (first kstp),present,210,posterior,-79.52241954643978
+B. Transient (first kstp),present,211,posterior,-3.069264270687928e-05
+B. Transient (first kstp),present,212,posterior,-218.1165353823453
+B. Transient (first kstp),present,213,posterior,4.889441818544583
+B. Transient (first kstp),present,214,posterior,-1.2327423095703125
+B. Transient (first kstp),present,215,posterior,6.663313018082117e-06
+B. Transient (first kstp),present,216,posterior,42.106795302504906
+B. Transient (first kstp),present,217,posterior,-94.54516628367129
+B. Transient (first kstp),present,218,posterior,-0.0021315402015616
+B. Transient (first kstp),present,219,posterior,-4114.107451189308
+B. Transient (first kstp),present,220,posterior,84.73317143777966
+B. Transient (first kstp),present,221,posterior,330.67736569721814
+B. Transient (first kstp),present,222,posterior,-41.57680904865265
+B. Transient (first kstp),present,223,posterior,-11.764317583520665
+B. Transient (first kstp),present,224,posterior,-2553.1239919662476
+B. Transient (first kstp),present,225,posterior,31.596156193932984
+B. Transient (first kstp),present,226,posterior,-717.6559293078317
+B. Transient (first kstp),present,227,posterior,0.0226351339066148
+B. Transient (first kstp),present,228,posterior,0.0068543491153232
+B. Transient (first kstp),present,230,posterior,-96.03703779852368
+B. Transient (first kstp),present,231,posterior,-0.0061149679672901
+B. Transient (first kstp),present,232,posterior,14.411371675072589
+B. Transient (first kstp),present,233,posterior,-0.0505148192214677
+B. Transient (first kstp),present,234,posterior,-98.34211926689386
+B. Transient (first kstp),present,235,posterior,-0.0151735495840793
+B. Transient (first kstp),present,236,posterior,40.33312568761221
+B. Transient (first kstp),present,237,posterior,13.195172158535568
+B. Transient (first kstp),present,238,posterior,-8.642152791210265
+B. Transient (first kstp),present,239,posterior,-0.039629827219592
+B. Transient (first kstp),present,240,posterior,-0.0002274077551944
+B. Transient (first kstp),present,241,posterior,4.6909669412122526
+B. Transient (first kstp),present,242,posterior,16.50193331152991
+B. Transient (first kstp),present,243,posterior,141.60816520461958
+B. Transient (first kstp),present,244,posterior,212.4674849448784
+B. Transient (first kstp),present,245,posterior,-46.25668573303847
+B. Transient (first kstp),present,246,posterior,-10.293716550232716
+B. Transient (first kstp),present,247,posterior,3.0979510098695755
+B. Transient (first kstp),present,248,posterior,2.2883613424224047
+B. Transient (first kstp),present,base,posterior,3.3515950541332127
+B. Transient (first kstp),future,0,prior,-7.123877337475814
+B. Transient (first kstp),future,1,prior,-0.5226316452026367
+B. Transient (first kstp),future,2,prior,-9.874644110614768e-07
+B. Transient (first kstp),future,3,prior,-68.38987802551856
+B. Transient (first kstp),future,4,prior,-0.0052900536157193
+B. Transient (first kstp),future,5,prior,-13.827907521006637
+B. Transient (first kstp),future,6,prior,-0.3019161221323898
+B. Transient (first kstp),future,7,prior,-12.009308310779568
+B. Transient (first kstp),future,8,prior,-42.524909406900406
+B. Transient (first kstp),future,9,prior,-1.0966629348439575e-09
+B. Transient (first kstp),future,10,prior,-21.914660757873207
+B. Transient (first kstp),future,11,prior,-10.726864344778733
+B. Transient (first kstp),future,12,prior,-6.957000732421875
+B. Transient (first kstp),future,13,prior,-0.0018154602973941
+B. Transient (first kstp),future,14,prior,-4.528258985290858e-06
+B. Transient (first kstp),future,15,prior,-0.0012005154332245
+B. Transient (first kstp),future,16,prior,-31.854717670939863
+B. Transient (first kstp),future,17,prior,-45.25764486417211
+B. Transient (first kstp),future,18,prior,-4.564678010614443
+B. Transient (first kstp),future,19,prior,-0.2010994317723433
+B. Transient (first kstp),future,20,prior,-303.3034621849656
+B. Transient (first kstp),future,21,prior,-0.9435202579134055
+B. Transient (first kstp),future,22,prior,-1.5261573493480682
+B. Transient (first kstp),future,23,prior,-15.677399396896362
+B. Transient (first kstp),future,24,prior,-15.652604068556684
+B. Transient (first kstp),future,25,prior,-86.38079414889216
+B. Transient (first kstp),future,26,prior,-15.209030151367188
+B. Transient (first kstp),future,27,prior,-0.0662632648910062
+B. Transient (first kstp),future,28,prior,-26.38619088443238
+B. Transient (first kstp),future,29,prior,-20.113770280499008
+B. Transient (first kstp),future,30,prior,-56.16876383579296
+B. Transient (first kstp),future,31,prior,-6.84147979935743
+B. Transient (first kstp),future,32,prior,-53.71367482468486
+B. Transient (first kstp),future,33,prior,72.70814991957741
+B. Transient (first kstp),future,34,prior,-0.000414254263834
+B. Transient (first kstp),future,35,prior,-3.0109128784388304
+B. Transient (first kstp),future,36,prior,-0.0142497660309532
+B. Transient (first kstp),future,37,prior,-29.11882257461548
+B. Transient (first kstp),future,38,prior,-4.1584157885590685
+B. Transient (first kstp),future,39,prior,-0.042598286823327
+B. Transient (first kstp),future,40,prior,-42.498782536713406
+B. Transient (first kstp),future,41,prior,-8.309674456715584
+B. Transient (first kstp),future,42,prior,-107.2497084736824
+B. Transient (first kstp),future,43,prior,-0.0029566267642429
+B. Transient (first kstp),future,44,prior,-18.32722363760695
+B. Transient (first kstp),future,45,prior,-7.892755601089446
+B. Transient (first kstp),future,46,prior,-23.50805884911407
+B. Transient (first kstp),future,47,prior,-12.655712155436047
+B. Transient (first kstp),future,48,prior,-0.0842016302923289
+B. Transient (first kstp),future,49,prior,-72.93530042455137
+B. Transient (first kstp),future,50,prior,-0.0087046614262574
+B. Transient (first kstp),future,51,prior,-1.4402653402727337
+B. Transient (first kstp),future,52,prior,-2.879204278858557
+B. Transient (first kstp),future,53,prior,-48.784246671013534
+B. Transient (first kstp),future,54,prior,-20.463167618330644
+B. Transient (first kstp),future,55,prior,-4.32932844624952
+B. Transient (first kstp),future,56,prior,-11.485470732276552
+B. Transient (first kstp),future,57,prior,-0.3450189372639647
+B. Transient (first kstp),future,58,prior,-6.791850520977277
+B. Transient (first kstp),future,59,prior,-8.233482932257177
+B. Transient (first kstp),future,60,prior,-6.1254895622781005
+B. Transient (first kstp),future,61,prior,-45.020095180894714
+B. Transient (first kstp),future,62,prior,-12.638045508555479
+B. Transient (first kstp),future,63,prior,-0.0272644430815128
+B. Transient (first kstp),future,64,prior,-0.4542592576622099
+B. Transient (first kstp),future,65,prior,-49.38690246222541
+B. Transient (first kstp),future,66,prior,-1.0615666845088956
+B. Transient (first kstp),future,67,prior,-19.520289364503697
+B. Transient (first kstp),future,68,prior,-58.90491983294487
+B. Transient (first kstp),future,69,prior,-20.44337200234713
+B. Transient (first kstp),future,70,prior,-0.0983420663615106
+B. Transient (first kstp),future,71,prior,-71.03218261897564
+B. Transient (first kstp),future,72,prior,-3.5383532577979784
+B. Transient (first kstp),future,73,prior,-44.71123075485229
+B. Transient (first kstp),future,74,prior,-56.914849954262536
+B. Transient (first kstp),future,75,prior,-384.3217562794179
+B. Transient (first kstp),future,76,prior,-1.8627263112244488
+B. Transient (first kstp),future,77,prior,-1.833226604214785
+B. Transient (first kstp),future,78,prior,-1.6416504251606625
+B. Transient (first kstp),future,79,prior,-0.1929786152277834
+B. Transient (first kstp),future,80,prior,-1.2357746024358068e-06
+B. Transient (first kstp),future,81,prior,-10.401416634784255
+B. Transient (first kstp),future,82,prior,-26.922757548793474
+B. Transient (first kstp),future,83,prior,-143.70489168167114
+B. Transient (first kstp),future,84,prior,-25.055781415409
+B. Transient (first kstp),future,85,prior,-63.71579851768911
+B. Transient (first kstp),future,86,prior,-52.0425620675087
+B. Transient (first kstp),future,87,prior,-38.30077514721779
+B. Transient (first kstp),future,88,prior,-6.999185630120337
+B. Transient (first kstp),future,89,prior,-5.7230996511978566e-05
+B. Transient (first kstp),future,90,prior,-5.918545846827328
+B. Transient (first kstp),future,91,prior,-2.8447902935331513
+B. Transient (first kstp),future,92,prior,-4.687556824370333
+B. Transient (first kstp),future,93,prior,-7.986890888202986
+B. Transient (first kstp),future,94,prior,-6.839950563159761
+B. Transient (first kstp),future,95,prior,-0.0001592043566857
+B. Transient (first kstp),future,96,prior,-33.24334517220902
+B. Transient (first kstp),future,97,prior,-6.6632947540313126
+B. Transient (first kstp),future,98,prior,-76.20028481756891
+B. Transient (first kstp),future,99,prior,-2.611505390914456
+B. Transient (first kstp),future,100,prior,-60.68031451106072
+B. Transient (first kstp),future,101,prior,-3.7470291587819418
+B. Transient (first kstp),future,102,prior,-0.0731129419343924
+B. Transient (first kstp),future,103,prior,-21.704606351793245
+B. Transient (first kstp),future,104,prior,-26.1870204890688
+B. Transient (first kstp),future,105,prior,-0.1860377857633928
+B. Transient (first kstp),future,106,prior,-1.1324284160509703
+B. Transient (first kstp),future,107,prior,-21.982398993408022
+B. Transient (first kstp),future,108,prior,-0.0008253941288015
+B. Transient (first kstp),future,109,prior,-441.29379950463766
+B. Transient (first kstp),future,110,prior,-14.289027869701384
+B. Transient (first kstp),future,111,prior,-6.0927904192358255
+B. Transient (first kstp),future,112,prior,-0.0054461563064403
+B. Transient (first kstp),future,113,prior,-53.306563899328474
+B. Transient (first kstp),future,114,prior,-46.008122732326456
+B. Transient (first kstp),future,115,prior,-0.1727835272594528
+B. Transient (first kstp),future,116,prior,-77.43788698498975
+B. Transient (first kstp),future,117,prior,-32.0496572626289
+B. Transient (first kstp),future,118,prior,-251.05437839006413
+B. Transient (first kstp),future,119,prior,-52.49007898569107
+B. Transient (first kstp),future,120,prior,-13.72765149624168
+B. Transient (first kstp),future,121,prior,-112.73535738845064
+B. Transient (first kstp),future,122,prior,-19.6052622004262
+B. Transient (first kstp),future,123,prior,-128.1665284904576
+B. Transient (first kstp),future,124,prior,-9.011293004350447
+B. Transient (first kstp),future,125,prior,-25.567585349082943
+B. Transient (first kstp),future,126,prior,-30.41028824285604
+B. Transient (first kstp),future,127,prior,-10.132977274269704
+B. Transient (first kstp),future,128,prior,-12.05172526379431
+B. Transient (first kstp),future,129,prior,-65.9252231362043
+B. Transient (first kstp),future,130,prior,-7.806942090785014
+B. Transient (first kstp),future,131,prior,-0.0870317134215765
+B. Transient (first kstp),future,132,prior,-52.34851896762848
+B. Transient (first kstp),future,133,prior,-0.452454955994483
+B. Transient (first kstp),future,134,prior,-112.37830159605072
+B. Transient (first kstp),future,135,prior,-0.2055969364511486
+B. Transient (first kstp),future,136,prior,-5.756097316741943
+B. Transient (first kstp),future,137,prior,-1.2693270836588864
+B. Transient (first kstp),future,138,prior,-0.0028105799061747
+B. Transient (first kstp),future,139,prior,-0.819581356295992
+B. Transient (first kstp),future,140,prior,-5.290057271317544
+B. Transient (first kstp),future,141,prior,-10.336814165115356
+B. Transient (first kstp),future,142,prior,-226.138097069726
+B. Transient (first kstp),future,143,prior,0.0026804166092014
+B. Transient (first kstp),future,144,prior,-15.836106636823388
+B. Transient (first kstp),future,145,prior,-0.0021692354631721
+B. Transient (first kstp),future,146,prior,-131.49133786722086
+B. Transient (first kstp),future,147,prior,-0.6145031748779337
+B. Transient (first kstp),future,148,prior,-0.0186628919952914
+B. Transient (first kstp),future,149,prior,-3.848918018572704
+B. Transient (first kstp),future,150,prior,-17.51539620483527
+B. Transient (first kstp),future,151,prior,-28.22017158038
+B. Transient (first kstp),future,152,prior,-12.102996078617746
+B. Transient (first kstp),future,153,prior,-110.86258704517968
+B. Transient (first kstp),future,154,prior,-2.1837525248185368
+B. Transient (first kstp),future,155,prior,-0.1738828707978141
+B. Transient (first kstp),future,156,prior,-32.23879776915419
+B. Transient (first kstp),future,157,prior,-0.3936573206957945
+B. Transient (first kstp),future,158,prior,-482.9084778577089
+B. Transient (first kstp),future,159,prior,-1.60329864305902
+B. Transient (first kstp),future,160,prior,-2.8014005431041222
+B. Transient (first kstp),future,161,prior,-0.0651783880872459
+B. Transient (first kstp),future,162,prior,-14.392559856176376
+B. Transient (first kstp),future,163,prior,-35.50183304694656
+B. Transient (first kstp),future,164,prior,-10.564956294677074
+B. Transient (first kstp),future,165,prior,-7.495089027387621
+B. Transient (first kstp),future,166,prior,-12.564664610423279
+B. Transient (first kstp),future,167,prior,-0.0379630468498619
+B. Transient (first kstp),future,168,prior,-0.0192145043454344
+B. Transient (first kstp),future,169,prior,-0.0100956365277517
+B. Transient (first kstp),future,170,prior,-0.4128953729922694
+B. Transient (first kstp),future,171,prior,-13.154020344059973
+B. Transient (first kstp),future,172,prior,-46.09390767973673
+B. Transient (first kstp),future,173,prior,-1.2030937623163442
+B. Transient (first kstp),future,174,prior,-12.993825611425564
+B. Transient (first kstp),future,175,prior,-6.670072308712747
+B. Transient (first kstp),future,176,prior,-8.262725087777653
+B. Transient (first kstp),future,177,prior,-0.1231901779950517
+B. Transient (first kstp),future,178,prior,-11.2813848182559
+B. Transient (first kstp),future,179,prior,-0.7631930103278391
+B. Transient (first kstp),future,180,prior,-0.0226832172821801
+B. Transient (first kstp),future,181,prior,-6.170326824471278
+B. Transient (first kstp),future,182,prior,-3.8652121680788696
+B. Transient (first kstp),future,183,prior,-4.70611595318092
+B. Transient (first kstp),future,184,prior,-0.0252652796959774
+B. Transient (first kstp),future,185,prior,-198.3091742148719
+B. Transient (first kstp),future,186,prior,-0.1471132804687311
+B. Transient (first kstp),future,187,prior,-2.527714673196897
+B. Transient (first kstp),future,188,prior,-54.60578918457031
+B. Transient (first kstp),future,189,prior,-0.0097436403735536
+B. Transient (first kstp),future,190,prior,-3.9102837734444615
+B. Transient (first kstp),future,191,prior,-6.268514306357247
+B. Transient (first kstp),future,192,prior,-0.0016871013787067
+B. Transient (first kstp),future,193,prior,-0.2514031571672887
+B. Transient (first kstp),future,194,prior,-57.12193719903007
+B. Transient (first kstp),future,195,prior,-0.0098229414244752
+B. Transient (first kstp),future,196,prior,-18.180314659373835
+B. Transient (first kstp),future,197,prior,-13.370602831134512
+B. Transient (first kstp),future,198,prior,-11.718606683483811
+B. Transient (first kstp),future,199,prior,-0.9615735307433284
+B. Transient (first kstp),future,200,prior,-26.8789684596116
+B. Transient (first kstp),future,201,prior,-1.5882264358903626
+B. Transient (first kstp),future,202,prior,-49.51697751972824
+B. Transient (first kstp),future,203,prior,-810.9464392182963
+B. Transient (first kstp),future,204,prior,-0.0002131906296026
+B. Transient (first kstp),future,205,prior,-74.94562976201996
+B. Transient (first kstp),future,206,prior,-201.87770949914372
+B. Transient (first kstp),future,207,prior,-1.153248647399673
+B. Transient (first kstp),future,208,prior,-17.268755867145956
+B. Transient (first kstp),future,209,prior,-6.733689741256967
+B. Transient (first kstp),future,210,prior,-12.659071387530275
+B. Transient (first kstp),future,211,prior,-7.384776515809951
+B. Transient (first kstp),future,212,prior,-121.91437469993252
+B. Transient (first kstp),future,213,prior,-16.46110220968751
+B. Transient (first kstp),future,214,prior,-2.036468505859375
+B. Transient (first kstp),future,215,prior,-0.0002769541706082
+B. Transient (first kstp),future,216,prior,-11.061239461647347
+B. Transient (first kstp),future,217,prior,-55.200541710037214
+B. Transient (first kstp),future,218,prior,-0.0021422108061624
+B. Transient (first kstp),future,219,prior,-134.75221186550334
+B. Transient (first kstp),future,220,prior,-3.2689131101165003
+B. Transient (first kstp),future,221,prior,-2.621866859340116
+B. Transient (first kstp),future,222,prior,-55.82011181116104
+B. Transient (first kstp),future,223,prior,-410.16484960196
+B. Transient (first kstp),future,224,prior,-51.31817215681076
+B. Transient (first kstp),future,225,prior,-8.631623958574664
+B. Transient (first kstp),future,226,prior,-28.44648329722986
+B. Transient (first kstp),future,227,prior,-1.1028353440585863
+B. Transient (first kstp),future,228,prior,-0.0111910309659895
+B. Transient (first kstp),future,229,prior,-7.236067348735218
+B. Transient (first kstp),future,230,prior,-29.057494046374813
+B. Transient (first kstp),future,231,prior,-0.5921628426910052
+B. Transient (first kstp),future,232,prior,-7.857669653603806
+B. Transient (first kstp),future,233,prior,-0.00538728945019
+B. Transient (first kstp),future,234,prior,-66.79592099393403
+B. Transient (first kstp),future,235,prior,-0.1655516555261801
+B. Transient (first kstp),future,236,prior,-163.88963228872416
+B. Transient (first kstp),future,237,prior,-1196.181734350724
+B. Transient (first kstp),future,238,prior,-49.05432859237054
+B. Transient (first kstp),future,239,prior,-0.0294601101983233
+B. Transient (first kstp),future,240,prior,-0.0001419777313596
+B. Transient (first kstp),future,241,prior,-21.519585738848946
+B. Transient (first kstp),future,242,prior,-3.393227351530534
+B. Transient (first kstp),future,243,prior,-3.546862007090567
+B. Transient (first kstp),future,244,prior,-8.745026672117092
+B. Transient (first kstp),future,245,prior,-9.639900265972756
+B. Transient (first kstp),future,246,prior,-0.300896096677812
+B. Transient (first kstp),future,247,prior,-1.7741366941481829
+B. Transient (first kstp),future,248,prior,-1.9794879308776352
+B. Transient (first kstp),future,base,prior,-3.578624456326338
+B. Transient (first kstp),future,0,posterior,-0.5871385074684143
+B. Transient (first kstp),future,1,posterior,-1.0660266876220703
+B. Transient (first kstp),future,2,posterior,-1.1523386910559417e-07
+B. Transient (first kstp),future,3,posterior,-193.26332092050143
+B. Transient (first kstp),future,4,posterior,0.0069584581036657
+B. Transient (first kstp),future,5,posterior,-7.8239863645976575
+B. Transient (first kstp),future,6,posterior,-0.1407755202842437
+B. Transient (first kstp),future,7,posterior,-0.5057102180547439
+B. Transient (first kstp),future,8,posterior,-22.896762698888775
+B. Transient (first kstp),future,9,posterior,-2.0980994647891744e-09
+B. Transient (first kstp),future,10,posterior,-165.0864649186842
+B. Transient (first kstp),future,11,posterior,-0.1197597077555141
+B. Transient (first kstp),future,12,posterior,-4.3746185302734375
+B. Transient (first kstp),future,13,posterior,-0.0001399262599042
+B. Transient (first kstp),future,14,posterior,-1.4249950027448966e-06
+B. Transient (first kstp),future,15,posterior,-0.0002532999848437
+B. Transient (first kstp),future,16,posterior,-47.79682567063719
+B. Transient (first kstp),future,17,posterior,-0.5821993252263837
+B. Transient (first kstp),future,18,posterior,-19.344171304219344
+B. Transient (first kstp),future,19,posterior,-0.076952849661926
+B. Transient (first kstp),future,20,posterior,-862.2865542992948
+B. Transient (first kstp),future,21,posterior,-1.5998997803515067
+B. Transient (first kstp),future,22,posterior,-2.8932386338710785
+B. Transient (first kstp),future,23,posterior,-12.738871335983276
+B. Transient (first kstp),future,24,posterior,-2.791842480186519
+B. Transient (first kstp),future,25,posterior,-27.77245368808508
+B. Transient (first kstp),future,26,posterior,-7.203628540039063
+B. Transient (first kstp),future,27,posterior,-0.0102633722419493
+B. Transient (first kstp),future,28,posterior,-46.49596259086411
+B. Transient (first kstp),future,29,posterior,-200.61213936650887
+B. Transient (first kstp),future,30,posterior,-4.288733213893067
+B. Transient (first kstp),future,31,posterior,-0.6370204859071436
+B. Transient (first kstp),future,32,posterior,-502.367874648422
+B. Transient (first kstp),future,33,posterior,629.8119855239638
+B. Transient (first kstp),future,34,posterior,-5.474153149721784e-05
+B. Transient (first kstp),future,35,posterior,-22.08497054129839
+B. Transient (first kstp),future,36,posterior,-3.3967784219095165
+B. Transient (first kstp),future,37,posterior,-21.60991239547729
+B. Transient (first kstp),future,38,posterior,-4.694873733748864
+B. Transient (first kstp),future,39,posterior,-0.0017082128319966
+B. Transient (first kstp),future,40,posterior,-49.23679002199788
+B. Transient (first kstp),future,41,posterior,-3.034117860719561
+B. Transient (first kstp),future,42,posterior,-53.622380662709475
+B. Transient (first kstp),future,43,posterior,-0.000706461057142
+B. Transient (first kstp),future,44,posterior,-90.25035602564458
+B. Transient (first kstp),future,45,posterior,-3.2901804288849235
+B. Transient (first kstp),future,46,posterior,-2.1426360381827863
+B. Transient (first kstp),future,47,posterior,-4.926616717450088
+B. Transient (first kstp),future,48,posterior,-0.0304407065695047
+B. Transient (first kstp),future,49,posterior,-11.315337262176229
+B. Transient (first kstp),future,50,posterior,-0.0033925477123002
+B. Transient (first kstp),future,51,posterior,-0.0240033907049816
+B. Transient (first kstp),future,52,posterior,-0.1444321162512784
+B. Transient (first kstp),future,53,posterior,-46.79277352499776
+B. Transient (first kstp),future,54,posterior,-1.8717905634586387
+B. Transient (first kstp),future,55,posterior,-2.5191568837556133
+B. Transient (first kstp),future,56,posterior,-6.729716372044095
+B. Transient (first kstp),future,57,posterior,-0.4596386616286878
+B. Transient (first kstp),future,58,posterior,-16.913433744654412
+B. Transient (first kstp),future,59,posterior,-6.8699738975046785
+B. Transient (first kstp),future,61,posterior,-285.013282273605
+B. Transient (first kstp),future,62,posterior,-5.011396303911397
+B. Transient (first kstp),future,63,posterior,-0.0082731985797147
+B. Transient (first kstp),future,64,posterior,-0.0839065662574445
+B. Transient (first kstp),future,65,posterior,-28.959949097130448
+B. Transient (first kstp),future,66,posterior,-0.0695378811033517
+B. Transient (first kstp),future,67,posterior,-10.09965281188488
+B. Transient (first kstp),future,68,posterior,-79.25017952919006
+B. Transient (first kstp),future,69,posterior,-54.95654770901456
+B. Transient (first kstp),future,70,posterior,-0.1577633602591959
+B. Transient (first kstp),future,71,posterior,-23.414076030254364
+B. Transient (first kstp),future,72,posterior,-0.236370921306289
+B. Transient (first kstp),future,73,posterior,-8.618594408035278
+B. Transient (first kstp),future,74,posterior,-1.5895464171417188
+B. Transient (first kstp),future,75,posterior,-8.389162961102784
+B. Transient (first kstp),future,76,posterior,-0.908766156871998
+B. Transient (first kstp),future,77,posterior,-0.5360005227585418
+B. Transient (first kstp),future,78,posterior,-2.894232954121719
+B. Transient (first kstp),future,79,posterior,-0.2270040833483868
+B. Transient (first kstp),future,80,posterior,-1.318036751180287e-07
+B. Transient (first kstp),future,81,posterior,-52.76237208386009
+B. Transient (first kstp),future,82,posterior,-15.822094803159416
+B. Transient (first kstp),future,83,posterior,-1373.539813995361
+B. Transient (first kstp),future,84,posterior,-16.724410904695105
+B. Transient (first kstp),future,85,posterior,-55.873632960021496
+B. Transient (first kstp),future,87,posterior,-45.270801715087146
+B. Transient (first kstp),future,88,posterior,-2.3092511930444743
+B. Transient (first kstp),future,89,posterior,-4.051861675586088e-07
+B. Transient (first kstp),future,90,posterior,-24.884693825268183
+B. Transient (first kstp),future,91,posterior,-2.2590204460921086
+B. Transient (first kstp),future,92,posterior,-0.938475172280313
+B. Transient (first kstp),future,93,posterior,-1.2949260193987726
+B. Transient (first kstp),future,94,posterior,-0.3656243370927354
+B. Transient (first kstp),future,95,posterior,-2.888207656878488e-05
+B. Transient (first kstp),future,96,posterior,-4.10700116831346
+B. Transient (first kstp),future,97,posterior,-20.065938555554798
+B. Transient (first kstp),future,98,posterior,-56.13127420728051
+B. Transient (first kstp),future,99,posterior,-1.0649988186220156
+B. Transient (first kstp),future,100,posterior,-100.61869964003562
+B. Transient (first kstp),future,101,posterior,-2.3678552990626542
+B. Transient (first kstp),future,102,posterior,-0.0215710068967188
+B. Transient (first kstp),future,103,posterior,-22.1638837215944
+B. Transient (first kstp),future,104,posterior,-8.03100967735827
+B. Transient (first kstp),future,105,posterior,-0.1868194438347892
+B. Transient (first kstp),future,106,posterior,-0.7566572409123182
+B. Transient (first kstp),future,107,posterior,-11.516807599955087
+B. Transient (first kstp),future,108,posterior,-0.0004068093459761
+B. Transient (first kstp),future,109,posterior,-344.8618564098797
+B. Transient (first kstp),future,110,posterior,-99.4821284096688
+B. Transient (first kstp),future,111,posterior,-1.8826097270939497
+B. Transient (first kstp),future,112,posterior,-0.0048803998235057
+B. Transient (first kstp),future,113,posterior,-36.222550682607114
+B. Transient (first kstp),future,114,posterior,-81.57553273226311
+B. Transient (first kstp),future,115,posterior,-0.039580474645346
+B. Transient (first kstp),future,116,posterior,-16.756663230917184
+B. Transient (first kstp),future,117,posterior,-17.505545355612412
+B. Transient (first kstp),future,118,posterior,-0.006573672837417
+B. Transient (first kstp),future,119,posterior,-54.57423120737076
+B. Transient (first kstp),future,120,posterior,-0.5946066650639754
+B. Transient (first kstp),future,121,posterior,-3.8745786596156577
+B. Transient (first kstp),future,122,posterior,-1.018505693219348
+B. Transient (first kstp),future,123,posterior,-49.45056820178377
+B. Transient (first kstp),future,124,posterior,-1.7088572515637563
+B. Transient (first kstp),future,125,posterior,-23.462095499038696
+B. Transient (first kstp),future,126,posterior,-77.70010461949276
+B. Transient (first kstp),future,127,posterior,-8.451069940565278
+B. Transient (first kstp),future,128,posterior,-7.493048049535559
+B. Transient (first kstp),future,129,posterior,-648.324823330855
+B. Transient (first kstp),future,130,posterior,-2.8387447240238544
+B. Transient (first kstp),future,131,posterior,-0.0067831732460949
+B. Transient (first kstp),future,132,posterior,-71.62188345193863
+B. Transient (first kstp),future,133,posterior,-0.7173647382115576
+B. Transient (first kstp),future,134,posterior,-94.86442305421225
+B. Transient (first kstp),future,135,posterior,-0.005651682225487
+B. Transient (first kstp),future,136,posterior,-3.533863306045532
+B. Transient (first kstp),future,137,posterior,0.4066190715512618
+B. Transient (first kstp),future,138,posterior,-0.0006172772791365
+B. Transient (first kstp),future,139,posterior,-0.0772310284255839
+B. Transient (first kstp),future,140,posterior,-0.6456968751998459
+B. Transient (first kstp),future,141,posterior,-4.331442356109619
+B. Transient (first kstp),future,142,posterior,-29.15057113059506
+B. Transient (first kstp),future,143,posterior,0.0044390435669185
+B. Transient (first kstp),future,144,posterior,-5.660169404037333
+B. Transient (first kstp),future,145,posterior,-0.0010533837217377
+B. Transient (first kstp),future,146,posterior,-55.93120423081564
+B. Transient (first kstp),future,147,posterior,-0.0301703356179833
+B. Transient (first kstp),future,148,posterior,-0.0068487147702577
+B. Transient (first kstp),future,149,posterior,-1.411996102104524
+B. Transient (first kstp),future,150,posterior,-15.349170055007562
+B. Transient (first kstp),future,151,posterior,-6.693365057220262
+B. Transient (first kstp),future,154,posterior,-0.0120760701596255
+B. Transient (first kstp),future,156,posterior,-33.08361459171283
+B. Transient (first kstp),future,157,posterior,-0.1520448240553378
+B. Transient (first kstp),future,158,posterior,-262.7273056656122
+B. Transient (first kstp),future,159,posterior,-2.862869076774928
+B. Transient (first kstp),future,160,posterior,-1.215899647637002
+B. Transient (first kstp),future,161,posterior,-0.0010664343084363
+B. Transient (first kstp),future,162,posterior,-213.2940970659256
+B. Transient (first kstp),future,163,posterior,-32.54566722383515
+B. Transient (first kstp),future,164,posterior,0.22601898713134
+B. Transient (first kstp),future,165,posterior,-6.978641922207316
+B. Transient (first kstp),future,166,posterior,-27.83166088479629
+B. Transient (first kstp),future,167,posterior,-0.0498490504763915
+B. Transient (first kstp),future,168,posterior,-0.0169183689552422
+B. Transient (first kstp),future,169,posterior,-0.0044234673031985
+B. Transient (first kstp),future,170,posterior,-0.0226382464192994
+B. Transient (first kstp),future,171,posterior,4.466862441331614
+B. Transient (first kstp),future,172,posterior,-21.896310556971
+B. Transient (first kstp),future,173,posterior,-0.1414061820384038
+B. Transient (first kstp),future,174,posterior,-91.41291483002713
+B. Transient (first kstp),future,175,posterior,-7.557932114289542
+B. Transient (first kstp),future,176,posterior,-44.66395614192152
+B. Transient (first kstp),future,177,posterior,-0.0458427069471785
+B. Transient (first kstp),future,178,posterior,-7.803292028605939
+B. Transient (first kstp),future,179,posterior,-0.0829766378011242
+B. Transient (first kstp),future,180,posterior,-0.0023154284849673
+B. Transient (first kstp),future,181,posterior,-0.8506061416541899
+B. Transient (first kstp),future,182,posterior,-14.476694473065436
+B. Transient (first kstp),future,183,posterior,-1.1590324735072173
+B. Transient (first kstp),future,184,posterior,-0.0088709308033012
+B. Transient (first kstp),future,185,posterior,-0.0019065639078277
+B. Transient (first kstp),future,186,posterior,-0.0264629693397575
+B. Transient (first kstp),future,188,posterior,-83.42660522460938
+B. Transient (first kstp),future,189,posterior,5.4149303319595e-06
+B. Transient (first kstp),future,190,posterior,-2.457288296227489
+B. Transient (first kstp),future,191,posterior,-2.411516985332128
+B. Transient (first kstp),future,192,posterior,-0.0004550085633816
+B. Transient (first kstp),future,193,posterior,-0.6108783442180509
+B. Transient (first kstp),future,194,posterior,-8.60368656839455
+B. Transient (first kstp),future,195,posterior,-0.0009989651460255
+B. Transient (first kstp),future,197,posterior,-1.0310489642572005
+B. Transient (first kstp),future,198,posterior,-57.703038116975215
+B. Transient (first kstp),future,199,posterior,-0.0956082461039138
+B. Transient (first kstp),future,200,posterior,-1.906117521445452
+B. Transient (first kstp),future,201,posterior,-1.6662794372467147
+B. Transient (first kstp),future,202,posterior,-14.980544741265476
+B. Transient (first kstp),future,203,posterior,-49.28817367337752
+B. Transient (first kstp),future,204,posterior,-0.0002641239755867
+B. Transient (first kstp),future,205,posterior,-119.9257145440206
+B. Transient (first kstp),future,206,posterior,7.175197853077975
+B. Transient (first kstp),future,207,posterior,-0.4549284154410777
+B. Transient (first kstp),future,208,posterior,-9.329104015851042
+B. Transient (first kstp),future,209,posterior,-3.891257917810435
+B. Transient (first kstp),future,210,posterior,-24.423494843977096
+B. Transient (first kstp),future,211,posterior,-3.4523020040006107e-06
+B. Transient (first kstp),future,212,posterior,-878.5008410532027
+B. Transient (first kstp),future,213,posterior,-9.920863534995988
+B. Transient (first kstp),future,214,posterior,-2.83966064453125
+B. Transient (first kstp),future,215,posterior,-4.951513642007943e-05
+B. Transient (first kstp),future,216,posterior,-4.362814434083703
+B. Transient (first kstp),future,217,posterior,-143.77907471496655
+B. Transient (first kstp),future,218,posterior,-0.0007597712462461
+B. Transient (first kstp),future,219,posterior,-455.3317418321967
+B. Transient (first kstp),future,220,posterior,-12.258594179063039
+B. Transient (first kstp),future,221,posterior,-2.9003003093052935
+B. Transient (first kstp),future,222,posterior,-61.573747590184205
+B. Transient (first kstp),future,223,posterior,-78.91761223164819
+B. Transient (first kstp),future,224,posterior,-36.85968953371048
+B. Transient (first kstp),future,225,posterior,-8.382399694765127
+B. Transient (first kstp),future,226,posterior,-34.11154125081521
+B. Transient (first kstp),future,227,posterior,-0.2288386820307852
+B. Transient (first kstp),future,228,posterior,-0.0043117920264893
+B. Transient (first kstp),future,230,posterior,-18.32762232640744
+B. Transient (first kstp),future,231,posterior,-0.0019649397575608
+B. Transient (first kstp),future,232,posterior,-10.399353937460546
+B. Transient (first kstp),future,233,posterior,-0.0047552481012094
+B. Transient (first kstp),future,234,posterior,-40.58887707199324
+B. Transient (first kstp),future,235,posterior,-0.0130287985412892
+B. Transient (first kstp),future,236,posterior,-31.528908835624577
+B. Transient (first kstp),future,237,posterior,-15.775497582217213
+B. Transient (first kstp),future,238,posterior,-9.912849537407896
+B. Transient (first kstp),future,239,posterior,-0.0191045086078318
+B. Transient (first kstp),future,240,posterior,-2.8147007016772e-05
+B. Transient (first kstp),future,241,posterior,-0.4692546223855202
+B. Transient (first kstp),future,242,posterior,-2.302622243314417
+B. Transient (first kstp),future,243,posterior,-2.5680887204198366
+B. Transient (first kstp),future,244,posterior,-12.667707180396972
+B. Transient (first kstp),future,245,posterior,-8.552634196244979
+B. Transient (first kstp),future,246,posterior,0.2389371114465461
+B. Transient (first kstp),future,247,posterior,-0.2931396532803773
+B. Transient (first kstp),future,248,posterior,-0.0968457501760724
+B. Transient (first kstp),future,base,posterior,-5.733488110633971
+C. Transient (last kstp),present,0,prior,-19.27100578448234
+C. Transient (last kstp),present,1,prior,-0.164886474609375
+C. Transient (last kstp),present,2,prior,-2.2392638850176035e-06
+C. Transient (last kstp),present,3,prior,-103.24061316094594
+C. Transient (last kstp),present,4,prior,-0.1781064767285616
+C. Transient (last kstp),present,5,prior,-46.94863068406993
+C. Transient (last kstp),present,6,prior,-3.5938548403432264
+C. Transient (last kstp),present,7,prior,-5.464020935537004
+C. Transient (last kstp),present,8,prior,-36.17029500007629
+C. Transient (last kstp),present,9,prior,-8.554487654687557e-09
+C. Transient (last kstp),present,10,prior,-4.043733403086662
+C. Transient (last kstp),present,11,prior,-34.89030425599776
+C. Transient (last kstp),present,12,prior,-5.23199462890625
+C. Transient (last kstp),present,13,prior,-0.0155945488049263
+C. Transient (last kstp),present,14,prior,-1.0914503043195059e-05
+C. Transient (last kstp),present,15,prior,-0.0052955722257749
+C. Transient (last kstp),present,16,prior,-30.947555929422375
+C. Transient (last kstp),present,17,prior,-42.170434292456775
+C. Transient (last kstp),present,18,prior,-32.81251025194797
+C. Transient (last kstp),present,19,prior,-1.2379236597148733
+C. Transient (last kstp),present,20,prior,-880.8210217654705
+C. Transient (last kstp),present,21,prior,-34.82425909221456
+C. Transient (last kstp),present,22,prior,-1.9683866500854488
+C. Transient (last kstp),present,23,prior,-15.814184188842772
+C. Transient (last kstp),present,24,prior,-29.891145538160345
+C. Transient (last kstp),present,25,prior,-75.45560133457184
+C. Transient (last kstp),present,26,prior,-14.108627319335936
+C. Transient (last kstp),present,27,prior,-1.8468692633686103
+C. Transient (last kstp),present,28,prior,-67.97291247629619
+C. Transient (last kstp),present,29,prior,-16.991744745522738
+C. Transient (last kstp),present,30,prior,-74.3673760602835
+C. Transient (last kstp),present,31,prior,-9.182485653631316
+C. Transient (last kstp),present,32,prior,-32.009867668151855
+C. Transient (last kstp),present,33,prior,-33.487379596568644
+C. Transient (last kstp),present,34,prior,-0.0013966540505118
+C. Transient (last kstp),present,35,prior,-8.559250503778458
+C. Transient (last kstp),present,36,prior,-0.0792035691256776
+C. Transient (last kstp),present,37,prior,-28.70953559875488
+C. Transient (last kstp),present,38,prior,-15.5333277404643
+C. Transient (last kstp),present,39,prior,-0.2556711767580525
+C. Transient (last kstp),present,40,prior,-38.154074652586125
+C. Transient (last kstp),present,41,prior,-6.453891910612583
+C. Transient (last kstp),present,42,prior,-88.84990561008453
+C. Transient (last kstp),present,43,prior,-0.0234095914295356
+C. Transient (last kstp),present,44,prior,-6.618327876552939
+C. Transient (last kstp),present,45,prior,-4.258011110126972
+C. Transient (last kstp),present,46,prior,-21.460734031196694
+C. Transient (last kstp),present,47,prior,-11.275417947443202
+C. Transient (last kstp),present,48,prior,-0.2787519715898163
+C. Transient (last kstp),present,49,prior,-23.80343613685397
+C. Transient (last kstp),present,50,prior,-0.0517327802212736
+C. Transient (last kstp),present,51,prior,-2.780422474219413
+C. Transient (last kstp),present,52,prior,-19.86665187805014
+C. Transient (last kstp),present,53,prior,-39.477647092193365
+C. Transient (last kstp),present,54,prior,-28.092508232925752
+C. Transient (last kstp),present,55,prior,-4.510005088921389
+C. Transient (last kstp),present,56,prior,-5.900564353360096
+C. Transient (last kstp),present,57,prior,-3.269439684393923
+C. Transient (last kstp),present,58,prior,-146.22515136897707
+C. Transient (last kstp),present,59,prior,-10.580010064761154
+C. Transient (last kstp),present,60,prior,-8.367123181716707
+C. Transient (last kstp),present,61,prior,-23.53225930267945
+C. Transient (last kstp),present,62,prior,-11.685164804574015
+C. Transient (last kstp),present,63,prior,-0.0105628146784369
+C. Transient (last kstp),present,64,prior,-1.325261321843608
+C. Transient (last kstp),present,65,prior,-37.60926199704409
+C. Transient (last kstp),present,66,prior,-0.5534873673538478
+C. Transient (last kstp),present,67,prior,-15.550372553989291
+C. Transient (last kstp),present,68,prior,-44.55666971206665
+C. Transient (last kstp),present,69,prior,-21.000252433357673
+C. Transient (last kstp),present,70,prior,-0.089081889243971
+C. Transient (last kstp),present,71,prior,-86.71870517730713
+C. Transient (last kstp),present,72,prior,-14.40431598285648
+C. Transient (last kstp),present,73,prior,-57.36241149902344
+C. Transient (last kstp),present,74,prior,-47.289201475126895
+C. Transient (last kstp),present,75,prior,-695.4758778042412
+C. Transient (last kstp),present,76,prior,-4.889672752198919
+C. Transient (last kstp),present,77,prior,-3.8841675659274695
+C. Transient (last kstp),present,78,prior,-10.947068814853992
+C. Transient (last kstp),present,79,prior,-3.6215560997245566
+C. Transient (last kstp),present,80,prior,-1.5931283728817813e-06
+C. Transient (last kstp),present,81,prior,-8.10093129868619
+C. Transient (last kstp),present,82,prior,-44.928495055301035
+C. Transient (last kstp),present,83,prior,-96.90358352661133
+C. Transient (last kstp),present,84,prior,-49.264179973863065
+C. Transient (last kstp),present,85,prior,-50.53736990690231
+C. Transient (last kstp),present,86,prior,-39.0891318321228
+C. Transient (last kstp),present,87,prior,-70.45851122844033
+C. Transient (last kstp),present,88,prior,-5.919644946581684
+C. Transient (last kstp),present,89,prior,-0.0002083404827439
+C. Transient (last kstp),present,90,prior,-4.995480620767921
+C. Transient (last kstp),present,91,prior,-3.2723230413830606
+C. Transient (last kstp),present,92,prior,-23.865310153678134
+C. Transient (last kstp),present,93,prior,-28.822946340103925
+C. Transient (last kstp),present,94,prior,-4.245637456303712
+C. Transient (last kstp),present,95,prior,-7.310378928542969e-05
+C. Transient (last kstp),present,96,prior,-31.49274946009308
+C. Transient (last kstp),present,97,prior,-132.07478953691952
+C. Transient (last kstp),present,98,prior,-81.6549631797825
+C. Transient (last kstp),present,99,prior,-4.971220485349193
+C. Transient (last kstp),present,100,prior,-60.30502182245255
+C. Transient (last kstp),present,101,prior,-43.017516912132805
+C. Transient (last kstp),present,102,prior,-0.1318153132039356
+C. Transient (last kstp),present,103,prior,-52.94273911305936
+C. Transient (last kstp),present,104,prior,-18.21347050026452
+C. Transient (last kstp),present,105,prior,-1.0853020126688475
+C. Transient (last kstp),present,106,prior,-0.7778775468468666
+C. Transient (last kstp),present,107,prior,-41.19647742288771
+C. Transient (last kstp),present,108,prior,-0.0012304523071752
+C. Transient (last kstp),present,109,prior,-226.0593523681164
+C. Transient (last kstp),present,110,prior,-14.476976498961449
+C. Transient (last kstp),present,111,prior,-4.63208813406527
+C. Transient (last kstp),present,112,prior,-0.0579522625072123
+C. Transient (last kstp),present,113,prior,-50.085058236029
+C. Transient (last kstp),present,114,prior,-53.89513532630008
+C. Transient (last kstp),present,115,prior,-3.332916783274797
+C. Transient (last kstp),present,116,prior,-51.70461248565697
+C. Transient (last kstp),present,117,prior,-25.295877828262743
+C. Transient (last kstp),present,118,prior,-170.18268772506747
+C. Transient (last kstp),present,119,prior,-39.13182163238525
+C. Transient (last kstp),present,120,prior,-9.234248782322208
+C. Transient (last kstp),present,121,prior,-110.89927812417928
+C. Transient (last kstp),present,122,prior,-23.371530085813102
+C. Transient (last kstp),present,123,prior,-98.51352521911667
+C. Transient (last kstp),present,124,prior,-34.21690482698932
+C. Transient (last kstp),present,125,prior,-18.650498390197757
+C. Transient (last kstp),present,126,prior,-55.36539825610816
+C. Transient (last kstp),present,127,prior,-37.45606207067066
+C. Transient (last kstp),present,128,prior,-50.733642430036525
+C. Transient (last kstp),present,129,prior,-23.916826190426946
+C. Transient (last kstp),present,130,prior,-5.453882219037041
+C. Transient (last kstp),present,131,prior,-0.4136294513065267
+C. Transient (last kstp),present,132,prior,-39.53646183013916
+C. Transient (last kstp),present,133,prior,-31.81713640319481
+C. Transient (last kstp),present,134,prior,-132.52648777409922
+C. Transient (last kstp),present,135,prior,-0.8019022559618602
+C. Transient (last kstp),present,136,prior,-5.420958518981934
+C. Transient (last kstp),present,137,prior,-3.5535186269701167
+C. Transient (last kstp),present,138,prior,-0.0260730476774699
+C. Transient (last kstp),present,139,prior,-4.107661077399055
+C. Transient (last kstp),present,140,prior,-8.995598477375353
+C. Transient (last kstp),present,141,prior,-11.215299606323242
+C. Transient (last kstp),present,142,prior,-119.2875827622503
+C. Transient (last kstp),present,143,prior,-0.0781387264493806
+C. Transient (last kstp),present,144,prior,-35.602563769265544
+C. Transient (last kstp),present,145,prior,-0.0130721164168935
+C. Transient (last kstp),present,146,prior,-118.86081025004385
+C. Transient (last kstp),present,147,prior,-0.1927618355767516
+C. Transient (last kstp),present,148,prior,-0.0500816866584837
+C. Transient (last kstp),present,149,prior,-49.89544592885226
+C. Transient (last kstp),present,150,prior,-16.496288137044758
+C. Transient (last kstp),present,151,prior,-21.86104100050443
+C. Transient (last kstp),present,152,prior,-23.89947171640216
+C. Transient (last kstp),present,153,prior,-101.52427912782876
+C. Transient (last kstp),present,154,prior,4.112182799177958
+C. Transient (last kstp),present,155,prior,-0.5051791145641288
+C. Transient (last kstp),present,156,prior,-36.897600382333614
+C. Transient (last kstp),present,157,prior,-3.2854198102282908
+C. Transient (last kstp),present,158,prior,-183.82524955272677
+C. Transient (last kstp),present,159,prior,-3.148016576417831
+C. Transient (last kstp),present,160,prior,-1.7418915855662362
+C. Transient (last kstp),present,161,prior,-0.1615953032021187
+C. Transient (last kstp),present,162,prior,-4.1999311447143555
+C. Transient (last kstp),present,163,prior,-36.21327064583238
+C. Transient (last kstp),present,164,prior,-17.674046355580685
+C. Transient (last kstp),present,165,prior,-4.698246538871899
+C. Transient (last kstp),present,166,prior,-26.31104162619158
+C. Transient (last kstp),present,167,prior,-0.2722116385620685
+C. Transient (last kstp),present,168,prior,-0.208061920872391
+C. Transient (last kstp),present,169,prior,-0.0585800207383746
+C. Transient (last kstp),present,170,prior,-0.0536657962397308
+C. Transient (last kstp),present,171,prior,-38.68559860941605
+C. Transient (last kstp),present,172,prior,-41.234107783529915
+C. Transient (last kstp),present,173,prior,-3.814467328646728
+C. Transient (last kstp),present,174,prior,-27.232155749574304
+C. Transient (last kstp),present,175,prior,-2.129906312789899
+C. Transient (last kstp),present,176,prior,-13.875907879955776
+C. Transient (last kstp),present,177,prior,0.0747533159107973
+C. Transient (last kstp),present,178,prior,-19.23647227883339
+C. Transient (last kstp),present,179,prior,-11.809647190544863
+C. Transient (last kstp),present,180,prior,-0.0281817665689705
+C. Transient (last kstp),present,181,prior,-2.4803696978629386
+C. Transient (last kstp),present,182,prior,-2.898450393229723
+C. Transient (last kstp),present,183,prior,-0.9723021151613124
+C. Transient (last kstp),present,184,prior,-0.3776531440641788
+C. Transient (last kstp),present,185,prior,-1186.2501426995443
+C. Transient (last kstp),present,186,prior,-0.2669996927995192
+C. Transient (last kstp),present,187,prior,-3.002368127461523
+C. Transient (last kstp),present,188,prior,-36.667678833007805
+C. Transient (last kstp),present,189,prior,-0.1126984361912511
+C. Transient (last kstp),present,190,prior,-6.7674513995443695
+C. Transient (last kstp),present,191,prior,-6.009308188571595
+C. Transient (last kstp),present,192,prior,-0.0013615141669528
+C. Transient (last kstp),present,193,prior,-4.10092824171295
+C. Transient (last kstp),present,194,prior,-54.07704408792778
+C. Transient (last kstp),present,195,prior,-0.1097828542956403
+C. Transient (last kstp),present,196,prior,-32.32591559737921
+C. Transient (last kstp),present,197,prior,-36.61318716200799
+C. Transient (last kstp),present,198,prior,-17.782720231451094
+C. Transient (last kstp),present,199,prior,-2.6018781048166195
+C. Transient (last kstp),present,200,prior,-59.761929138726366
+C. Transient (last kstp),present,201,prior,-18.21728884293316
+C. Transient (last kstp),present,202,prior,-23.600589089095592
+C. Transient (last kstp),present,203,prior,-430.2816083145808
+C. Transient (last kstp),present,204,prior,-0.0015450332585814
+C. Transient (last kstp),present,205,prior,-58.55087113007903
+C. Transient (last kstp),present,206,prior,-173.07895819307305
+C. Transient (last kstp),present,207,prior,-7.240528478148832
+C. Transient (last kstp),present,208,prior,-12.395871609449387
+C. Transient (last kstp),present,209,prior,-8.635018254295574
+C. Transient (last kstp),present,210,prior,-20.135617107996946
+C. Transient (last kstp),present,211,prior,-9.88014673357533
+C. Transient (last kstp),present,212,prior,-89.27134932111949
+C. Transient (last kstp),present,213,prior,-62.895573288426014
+C. Transient (last kstp),present,214,prior,-1.5647735595703125
+C. Transient (last kstp),present,215,prior,-1.274835767697439e-05
+C. Transient (last kstp),present,216,prior,-10.43836956564337
+C. Transient (last kstp),present,217,prior,-124.28960722405463
+C. Transient (last kstp),present,218,prior,-0.0087977863635374
+C. Transient (last kstp),present,219,prior,-144.40794343501327
+C. Transient (last kstp),present,220,prior,-5.352788208110724
+C. Transient (last kstp),present,221,prior,-32.75804952595354
+C. Transient (last kstp),present,222,prior,-60.2678564786911
+C. Transient (last kstp),present,223,prior,-311.1691617377859
+C. Transient (last kstp),present,224,prior,-38.34553861618041
+C. Transient (last kstp),present,225,prior,-5.609903892933289
+C. Transient (last kstp),present,226,prior,-40.30170233157696
+C. Transient (last kstp),present,227,prior,-4.300920899072956
+C. Transient (last kstp),present,228,prior,-0.0510180290759678
+C. Transient (last kstp),present,229,prior,-32.91015720285304
+C. Transient (last kstp),present,230,prior,-57.698403546746704
+C. Transient (last kstp),present,231,prior,-5.645898397612132
+C. Transient (last kstp),present,232,prior,-6.171075243502855
+C. Transient (last kstp),present,233,prior,-0.0553882118068176
+C. Transient (last kstp),present,234,prior,-24.85114602878639
+C. Transient (last kstp),present,235,prior,-0.0925800552661043
+C. Transient (last kstp),present,236,prior,-78.74557973001652
+C. Transient (last kstp),present,237,prior,-636.5403357153867
+C. Transient (last kstp),present,238,prior,-49.322317038067496
+C. Transient (last kstp),present,239,prior,-0.0951729040406357
+C. Transient (last kstp),present,240,prior,-0.0005936971197749
+C. Transient (last kstp),present,241,prior,-96.22307224137968
+C. Transient (last kstp),present,242,prior,-4.0811733831885695
+C. Transient (last kstp),present,243,prior,-11.311387062032736
+C. Transient (last kstp),present,244,prior,-34.41469883071841
+C. Transient (last kstp),present,245,prior,-36.287435843856656
+C. Transient (last kstp),present,246,prior,-0.3493152423866323
+C. Transient (last kstp),present,247,prior,-1.7428646385669708
+C. Transient (last kstp),present,248,prior,-15.73796500885949
+C. Transient (last kstp),present,base,prior,-6.40248991460976
+C. Transient (last kstp),present,0,posterior,-3.072622485393566
+C. Transient (last kstp),present,1,posterior,-0.5588531494140625
+C. Transient (last kstp),present,2,posterior,-1.0825964507425e-07
+C. Transient (last kstp),present,3,posterior,-133.1843489407183
+C. Transient (last kstp),present,4,posterior,-0.1199419914069066
+C. Transient (last kstp),present,5,posterior,-244.1568308175192
+C. Transient (last kstp),present,6,posterior,-1.3049135973817556
+C. Transient (last kstp),present,7,posterior,-0.4681228926020324
+C. Transient (last kstp),present,8,posterior,-39.012001752853394
+C. Transient (last kstp),present,9,posterior,-1.4745039199970212e-08
+C. Transient (last kstp),present,10,posterior,-6.059993710368872
+C. Transient (last kstp),present,11,posterior,-0.0896803813780597
+C. Transient (last kstp),present,12,posterior,-4.408615112304688
+C. Transient (last kstp),present,13,posterior,-0.0014440990398733
+C. Transient (last kstp),present,14,posterior,-2.603646369054426e-06
+C. Transient (last kstp),present,15,posterior,-0.0038148539808383
+C. Transient (last kstp),present,16,posterior,-37.85830308496952
+C. Transient (last kstp),present,17,posterior,-6.515327538691963
+C. Transient (last kstp),present,18,posterior,-31.266687477604137
+C. Transient (last kstp),present,19,posterior,-0.5845073529287176
+C. Transient (last kstp),present,20,posterior,-4179.683787252754
+C. Transient (last kstp),present,21,posterior,-11.20024661226671
+C. Transient (last kstp),present,22,posterior,-2.2381956577301025
+C. Transient (last kstp),present,23,posterior,-17.590167999267578
+C. Transient (last kstp),present,24,posterior,-3.967247971453901
+C. Transient (last kstp),present,25,posterior,-57.929733753204346
+C. Transient (last kstp),present,26,posterior,-6.255401611328125
+C. Transient (last kstp),present,27,posterior,-1.3904517964819902
+C. Transient (last kstp),present,28,posterior,-82.12550922722947
+C. Transient (last kstp),present,29,posterior,-93.53836102737114
+C. Transient (last kstp),present,30,posterior,-5.916391356871827
+C. Transient (last kstp),present,31,posterior,0.4643209661176115
+C. Transient (last kstp),present,32,posterior,-312.72417756915087
+C. Transient (last kstp),present,33,posterior,-197.48012701980767
+C. Transient (last kstp),present,34,posterior,-0.0009843149117643
+C. Transient (last kstp),present,35,posterior,-41.76105500757694
+C. Transient (last kstp),present,36,posterior,-27.108433654791952
+C. Transient (last kstp),present,37,posterior,-40.12579345703125
+C. Transient (last kstp),present,38,posterior,-8.23712090536719
+C. Transient (last kstp),present,39,posterior,-0.00783355279735
+C. Transient (last kstp),present,40,posterior,-39.71304245386273
+C. Transient (last kstp),present,41,posterior,-2.1894078701734543
+C. Transient (last kstp),present,42,posterior,-37.625123023986816
+C. Transient (last kstp),present,43,posterior,-0.0084705708538908
+C. Transient (last kstp),present,44,posterior,17.879714902024716
+C. Transient (last kstp),present,45,posterior,-4.61941871419549
+C. Transient (last kstp),present,46,posterior,-9.537224422536497
+C. Transient (last kstp),present,47,posterior,-6.483863593544811
+C. Transient (last kstp),present,48,posterior,-0.6529768343408868
+C. Transient (last kstp),present,49,posterior,-17.72894610985344
+C. Transient (last kstp),present,50,posterior,-0.0329485791114423
+C. Transient (last kstp),present,51,posterior,-0.701589213892376
+C. Transient (last kstp),present,52,posterior,-0.7902884805056746
+C. Transient (last kstp),present,53,posterior,-44.68533291481435
+C. Transient (last kstp),present,54,posterior,-5.099284760107196
+C. Transient (last kstp),present,55,posterior,-3.8143766072244034
+C. Transient (last kstp),present,56,posterior,-7.993498532174271
+C. Transient (last kstp),present,57,posterior,-6.686640747491239
+C. Transient (last kstp),present,58,posterior,-142.34877166050865
+C. Transient (last kstp),present,59,posterior,-16.49782558606239
+C. Transient (last kstp),present,61,posterior,-46.03098352206871
+C. Transient (last kstp),present,62,posterior,-4.543053101862824
+C. Transient (last kstp),present,63,posterior,-0.0016064397556465
+C. Transient (last kstp),present,64,posterior,-0.1194392459992474
+C. Transient (last kstp),present,65,posterior,-21.9063430018723
+C. Transient (last kstp),present,66,posterior,-0.0914504126415334
+C. Transient (last kstp),present,67,posterior,-16.54037018120289
+C. Transient (last kstp),present,68,posterior,-55.3415629863739
+C. Transient (last kstp),present,69,posterior,-31.076883021094545
+C. Transient (last kstp),present,70,posterior,-0.2332504084115498
+C. Transient (last kstp),present,71,posterior,-15.25056916475296
+C. Transient (last kstp),present,72,posterior,-2.6684403531350966
+C. Transient (last kstp),present,73,posterior,-11.957756042480469
+C. Transient (last kstp),present,74,posterior,-28.3523621750428
+C. Transient (last kstp),present,75,posterior,-12.615449150864151
+C. Transient (last kstp),present,76,posterior,-3.745576110123864
+C. Transient (last kstp),present,77,posterior,-0.8738982839702202
+C. Transient (last kstp),present,78,posterior,-19.82883642364777
+C. Transient (last kstp),present,79,posterior,-2.00901940220686
+C. Transient (last kstp),present,80,posterior,-1.2784491603392862e-07
+C. Transient (last kstp),present,81,posterior,-37.932447443366975
+C. Transient (last kstp),present,82,posterior,-20.259773052835957
+C. Transient (last kstp),present,83,posterior,-92.4110279083252
+C. Transient (last kstp),present,84,posterior,-25.416404331685044
+C. Transient (last kstp),present,85,posterior,-65.02302265167236
+C. Transient (last kstp),present,87,posterior,-152.71313008572906
+C. Transient (last kstp),present,88,posterior,-3.690395455691032
+C. Transient (last kstp),present,89,posterior,-1.9237971349587982e-07
+C. Transient (last kstp),present,90,posterior,-12.056896237190813
+C. Transient (last kstp),present,91,posterior,-1.7881543837138452
+C. Transient (last kstp),present,92,posterior,-20.885908185523878
+C. Transient (last kstp),present,93,posterior,-9.37257212730458
+C. Transient (last kstp),present,94,posterior,-0.1430784821680646
+C. Transient (last kstp),present,95,posterior,-0.0001015765963729
+C. Transient (last kstp),present,96,posterior,-6.554934888248624
+C. Transient (last kstp),present,97,posterior,-57.24116946599861
+C. Transient (last kstp),present,98,posterior,-73.0625782033603
+C. Transient (last kstp),present,99,posterior,-4.092537280905674
+C. Transient (last kstp),present,100,posterior,-156.2575877904892
+C. Transient (last kstp),present,101,posterior,-11.950446284156897
+C. Transient (last kstp),present,102,posterior,-0.0167945947272776
+C. Transient (last kstp),present,103,posterior,-22.318576621186367
+C. Transient (last kstp),present,104,posterior,-5.879225541932101
+C. Transient (last kstp),present,105,posterior,-1.7878660793991727
+C. Transient (last kstp),present,106,posterior,-0.1398359388113021
+C. Transient (last kstp),present,107,posterior,-61.78798872981861
+C. Transient (last kstp),present,108,posterior,-0.0002523781365531
+C. Transient (last kstp),present,109,posterior,-299.3742175811203
+C. Transient (last kstp),present,110,posterior,-38.186699360609055
+C. Transient (last kstp),present,111,posterior,-1.348317140713334
+C. Transient (last kstp),present,112,posterior,-0.0396116660372602
+C. Transient (last kstp),present,113,posterior,-41.42744117137045
+C. Transient (last kstp),present,114,posterior,-32.4274370939238
+C. Transient (last kstp),present,115,posterior,-2.393230251253321
+C. Transient (last kstp),present,116,posterior,-13.362831500940956
+C. Transient (last kstp),present,117,posterior,-19.608807346783575
+C. Transient (last kstp),present,118,posterior,-0.0486074358680038
+C. Transient (last kstp),present,119,posterior,-41.73122811317444
+C. Transient (last kstp),present,120,posterior,-0.3781906810376725
+C. Transient (last kstp),present,121,posterior,-14.962805644722764
+C. Transient (last kstp),present,122,posterior,-3.89959514980562
+C. Transient (last kstp),present,123,posterior,-64.86307931511965
+C. Transient (last kstp),present,124,posterior,-55.050564468620905
+C. Transient (last kstp),present,125,posterior,-16.81037139892578
+C. Transient (last kstp),present,126,posterior,-179.3928645439446
+C. Transient (last kstp),present,127,posterior,-41.027954921959456
+C. Transient (last kstp),present,128,posterior,-56.6190934436836
+C. Transient (last kstp),present,129,posterior,-218.870419758372
+C. Transient (last kstp),present,130,posterior,-1.8498908639885483
+C. Transient (last kstp),present,131,posterior,-0.0311304701859677
+C. Transient (last kstp),present,132,posterior,-53.51063776016235
+C. Transient (last kstp),present,133,posterior,-40.580613329874495
+C. Transient (last kstp),present,134,posterior,-178.51246509468183
+C. Transient (last kstp),present,135,posterior,-0.0176505247884773
+C. Transient (last kstp),present,136,posterior,-2.791505813598633
+C. Transient (last kstp),present,137,posterior,2.1374594324786926
+C. Transient (last kstp),present,138,posterior,-0.0210064850837956
+C. Transient (last kstp),present,139,posterior,-1.9009539011101777
+C. Transient (last kstp),present,140,posterior,-4.20243512429758
+C. Transient (last kstp),present,141,posterior,-9.651517868041992
+C. Transient (last kstp),present,142,posterior,-22.176322774888888
+C. Transient (last kstp),present,143,posterior,-0.1357162125446098
+C. Transient (last kstp),present,144,posterior,-12.474751594629195
+C. Transient (last kstp),present,145,posterior,-0.0014060304911687
+C. Transient (last kstp),present,146,posterior,-26.52436417574063
+C. Transient (last kstp),present,147,posterior,-0.0120397760276278
+C. Transient (last kstp),present,148,posterior,-0.065460191053331
+C. Transient (last kstp),present,149,posterior,-53.077476951792505
+C. Transient (last kstp),present,150,posterior,-32.90474199317396
+C. Transient (last kstp),present,151,posterior,-7.05220742734582
+C. Transient (last kstp),present,154,posterior,-0.1244866279459004
+C. Transient (last kstp),present,156,posterior,-36.824354166397825
+C. Transient (last kstp),present,157,posterior,-5.247326276738704
+C. Transient (last kstp),present,158,posterior,-109.16293728351592
+C. Transient (last kstp),present,159,posterior,-9.464523959991762
+C. Transient (last kstp),present,160,posterior,-0.9657437466826196
+C. Transient (last kstp),present,161,posterior,-0.0024063532382296
+C. Transient (last kstp),present,162,posterior,-49.71728515625
+C. Transient (last kstp),present,163,posterior,-85.35528039766358
+C. Transient (last kstp),present,164,posterior,-9.47036978067581
+C. Transient (last kstp),present,165,posterior,-3.510830794359208
+C. Transient (last kstp),present,166,posterior,-51.793773842335206
+C. Transient (last kstp),present,167,posterior,0.022205742066423
+C. Transient (last kstp),present,168,posterior,-0.2310806863546073
+C. Transient (last kstp),present,169,posterior,-0.0350127938249018
+C. Transient (last kstp),present,170,posterior,0.0005933167678317
+C. Transient (last kstp),present,171,posterior,-56.675172334202216
+C. Transient (last kstp),present,172,posterior,-16.24422557442449
+C. Transient (last kstp),present,173,posterior,-2.0486000193978806
+C. Transient (last kstp),present,174,posterior,-179.8072612117976
+C. Transient (last kstp),present,175,posterior,-2.3767048228423846
+C. Transient (last kstp),present,176,posterior,-49.26369194847939
+C. Transient (last kstp),present,177,posterior,0.3265228860319506
+C. Transient (last kstp),present,178,posterior,-16.447248488664627
+C. Transient (last kstp),present,179,posterior,-14.155894880924164
+C. Transient (last kstp),present,180,posterior,-0.0007048990302557
+C. Transient (last kstp),present,181,posterior,-1.1373280209690186
+C. Transient (last kstp),present,182,posterior,-10.753984779119492
+C. Transient (last kstp),present,183,posterior,-1.1788445096632643
+C. Transient (last kstp),present,184,posterior,-0.560861924824854
+C. Transient (last kstp),present,185,posterior,0.0372980415637511
+C. Transient (last kstp),present,186,posterior,-0.2589054274439508
+C. Transient (last kstp),present,188,posterior,-66.59211730957031
+C. Transient (last kstp),present,189,posterior,-0.057161742994048
+C. Transient (last kstp),present,190,posterior,-2.1182565573544707
+C. Transient (last kstp),present,191,posterior,-2.1439692619023845
+C. Transient (last kstp),present,192,posterior,-0.0009958761101261
+C. Transient (last kstp),present,193,posterior,-4.861841327598199
+C. Transient (last kstp),present,194,posterior,-32.315633340753266
+C. Transient (last kstp),present,195,posterior,-0.0557183703951569
+C. Transient (last kstp),present,197,posterior,-15.983609904426828
+C. Transient (last kstp),present,198,posterior,-15.155723391566424
+C. Transient (last kstp),present,199,posterior,-0.3251303353747365
+C. Transient (last kstp),present,200,posterior,0.8910059127570094
+C. Transient (last kstp),present,201,posterior,-9.131915666441271
+C. Transient (last kstp),present,202,posterior,-15.611608885228632
+C. Transient (last kstp),present,203,posterior,-62.59963384277216
+C. Transient (last kstp),present,204,posterior,-0.0034947545346561
+C. Transient (last kstp),present,205,posterior,-87.0677648410201
+C. Transient (last kstp),present,206,posterior,-74.97458179819294
+C. Transient (last kstp),present,207,posterior,-6.04072918274727
+C. Transient (last kstp),present,208,posterior,-8.234591869520953
+C. Transient (last kstp),present,209,posterior,-4.6762374518148135
+C. Transient (last kstp),present,210,posterior,-35.486810879490804
+C. Transient (last kstp),present,211,posterior,-3.8159100961265185e-05
+C. Transient (last kstp),present,212,posterior,-498.20477966777986
+C. Transient (last kstp),present,213,posterior,-59.621171659839085
+C. Transient (last kstp),present,214,posterior,-2.4138641357421875
+C. Transient (last kstp),present,215,posterior,-1.108090403198562e-05
+C. Transient (last kstp),present,216,posterior,-1.3565208440413699
+C. Transient (last kstp),present,217,posterior,-124.51659248655778
+C. Transient (last kstp),present,218,posterior,-0.0048780704228596
+C. Transient (last kstp),present,219,posterior,-148.3599752932787
+C. Transient (last kstp),present,220,posterior,-8.826033168486902
+C. Transient (last kstp),present,221,posterior,-33.952436826384655
+C. Transient (last kstp),present,222,posterior,-41.221450448036194
+C. Transient (last kstp),present,223,posterior,-24.431825285066225
+C. Transient (last kstp),present,224,posterior,-31.244743824005127
+C. Transient (last kstp),present,225,posterior,-7.13180475451736
+C. Transient (last kstp),present,226,posterior,-104.09737621847307
+C. Transient (last kstp),present,227,posterior,-0.9802293038072812
+C. Transient (last kstp),present,228,posterior,-0.0397526259625875
+C. Transient (last kstp),present,230,posterior,-28.738553022521955
+C. Transient (last kstp),present,231,posterior,-0.0139170656355178
+C. Transient (last kstp),present,232,posterior,-14.161751363630172
+C. Transient (last kstp),present,233,posterior,-0.0726433163464821
+C. Transient (last kstp),present,234,posterior,-66.63178419380165
+C. Transient (last kstp),present,235,posterior,-0.0341338261839045
+C. Transient (last kstp),present,236,posterior,-33.78069081391459
+C. Transient (last kstp),present,237,posterior,-11.793213923694564
+C. Transient (last kstp),present,238,posterior,-10.02051430380854
+C. Transient (last kstp),present,239,posterior,-0.0924077909830276
+C. Transient (last kstp),present,240,posterior,-0.0004421087655345
+C. Transient (last kstp),present,241,posterior,-15.369684800142352
+C. Transient (last kstp),present,242,posterior,-7.108320951644373
+C. Transient (last kstp),present,243,posterior,-3.8952565914369193
+C. Transient (last kstp),present,244,posterior,-39.96991002970026
+C. Transient (last kstp),present,245,posterior,-32.34037685842486
+C. Transient (last kstp),present,246,posterior,-18.3166227493158
+C. Transient (last kstp),present,247,posterior,-1.5776183754205704
+C. Transient (last kstp),present,248,posterior,-2.9649864184757178
+C. Transient (last kstp),present,base,posterior,-7.958049830596792
+C. Transient (last kstp),future,0,prior,-7.256045056346655
+C. Transient (last kstp),future,1,prior,-0.4841995239257812
+C. Transient (last kstp),future,2,prior,-9.912715855913542e-07
+C. Transient (last kstp),future,3,prior,-119.2539621424512
+C. Transient (last kstp),future,4,prior,-0.0170248183184169
+C. Transient (last kstp),future,5,prior,-31.094298388286916
+C. Transient (last kstp),future,6,prior,-1.3161164884987924
+C. Transient (last kstp),future,7,prior,-11.893464197400919
+C. Transient (last kstp),future,8,prior,-15.557860940694807
+C. Transient (last kstp),future,9,prior,-1.4416521827206143e-09
+C. Transient (last kstp),future,10,prior,-18.926634995266795
+C. Transient (last kstp),future,11,prior,-9.085997364552895
+C. Transient (last kstp),future,12,prior,-4.004337310791016
+C. Transient (last kstp),future,13,prior,-0.0018781281777524
+C. Transient (last kstp),future,14,prior,-4.47270368474923e-06
+C. Transient (last kstp),future,15,prior,-0.0019137846678239
+C. Transient (last kstp),future,16,prior,-32.487270209006965
+C. Transient (last kstp),future,17,prior,-44.87080025258365
+C. Transient (last kstp),future,18,prior,-35.65717612016306
+C. Transient (last kstp),future,19,prior,-0.2753750502660619
+C. Transient (last kstp),future,20,prior,-880.9149528387934
+C. Transient (last kstp),future,21,prior,-20.417355827940355
+C. Transient (last kstp),future,22,prior,-2.0154379904270168
+C. Transient (last kstp),future,23,prior,-16.987980842590332
+C. Transient (last kstp),future,24,prior,-11.138045924159089
+C. Transient (last kstp),future,25,prior,-58.07015034928918
+C. Transient (last kstp),future,26,prior,-12.92291259765625
+C. Transient (last kstp),future,27,prior,-0.2253931269444997
+C. Transient (last kstp),future,28,prior,-69.93390650258425
+C. Transient (last kstp),future,29,prior,-25.802054625004526
+C. Transient (last kstp),future,30,prior,-46.99041614670364
+C. Transient (last kstp),future,31,prior,-7.751848382575319
+C. Transient (last kstp),future,32,prior,-52.47923440858722
+C. Transient (last kstp),future,33,prior,68.67002633446828
+C. Transient (last kstp),future,34,prior,-0.0004610406432091
+C. Transient (last kstp),future,35,prior,-9.625936603173614
+C. Transient (last kstp),future,36,prior,-0.0186250505072116
+C. Transient (last kstp),future,37,prior,-28.16949248313904
+C. Transient (last kstp),future,38,prior,-6.541916335985661
+C. Transient (last kstp),future,39,prior,-0.0427463940145823
+C. Transient (last kstp),future,40,prior,-10.991132578928953
+C. Transient (last kstp),future,41,prior,-2.5951323974877596
+C. Transient (last kstp),future,42,prior,-68.70560579001904
+C. Transient (last kstp),future,43,prior,-0.003358614671863
+C. Transient (last kstp),future,44,prior,-19.346525125380136
+C. Transient (last kstp),future,45,prior,-7.990175574552267
+C. Transient (last kstp),future,46,prior,-24.946919232818097
+C. Transient (last kstp),future,47,prior,-6.718687653716188
+C. Transient (last kstp),future,48,prior,-0.1277884245497855
+C. Transient (last kstp),future,49,prior,-69.53845888568873
+C. Transient (last kstp),future,50,prior,-0.0128779672726174
+C. Transient (last kstp),future,51,prior,-0.4208591032536588
+C. Transient (last kstp),future,52,prior,-2.885638342882229
+C. Transient (last kstp),future,53,prior,-13.106839804444462
+C. Transient (last kstp),future,54,prior,-20.645766014364543
+C. Transient (last kstp),future,55,prior,-4.259849822803744
+C. Transient (last kstp),future,56,prior,-7.278665098074271
+C. Transient (last kstp),future,57,prior,-0.4876063988061591
+C. Transient (last kstp),future,58,prior,-116.47521921910264
+C. Transient (last kstp),future,59,prior,-8.46154599331203
+C. Transient (last kstp),future,60,prior,-6.354743293014783
+C. Transient (last kstp),future,61,prior,-35.07499350653961
+C. Transient (last kstp),future,62,prior,-9.855067986777613
+C. Transient (last kstp),future,63,prior,-0.0272682779929688
+C. Transient (last kstp),future,64,prior,-0.37625568310421
+C. Transient (last kstp),future,65,prior,-11.47724266629666
+C. Transient (last kstp),future,66,prior,-1.0622692846844732
+C. Transient (last kstp),future,67,prior,-16.792403191095218
+C. Transient (last kstp),future,68,prior,-25.1220128685236
+C. Transient (last kstp),future,69,prior,-30.35080678558006
+C. Transient (last kstp),future,70,prior,-0.1645433737830899
+C. Transient (last kstp),future,71,prior,-63.80280040204525
+C. Transient (last kstp),future,72,prior,-3.706928855267861
+C. Transient (last kstp),future,73,prior,-43.623733043670654
+C. Transient (last kstp),future,74,prior,-48.13671460960995
+C. Transient (last kstp),future,75,prior,-376.1542332927622
+C. Transient (last kstp),future,76,prior,-4.797119826560774
+C. Transient (last kstp),future,77,prior,-1.972781989718168
+C. Transient (last kstp),future,78,prior,-10.501997449019823
+C. Transient (last kstp),future,79,prior,-0.4859321123515272
+C. Transient (last kstp),future,80,prior,-1.236765300444282e-06
+C. Transient (last kstp),future,81,prior,-13.137917116255267
+C. Transient (last kstp),future,82,prior,-57.528882094520206
+C. Transient (last kstp),future,83,prior,-165.24214482307434
+C. Transient (last kstp),future,84,prior,-16.2356849937496
+C. Transient (last kstp),future,85,prior,-34.781526781618595
+C. Transient (last kstp),future,86,prior,-13.36157578229904
+C. Transient (last kstp),future,87,prior,-55.995920870336704
+C. Transient (last kstp),future,88,prior,-6.023243961659318
+C. Transient (last kstp),future,89,prior,-5.707179827869406e-05
+C. Transient (last kstp),future,90,prior,-7.578407400753349
+C. Transient (last kstp),future,91,prior,-2.3737530702510408
+C. Transient (last kstp),future,92,prior,-5.912889942066641
+C. Transient (last kstp),future,93,prior,-8.617831290819321
+C. Transient (last kstp),future,94,prior,-12.851431975453863
+C. Transient (last kstp),future,95,prior,-0.0001656981278242
+C. Transient (last kstp),future,96,prior,-18.473676986964712
+C. Transient (last kstp),future,97,prior,-35.28806777529553
+C. Transient (last kstp),future,98,prior,-71.21020235268952
+C. Transient (last kstp),future,99,prior,-3.0676827860486355
+C. Transient (last kstp),future,100,prior,-29.964184343814846
+C. Transient (last kstp),future,101,prior,-7.478743716924469
+C. Transient (last kstp),future,102,prior,-0.0793012262492954
+C. Transient (last kstp),future,103,prior,-36.71176680874328
+C. Transient (last kstp),future,104,prior,-25.616477259565272
+C. Transient (last kstp),future,105,prior,-0.104698988730596
+C. Transient (last kstp),future,106,prior,-0.6184126688167452
+C. Transient (last kstp),future,107,prior,-26.04113348692647
+C. Transient (last kstp),future,108,prior,-0.000818619639932
+C. Transient (last kstp),future,109,prior,-387.04136889055366
+C. Transient (last kstp),future,110,prior,-20.225789656862617
+C. Transient (last kstp),future,111,prior,-3.053908622125164
+C. Transient (last kstp),future,112,prior,-0.0082984138742866
+C. Transient (last kstp),future,113,prior,-26.453447359905113
+C. Transient (last kstp),future,114,prior,-58.77920667291869
+C. Transient (last kstp),future,115,prior,-0.3326585051191068
+C. Transient (last kstp),future,116,prior,-52.3407209241559
+C. Transient (last kstp),future,117,prior,-20.020381505950358
+C. Transient (last kstp),future,118,prior,-177.60683950256487
+C. Transient (last kstp),future,119,prior,-13.917891204357147
+C. Transient (last kstp),future,120,prior,-13.743373716890927
+C. Transient (last kstp),future,121,prior,-112.93310580789203
+C. Transient (last kstp),future,122,prior,-21.4151910339652
+C. Transient (last kstp),future,123,prior,-136.15563953310948
+C. Transient (last kstp),future,124,prior,-14.401263073584715
+C. Transient (last kstp),future,125,prior,-10.85308039188385
+C. Transient (last kstp),future,126,prior,-64.08526000846177
+C. Transient (last kstp),future,127,prior,-10.100727240474724
+C. Transient (last kstp),future,128,prior,-28.631893199530964
+C. Transient (last kstp),future,129,prior,-65.50257386744488
+C. Transient (last kstp),future,130,prior,-4.337182226663572
+C. Transient (last kstp),future,131,prior,-0.0879014280474531
+C. Transient (last kstp),future,132,prior,-15.248303413391112
+C. Transient (last kstp),future,133,prior,-4.992857180225116
+C. Transient (last kstp),future,134,prior,-98.05472304658906
+C. Transient (last kstp),future,135,prior,-0.1810947144651065
+C. Transient (last kstp),future,136,prior,-4.79555881023407
+C. Transient (last kstp),future,137,prior,-1.6343861073643031
+C. Transient (last kstp),future,138,prior,-0.0058868255973862
+C. Transient (last kstp),future,139,prior,-0.9318678567861785
+C. Transient (last kstp),future,140,prior,-5.736861499114308
+C. Transient (last kstp),future,141,prior,-11.635934829711914
+C. Transient (last kstp),future,142,prior,-227.02023019291275
+C. Transient (last kstp),future,143,prior,-0.0031966065956487
+C. Transient (last kstp),future,144,prior,-6.443216883875721
+C. Transient (last kstp),future,145,prior,-0.0028043114763945
+C. Transient (last kstp),future,146,prior,-121.48758136224932
+C. Transient (last kstp),future,147,prior,-0.6174392808902835
+C. Transient (last kstp),future,148,prior,-0.0210891444688136
+C. Transient (last kstp),future,149,prior,-8.240982630571352
+C. Transient (last kstp),future,150,prior,-8.321763713960534
+C. Transient (last kstp),future,151,prior,-29.795361723035512
+C. Transient (last kstp),future,152,prior,-12.235486325301691
+C. Transient (last kstp),future,153,prior,-75.0806562298676
+C. Transient (last kstp),future,154,prior,-3.7704192396844287
+C. Transient (last kstp),future,155,prior,-0.0737181672555449
+C. Transient (last kstp),future,156,prior,-6.53004190401407
+C. Transient (last kstp),future,157,prior,-0.8871674369948365
+C. Transient (last kstp),future,158,prior,-484.53637657314533
+C. Transient (last kstp),future,159,prior,-2.88023529806145
+C. Transient (last kstp),future,160,prior,-2.694834472681066
+C. Transient (last kstp),future,161,prior,-0.0652065650900109
+C. Transient (last kstp),future,162,prior,-14.181052967905998
+C. Transient (last kstp),future,163,prior,-34.420208339303365
+C. Transient (last kstp),future,164,prior,-14.501187632927667
+C. Transient (last kstp),future,165,prior,-6.664215529273861
+C. Transient (last kstp),future,166,prior,-32.19405665567683
+C. Transient (last kstp),future,167,prior,-0.0459287887693031
+C. Transient (last kstp),future,168,prior,-0.0173237364619746
+C. Transient (last kstp),future,169,prior,-0.00641158702265
+C. Transient (last kstp),future,170,prior,-0.4133006250545164
+C. Transient (last kstp),future,171,prior,-21.858270412836642
+C. Transient (last kstp),future,172,prior,-34.82763717476337
+C. Transient (last kstp),future,173,prior,-1.481368512452233
+C. Transient (last kstp),future,174,prior,-29.10842309542932
+C. Transient (last kstp),future,175,prior,-6.788215876108666
+C. Transient (last kstp),future,176,prior,-20.225268585267255
+C. Transient (last kstp),future,177,prior,-0.1554021585699969
+C. Transient (last kstp),future,178,prior,-20.646370302885767
+C. Transient (last kstp),future,179,prior,-1.835812617087193
+C. Transient (last kstp),future,180,prior,-0.0226328532691888
+C. Transient (last kstp),future,181,prior,-6.20492890772198
+C. Transient (last kstp),future,182,prior,-3.3314405800774693
+C. Transient (last kstp),future,183,prior,-0.4297776334102536
+C. Transient (last kstp),future,184,prior,-0.0605133541457123
+C. Transient (last kstp),future,185,prior,-197.37355924762147
+C. Transient (last kstp),future,186,prior,-0.1823773354133484
+C. Transient (last kstp),future,187,prior,-2.0498439213843085
+C. Transient (last kstp),future,188,prior,-22.4986572265625
+C. Transient (last kstp),future,189,prior,-0.0119922492202598
+C. Transient (last kstp),future,190,prior,-1.216401600264362
+C. Transient (last kstp),future,191,prior,-5.973106972727692
+C. Transient (last kstp),future,192,prior,-0.0017147570024057
+C. Transient (last kstp),future,193,prior,-1.4812201362314283
+C. Transient (last kstp),future,194,prior,-26.411904322856568
+C. Transient (last kstp),future,195,prior,-0.0154707304932671
+C. Transient (last kstp),future,196,prior,-32.49253701022826
+C. Transient (last kstp),future,197,prior,-15.155699106054408
+C. Transient (last kstp),future,198,prior,-21.8449712577858
+C. Transient (last kstp),future,199,prior,-0.9777434189554084
+C. Transient (last kstp),future,200,prior,-35.427286531577636
+C. Transient (last kstp),future,201,prior,-5.2312399044545534
+C. Transient (last kstp),future,202,prior,-47.793376825749874
+C. Transient (last kstp),future,203,prior,-801.8738118735955
+C. Transient (last kstp),future,204,prior,-0.0004086052402422
+C. Transient (last kstp),future,205,prior,-40.60700052510946
+C. Transient (last kstp),future,206,prior,-196.50060661507268
+C. Transient (last kstp),future,207,prior,-1.5841195052730903
+C. Transient (last kstp),future,208,prior,-5.545671859756112
+C. Transient (last kstp),future,209,prior,-4.062270757309307
+C. Transient (last kstp),future,210,prior,-7.802800209483394
+C. Transient (last kstp),future,211,prior,-1.6224210904072378
+C. Transient (last kstp),future,212,prior,-138.030207359232
+C. Transient (last kstp),future,213,prior,-30.32299329031161
+C. Transient (last kstp),future,214,prior,-1.8296661376953125
+C. Transient (last kstp),future,215,prior,-0.0002780494739272
+C. Transient (last kstp),future,216,prior,-10.446986055583691
+C. Transient (last kstp),future,217,prior,-154.14384644430174
+C. Transient (last kstp),future,218,prior,-0.0023536037093262
+C. Transient (last kstp),future,219,prior,-173.70883736712858
+C. Transient (last kstp),future,220,prior,-3.5241928660384474
+C. Transient (last kstp),future,221,prior,-28.9196164772502
+C. Transient (last kstp),future,222,prior,-66.237239100039
+C. Transient (last kstp),future,223,prior,-403.5067004355104
+C. Transient (last kstp),future,224,prior,-12.501279175281525
+C. Transient (last kstp),future,225,prior,-7.381641008252245
+C. Transient (last kstp),future,226,prior,-27.552537141869838
+C. Transient (last kstp),future,227,prior,-1.144364737242956
+C. Transient (last kstp),future,228,prior,-0.0163362365881258
+C. Transient (last kstp),future,229,prior,-29.1012829990168
+C. Transient (last kstp),future,230,prior,-55.85354769509468
+C. Transient (last kstp),future,231,prior,-0.5993399990909631
+C. Transient (last kstp),future,232,prior,-3.5908710153307766
+C. Transient (last kstp),future,233,prior,-0.0053419479259329
+C. Transient (last kstp),future,234,prior,-78.80713898052862
+C. Transient (last kstp),future,235,prior,-0.1671360480268872
+C. Transient (last kstp),future,236,prior,-168.1867533117298
+C. Transient (last kstp),future,237,prior,-1196.1347369681484
+C. Transient (last kstp),future,238,prior,-47.898114175408296
+C. Transient (last kstp),future,239,prior,-0.0238470525409743
+C. Transient (last kstp),future,240,prior,-0.0001525454792678
+C. Transient (last kstp),future,241,prior,-57.12397719595128
+C. Transient (last kstp),future,242,prior,-4.775561269756835
+C. Transient (last kstp),future,243,prior,-7.612857863824956
+C. Transient (last kstp),future,244,prior,-15.410452136471577
+C. Transient (last kstp),future,245,prior,-31.609524821792547
+C. Transient (last kstp),future,246,prior,-0.3418373534189862
+C. Transient (last kstp),future,247,prior,-2.1513162665069103
+C. Transient (last kstp),future,248,prior,-2.1343034256811606
+C. Transient (last kstp),future,base,prior,-6.264367468651472
+C. Transient (last kstp),future,0,posterior,-0.7904065281402044
+C. Transient (last kstp),future,1,posterior,-1.350830078125
+C. Transient (last kstp),future,2,posterior,-1.2347424674126201e-07
+C. Transient (last kstp),future,3,posterior,-238.47154620994115
+C. Transient (last kstp),future,4,posterior,-0.0010457089693143
+C. Transient (last kstp),future,5,posterior,-13.209274368367915
+C. Transient (last kstp),future,6,posterior,-0.1826963322039958
+C. Transient (last kstp),future,7,posterior,-0.4863728454523756
+C. Transient (last kstp),future,8,posterior,-28.152697563171383
+C. Transient (last kstp),future,9,posterior,-2.77029068530682e-09
+C. Transient (last kstp),future,10,posterior,-165.42563045769927
+C. Transient (last kstp),future,11,posterior,-0.1246840525905263
+C. Transient (last kstp),future,12,posterior,-7.7446136474609375
+C. Transient (last kstp),future,13,posterior,-0.0002440791740906
+C. Transient (last kstp),future,14,posterior,-1.466051366211733e-06
+C. Transient (last kstp),future,15,posterior,-0.0006369634510266
+C. Transient (last kstp),future,16,posterior,-61.895100057125084
+C. Transient (last kstp),future,17,posterior,-5.032832530080782
+C. Transient (last kstp),future,18,posterior,-35.97012179018202
+C. Transient (last kstp),future,19,posterior,-0.1118825126558737
+C. Transient (last kstp),future,20,posterior,-4218.268313369248
+C. Transient (last kstp),future,21,posterior,-8.49361411088944
+C. Transient (last kstp),future,22,posterior,-3.0439328402280807
+C. Transient (last kstp),future,23,posterior,-20.242037773132324
+C. Transient (last kstp),future,24,posterior,-3.0247988127495318
+C. Transient (last kstp),future,25,posterior,-46.04780524969101
+C. Transient (last kstp),future,26,posterior,-6.47576904296875
+C. Transient (last kstp),future,27,posterior,-0.1306061789014165
+C. Transient (last kstp),future,28,posterior,-86.22645422757296
+C. Transient (last kstp),future,29,posterior,-231.32374561252072
+C. Transient (last kstp),future,30,posterior,-2.0237695662954702
+C. Transient (last kstp),future,31,posterior,-1.5243630698440427
+C. Transient (last kstp),future,32,posterior,-507.4799057245255
+C. Transient (last kstp),future,33,posterior,629.032384776161
+C. Transient (last kstp),future,34,posterior,-0.0001642203015376
+C. Transient (last kstp),future,35,posterior,-34.14863056689501
+C. Transient (last kstp),future,36,posterior,-9.493906855528765
+C. Transient (last kstp),future,37,posterior,-40.87487769126892
+C. Transient (last kstp),future,38,posterior,-6.181894674016803
+C. Transient (last kstp),future,39,posterior,-0.0019208226719588
+C. Transient (last kstp),future,40,posterior,-20.835648414795287
+C. Transient (last kstp),future,41,posterior,-1.0848414916545153
+C. Transient (last kstp),future,42,posterior,-41.20276346802712
+C. Transient (last kstp),future,43,posterior,-0.0012954785233221
+C. Transient (last kstp),future,44,posterior,-94.95819278398993
+C. Transient (last kstp),future,45,posterior,-4.926963344216347
+C. Transient (last kstp),future,46,posterior,-3.3655585000509944
+C. Transient (last kstp),future,47,posterior,-5.304455579520436
+C. Transient (last kstp),future,48,posterior,-0.1701213202955855
+C. Transient (last kstp),future,49,posterior,-20.47754626726248
+C. Transient (last kstp),future,50,posterior,-0.0099694879668023
+C. Transient (last kstp),future,51,posterior,0.0235055261208643
+C. Transient (last kstp),future,52,posterior,-0.1552636368999591
+C. Transient (last kstp),future,53,posterior,-14.569406456779689
+C. Transient (last kstp),future,54,posterior,-2.3817426618008746
+C. Transient (last kstp),future,55,posterior,-3.9485273661721294
+C. Transient (last kstp),future,56,posterior,-16.19887843428205
+C. Transient (last kstp),future,57,posterior,-0.7641401052159508
+C. Transient (last kstp),future,58,posterior,-109.66039368981455
+C. Transient (last kstp),future,59,posterior,-16.884107939884416
+C. Transient (last kstp),future,61,posterior,-264.7201400452177
+C. Transient (last kstp),future,62,posterior,-5.137352580069773
+C. Transient (last kstp),future,63,posterior,-0.0082837754049058
+C. Transient (last kstp),future,64,posterior,-0.1228907038133859
+C. Transient (last kstp),future,65,posterior,-7.036271492950617
+C. Transient (last kstp),future,66,posterior,-0.0704813357363728
+C. Transient (last kstp),future,67,posterior,-18.502950897673145
+C. Transient (last kstp),future,68,posterior,-69.27226874232292
+C. Transient (last kstp),future,69,posterior,-57.815514817445546
+C. Transient (last kstp),future,70,posterior,-0.469906643818831
+C. Transient (last kstp),future,71,posterior,-22.757825680077076
+C. Transient (last kstp),future,72,posterior,-0.5505032283950317
+C. Transient (last kstp),future,73,posterior,-13.996681213378906
+C. Transient (last kstp),future,74,posterior,-2.494072526602394
+C. Transient (last kstp),future,75,posterior,-13.684982254125998
+C. Transient (last kstp),future,76,posterior,-1.7641991252723557
+C. Transient (last kstp),future,77,posterior,-0.7521888012329434
+C. Transient (last kstp),future,78,posterior,-18.15845742280851
+C. Transient (last kstp),future,79,posterior,-0.4472248046152635
+C. Transient (last kstp),future,80,posterior,-1.3436965278156142e-07
+C. Transient (last kstp),future,81,posterior,-91.20401842315185
+C. Transient (last kstp),future,82,posterior,-51.4561760789984
+C. Transient (last kstp),future,83,posterior,-1344.9514734745023
+C. Transient (last kstp),future,84,posterior,-9.25322855482955
+C. Transient (last kstp),future,85,posterior,-94.2740599028766
+C. Transient (last kstp),future,87,posterior,-75.00091949739726
+C. Transient (last kstp),future,88,posterior,-4.496655687107705
+C. Transient (last kstp),future,89,posterior,-4.034746471355973e-07
+C. Transient (last kstp),future,90,posterior,-36.886838014412206
+C. Transient (last kstp),future,91,posterior,-2.9464860793477783
+C. Transient (last kstp),future,92,posterior,-2.2458090729579965
+C. Transient (last kstp),future,93,posterior,-2.074828099462209
+C. Transient (last kstp),future,94,posterior,-0.5412864806826718
+C. Transient (last kstp),future,95,posterior,-4.2371302493465855e-05
+C. Transient (last kstp),future,96,posterior,-1.563793374136864
+C. Transient (last kstp),future,97,posterior,-40.04726469146294
+C. Transient (last kstp),future,98,posterior,-61.57842112113576
+C. Transient (last kstp),future,99,posterior,-1.2170615620396816
+C. Transient (last kstp),future,100,posterior,-120.62777453660964
+C. Transient (last kstp),future,101,posterior,-3.605330513576405
+C. Transient (last kstp),future,102,posterior,-0.032159342962476
+C. Transient (last kstp),future,103,posterior,-29.221920900881056
+C. Transient (last kstp),future,104,posterior,-6.686969995436812
+C. Transient (last kstp),future,105,posterior,-0.1684283003154112
+C. Transient (last kstp),future,106,posterior,-1.5575173199176788
+C. Transient (last kstp),future,107,posterior,-14.86211422800318
+C. Transient (last kstp),future,108,posterior,-0.0004127262138796
+C. Transient (last kstp),future,109,posterior,-345.3644017978368
+C. Transient (last kstp),future,110,posterior,-120.3532746694982
+C. Transient (last kstp),future,111,posterior,-2.6106718259397894
+C. Transient (last kstp),future,112,posterior,-0.0062120169772543
+C. Transient (last kstp),future,113,posterior,-53.57566122052958
+C. Transient (last kstp),future,114,posterior,-94.05764388074569
+C. Transient (last kstp),future,115,posterior,-0.1940041884375744
+C. Transient (last kstp),future,116,posterior,-18.435317558120005
+C. Transient (last kstp),future,117,posterior,-21.635771257802844
+C. Transient (last kstp),future,118,posterior,-0.0090492486533745
+C. Transient (last kstp),future,119,posterior,-18.953766882419583
+C. Transient (last kstp),future,120,posterior,-0.6123743156667923
+C. Transient (last kstp),future,121,posterior,-4.229633913715974
+C. Transient (last kstp),future,122,posterior,-1.2850640334196424
+C. Transient (last kstp),future,123,posterior,-70.07752514532893
+C. Transient (last kstp),future,124,posterior,-11.175934176245676
+C. Transient (last kstp),future,125,posterior,-33.31367039680481
+C. Transient (last kstp),future,126,posterior,-184.3823068399215
+C. Transient (last kstp),future,127,posterior,-8.452194504332738
+C. Transient (last kstp),future,128,posterior,-26.42032499847721
+C. Transient (last kstp),future,129,posterior,-637.9031663191272
+C. Transient (last kstp),future,130,posterior,-1.399579033095506
+C. Transient (last kstp),future,131,posterior,-0.00778990727014
+C. Transient (last kstp),future,132,posterior,-55.540113508701324
+C. Transient (last kstp),future,133,posterior,-6.566025436169525
+C. Transient (last kstp),future,134,posterior,-135.4977898992074
+C. Transient (last kstp),future,135,posterior,-0.0019488749340114
+C. Transient (last kstp),future,136,posterior,-4.509326696395874
+C. Transient (last kstp),future,137,posterior,0.045640340835682
+C. Transient (last kstp),future,138,posterior,-0.0044061613564741
+C. Transient (last kstp),future,139,posterior,-0.2395625706146038
+C. Transient (last kstp),future,140,posterior,-1.328299080713986
+C. Transient (last kstp),future,141,posterior,-10.578377485275269
+C. Transient (last kstp),future,142,posterior,-30.11002241452963
+C. Transient (last kstp),future,143,posterior,0.0020779105011983
+C. Transient (last kstp),future,144,posterior,-8.14448928652564
+C. Transient (last kstp),future,145,posterior,-0.001179994620244
+C. Transient (last kstp),future,146,posterior,-34.53326611884404
+C. Transient (last kstp),future,147,posterior,-0.0354465292833953
+C. Transient (last kstp),future,148,posterior,-0.0111834085703245
+C. Transient (last kstp),future,149,posterior,-8.651366876572524
+C. Transient (last kstp),future,150,posterior,-29.75356714759255
+C. Transient (last kstp),future,151,posterior,-9.1832663709273
+C. Transient (last kstp),future,154,posterior,-0.0126783297911483
+C. Transient (last kstp),future,156,posterior,-6.775238863512641
+C. Transient (last kstp),future,157,posterior,-1.130852101703887
+C. Transient (last kstp),future,158,posterior,-286.4862638115883
+C. Transient (last kstp),future,159,posterior,-4.726074517387076
+C. Transient (last kstp),future,160,posterior,-1.4709312508030905
+C. Transient (last kstp),future,161,posterior,-0.0013102303487977
+C. Transient (last kstp),future,162,posterior,-213.27947662770748
+C. Transient (last kstp),future,163,posterior,-92.48981034717008
+C. Transient (last kstp),future,164,posterior,-2.046407864748346
+C. Transient (last kstp),future,165,posterior,-5.389260856828513
+C. Transient (last kstp),future,166,posterior,-64.62593260259382
+C. Transient (last kstp),future,167,posterior,-0.0698449996025483
+C. Transient (last kstp),future,168,posterior,-0.0175615618925133
+C. Transient (last kstp),future,169,posterior,-0.0031527326178598
+C. Transient (last kstp),future,170,posterior,-0.0232038804503183
+C. Transient (last kstp),future,171,posterior,-40.80219770982694
+C. Transient (last kstp),future,172,posterior,-23.24038773373468
+C. Transient (last kstp),future,173,posterior,-0.5029105527360151
+C. Transient (last kstp),future,174,posterior,-160.6876622454729
+C. Transient (last kstp),future,175,posterior,-8.82470823673526
+C. Transient (last kstp),future,176,posterior,-74.6488804371147
+C. Transient (last kstp),future,177,posterior,-0.0942795428754616
+C. Transient (last kstp),future,178,posterior,-19.06847850605845
+C. Transient (last kstp),future,179,posterior,-1.622437579412704
+C. Transient (last kstp),future,180,posterior,-0.0024283932596326
+C. Transient (last kstp),future,181,posterior,-0.8905686042860547
+C. Transient (last kstp),future,182,posterior,-18.16665295045823
+C. Transient (last kstp),future,183,posterior,-0.5447075848415251
+C. Transient (last kstp),future,184,posterior,-0.0903537400038683
+C. Transient (last kstp),future,185,posterior,-0.0051806453987629
+C. Transient (last kstp),future,186,posterior,-0.0770915444090698
+C. Transient (last kstp),future,188,posterior,-88.16508483886719
+C. Transient (last kstp),future,189,posterior,-0.0027085131086615
+C. Transient (last kstp),future,190,posterior,-1.9512087697603415
+C. Transient (last kstp),future,191,posterior,-2.720363482905668
+C. Transient (last kstp),future,192,posterior,-0.0004923218042774
+C. Transient (last kstp),future,193,posterior,-2.159354658882137
+C. Transient (last kstp),future,194,posterior,-24.99376326002948
+C. Transient (last kstp),future,195,posterior,-0.0076314607577464
+C. Transient (last kstp),future,197,posterior,-2.920335694307361
+C. Transient (last kstp),future,198,posterior,-65.61734251541202
+C. Transient (last kstp),future,199,posterior,-0.1244467671161804
+C. Transient (last kstp),future,200,posterior,-4.044491361125353
+C. Transient (last kstp),future,201,posterior,-5.102387849799612
+C. Transient (last kstp),future,202,posterior,-21.825302558485415
+C. Transient (last kstp),future,203,posterior,-64.2363797625253
+C. Transient (last kstp),future,204,posterior,-0.0005761562708591
+C. Transient (last kstp),future,205,posterior,-113.10925975255668
+C. Transient (last kstp),future,206,posterior,-13.569206617378768
+C. Transient (last kstp),future,207,posterior,-1.1079913187039627
+C. Transient (last kstp),future,208,posterior,-14.19050734162738
+C. Transient (last kstp),future,209,posterior,-8.193084027032455
+C. Transient (last kstp),future,210,posterior,-41.15267186399433
+C. Transient (last kstp),future,211,posterior,-5.119626661184033e-06
+C. Transient (last kstp),future,212,posterior,-944.3691177152797
+C. Transient (last kstp),future,213,posterior,-19.471985229662323
+C. Transient (last kstp),future,214,posterior,-4.1954193115234375
+C. Transient (last kstp),future,215,posterior,-5.1128391029147534e-05
+C. Transient (last kstp),future,216,posterior,-9.03434609742544
+C. Transient (last kstp),future,217,posterior,-227.41713996094768
+C. Transient (last kstp),future,218,posterior,-0.0010801939999268
+C. Transient (last kstp),future,219,posterior,-576.0217588059604
+C. Transient (last kstp),future,220,posterior,-18.334352954937454
+C. Transient (last kstp),future,221,posterior,-35.31291666336074
+C. Transient (last kstp),future,222,posterior,-82.58870947360992
+C. Transient (last kstp),future,223,posterior,-80.54306244150969
+C. Transient (last kstp),future,224,posterior,-12.548289954662321
+C. Transient (last kstp),future,225,posterior,-9.523309302771167
+C. Transient (last kstp),future,226,posterior,-106.28551872038588
+C. Transient (last kstp),future,227,posterior,-0.4756888129683973
+C. Transient (last kstp),future,228,posterior,-0.0108317715813913
+C. Transient (last kstp),future,230,posterior,-29.719926870108797
+C. Transient (last kstp),future,231,posterior,-0.002580961858207
+C. Transient (last kstp),future,232,posterior,-27.76618394082652
+C. Transient (last kstp),future,233,posterior,-0.0055263038833767
+C. Transient (last kstp),future,234,posterior,-66.54464052182266
+C. Transient (last kstp),future,235,posterior,-0.015270842665376
+C. Transient (last kstp),future,236,posterior,-37.91441494545585
+C. Transient (last kstp),future,237,posterior,-20.73640231578611
+C. Transient (last kstp),future,238,posterior,-9.143018404507847
+C. Transient (last kstp),future,239,posterior,-0.0120926128220442
+C. Transient (last kstp),future,240,posterior,-5.276287984678173e-05
+C. Transient (last kstp),future,241,posterior,-2.823950753233482
+C. Transient (last kstp),future,242,posterior,-4.345646337213296
+C. Transient (last kstp),future,243,posterior,-1.585763034391675
+C. Transient (last kstp),future,244,posterior,-24.248909236986943
+C. Transient (last kstp),future,245,posterior,-19.825812579356352
+C. Transient (last kstp),future,246,posterior,-2.298462194671856
+C. Transient (last kstp),future,247,posterior,-1.2429543975740671
+C. Transient (last kstp),future,248,posterior,-0.2472594962787191
+C. Transient (last kstp),future,base,posterior,-10.072623527618816

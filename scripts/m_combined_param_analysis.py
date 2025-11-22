@@ -28,7 +28,70 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__)))
 # Import setup and parameter categorization
 from setup import MODEL_NAME as DEFAULT_MODEL_NAME
 from setup import REINFLATE_ITERS as DEFAULT_REINFLATE_LIST
-from h_analyze_params import categorize_parameter
+
+
+def categorize_parameter(pname):
+    """
+    Categorize parameter by type based on pname prefix.
+
+    Args:
+        pname: Parameter name (e.g., 'npfklayer1-gr')
+
+    Returns:
+        tuple: (category, subcategory)
+    """
+    pname_lower = str(pname).lower()
+
+    if 'npfk' in pname_lower:
+        if '-gr' in pname_lower:
+            return ('Hydraulic Conductivity', 'K-grid')
+        elif '-pp' in pname_lower:
+            return ('Hydraulic Conductivity', 'K-pilot')
+        elif '-cn' in pname_lower:
+            return ('Hydraulic Conductivity', 'K-constant')
+        else:
+            return ('Hydraulic Conductivity', 'K-other')
+
+    elif 'stoss' in pname_lower or 'sto' in pname_lower:
+        if '-gr' in pname_lower:
+            return ('Storage', 'S-grid')
+        elif '-pp' in pname_lower:
+            return ('Storage', 'S-pilot')
+        elif '-cn' in pname_lower:
+            return ('Storage', 'S-constant')
+        else:
+            return ('Storage', 'S-other')
+
+    elif 'rch' in pname_lower:
+        if 'rchss' in pname_lower or 'ss' in pname_lower:
+            return ('Recharge', 'RCH-steady')
+        elif 'rchtr' in pname_lower or 'tr' in pname_lower:
+            return ('Recharge', 'RCH-transient')
+        else:
+            return ('Recharge', 'RCH-other')
+
+    elif 'ghb' in pname_lower:
+        # Determine GHB type
+        ghb_type = 'GHB-other'
+        if 'ghbaw' in pname_lower:
+            ghb_type = 'GHB-Awanui'
+        elif 'ghbpw' in pname_lower:
+            ghb_type = 'GHB-Poukawa'
+        elif 'ghbspring' in pname_lower:
+            ghb_type = 'GHB-Spring'
+        elif 'ghbconf' in pname_lower:
+            ghb_type = 'GHB-Confined'
+
+        # Determine property
+        if '-cond' in pname_lower:
+            return ('GHB Conductance', ghb_type + '-cond')
+        elif '-head' in pname_lower:
+            return ('GHB Head', ghb_type + '-head')
+        else:
+            return ('GHB Other', ghb_type)
+
+    else:
+        return ('Other', 'Other')
 
 
 def calculate_reinflation_iters(reinflate_list):

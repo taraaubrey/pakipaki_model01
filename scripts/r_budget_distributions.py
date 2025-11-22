@@ -284,26 +284,32 @@ def create_budget_plots(run_name, model_name, post_iter=19, filter_file=None, su
             prior_vals = prior_oe[obs_name].values
             post_vals = post_oe[obs_name].values
 
-            # Determine bins
-            all_vals = np.concatenate([prior_vals, post_vals])
-            bins = np.linspace(np.min(all_vals), np.max(all_vals), 25)
+            # Separate bins for prior and posterior
+            bins_prior = np.linspace(np.min(prior_vals), np.max(prior_vals), 25)
+            bins_post = np.linspace(np.min(post_vals), np.max(post_vals), 25)
 
             # Plot histograms
-            ax.hist(prior_vals, bins=bins, alpha=0.5, color='#1f77b4',
+            ax.hist(prior_vals, bins=bins_prior, alpha=0.5, color='#1f77b4',
                    label='Prior', edgecolor='black', linewidth=0.3)
-            ax.hist(post_vals, bins=bins, alpha=0.5, color='#ff7f0e',
+            ax.hist(post_vals, bins=bins_post, alpha=0.5, color='#ff7f0e',
                    label='Posterior', edgecolor='black', linewidth=0.3)
 
-            # Add mean lines
+            # Set x-axis limits based on posterior distribution
+            post_min = np.min(post_vals)
+            post_max = np.max(post_vals)
+            x_margin = (post_max - post_min) * 0.1
+            ax.set_xlim(post_min - x_margin, post_max + x_margin)
+
+            # Add median lines
             ymin, ymax = ax.get_ylim()
 
-            prior_mean = np.mean(prior_vals)
-            post_mean = np.mean(post_vals)
+            prior_median = np.median(prior_vals)
+            post_median = np.median(post_vals)
 
-            ax.axvline(prior_mean, color='#1f77b4', linestyle='--', linewidth=2,
-                      label=f'Prior mean: {prior_mean:.1f}')
-            ax.axvline(post_mean, color='#ff7f0e', linestyle='-', linewidth=2,
-                      label=f'Post mean: {post_mean:.1f}')
+            ax.axvline(prior_median, color='#1f77b4', linestyle='--', linewidth=2,
+                      label=f'Prior median: {prior_median:.1f}')
+            ax.axvline(post_median, color='#ff7f0e', linestyle='-', linewidth=2,
+                      label=f'Post median: {post_median:.1f}')
 
             # Add truth value if available
             if btype in truth_values and kper in truth_values[btype]:

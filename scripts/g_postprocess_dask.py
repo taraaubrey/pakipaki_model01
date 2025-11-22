@@ -4,11 +4,9 @@ Dask-optimized post-processing script for PEST++ IES results.
 Uses Dask for efficient loading of large CSV files.
 
 Usage:
-    # Same as g_postprocess.py, but with Dask optimization:
-    python scripts/g_postprocess_dask.py
-    python scripts/g_postprocess_dask.py --model local_run34 --last-iter 8
-    python scripts/g_postprocess_dask.py --subset-method phi --phi-percentile 10 90
-    python scripts/g_postprocess_dask.py --no-dask  # Disable Dask optimization
+    python scripts/g_postprocess_dask.py run_name [options]
+    python scripts/g_postprocess_dask.py local_run34 --last-iter 8
+    python scripts/g_postprocess_dask.py local_run34 --subset-method phi --phi-percentile 10 90
 """
 
 import os
@@ -18,7 +16,6 @@ import pyemu
 
 # Import standard helpers (Dask optimization doesn't provide benefit for PyEMU ensembles)
 from g_helpers_run4 import *
-from setup import MODEL_NAME
 import pandas as pd
 
 print("Note: Using standard data loading (PyEMU ensembles are already optimized)")
@@ -33,10 +30,9 @@ def parse_args():
     )
 
     parser.add_argument(
-        '--model', '-m',
+        'run_name',
         type=str,
-        default=MODEL_NAME,
-        help=f'Model/run name (default: {MODEL_NAME} from setup.py)'
+        help='Name of the run directory'
     )
 
     parser.add_argument(
@@ -78,7 +74,7 @@ def main():
 
     # Parse command-line arguments
     args = parse_args()
-    run_name = args.model
+    run_name = args.run_name
 
     print(f"\n{'='*70}")
     print(f"POST-PROCESSING (Dask-optimized): {run_name}")
@@ -86,6 +82,12 @@ def main():
 
     # Setup paths
     paths = setup_paths(run_name, m_d_str='master_ies', m_d_prior='master_ies')
+
+    # Override output directory to pp_figures
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    project_root = os.path.dirname(script_dir)
+    paths['output'] = os.path.join(project_root, f'models/{run_name}/pp_figures')
+    os.makedirs(paths['output'], exist_ok=True)
 
     check_dir = paths['m_d']
     if not os.path.exists(check_dir):
