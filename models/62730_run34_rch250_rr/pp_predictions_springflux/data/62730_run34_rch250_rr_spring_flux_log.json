@@ -1,0 +1,44 @@
+{
+  "run_name": "62730_run34_rch250_rr",
+  "model_name": "local_run34",
+  "post_iter": 19,
+  "filter_file": null,
+  "spring_i": 36,
+  "spring_j": 33,
+  "suffix": null,
+  "comparisons": [
+    {
+      "name": "Steady state",
+      "present": [
+        1,
+        1
+      ],
+      "past": [
+        3,
+        1
+      ]
+    },
+    {
+      "name": "10 days after recession",
+      "present": [
+        2,
+        10
+      ],
+      "past": [
+        4,
+        10
+      ]
+    },
+    {
+      "name": "End of recession",
+      "present": [
+        2,
+        52
+      ],
+      "past": [
+        4,
+        52
+      ]
+    }
+  ]
+}

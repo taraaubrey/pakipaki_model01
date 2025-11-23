@@ -1,0 +1,44 @@
+{
+  "run_name": "run36_62859_noGHBheads",
+  "model_name": "run36",
+  "post_iter": 39,
+  "filter_file": null,
+  "spring_i": 36,
+  "spring_j": 33,
+  "suffix": null,
+  "comparisons": [
+    {
+      "name": "Steady state",
+      "present": [
+        1,
+        1
+      ],
+      "past": [
+        3,
+        1
+      ]
+    },
+    {
+      "name": "10 days after recession",
+      "present": [
+        2,
+        10
+      ],
+      "past": [
+        4,
+        10
+      ]
+    },
+    {
+      "name": "End of recession",
+      "present": [
+        2,
+        52
+      ],
+      "past": [
+        4,
+        52
+      ]
+    }
+  ]
+}

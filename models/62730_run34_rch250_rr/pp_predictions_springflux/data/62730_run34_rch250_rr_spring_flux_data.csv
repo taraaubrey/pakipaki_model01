@@ -1,0 +1,373 @@
+comparison,period,realization,iteration,value
+Steady state,present,0,prior,-19.265738335117007
+Steady state,present,1,prior,-0.2173843383789062
+Steady state,present,2,prior,-2.2560247865116265e-06
+Steady state,present,3,prior,-32.389583239521016
+Steady state,present,4,prior,0.0539770199179256
+Steady state,present,5,prior,-22.18005145402276
+Steady state,present,6,prior,-1.3516772979917275
+Steady state,present,7,prior,-5.932431150070864
+Steady state,present,8,prior,-5.0687928199768075
+Steady state,present,9,prior,-4.465430763115413e-10
+Steady state,present,10,prior,-16.733977500349283
+Steady state,present,11,prior,-0.0981100158824119
+Steady state,present,12,prior,-0.598541259765625
+Steady state,present,13,prior,-0.0150312067578288
+Steady state,present,14,prior,-1.1149397480294992e-05
+Steady state,present,15,prior,-0.0045016264226604
+Steady state,present,16,prior,-5.892791360616684
+Steady state,present,17,prior,-43.9094310331202
+Steady state,present,18,prior,0.6931740915533737
+Steady state,present,19,prior,-0.5053822128565741
+Steady state,present,20,prior,-4.747395418584347
+Steady state,present,21,prior,-0.3782680621479812
+Steady state,present,22,prior,-0.4530616998672485
+Steady state,present,23,prior,-1.259450912475586
+Steady state,present,24,prior,-3.959475158335408
+Steady state,present,25,prior,-44.153045982122414
+Steady state,present,26,prior,-12.126419067382812
+Steady state,present,27,prior,0.0047306548438754
+Steady state,present,28,prior,-12.47637080034474
+Steady state,present,29,prior,-3.5800578705966473
+Steady state,present,30,prior,-87.46597088521116
+Steady state,present,0,posterior,-4.2864892178174605
+Steady state,present,1,posterior,-0.7842140197753906
+Steady state,present,2,posterior,-1.5722708716605483e-06
+Steady state,present,3,posterior,120.26497543797448
+Steady state,present,4,posterior,0.3486036269800472
+Steady state,present,6,posterior,-0.5667285614727575
+Steady state,present,7,posterior,-0.0449664480182878
+Steady state,present,8,posterior,1.0012898445129395
+Steady state,present,9,posterior,-1.8478702398760606e-09
+Steady state,present,10,posterior,-81.66873950138688
+Steady state,present,11,posterior,-0.8773464628502551
+Steady state,present,12,posterior,0.4418182373046875
+Steady state,present,13,posterior,-0.0002110200413493
+Steady state,present,14,posterior,-0.0002502616303228
+Steady state,present,15,posterior,-0.00229376629865
+Steady state,present,16,posterior,-3.077778644859791
+Steady state,present,17,posterior,-1.2437335419597275
+Steady state,present,18,posterior,5.44240907207859
+Steady state,present,19,posterior,0.1011408018305104
+Steady state,present,20,posterior,1.0707607831573112
+Steady state,present,21,posterior,-0.5797865040676697
+Steady state,present,22,posterior,0.4467809498310089
+Steady state,present,23,posterior,-1.9768424034118648
+Steady state,present,25,posterior,-6.902140166610479
+Steady state,present,26,posterior,-0.7950897216796875
+Steady state,present,27,posterior,0.0012995422290638
+Steady state,present,28,posterior,-2.7519427217021075
+Steady state,present,29,posterior,-28.001823619008064
+Steady state,present,30,posterior,-0.4387963827439307
+Steady state,present,31,posterior,-2.5567198420250747
+Steady state,present,32,posterior,82.67630957067011
+Steady state,past,0,prior,-7.121159528041924
+Steady state,past,1,prior,-0.4609174728393554
+Steady state,past,2,prior,-9.87350137262705e-07
+Steady state,past,3,prior,-61.843712949732435
+Steady state,past,4,prior,-0.0050301049855914
+Steady state,past,5,prior,-10.582316171128696
+Steady state,past,6,prior,-0.2704419668233626
+Steady state,past,7,prior,-12.01204315506737
+Steady state,past,8,prior,-5.721434980630875
+Steady state,past,9,prior,-1.0895583223592972e-09
+Steady state,past,10,prior,-21.654041887260973
+Steady state,past,11,prior,-0.3282884637847018
+Steady state,past,12,prior,-1.3524551391601562
+Steady state,past,13,prior,-0.0018141692621819
+Steady state,past,14,prior,-4.528830390276208e-06
+Steady state,past,15,prior,-0.0011838033415211
+Steady state,past,16,prior,-21.4803419560194
+Steady state,past,17,prior,-46.5491126529696
+Steady state,past,18,prior,-2.22730556278475
+Steady state,past,19,prior,-0.1984937521625909
+Steady state,past,20,prior,-4.863125609233976
+Steady state,past,21,prior,-0.3388241983939224
+Steady state,past,22,prior,-0.6579991728067398
+Steady state,past,23,prior,-2.4687356948852535
+Steady state,past,24,prior,-4.630408734541561
+Steady state,past,25,prior,-49.317008811980486
+Steady state,past,26,prior,-12.48431396484375
+Steady state,past,27,prior,-0.0626979833648864
+Steady state,past,28,prior,-19.248000063166277
+Steady state,past,29,prior,-15.773119017947463
+Steady state,past,30,prior,-58.1897527336163
+Steady state,past,0,posterior,-1.986715571817811
+Steady state,past,1,posterior,-0.9664206504821776
+Steady state,past,2,posterior,-2.67316391780382e-06
+Steady state,past,3,posterior,-89.43840655244458
+Steady state,past,4,posterior,0.0093619722152864
+Steady state,past,6,posterior,-0.0443108606015059
+Steady state,past,7,posterior,-0.2161697659589749
+Steady state,past,8,posterior,-8.51748514175415
+Steady state,past,9,posterior,-9.983107143940207e-09
+Steady state,past,10,posterior,-131.54034307366237
+Steady state,past,11,posterior,-1.6197987837942946
+Steady state,past,12,posterior,-2.0401535034179688
+Steady state,past,13,posterior,-5.6921089380318826e-05
+Steady state,past,14,posterior,-0.000193885664007
+Steady state,past,15,posterior,-0.0001662904630164
+Steady state,past,16,posterior,-41.236097363755114
+Steady state,past,17,posterior,-0.1929896886498028
+Steady state,past,18,posterior,-12.863299250003363
+Steady state,past,19,posterior,-0.0275473829509156
+Steady state,past,20,posterior,-2.3653118096626713
+Steady state,past,21,posterior,-0.4580818219860702
+Steady state,past,22,posterior,-1.343307789415121
+Steady state,past,23,posterior,-2.012292742729187
+Steady state,past,25,posterior,-15.679696918930858
+Steady state,past,26,posterior,-2.6973876953125
+Steady state,past,27,posterior,0.006463985765204
+Steady state,past,28,posterior,-8.950900712236146
+Steady state,past,29,posterior,-80.18469467939576
+Steady state,past,30,posterior,-3.3523892369868236
+Steady state,past,31,posterior,-0.2270507829773258
+Steady state,past,32,posterior,-355.0462817493826
+10 days after recession,present,0,prior,-18.181989108746183
+10 days after recession,present,1,prior,-0.048736572265625
+10 days after recession,present,2,prior,-2.2087903977564925e-06
+10 days after recession,present,3,prior,-57.305755223394954
+10 days after recession,present,4,prior,-0.0755406913389227
+10 days after recession,present,5,prior,-21.398342386033615
+10 days after recession,present,6,prior,9.126564144195015
+10 days after recession,present,7,prior,-5.704796644116632
+10 days after recession,present,8,prior,-24.772857427597042
+10 days after recession,present,9,prior,-5.7489436122621735e-09
+10 days after recession,present,10,prior,-4.22250757738948
+10 days after recession,present,11,prior,-20.0649364986748
+10 days after recession,present,12,prior,-3.6653900146484375
+10 days after recession,present,13,prior,-0.0150849598807142
+10 days after recession,present,14,prior,-1.1332924967740496e-05
+10 days after recession,present,15,prior,-0.0029247924446403
+10 days after recession,present,16,prior,-24.145049124956127
+10 days after recession,present,17,prior,-42.45119063700986
+10 days after recession,present,18,prior,-8.291597479947086
+10 days after recession,present,19,prior,-1.2792540057889423
+10 days after recession,present,20,prior,-384.4864449054002
+10 days after recession,present,21,prior,22.415370117205384
+10 days after recession,present,22,prior,-1.8736066818237305
+10 days after recession,present,23,prior,-14.270401000976562
+10 days after recession,present,24,prior,-16.015232838108204
+10 days after recession,present,25,prior,-62.453210294246674
+10 days after recession,present,26,prior,-13.263320922851562
+10 days after recession,present,27,prior,-1.14326232179841
+10 days after recession,present,28,prior,-47.346189999829214
+10 days after recession,present,29,prior,-9.817900124937298
+10 days after recession,present,30,prior,-79.2761275033199
+10 days after recession,present,0,posterior,18.441853322545967
+10 days after recession,present,1,posterior,-0.0991249084472656
+10 days after recession,present,2,posterior,-6.862233129005131e-07
+10 days after recession,present,3,posterior,16.13005848186731
+10 days after recession,present,4,posterior,-0.0659003392714687
+10 days after recession,present,6,posterior,0.9155074222273072
+10 days after recession,present,7,posterior,-0.0477249491698845
+10 days after recession,present,8,posterior,-23.28491878509521
+10 days after recession,present,9,posterior,-5.7060121417010544e-08
+10 days after recession,present,10,posterior,-2.710911091417074
+10 days after recession,present,11,posterior,-35.6899797135311
+10 days after recession,present,12,posterior,-0.0270233154296875
+10 days after recession,present,13,posterior,-0.0002426715294947
+10 days after recession,present,14,posterior,-0.0005443151706716
+10 days after recession,present,15,posterior,-0.0010125542077574
+10 days after recession,present,16,posterior,-33.545639093965285
+10 days after recession,present,17,posterior,0.5739675503423313
+10 days after recession,present,18,posterior,-5.508119512604026
+10 days after recession,present,19,posterior,-0.2468308384311193
+10 days after recession,present,20,posterior,-189.63721355248708
+10 days after recession,present,21,posterior,-5.409209324994663
+10 days after recession,present,22,posterior,-1.8476098477840424
+10 days after recession,present,23,posterior,-13.763437271118164
+10 days after recession,present,25,posterior,-34.54359209910035
+10 days after recession,present,26,posterior,-3.047943115234375
+10 days after recession,present,27,posterior,-0.1017516011783561
+10 days after recession,present,28,posterior,-52.710500237492845
+10 days after recession,present,29,posterior,-24.88970829406753
+10 days after recession,present,30,posterior,-4.201849613219565
+10 days after recession,present,31,posterior,5.040696787446393
+10 days after recession,present,32,posterior,-139.54942840337753
+10 days after recession,past,0,prior,-7.152803831525118
+10 days after recession,past,1,prior,-0.5340662002563475
+10 days after recession,past,2,prior,-9.884980767514986e-07
+10 days after recession,past,3,prior,-99.18628603609069
+10 days after recession,past,4,prior,-0.0080860365033521
+10 days after recession,past,5,prior,-23.85832179842328
+10 days after recession,past,6,prior,-0.6202333384407906
+10 days after recession,past,7,prior,-11.984241422387468
+10 days after recession,past,8,prior,-43.24868392944336
+10 days after recession,past,9,prior,-1.1731036068268173e-09
+10 days after recession,past,10,prior,-20.4669769317843
+10 days after recession,past,11,prior,-51.218390685269696
+10 days after recession,past,12,prior,-7.096099853515625
+10 days after recession,past,13,prior,-0.001829366706381
+10 days after recession,past,14,prior,-4.515634110165018e-06
+10 days after recession,past,15,prior,-0.0013564805295068
+10 days after recession,past,16,prior,-34.29488426819444
+10 days after recession,past,17,prior,-45.18027489418091
+10 days after recession,past,18,prior,-24.58925411157361
+10 days after recession,past,19,prior,-0.2280937385855672
+10 days after recession,past,20,prior,-384.5751680629328
+10 days after recession,past,21,prior,-7.0199125083074705
+10 days after recession,past,22,prior,-2.0296179950237274
+10 days after recession,past,23,prior,-16.12656021118164
+10 days after recession,past,24,prior,-44.99935505226313
+10 days after recession,past,25,prior,-87.43076943233609
+10 days after recession,past,26,prior,-15.245849609375
+10 days after recession,past,27,prior,-0.1038677121834847
+10 days after recession,past,28,prior,-45.44851293931879
+10 days after recession,past,29,prior,-23.342854655813422
+10 days after recession,past,30,prior,-51.39840992586144
+10 days after recession,past,0,posterior,-2.6732898005236048
+10 days after recession,past,1,posterior,-1.10595703125
+10 days after recession,past,2,posterior,-2.701708606025044e-06
+10 days after recession,past,3,posterior,-103.91240140030096
+10 days after recession,past,4,posterior,0.0014200508557484
+10 days after recession,past,6,posterior,-0.1291295127218106
+10 days after recession,past,7,posterior,-0.215969757984732
+10 days after recession,past,8,posterior,-21.896936058998108
+10 days after recession,past,9,posterior,-1.0912537707421855e-08
+10 days after recession,past,10,posterior,-132.95642826939
+10 days after recession,past,11,posterior,-5.90443738721649
+10 days after recession,past,12,posterior,-5.010963439941406
+10 days after recession,past,13,posterior,-6.74127127104397e-05
+10 days after recession,past,14,posterior,-0.0001994127056264
+10 days after recession,past,15,posterior,-0.0004912989119498
+10 days after recession,past,16,posterior,-52.888061868958175
+10 days after recession,past,17,posterior,-0.4016237626767704
+10 days after recession,past,18,posterior,-31.076179289420903
+10 days after recession,past,19,posterior,-0.0403550446459051
+10 days after recession,past,20,posterior,-191.5873409230844
+10 days after recession,past,21,posterior,-9.634813490768463
+10 days after recession,past,22,posterior,-2.9340023435652256
+10 days after recession,past,23,posterior,-17.0413960814476
+10 days after recession,past,25,posterior,-33.14124474581331
+10 days after recession,past,26,posterior,-6.115646362304688
+10 days after recession,past,27,posterior,0.0017200241717753
+10 days after recession,past,28,posterior,-17.978647023171902
+10 days after recession,past,29,posterior,-93.97895440727007
+10 days after recession,past,30,posterior,-3.929170126525264
+10 days after recession,past,31,posterior,-0.3463330809538192
+10 days after recession,past,32,posterior,-359.1614106558264
+End of recession,present,0,prior,-19.27100578448234
+End of recession,present,1,prior,-0.164886474609375
+End of recession,present,2,prior,-2.2392638850176035e-06
+End of recession,present,3,prior,-103.24061316094594
+End of recession,present,4,prior,-0.1781064767285616
+End of recession,present,5,prior,-46.94863068406993
+End of recession,present,6,prior,-3.5938548403432264
+End of recession,present,7,prior,-5.464020935537004
+End of recession,present,8,prior,-36.17029500007629
+End of recession,present,9,prior,-8.554487654687557e-09
+End of recession,present,10,prior,-4.043733403086662
+End of recession,present,11,prior,-34.89030425599776
+End of recession,present,12,prior,-5.23199462890625
+End of recession,present,13,prior,-0.0155945488049263
+End of recession,present,14,prior,-1.0914503043195059e-05
+End of recession,present,15,prior,-0.0052955722257749
+End of recession,present,16,prior,-30.947555929422375
+End of recession,present,17,prior,-42.170434292456775
+End of recession,present,18,prior,-32.81251025194797
+End of recession,present,19,prior,-1.2379236597148733
+End of recession,present,20,prior,-880.8210217654705
+End of recession,present,21,prior,-34.82425909221456
+End of recession,present,22,prior,-1.9683866500854488
+End of recession,present,23,prior,-15.814184188842772
+End of recession,present,24,prior,-29.891145538160345
+End of recession,present,25,prior,-75.45560133457184
+End of recession,present,26,prior,-14.108627319335936
+End of recession,present,27,prior,-1.8468692633686103
+End of recession,present,28,prior,-67.97291247629619
+End of recession,present,29,prior,-16.991744745522738
+End of recession,present,30,prior,-74.3673760602835
+End of recession,present,0,posterior,-8.5866811199636
+End of recession,present,1,posterior,-0.6214218139648438
+End of recession,present,2,posterior,-2.7071950519358118e-06
+End of recession,present,3,posterior,-28.129349930793975
+End of recession,present,4,posterior,-0.1820288160966345
+End of recession,present,6,posterior,-0.7096829598903582
+End of recession,present,7,posterior,-0.102696215034693
+End of recession,present,8,posterior,-31.604729652404785
+End of recession,present,9,posterior,-8.263664611468446e-08
+End of recession,present,10,posterior,-5.289067033678293
+End of recession,present,11,posterior,-46.26556672845436
+End of recession,present,12,posterior,-4.8135986328125
+End of recession,present,13,posterior,-0.000594667991332
+End of recession,present,14,posterior,-0.0007580392071327
+End of recession,present,15,posterior,-0.0030665703844936
+End of recession,present,16,posterior,-35.95876833051443
+End of recession,present,17,posterior,-2.42508119126677
+End of recession,present,18,posterior,-31.407496565436304
+End of recession,present,19,posterior,-0.3143651201025505
+End of recession,present,20,posterior,-336.87069731979864
+End of recession,present,21,posterior,-13.967689728959156
+End of recession,present,22,posterior,-2.284750819206238
+End of recession,present,23,posterior,-19.347343444824215
+End of recession,present,25,posterior,-52.90555027127266
+End of recession,present,26,posterior,-4.9093170166015625
+End of recession,present,27,posterior,-0.2084304223875843
+End of recession,present,28,posterior,-72.84165253733316
+End of recession,present,29,posterior,-45.28826849209145
+End of recession,present,30,posterior,-4.2836444984732225
+End of recession,present,31,posterior,-0.075965417671739
+End of recession,present,32,posterior,-240.43915539979932
+End of recession,past,0,prior,-7.256045056346655
+End of recession,past,1,prior,-0.4841995239257812
+End of recession,past,2,prior,-9.912715855913542e-07
+End of recession,past,3,prior,-119.2539621424512
+End of recession,past,4,prior,-0.0170248183184169
+End of recession,past,5,prior,-31.094298388286916
+End of recession,past,6,prior,-1.3161164884987924
+End of recession,past,7,prior,-11.893464197400919
+End of recession,past,8,prior,-15.557860940694807
+End of recession,past,9,prior,-1.4416521827206143e-09
+End of recession,past,10,prior,-18.926634995266795
+End of recession,past,11,prior,-9.085997364552895
+End of recession,past,12,prior,-4.004337310791016
+End of recession,past,13,prior,-0.0018781281777524
+End of recession,past,14,prior,-4.47270368474923e-06
+End of recession,past,15,prior,-0.0019137846678239
+End of recession,past,16,prior,-32.487270209006965
+End of recession,past,17,prior,-44.87080025258365
+End of recession,past,18,prior,-35.65717612016306
+End of recession,past,19,prior,-0.2753750502660619
+End of recession,past,20,prior,-880.9149528387934
+End of recession,past,21,prior,-20.417355827940355
+End of recession,past,22,prior,-2.0154379904270168
+End of recession,past,23,prior,-16.987980842590332
+End of recession,past,24,prior,-11.138045924159089
+End of recession,past,25,prior,-58.07015034928918
+End of recession,past,26,prior,-12.92291259765625
+End of recession,past,27,prior,-0.2253931269444997
+End of recession,past,28,prior,-69.93390650258425
+End of recession,past,29,prior,-25.802054625004526
+End of recession,past,30,prior,-46.99041614670364
+End of recession,past,0,posterior,-4.832952703857757
+End of recession,past,1,posterior,-1.227674961090088
+End of recession,past,2,posterior,-2.9073887855051063e-06
+End of recession,past,3,posterior,-100.017393768705
+End of recession,past,4,posterior,-0.0031039488194664
+End of recession,past,6,posterior,-0.0862126087532679
+End of recession,past,7,posterior,-0.2145868682819185
+End of recession,past,8,posterior,-22.547484815120697
+End of recession,past,9,posterior,-1.38179284191965e-08
+End of recession,past,10,posterior,-132.82753240456805
+End of recession,past,11,posterior,-16.502607847729674
+End of recession,past,12,posterior,-7.561065673828125
+End of recession,past,13,posterior,-0.0001010907845301
+End of recession,past,14,posterior,-0.0002206550211113
+End of recession,past,15,posterior,-0.0005852407619853
+End of recession,past,16,posterior,-59.814554747892544
+End of recession,past,17,posterior,-0.793012638838995
+End of recession,past,18,posterior,-32.829718498164766
+End of recession,past,19,posterior,-0.0517149230389031
+End of recession,past,20,posterior,-343.6800050940328
+End of recession,past,21,posterior,-12.453495169695088
+End of recession,past,22,posterior,-2.9507792964577675
+End of recession,past,23,posterior,-21.654095113277435
+End of recession,past,25,posterior,-41.960927789565176
+End of recession,past,26,posterior,-5.1772003173828125
+End of recession,past,27,posterior,-0.0103679499623665
+End of recession,past,28,posterior,-32.497332736807266
+End of recession,past,29,posterior,-98.1965994760976
+End of recession,past,30,posterior,-3.6585479052787377
+End of recession,past,31,posterior,-0.54753357166987
+End of recession,past,32,posterior,-358.8153568673879
