@@ -1,4 +1,4 @@
-MODEL_NAME = 'run37'  # name of the model
+MODEL_NAME = 'run38'  # name of the model
 """
 - Removed recharge from parameterization.
 - Added shapefile for pilot points.
@@ -110,6 +110,13 @@ GHB_SW = {
     'head_ub': 0.5,
     'head_ulb': 5,
     'head_uub': 12,
+}
+
+WEL_SW = {
+    'lb': 1e-3,
+    'ub': 1e3,
+    'ulb': 1e-8,
+    'uub': 1e8,
 }
 
 GHB_CONF = {

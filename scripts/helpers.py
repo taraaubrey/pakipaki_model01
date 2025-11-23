@@ -24,16 +24,13 @@ def extract_budget(model_name=None):
     incremental, cumulative = lst.get_dataframes(diff=True, start_datetime=None)
     # inc.columns = inc.columns.map(lambda x: x.lower().replace("_","-"))
     col_names = {
-        'ghb': 'awanui',
-        'ghb2': 'confined',
-        'ghb3': 'poukawa',
-        'ghb4': 'spring',
+        'wel': 'awanui',
+        'ghb': 'confined',
+        'ghb2': 'poukawa',
+        'ghb3': 'spring',
         'rcha': 'recharge',
         'sto-ss': 'stoss',
         'total': 'total',
-        'wel': 'mbr',
-        'wel2': 'inflow',
-        'wel3': 'outflow',
         'in-out': 'inout'
     }
     # replace any _ in column names
@@ -456,13 +453,11 @@ def extract_ghb_fluxes(model_name, gwf=None, save=True, sample_path=None):
     idomain = np.where(idomain > 0, 1, 0)
 
     dfs = {
-        'GHB_AW': [],
         'GHB_CONF': [],
         'GHB_PW': [],
         'GHB_SP': []
     }
     arrs = {
-        'GHB_AW': {},
         'GHB_CONF': {},
         'GHB_PW': {},
         'GHB_SP': {},
@@ -728,16 +723,16 @@ def extract_model_heads(model_name, gwf=None, sample_path=None):
         all_samples = all_samples.reset_index().rename(columns={'index': 'time'})
 
         # add derived columns
-        all_samples['pk4-spr-diff'] = compare_ghb_heads(gwf, 3, 'ts_array_10', all_samples)
+        all_samples['pk4-spr-diff'] = compare_ghb_heads(gwf, 2, 'ts_array_10', all_samples)
 
 
-        all_samples['pk4-conf-diff'] = compare_ghb_heads(gwf, 1, 'ts_array_0', all_samples)
+        all_samples['pk4-conf-diff'] = compare_ghb_heads(gwf, 0, 'ts_array_0', all_samples)
         # all_samples['d-losing'] = days_losing_regime(sim, all_samples)
 
         all_samples.fillna(-999, inplace=True)
 
         recession_rates = (all_samples.groupby(['kper']).last() - all_samples.groupby(['kper']).first())
-        recession_rates['pk4'] = recession_rates['pk4'] / (recession_rates.loc[2,'time']+1)
+        recession_rates['pk4'] = (recession_rates['pk4'] / (recession_rates.loc[2,'time']+1))
         recession_rates['pk4-spr-diff'] = recession_rates['pk4-spr-diff'] / (recession_rates.loc[2,'time']+1)
         recession_rates['pk4-conf-diff'] = recession_rates['pk4-conf-diff'] / (recession_rates.loc[2,'time']+1)
         
@@ -821,31 +816,31 @@ def compare_ghb_heads(gwf, i, ghb_col, all_samples):
 #     all_heads.to_csv(Path(truth_dir,f"{model_name}_heads_truth.csv"), index=False)
 #     return
 
-def create_awghb_truth(ghb_dfs, dir):
-    """
-    Replace all values in the kper, kstp dataframes with the truth values.
-    Only valid for kper 1 and kstp 1.
-    """
+# def create_awghb_truth(ghb_dfs, dir):
+#     """
+#     Replace all values in the kper, kstp dataframes with the truth values.
+#     Only valid for kper 1 and kstp 1.
+#     """
 
-    df = ghb_dfs['GHB_AW'].copy()
+#     df = ghb_dfs['GHB_AW'].copy()
 
-    kstps = df['kstp'].unique()
-    kstp_include = np.arange(min(kstps), max(kstps), TIME_SUBSAMPLE)  # include every 10th kstp
+#     kstps = df['kstp'].unique()
+#     kstp_include = np.arange(min(kstps), max(kstps), TIME_SUBSAMPLE)  # include every 10th kstp
 
-    # replace all values with GHB_Q
-    df['weight'] = 0
-    df['std'] = GHB_Qstd
-    df['AWq'] = GHB_Q
-    # time_space_filter = (df['kper'] < 3) & (df['i'] % SPACE_SUBSAMPLE == 0) & (df['j'] % SPACE_SUBSAMPLE == 0)
-    time_space_filter = (df['kper'] < 3)
-    # set std only on kper 1 and kstp 1
-    # df.loc[(df['kper'] == 1) & (df['kstp'] == 1), 'weight'] = 1/GHB_Qstd
-    df['weight'] = np.where(
-        time_space_filter & (df['kstp'].isin(kstp_include)), 
-        1/GHB_Qstd, 0)
+#     # replace all values with GHB_Q
+#     df['weight'] = 0
+#     df['std'] = GHB_Qstd
+#     df['AWq'] = GHB_Q
+#     # time_space_filter = (df['kper'] < 3) & (df['i'] % SPACE_SUBSAMPLE == 0) & (df['j'] % SPACE_SUBSAMPLE == 0)
+#     time_space_filter = (df['kper'] < 3)
+#     # set std only on kper 1 and kstp 1
+#     # df.loc[(df['kper'] == 1) & (df['kstp'] == 1), 'weight'] = 1/GHB_Qstd
+#     df['weight'] = np.where(
+#         time_space_filter & (df['kstp'].isin(kstp_include)), 
+#         1/GHB_Qstd, 0)
 
-    df.to_csv(Path(dir, f"output.GHB_AW_fluxes.truth.csv"), index=False)
-    return
+#     df.to_csv(Path(dir, f"output.GHB_AW_fluxes.truth.csv"), index=False)
+#     return
 
 def create_sprghb_truth(ghb_dfs, dir):
     """

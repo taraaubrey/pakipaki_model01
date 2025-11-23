@@ -70,7 +70,8 @@ def main():
     grid, idomain, top, nrow, ncol, delr, delc, fn_out, model_thickness = dis_setup(fn_out)
     # ghbs
     active_domain = np.where(idomain > 0, 1, 0)
-    fn_out, aw_ts, wetland_WL, aw_present_arr, aw_past_arr = ghb_aw_setup(grid, active_domain, start, end, fn_out)
+    # fn_out, aw_ts, wetland_WL, aw_present_arr, aw_past_arr = ghb_aw_setup(grid, active_domain, start, end, fn_out)
+    fn_out, aw_ts, wetland_WL, aw_present_arr, aw_past_arr = wel_aw_setup(grid, idomain, start, end, fn_out, save=True)
     fn_out, spr_present_arr, spr_past_arr = ghb_spring_setup(grid, active_domain, start, end, aw_ts, wetland_WL, aw_present_arr, aw_past_arr, fn_out)
     fn_out, ghb_pw_kper0, pw_present_arr, pw_past_arr = ghb_pw_setup(grid, active_domain, start, end, fn_out)
     fn_out, conf_arr = ghb_conf_setup(grid, active_domain, start, end, model_thickness, fn_out)
@@ -195,12 +196,12 @@ def main():
         pname='rch' # package name
     )
     
-    ghb_aw = fp.mf6.ModflowGwfghb(
+    wel_aw = fp.mf6.ModflowGwfwel(
         print_input=True,
         model=gwf, # add riv package to model gwf (created in previous code cell)
-        timeseries=fn_out['ghb_aw_ts'],
-        stress_period_data=fn_out['ghb_aw'],
-        pname='ghb_aw', # package name
+        timeseries=fn_out['wel_aw_ts'],
+        stress_period_data=fn_out['wel_aw'],
+        pname='wel_aw', # package name
         save_flows=True,
         )
     # ghb_aw.ts.initialize(fn_out['ghb_aw_ts'])
@@ -285,7 +286,7 @@ def main():
     # tdis_data = sim.tdis.perioddata.get_data()
     
     # awanui flux truth
-    helpers.create_awghb_truth(ghb_dfs, TRUTHREL_DIR)
+    # helpers.create_awghb_truth(ghb_dfs, TRUTHREL_DIR)
     helpers.create_sprghb_truth(ghb_dfs, TRUTHREL_DIR)
     helpers.create_confghb_truth(ghb_dfs, TRUTHREL_DIR)
     # top model constraints (head can't be greater than 1m above top)

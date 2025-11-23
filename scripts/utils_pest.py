@@ -41,7 +41,7 @@ def define_mult_array(
                         transform="log",
                         par_style="multiplier",
                         pp_options= {
-                            "pp_space": pp_space, # specify the spacing of the pilot points
+                            "pp_space": 8, # specify the spacing of the pilot points
                             }
                         )
             
@@ -151,55 +151,51 @@ def rcha(
 
 
 def wel(
-        pf, ws, 
+        pf, ws,
         name='wel', 
-        tag='local1.wel_stress_period_data', 
-        fine_gs=None,
+        tag='local1.drn_stress_period_data',
         grid_gs=None,
-        constant_gs=None,
-        q_bounds=[0.1, 10],
-        grid=True,
-        constant=True,
+        bounds=[None, None], 
+        ult_bounds=[None, None],
         ):
-    files = [f for f in os.listdir(ws) if tag in f.lower() and f.endswith(".txt")]
-    # for f in files:
-    if grid:
-        if fine_gs:
-            pf.add_parameters(
-                files,
-                par_type="grid",
-                geostruct=fine_gs,
-                par_name_base=name+"-fngr",
-                pargp=name+"fngr",
-                index_cols=[0,1,2],
-                use_cols=[3],
-                lower_bound=q_bounds[0],
-                upper_bound=q_bounds[1],
-                )
+    
+    kper_files = [f for f in os.listdir(ws) if tag in f.lower()]
+    name = name.replace('-', '')
+    # conductances all the same for each stress period
+    if bounds:
+        if grid_gs:
+            if isinstance(grid_gs, dict):
+                for suffix, gs in grid_gs.items():
+                    iname = name + f'-q-{suffix}'
+                    # every cell scale (fine scale)
+                    pf.add_parameters(
+                        kper_files,
+                        par_type="grid",
+                        geostruct=gs,
+                        par_name_base=iname,
+                        pargp=iname,
+                        index_cols={'k':0, 'i':1, 'j':2},
+                        use_cols=[3],
+                        lower_bound=bounds[0],
+                        upper_bound=bounds[1],
+                        ult_lbound=ult_bounds[0],
+                        ult_ubound=ult_bounds[1],
+                        )
+
         pf.add_parameters(
-            files,
-            par_type="grid",
-            geostruct=grid_gs,
-            par_name_base=name+"-crgr",
-            pargp=name+"crgr",
-            index_cols=[0,1,2],
-            use_cols=[3],
-            lower_bound=q_bounds[0],
-            upper_bound=q_bounds[1],
-        )
-    if constant:
-        pf.add_parameters(
-            files,
+            kper_files,
             par_type="constant",
-            geostruct=constant_gs,
-            par_name_base=name+"-cn",
-            pargp=name+"cn",
-            index_cols=[0,1,2],
-            use_cols=[3],  
-            lower_bound=q_bounds[0],
-            upper_bound=q_bounds[1],
-        )
-    return
+            par_name_base=name+"-q-cn",
+            pargp=name+"-q-cn",
+            index_cols={'k':0, 'i':1, 'j':2},
+            use_cols=[3],
+            lower_bound=bounds[0],
+            upper_bound=bounds[1],
+            ult_lbound=ult_bounds[0],
+            ult_ubound=ult_bounds[1],
+            )
+
+        return
 
 def ghb_heads(
         pf, ws,
