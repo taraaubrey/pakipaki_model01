@@ -28,6 +28,12 @@ import pyemu
 # Add scripts directory to path
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
+# Import default model name from setup
+try:
+    from setup import MODEL_NAME as DEFAULT_MODEL_NAME
+except ImportError:
+    DEFAULT_MODEL_NAME = None
+
 
 def parse_args():
     """Parse command-line arguments."""
@@ -38,16 +44,18 @@ def parse_args():
     )
 
     parser.add_argument(
-        'run_name',
+        'model_name',
         type=str,
-        help='Name of the run directory'
+        nargs='?',
+        default=DEFAULT_MODEL_NAME,
+        help=f'Model name for file prefixes (default: {DEFAULT_MODEL_NAME} from setup.py)'
     )
 
     parser.add_argument(
-        '--model-name',
+        '--run-name', '-r',
         type=str,
         default=None,
-        help='Model name (default: same as run_name)'
+        help='Run name for directory path (default: same as model_name)'
     )
 
     parser.add_argument(
@@ -381,8 +389,12 @@ def load_filtered_realizations(run_name):
 if __name__ == '__main__':
     args = parse_args()
 
-    run_name = args.run_name
-    model_name = args.model_name if args.model_name else run_name
+    model_name = args.model_name
+    run_name = args.run_name if args.run_name else model_name
+
+    print(f"Model name: {model_name}")
+    if run_name != model_name:
+        print(f"Run name (directory): {run_name}")
 
     filtered = filter_realizations(
         run_name=run_name,

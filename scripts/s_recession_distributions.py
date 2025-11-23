@@ -1,15 +1,15 @@
 """
-r_budget_distributions.py - Plot budget distributions for prior vs posterior
+s_recession_distributions.py - Plot recession distributions for prior vs posterior
 
-Creates histogram plots for each budget type (Awanui, Poukawa, Spring, Confined,
-Recharge, Storage) showing prior and posterior distributions for each stress period.
+Creates histogram plots for recession observations (pk4 and fliptime)
+showing prior and posterior distributions for each stress period.
 
 Usage:
-    python scripts/r_budget_distributions.py run_name [options]
+    python scripts/s_recession_distributions.py run_name [options]
 
 Examples:
-    python scripts/r_budget_distributions.py local_run34 --post-iter 19
-    python scripts/r_budget_distributions.py local_run34 --post-iter 19 --filter-file models/local_run34/filtered_realizations.csv
+    python scripts/s_recession_distributions.py local_run34 --post-iter 19
+    python scripts/s_recession_distributions.py local_run34 --post-iter 19 --filter-file models/local_run34/filtered_realizations.csv
 """
 
 import os
@@ -33,7 +33,7 @@ except ImportError:
 def parse_args():
     """Parse command line arguments."""
     parser = argparse.ArgumentParser(
-        description='Plot budget distributions for prior vs posterior'
+        description='Plot recession distributions for prior vs posterior'
     )
     parser.add_argument(
         'model_name',
@@ -42,6 +42,7 @@ def parse_args():
         default=DEFAULT_MODEL_NAME,
         help=f'Model name for file prefixes (default: {DEFAULT_MODEL_NAME} from setup.py)'
     )
+
     parser.add_argument('--run-name', '-r', type=str, default=None,
                        help='Run name for directory path (default: same as model_name)')
     parser.add_argument('--post-iter', type=int, default=19,
@@ -61,57 +62,53 @@ def load_filtered_realizations(filter_file):
     return df['realization'].tolist()
 
 
-def get_budget_obs(obs_data):
+def get_recession_obs(obs_data):
     """
-    Get budget observation names organized by type and kper.
+    Get recession observation names organized by type and kper.
 
-    Returns dict: {budget_type: {kper: obs_name}}
+    Returns dict: {recession_type: {kper: obs_name}}
     """
-    # Filter budget observations
-    budget_obs = obs_data[obs_data['oname'] == 'budget'].copy()
+    # Filter recession observations
+    recession_obs = obs_data[obs_data['oname'] == 'recession'].copy()
 
-    if len(budget_obs) == 0:
-        print("  No budget observations found with oname='budget'")
+    if len(recession_obs) == 0:
+        print("  No recession observations found with oname='recession'")
         return {}
 
-    budget_obs['kper'] = pd.to_numeric(budget_obs['kper'], errors='coerce')
+    recession_obs['kper'] = pd.to_numeric(recession_obs['kper'], errors='coerce')
 
-    # Define budget types to look for in usecol field
-    budget_types = {
-        'Awanui': ['awanui'],
-        'Poukawa': ['poukawa'],
-        'Spring': ['spring'],
-        'Confined': ['confined'],
-        'Recharge': ['recharge'],
-        'Storage': ['stoss']
+    # Define recession types to look for in usecol field
+    recession_types = {
+        'pk4': ['pk4'],
+        'fliptime': ['fliptime']
     }
 
     result = {}
 
-    for btype, usecol_patterns in budget_types.items():
-        result[btype] = {}
+    for rtype, usecol_patterns in recession_types.items():
+        result[rtype] = {}
 
-        for idx, row in budget_obs.iterrows():
+        for idx, row in recession_obs.iterrows():
             usecol = str(row.get('usecol', '')).lower()
 
-            # Check if this observation matches the budget type
+            # Check if this observation matches the recession type
             for pattern in usecol_patterns:
                 if pattern == usecol:
                     kper = int(row['kper']) if pd.notna(row['kper']) else 1
-                    result[btype][kper] = idx
+                    result[rtype][kper] = idx
                     break
 
     return result
 
 
-def load_truth_budgets(model_ws):
+def load_truth_recessions(model_ws):
     """
-    Load truth budget values.
+    Load truth recession values.
 
-    Returns dict: {budget_type: {kper: value}}
+    Returns dict: {recession_type: {kper: value}}
     """
     # Truth file is in project root, not model directory
-    truth_file = os.path.join('truth', 'output.budget.truth.csv')
+    truth_file = os.path.join('truth', 'output.sample_recession_rates.truth.csv')
 
     if not os.path.exists(truth_file):
         print(f"  Truth file not found: {truth_file}")
@@ -120,26 +117,22 @@ def load_truth_budgets(model_ws):
     try:
         truth_df = pd.read_csv(truth_file)
 
-        # Map column names to our budget type names
+        # Map column names to our recession type names
         col_mapping = {
-            'awanui': 'Awanui',
-            'poukawa': 'Poukawa',
-            'spring': 'Spring',
-            'confined': 'Confined',
-            'recharge': 'Recharge',
-            'stoss': 'Storage'
+            'pk4': 'pk4',
+            'fliptime': 'fliptime'
         }
 
-        # Convert to dict {budget_type: {kper: value}}
+        # Convert to dict {recession_type: {kper: value}}
         truth_dict = {}
-        for col, btype in col_mapping.items():
+        for col, rtype in col_mapping.items():
             if col in truth_df.columns:
-                truth_dict[btype] = {}
+                truth_dict[rtype] = {}
                 for _, row in truth_df.iterrows():
                     kper = int(row['kper'])
                     val = row[col]
-                    if val != 0:  # Only include non-zero values
-                        truth_dict[btype][kper] = float(val)
+                    if pd.notna(val):  # Include all non-NaN values
+                        truth_dict[rtype][kper] = float(val)
 
         return truth_dict
     except Exception as e:
@@ -147,20 +140,20 @@ def load_truth_budgets(model_ws):
         return {}
 
 
-def create_budget_plots(run_name, model_name, post_iter=19, filter_file=None, suffix=None):
+def create_recession_plots(run_name, model_name, post_iter=19, filter_file=None, suffix=None):
     """
-    Create budget distribution plots comparing prior vs posterior.
+    Create recession distribution plots comparing prior vs posterior.
     """
     # Set suffix for output files
     file_suffix = suffix if suffix else ''
     print(f"\n{'='*80}")
-    print(f"BUDGET DISTRIBUTION ANALYSIS: {run_name}")
+    print(f"RECESSION DISTRIBUTION ANALYSIS: {run_name}")
     print(f"{'='*80}")
 
     # Setup paths
     model_ws = os.path.join('models', run_name)
     master_dir = os.path.join(model_ws, 'pest', 'master_ies')
-    output_dir = os.path.join(model_ws, 'pp_budget_analysis')
+    output_dir = os.path.join(model_ws, 'pp_recession_analysis')
 
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
@@ -170,24 +163,24 @@ def create_budget_plots(run_name, model_name, post_iter=19, filter_file=None, su
     pst = pyemu.Pst(pst_file)
     obs_data = pst.observation_data
 
-    # Get budget observations
-    budget_obs = get_budget_obs(obs_data)
+    # Get recession observations
+    recession_obs = get_recession_obs(obs_data)
 
-    print("\nBudget observations found:")
+    print("\nRecession observations found:")
     all_obs_names = []
-    for btype, kper_dict in budget_obs.items():
+    for rtype, kper_dict in recession_obs.items():
         if kper_dict:
-            print(f"  {btype}: {kper_dict}")
+            print(f"  {rtype}: {kper_dict}")
             all_obs_names.extend(kper_dict.values())
 
     if len(all_obs_names) == 0:
-        print("Error: No budget observations found")
+        print("Error: No recession observations found")
         return
 
     # Load truth values
     print("\nLoading truth values...")
-    truth_values = load_truth_budgets(model_ws)
-    print(f"  Found {len(truth_values)} non-zero truth values")
+    truth_values = load_truth_recessions(model_ws)
+    print(f"  Found {len(truth_values)} recession types with truth values")
 
     # Load filtered realizations
     filtered_ids = load_filtered_realizations(filter_file)
@@ -215,69 +208,19 @@ def create_budget_plots(run_name, model_name, post_iter=19, filter_file=None, su
         post_oe = post_oe.loc[[r for r in filtered_ids if r in post_oe.index]]
         print(f"  Filtered to {len(prior_oe)} prior, {len(post_oe)} posterior realizations")
 
-    # Save extracted data for quick reloading
-    print("\nSaving extracted data...")
-    data_dir = os.path.join(output_dir, 'data')
-    if not os.path.exists(data_dir):
-        os.makedirs(data_dir)
-
-    # Get budget types that have data
-    budget_types_with_data = [bt for bt, kd in budget_obs.items() if len(kd) > 0]
-
-    # Build dataframe with all budget data
-    budget_data_rows = []
-    for btype in budget_types_with_data:
-        kper_dict = budget_obs[btype]
-        for kper, obs_name in kper_dict.items():
-            if obs_name in prior_oe.columns:
-                for real_id in prior_oe.index:
-                    budget_data_rows.append({
-                        'budget_type': btype,
-                        'kper': kper,
-                        'realization': real_id,
-                        'iteration': 'prior',
-                        'value': prior_oe.loc[real_id, obs_name]
-                    })
-                for real_id in post_oe.index:
-                    budget_data_rows.append({
-                        'budget_type': btype,
-                        'kper': kper,
-                        'realization': real_id,
-                        'iteration': 'posterior',
-                        'value': post_oe.loc[real_id, obs_name]
-                    })
-
-    budget_data_df = pd.DataFrame(budget_data_rows)
-    budget_data_file = os.path.join(data_dir, f'{run_name}_budget_data{file_suffix}.csv')
-    budget_data_df.to_csv(budget_data_file, index=False)
-    print(f"  Saved: {budget_data_file}")
-
-    # Save truth values
-    if truth_values:
-        truth_rows = []
-        for btype, kper_vals in truth_values.items():
-            for kper, val in kper_vals.items():
-                truth_rows.append({
-                    'budget_type': btype,
-                    'kper': kper,
-                    'truth_value': val
-                })
-        truth_df = pd.DataFrame(truth_rows)
-        truth_data_file = os.path.join(data_dir, f'{run_name}_budget_truth{file_suffix}.csv')
-        truth_df.to_csv(truth_data_file, index=False)
-        print(f"  Saved: {truth_data_file}")
-
-    # Create plots for each budget type
+    # Create plots for each recession type
     print("\nCreating plots...")
 
-    for btype in budget_types_with_data:
-        kper_dict = budget_obs[btype]
+    recession_types_with_data = [rt for rt, kd in recession_obs.items() if len(kd) > 0]
+
+    for rtype in recession_types_with_data:
+        kper_dict = recession_obs[rtype]
         kpers = sorted(kper_dict.keys())
 
         if len(kpers) == 0:
             continue
 
-        # Create figure with subplots for each kper
+        # Create figure with subplots for each kper (4 in a row)
         n_kpers = len(kpers)
         fig, axes = plt.subplots(1, n_kpers, figsize=(4*n_kpers, 4))
 
@@ -295,6 +238,15 @@ def create_budget_plots(run_name, model_name, post_iter=19, filter_file=None, su
             # Get data
             prior_vals = prior_oe[obs_name].values
             post_vals = post_oe[obs_name].values
+
+            # Remove NaN values
+            prior_vals = prior_vals[~np.isnan(prior_vals)]
+            post_vals = post_vals[~np.isnan(post_vals)]
+
+            if len(post_vals) == 0:
+                ax.text(0.5, 0.5, 'No valid data', ha='center', va='center')
+                ax.set_title(f'kper {kper}')
+                continue
 
             # Separate bins for prior and posterior
             bins_prior = np.linspace(np.min(prior_vals), np.max(prior_vals), 25)
@@ -319,28 +271,35 @@ def create_budget_plots(run_name, model_name, post_iter=19, filter_file=None, su
             post_median = np.median(post_vals)
 
             ax.axvline(prior_median, color='#1f77b4', linestyle='--', linewidth=2,
-                      label=f'Prior median: {prior_median:.1f}')
+                      label=f'Prior median: {prior_median:.3f}')
             ax.axvline(post_median, color='#ff7f0e', linestyle='-', linewidth=2,
-                      label=f'Post median: {post_median:.1f}')
+                      label=f'Post median: {post_median:.3f}')
 
             # Add truth value if available
-            if btype in truth_values and kper in truth_values[btype]:
-                truth_val = truth_values[btype][kper]
+            if rtype in truth_values and kper in truth_values[rtype]:
+                truth_val = truth_values[rtype][kper]
                 ax.axvline(truth_val, color='red', linestyle=':', linewidth=2,
-                          label=f'Truth: {truth_val:.1f}')
+                          label=f'Truth: {truth_val:.3f}')
 
-            ax.set_xlabel('Budget (m³/d)', fontsize=9)
+            # Set axis labels based on type
+            if rtype == 'pk4':
+                ax.set_xlabel('Recession Rate (m/d)', fontsize=9)
+            elif rtype == 'fliptime':
+                ax.set_xlabel('Flip Time (days)', fontsize=9)
+            else:
+                ax.set_xlabel('Value', fontsize=9)
+
             ax.set_ylabel('Frequency', fontsize=9)
             ax.set_title(f'kper {kper}', fontsize=10, fontweight='bold')
             ax.grid(True, alpha=0.3)
             ax.legend(fontsize=7, loc='best')
             ax.tick_params(labelsize=8)
 
-        fig.suptitle(f'{btype} Budget', fontsize=12, fontweight='bold', y=1.02)
+        fig.suptitle(f'{rtype} Recession', fontsize=12, fontweight='bold', y=1.02)
         plt.tight_layout()
 
         # Save figure
-        output_path = os.path.join(output_dir, f'{run_name}_{btype.lower()}_budget{file_suffix}.png')
+        output_path = os.path.join(output_dir, f'{run_name}_{rtype}_recession{file_suffix}.png')
         plt.savefig(output_path, dpi=150, bbox_inches='tight')
         plt.close()
 
@@ -359,7 +318,7 @@ if __name__ == '__main__':
     if run_name != model_name:
         print(f"Run name (directory): {run_name}")
 
-    create_budget_plots(
+    create_recession_plots(
         run_name=run_name,
         model_name=model_name,
         post_iter=args.post_iter,

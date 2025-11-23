@@ -1,14 +1,15 @@
 """
 Combined parameter analysis plot with evolution across iterations.
 
-Combines elements from h_analyze_params.py and i_analyze_param_reinflation.py:
-- Row 1: A - Lineplot of parameter change magnitude per iteration
-- Row 2: B, C, D, E - Evolution of parameter mean for 4 main groups
-- Row 3: F, G, H, I - Evolution of parameter CV for 4 main groups
+Calculates statistics on transformed parameter values (log10 for log-transformed params).
+
+- Row 1: A - Lineplot of % change in transformed mean per iteration
+- Row 2: B, C, D, E - Evolution of parameter mean (transformed) for 4 main groups
+- Row 3: F, G, H, I - Evolution of parameter CV (transformed) for 4 main groups
 - Row 4: J, K - Histograms of CV reduction (from prior and from last inflation)
 
 Usage:
-    python scripts/m_combined_param_analysis.py [model_name] [--run-name NAME] [--last-iter N]
+    python scripts/pp_param_analysis.py [model_name] [--run-name NAME] [--last-iter N]
 
     If model_name is not provided, uses MODEL_NAME from setup.py
 """
@@ -30,68 +31,135 @@ from setup import MODEL_NAME as DEFAULT_MODEL_NAME
 from setup import REINFLATE_ITERS as DEFAULT_REINFLATE_LIST
 
 
-def categorize_parameter(pname):
+def categorize_parameter_by_pglong(pglong):
     """
-    Categorize parameter by type based on pname prefix.
+    Categorize parameter by type based on pglong (parameter group long name).
+
+    pglong format:
+    - npflayer1-{suffix}: Hydraulic Conductivity
+    - stosslayer1-{suffix}: Storage
+    - rchss-{suffix}: Recharge (steady-state)
+    - rchtr-{suffix}: Recharge (transient)
+    - ghb{type}-{param}-{suffix}: GHB boundaries
 
     Args:
-        pname: Parameter name (e.g., 'npfklayer1-gr')
+        pglong: Parameter group long name (e.g., 'npflayer1-gr', 'ghbaw-cond-gr')
 
     Returns:
-        tuple: (category, subcategory)
+        tuple: (category, subcategory, display_name)
     """
-    pname_lower = str(pname).lower()
+    pglong_lower = str(pglong).lower()
 
-    if 'npfk' in pname_lower:
-        if '-gr' in pname_lower:
-            return ('Hydraulic Conductivity', 'K-grid')
-        elif '-pp' in pname_lower:
-            return ('Hydraulic Conductivity', 'K-pilot')
-        elif '-cn' in pname_lower:
-            return ('Hydraulic Conductivity', 'K-constant')
-        else:
-            return ('Hydraulic Conductivity', 'K-other')
+    # Determine suffix type
+    if '-gr' in pglong_lower:
+        suffix_type = 'grid'
+    elif '-pp' in pglong_lower:
+        suffix_type = 'pilot'
+    elif '-cn' in pglong_lower:
+        suffix_type = 'constant'
+    elif '-hg' in pglong_lower:
+        suffix_type = 'head-grid'
+    else:
+        suffix_type = 'other'
 
-    elif 'stoss' in pname_lower or 'sto' in pname_lower:
-        if '-gr' in pname_lower:
-            return ('Storage', 'S-grid')
-        elif '-pp' in pname_lower:
-            return ('Storage', 'S-pilot')
-        elif '-cn' in pname_lower:
-            return ('Storage', 'S-constant')
-        else:
-            return ('Storage', 'S-other')
+    # Hydraulic Conductivity
+    if pglong_lower.startswith('npflayer1') or pglong_lower.startswith('npfk'):
+        category = 'Hydraulic Conductivity'
+        subcategory = f'K-{suffix_type}'
+        display_name = f'K ({suffix_type})'
+        return (category, subcategory, display_name)
 
-    elif 'rch' in pname_lower:
-        if 'rchss' in pname_lower or 'ss' in pname_lower:
-            return ('Recharge', 'RCH-steady')
-        elif 'rchtr' in pname_lower or 'tr' in pname_lower:
-            return ('Recharge', 'RCH-transient')
-        else:
-            return ('Recharge', 'RCH-other')
+    # Storage
+    elif pglong_lower.startswith('stosslayer1') or pglong_lower.startswith('sto'):
+        category = 'Storage'
+        subcategory = f'S-{suffix_type}'
+        display_name = f'S ({suffix_type})'
+        return (category, subcategory, display_name)
 
-    elif 'ghb' in pname_lower:
+    # Recharge steady-state
+    elif pglong_lower.startswith('rchss'):
+        category = 'Recharge'
+        subcategory = f'RCH-steady'
+        display_name = f'RCH-SS ({suffix_type})'
+        return (category, subcategory, display_name)
+
+    # Recharge transient
+    elif pglong_lower.startswith('rchtr'):
+        category = 'Recharge'
+        subcategory = f'RCH-transient'
+        display_name = f'RCH-TR ({suffix_type})'
+        return (category, subcategory, display_name)
+
+    # GHB boundaries
+    elif pglong_lower.startswith('ghb'):
         # Determine GHB type
-        ghb_type = 'GHB-other'
-        if 'ghbaw' in pname_lower:
-            ghb_type = 'GHB-Awanui'
-        elif 'ghbpw' in pname_lower:
-            ghb_type = 'GHB-Poukawa'
-        elif 'ghbspring' in pname_lower:
-            ghb_type = 'GHB-Spring'
-        elif 'ghbconf' in pname_lower:
-            ghb_type = 'GHB-Confined'
-
-        # Determine property
-        if '-cond' in pname_lower:
-            return ('GHB Conductance', ghb_type + '-cond')
-        elif '-head' in pname_lower:
-            return ('GHB Head', ghb_type + '-head')
+        if pglong_lower.startswith('ghbaw'):
+            ghb_name = 'Awanui'
+        elif pglong_lower.startswith('ghbpw'):
+            ghb_name = 'Poukawa'
+        elif pglong_lower.startswith('ghbspr'):
+            ghb_name = 'Spring'
+        elif pglong_lower.startswith('ghbconf'):
+            ghb_name = 'Confined'
         else:
-            return ('GHB Other', ghb_type)
+            ghb_name = 'Other'
+
+        # Determine parameter type
+        if '-cond-' in pglong_lower or pglong_lower.endswith('-cond'):
+            category = 'GHB Conductance'
+            subcategory = f'GHB-{ghb_name}-cond'
+            display_name = f'{ghb_name} cond ({suffix_type})'
+        elif '-head-ts' in pglong_lower:
+            category = 'GHB Head TS'
+            subcategory = f'GHB-{ghb_name}-head-ts'
+            display_name = f'{ghb_name} head-ts'
+        elif '-head-' in pglong_lower or pglong_lower.endswith('-head'):
+            category = 'GHB Head'
+            subcategory = f'GHB-{ghb_name}-head'
+            display_name = f'{ghb_name} head ({suffix_type})'
+        else:
+            category = 'GHB Other'
+            subcategory = f'GHB-{ghb_name}'
+            display_name = f'{ghb_name} ({suffix_type})'
+
+        return (category, subcategory, display_name)
 
     else:
-        return ('Other', 'Other')
+        return ('Other', 'Other', pglong)
+
+
+def load_pglong_mapping(master_dir, model_name):
+    """
+    Load pglong mapping from par_data.csv.
+
+    Args:
+        master_dir: Path to master_ies directory
+        model_name: Model name
+
+    Returns:
+        dict: {pargp: pglong}
+    """
+    par_data_file = os.path.join(master_dir, f'{model_name}.par_data.csv')
+
+    if not os.path.exists(par_data_file):
+        print(f"  Warning: par_data.csv not found: {par_data_file}")
+        return {}
+
+    par_data = pd.read_csv(par_data_file, low_memory=False)
+
+    # Create mapping from pargp to pglong
+    pargp_to_pglong = {}
+
+    if 'pargp' in par_data.columns and 'pglong' in par_data.columns:
+        for pargp in par_data['pargp'].unique():
+            group_data = par_data[par_data['pargp'] == pargp]
+            if len(group_data) > 0:
+                # Use the first pglong value for this group
+                pglong = group_data['pglong'].iloc[0]
+                pargp_to_pglong[pargp] = pglong
+
+    print(f"  Loaded pglong mapping for {len(pargp_to_pglong)} parameter groups")
+    return pargp_to_pglong
 
 
 def calculate_reinflation_iters(reinflate_list):
@@ -112,9 +180,43 @@ def calculate_reinflation_iters(reinflate_list):
     return r_iters
 
 
+def get_param_transform_info(pst):
+    """
+    Get transformation information for each parameter group.
+
+    Args:
+        pst: pyemu.Pst object
+
+    Returns:
+        dict: {pargp: is_log_transformed}
+    """
+    param_data = pst.parameter_data.copy()
+
+    # Determine if each parameter group is log-transformed
+    # A group is log-transformed if most of its parameters are log-transformed
+    group_transform = {}
+
+    for pargp in param_data['pargp'].unique():
+        group_params = param_data[param_data['pargp'] == pargp]
+
+        # Check partrans column
+        if 'partrans' in group_params.columns:
+            # Count log-transformed parameters
+            log_count = (group_params['partrans'] == 'log').sum()
+            total_count = len(group_params)
+
+            # If majority are log-transformed, treat group as log
+            group_transform[pargp] = log_count > total_count / 2
+        else:
+            group_transform[pargp] = False
+
+    return group_transform
+
+
 def load_parameter_stats_all_iters(master_dir, model_name, pst):
     """
     Load parameter ensemble statistics for all iterations.
+    Calculates statistics on transformed values (log10 for log-transformed params).
 
     Args:
         master_dir: Path to master_ies directory
@@ -140,7 +242,17 @@ def load_parameter_stats_all_iters(master_dir, model_name, pst):
     # Load parameter data
     param_data = pst.parameter_data.copy()
 
-    # Create mapping from pargp to pname
+    # Get transformation info for each group
+    group_transform = get_param_transform_info(pst)
+
+    # Log which groups are log-transformed
+    log_groups = [g for g, is_log in group_transform.items() if is_log]
+    print(f"Log-transformed parameter groups: {len(log_groups)}")
+
+    # Load pglong mapping from par_data.csv
+    pargp_to_pglong = load_pglong_mapping(master_dir, model_name)
+
+    # Create mapping from pargp to pname (fallback if no pglong)
     pargp_to_pname = {}
     for pargp in pst.par_groups:
         pars = param_data[param_data['pargp'] == pargp]
@@ -172,25 +284,44 @@ def load_parameter_stats_all_iters(master_dir, model_name, pst):
             # Get values for this group across all realizations
             group_values = par_df[group_params].values.flatten()
 
-            # Calculate statistics
-            mean_val = np.mean(group_values)
-            std_val = np.std(group_values)
-            cv_val = (std_val / mean_val * 100) if mean_val != 0 else np.nan
+            # Check if this group is log-transformed
+            is_log = group_transform.get(pargp, False)
 
-            # Get pname and category
-            pname = pargp_to_pname.get(pargp, pargp)
-            category, subcategory = categorize_parameter(pname)
+            if is_log:
+                # Calculate statistics on log10 values
+                # Filter out non-positive values for log transform
+                positive_vals = group_values[group_values > 0]
+                if len(positive_vals) > 0:
+                    log_values = np.log10(positive_vals)
+                    mean_val = np.mean(log_values)
+                    std_val = np.std(log_values)
+                    cv_val = (std_val / abs(mean_val) * 100) if mean_val != 0 else np.nan
+                else:
+                    mean_val = np.nan
+                    std_val = np.nan
+                    cv_val = np.nan
+            else:
+                # Calculate statistics on original values
+                mean_val = np.mean(group_values)
+                std_val = np.std(group_values)
+                cv_val = (std_val / mean_val * 100) if mean_val != 0 else np.nan
+
+            # Get pglong and category using pglong-based categorization
+            pglong = pargp_to_pglong.get(pargp, pargp_to_pname.get(pargp, pargp))
+            category, subcategory, display_name = categorize_parameter_by_pglong(pglong)
 
             all_stats.append({
                 'Iteration': iter_num,
                 'Group': pargp,
-                'Pname': pname,
+                'Pglong': pglong,
                 'Category': category,
                 'Subcategory': subcategory,
+                'DisplayName': display_name,
                 'Mean': mean_val,
                 'Std': std_val,
                 'CV': cv_val,
-                'N_Params': len(group_params)
+                'N_Params': len(group_params),
+                'IsLog': is_log
             })
 
     return pd.DataFrame(all_stats), iterations
@@ -236,6 +367,7 @@ def load_pcs_data(master_dir, model_name):
 def create_combined_plot(run_name, model_name, last_iter=None, reinflate_list=None):
     """
     Create combined parameter analysis plot.
+    Statistics are calculated on transformed parameter values.
 
     Args:
         run_name: Name for directory path
@@ -244,7 +376,7 @@ def create_combined_plot(run_name, model_name, last_iter=None, reinflate_list=No
         reinflate_list: Custom reinflation iteration counts (default: from setup.py)
     """
     print("=" * 100)
-    print(f"COMBINED PARAMETER ANALYSIS: {run_name}: {model_name}")
+    print(f"COMBINED PARAMETER ANALYSIS (Transformed): {run_name}: {model_name}")
     print("=" * 100)
 
     # Set paths
@@ -279,8 +411,8 @@ def create_combined_plot(run_name, model_name, last_iter=None, reinflate_list=No
         print(f"\nUsing default reinflation list from setup.py: {DEFAULT_REINFLATE_LIST}")
     print(f"Reinflation iterations: {reinflate_iters}")
 
-    # Load parameter statistics for all iterations
-    print("\nLoading parameter ensemble data...")
+    # Load parameter statistics for all iterations (using transformed values)
+    print("\nLoading parameter ensemble data (calculating on transformed values)...")
     stats_df, iterations = load_parameter_stats_all_iters(master_dir, model_name, pst)
 
     if len(stats_df) == 0:
@@ -301,9 +433,6 @@ def create_combined_plot(run_name, model_name, last_iter=None, reinflate_list=No
             break
 
     print(f"Last inflation iteration: {last_inflation_iter}")
-
-    # Load PCS data for mean change magnitudes
-    pcs_df = load_pcs_data(master_dir, model_name)
 
     # Color scheme for parameter categories
     category_colors = {
@@ -366,53 +495,70 @@ def create_combined_plot(run_name, model_name, last_iter=None, reinflate_list=No
     fig = plt.figure(figsize=(16, 10))
     gs = fig.add_gridspec(3, 4, hspace=0.35, wspace=0.3)
 
-    # Row 1 (A): Lineplot of parameter change magnitude per iteration
+    # Row 1 (A): Lineplot of % change in transformed mean per iteration
     ax_a = fig.add_subplot(gs[0, :])
 
-    if pcs_df is not None and len(pcs_df) > 0:
-        # Map pargp to category using stats_df
-        group_to_cat = dict(zip(stats_df['Group'], stats_df['Category']))
+    # Calculate % change in transformed mean for each category
+    # Exclude 'Other', 'GHB Head', and 'GHB Head TS' from top plot
+    plot_categories = [c for c in available_categories if c not in ['Other', 'GHB Head', 'GHB Head TS', 'GHB Other']]
 
-        # Calculate mean change by category for each iteration
-        # Exclude 'Other' and 'GHB Head' from top plot
-        plot_categories = [c for c in available_categories if c not in ['Other', 'GHB Head', 'GHB Other']]
-        for category in plot_categories:
-            cat_pcs = pcs_df[pcs_df['group'].map(group_to_cat) == category]
-            if len(cat_pcs) > 0:
-                change_by_iter = cat_pcs.groupby('iteration')['mean_change'].mean()
-                color = category_colors.get(category, '#95a5a6')
-                ax_a.plot(change_by_iter.index, change_by_iter.values, 'o-', linewidth=2,
-                         markersize=5, label=category, color=color, alpha=0.8)
+    for category in plot_categories:
+        cat_data = stats_df[stats_df['Category'] == category]
 
-        # Mark reinflation iterations
-        for r_iter in reinflate_iters:
-            if r_iter <= last_iter:
-                ax_a.axvline(x=r_iter, color='red', linestyle='--', linewidth=1, alpha=0.5)
+        # Get mean by iteration for this category
+        mean_by_iter = cat_data.groupby('Iteration')['Mean'].mean()
 
-        ax_a.set_xlabel('Iteration', fontsize=10)
-        ax_a.set_ylabel('Mean Change Magnitude', fontsize=10)
-        ax_a.set_title('A. Parameter change magnitude per iteration', fontsize=11, fontweight='bold', loc='left')
-        ax_a.legend(fontsize=7, loc='best', ncol=3)
-        ax_a.grid(True, alpha=0.3)
-        ax_a.set_xlim(0, last_iter)
-        ax_a.xaxis.set_major_locator(plt.MaxNLocator(integer=True))
-    else:
-        ax_a.text(0.5, 0.5, 'No PCS data available', ha='center', va='center',
-                transform=ax_a.transAxes, fontsize=10, color='gray')
+        # Calculate % change from previous iteration
+        iters_sorted = sorted(mean_by_iter.index)
+        pct_changes = []
+        iter_nums = []
 
-    # Row 2 (B, C, D, E): Evolution of parameter mean for 4 main groups (by subcategory)
+        for i in range(1, len(iters_sorted)):
+            prev_iter = iters_sorted[i-1]
+            curr_iter = iters_sorted[i]
+            prev_mean = mean_by_iter[prev_iter]
+            curr_mean = mean_by_iter[curr_iter]
+
+            if prev_mean != 0:
+                pct_change = abs((curr_mean - prev_mean) / prev_mean * 100)
+                pct_changes.append(pct_change)
+                iter_nums.append(curr_iter)
+
+        if len(iter_nums) > 0:
+            color = category_colors.get(category, '#95a5a6')
+            ax_a.plot(iter_nums, pct_changes, 'o-', linewidth=2,
+                     markersize=5, label=category, color=color, alpha=0.8)
+
+    # Mark reinflation iterations
+    for r_iter in reinflate_iters:
+        if r_iter <= last_iter:
+            ax_a.axvline(x=r_iter, color='red', linestyle='--', linewidth=1, alpha=0.5)
+
+    ax_a.set_xlabel('Iteration', fontsize=10)
+    ax_a.set_ylabel('% Change in Transformed Mean', fontsize=10)
+    ax_a.set_title('A. % change in transformed mean per iteration', fontsize=11, fontweight='bold', loc='left')
+    ax_a.legend(fontsize=7, loc='best', ncol=3)
+    ax_a.grid(True, alpha=0.3)
+    ax_a.set_xlim(0, last_iter)
+    ax_a.xaxis.set_major_locator(plt.MaxNLocator(integer=True))
+    ax_a.set_yscale('log')
+
+    # Row 2 (B, C, D, E): Evolution of transformed parameter mean for 4 main groups (by subcategory)
     plot_labels = ['B', 'C', 'D', 'E']
     for i, category in enumerate(main_categories[:4]):
         ax = fig.add_subplot(gs[1, i])
         cat_data = stats_df[stats_df['Category'] == category]
+
+        # Check if this category has log-transformed parameters
+        has_log = cat_data['IsLog'].any() if 'IsLog' in cat_data.columns else False
 
         # Plot mean evolution for each subcategory
         for subcat in cat_data['Subcategory'].unique():
             subcat_data = cat_data[cat_data['Subcategory'] == subcat]
             mean_by_iter = subcat_data.groupby('Iteration')['Mean'].mean()
             color = subcategory_colors.get(subcat, '#95a5a6')
-            # Create shorter label
-            label = subcat.replace(category + '-', '').replace('K-', '').replace('S-', '').replace('RCH-', '').replace('GHB-', '')
+            # Use DisplayName for label
+            label = subcat_data['DisplayName'].iloc[0] if 'DisplayName' in subcat_data.columns else subcat
             ax.plot(mean_by_iter.index, mean_by_iter.values, 'o-', linewidth=1.5,
                    markersize=3, color=color, alpha=0.8, label=label)
 
@@ -423,17 +569,18 @@ def create_combined_plot(run_name, model_name, last_iter=None, reinflate_list=No
 
         ax.set_xlabel('Iteration', fontsize=8)
         if i == 0:
-            ax.set_ylabel('Mean', fontsize=8)
+            if has_log:
+                ax.set_ylabel('Mean (log₁₀)', fontsize=8)
+            else:
+                ax.set_ylabel('Mean', fontsize=8)
         ax.set_title(f'{plot_labels[i]}. {category}', fontsize=9, fontweight='bold', loc='left')
         ax.legend(fontsize=5, loc='best')
         ax.grid(True, alpha=0.3)
         ax.set_xlim(0, last_iter)
         ax.xaxis.set_major_locator(plt.MaxNLocator(integer=True))
         ax.tick_params(labelsize=7)
-        if category in ['Hydraulic Conductivity', 'GHB Conductance']:
-            ax.set_yscale('log')
 
-    # Row 3 (F, G, H, I): Evolution of parameter CV for 4 main groups (by subcategory)
+    # Row 3 (F, G, H, I): Evolution of transformed parameter CV for 4 main groups (by subcategory)
     plot_labels = ['F', 'G', 'H', 'I']
     for i, category in enumerate(main_categories[:4]):
         ax = fig.add_subplot(gs[2, i])
@@ -444,8 +591,8 @@ def create_combined_plot(run_name, model_name, last_iter=None, reinflate_list=No
             subcat_data = cat_data[cat_data['Subcategory'] == subcat]
             cv_by_iter = subcat_data.groupby('Iteration')['CV'].mean()
             color = subcategory_colors.get(subcat, '#95a5a6')
-            # Create shorter label
-            label = subcat.replace(category + '-', '').replace('K-', '').replace('S-', '').replace('RCH-', '').replace('GHB-', '')
+            # Use DisplayName for label
+            label = subcat_data['DisplayName'].iloc[0] if 'DisplayName' in subcat_data.columns else subcat
             ax.plot(cv_by_iter.index, cv_by_iter.values, 'o-', linewidth=1.5,
                    markersize=3, color=color, alpha=0.8, label=label)
 
@@ -463,16 +610,13 @@ def create_combined_plot(run_name, model_name, last_iter=None, reinflate_list=No
         ax.set_xlim(0, last_iter)
         ax.xaxis.set_major_locator(plt.MaxNLocator(integer=True))
         ax.tick_params(labelsize=7)
+        ax.set_yscale('log')
 
     # Save first figure (A-I)
     fig_path = os.path.join(output_dir, f'{model_name}_combined_param_analysis.png')
     plt.savefig(fig_path, dpi=200, bbox_inches='tight')
     print(f"\nFigure 1 saved to: {fig_path}")
     plt.close()
-
-    # Create second figure for CV reduction bar charts (A and B)
-    fig2 = plt.figure(figsize=(14, 8))
-    gs2 = fig2.add_gridspec(1, 2, wspace=0.4)
 
     # Get CV at iteration 0 and last iteration for all groups
     prior_data = stats_df[stats_df['Iteration'] == 0].set_index('Group')
@@ -485,31 +629,15 @@ def create_combined_plot(run_name, model_name, last_iter=None, reinflate_list=No
             prior_cv = prior_data.loc[group, 'CV']
             final_cv = final_data.loc[group, 'CV']
             category = prior_data.loc[group, 'Category']
-            # Skip GHB Head category
-            if category == 'GHB Head':
+            # Skip GHB Head and GHB Head TS categories
+            if category in ['GHB Head', 'GHB Head TS']:
                 continue
             if prior_cv > 0:
                 reduction = ((prior_cv - final_cv) / prior_cv * 100)
                 subcat = prior_data.loc[group, 'Subcategory']
 
-                # Create clearer label with pp/grid/constant
-                if '-grid' in subcat.lower() or subcat.endswith('-gr'):
-                    param_type = 'grid'
-                elif '-pilot' in subcat.lower() or subcat.endswith('-pp'):
-                    param_type = 'pp'
-                elif '-constant' in subcat.lower() or subcat.endswith('-cn'):
-                    param_type = 'const'
-                else:
-                    param_type = ''
-
-                # Create display name
-                base_name = subcat.replace('K-', '').replace('S-', '').replace('RCH-', '').replace('GHB-', '')
-                base_name = base_name.replace('-grid', '').replace('-pilot', '').replace('-constant', '')
-                base_name = base_name.replace('-gr', '').replace('-pp', '').replace('-cn', '')
-                if param_type:
-                    display_name = f"{base_name} ({param_type})"
-                else:
-                    display_name = base_name
+                # Use DisplayName from stats_df
+                display_name = prior_data.loc[group, 'DisplayName']
 
                 cv_reduction_data.append({
                     'Subcategory': subcat,
@@ -525,6 +653,16 @@ def create_combined_plot(run_name, model_name, last_iter=None, reinflate_list=No
         positive_df = cv_df[cv_df['Reduction'] >= 0].sort_values('Reduction', ascending=False)
         negative_df = cv_df[cv_df['Reduction'] < 0].sort_values('Reduction', ascending=True)
 
+        # Determine number of plots needed
+        has_increases = len(negative_df) > 0
+        n_plots = 2 if has_increases else 1
+
+        # Create figure with 1/3 aspect ratio, width 7.28
+        fig_width = 7.28
+        fig_height = fig_width / 3
+        fig2 = plt.figure(figsize=(fig_width, fig_height))
+        gs2 = fig2.add_gridspec(1, n_plots, wspace=0.4)
+
         # A: Positive reductions (CV decreased) - vertical bars
         ax_a = fig2.add_subplot(gs2[0, 0])
 
@@ -536,21 +674,22 @@ def create_combined_plot(run_name, model_name, last_iter=None, reinflate_list=No
             ax_a.bar(x_pos, positive_df['Reduction'].values, color=colors, alpha=0.8, edgecolor='black')
 
             ax_a.set_xticks(x_pos)
-            ax_a.set_xticklabels(positive_df['DisplayName'].values, rotation=45, ha='right', fontsize=8)
+            ax_a.set_xticklabels(positive_df['DisplayName'].values, rotation=45, ha='right', fontsize=9)
 
-            ax_a.set_ylabel('CV Reduction (%)', fontsize=10)
-            ax_a.set_title(f'A. CV reductions (iter 0 → {last_iter})', fontsize=11, fontweight='bold', loc='left')
+            ax_a.set_ylabel('CV Reduction (%)', fontsize=9)
+            ax_a.set_title(f'A. CV reductions (iter 0 → {last_iter})', fontsize=9, fontweight='bold', loc='left')
             ax_a.axhline(y=0, color='gray', linestyle=':', linewidth=1)
             ax_a.grid(True, alpha=0.3, axis='y')
             ax_a.set_axisbelow(True)
+            ax_a.tick_params(labelsize=9)
         else:
             ax_a.text(0.5, 0.5, 'No CV reductions', ha='center', va='center',
-                     transform=ax_a.transAxes, fontsize=10, color='gray')
+                     transform=ax_a.transAxes, fontsize=9, color='gray')
 
-        # B: Negative reductions (CV increased) - vertical bars
-        ax_b = fig2.add_subplot(gs2[0, 1])
+        # B: Negative reductions (CV increased) - only if there are increases
+        if has_increases:
+            ax_b = fig2.add_subplot(gs2[0, 1])
 
-        if len(negative_df) > 0:
             colors = [subcategory_colors.get(subcat, category_colors.get(cat, '#95a5a6'))
                       for subcat, cat in zip(negative_df['Subcategory'], negative_df['Category'])]
 
@@ -558,26 +697,25 @@ def create_combined_plot(run_name, model_name, last_iter=None, reinflate_list=No
             ax_b.bar(x_pos, negative_df['Reduction'].values, color=colors, alpha=0.8, edgecolor='black')
 
             ax_b.set_xticks(x_pos)
-            ax_b.set_xticklabels(negative_df['DisplayName'].values, rotation=45, ha='right', fontsize=8)
+            ax_b.set_xticklabels(negative_df['DisplayName'].values, rotation=45, ha='right', fontsize=9)
 
-            ax_b.set_ylabel('CV Reduction (%)', fontsize=10)
-            ax_b.set_title(f'B. CV increases (iter 0 → {last_iter})', fontsize=11, fontweight='bold', loc='left')
+            ax_b.set_ylabel('CV Reduction (%)', fontsize=9)
+            ax_b.set_title(f'B. CV increases (iter 0 → {last_iter})', fontsize=9, fontweight='bold', loc='left')
             ax_b.axhline(y=0, color='gray', linestyle=':', linewidth=1)
             ax_b.grid(True, alpha=0.3, axis='y')
             ax_b.set_axisbelow(True)
-        else:
-            ax_b.text(0.5, 0.5, 'No CV increases', ha='center', va='center',
-                     transform=ax_b.transAxes, fontsize=10, color='gray')
+            ax_b.tick_params(labelsize=9)
 
-    # Save second figure
-    fig2_path = os.path.join(output_dir, f'{model_name}_cv_reduction.png')
-    plt.savefig(fig2_path, dpi=200, bbox_inches='tight')
-    print(f"Figure 2 saved to: {fig2_path}")
-    plt.close()
+        # Save second figure
+        fig2_path = os.path.join(output_dir, f'{model_name}_cv_reduction.png')
+        plt.savefig(fig2_path, dpi=200, bbox_inches='tight')
+        print(f"Figure 2 saved to: {fig2_path}")
+        plt.close()
 
     # Create individual histogram figures for each parameter group
     # Compare final iteration vs reinflated prior (last inflation iteration)
-    print("\nCreating parameter distribution histograms...")
+    # Uses transformed values for histograms
+    print("\nCreating parameter distribution histograms (transformed values)...")
 
     # Load parameter ensembles for final and reinflated iterations
     final_par_file = os.path.join(master_dir, f'{model_name}.{last_iter}.par.csv')
@@ -589,6 +727,9 @@ def create_combined_plot(run_name, model_name, last_iter=None, reinflate_list=No
 
         # Get parameter data
         param_data = pst.parameter_data.copy()
+
+        # Get transformation info
+        group_transform = get_param_transform_info(pst)
 
         # Create histogram subdirectory
         hist_dir = os.path.join(output_dir, 'histograms')
@@ -603,8 +744,8 @@ def create_combined_plot(run_name, model_name, last_iter=None, reinflate_list=No
             subcat = row['Subcategory']
             category = row['Category']
 
-            # Skip GHB Head
-            if category == 'GHB Head':
+            # Skip GHB Head and GHB Head TS
+            if category in ['GHB Head', 'GHB Head TS']:
                 continue
 
             # Get parameter groups for this subcategory
@@ -613,8 +754,13 @@ def create_combined_plot(run_name, model_name, last_iter=None, reinflate_list=No
             # Collect all parameter values for this subcategory
             final_values = []
             prior_values = []
+            is_log_subcat = False
 
             for group in subcat_groups:
+                # Check if this group is log-transformed
+                if group_transform.get(group, False):
+                    is_log_subcat = True
+
                 # Get parameters in this group
                 group_params = param_data[param_data['pargp'] == group].index.tolist()
                 group_params = [p for p in group_params if p in final_par.columns and p in prior_par.columns]
@@ -627,12 +773,8 @@ def create_combined_plot(run_name, model_name, last_iter=None, reinflate_list=No
                 # Create figure (1/3 page size ~ 4x3 inches)
                 fig3, ax = plt.subplots(figsize=(4, 3))
 
-                # Determine if log scale needed
-                all_vals = np.concatenate([final_values, prior_values])
-                use_log = np.min(all_vals[all_vals > 0]) > 0 and np.max(all_vals) / np.min(all_vals[all_vals > 0]) > 100
-
-                if use_log:
-                    # Log-transform for histogram
+                if is_log_subcat:
+                    # Always use log10 for log-transformed parameters
                     final_log = np.log10(np.array(final_values)[np.array(final_values) > 0])
                     prior_log = np.log10(np.array(prior_values)[np.array(prior_values) > 0])
 
@@ -666,7 +808,7 @@ def create_combined_plot(run_name, model_name, last_iter=None, reinflate_list=No
 
                 # Save figure
                 safe_name = subcat.replace('/', '_').replace('\\', '_').replace(' ', '_')
-                hist_path = os.path.join(hist_dir, f'{safe_name}_hist.png')
+                hist_path = os.path.join(hist_dir, f'{model_name}_{safe_name}_hist.png')
                 plt.savefig(hist_path, dpi=150, bbox_inches='tight')
                 plt.close()
 
@@ -679,8 +821,110 @@ def create_combined_plot(run_name, model_name, last_iter=None, reinflate_list=No
     stats_df.to_csv(csv_path, index=False)
     print(f"Statistics saved to: {csv_path}")
 
+    # Write methods documentation
+    methods_path = os.path.join(output_dir, 'METHODS.txt')
+    methods_text = """PP_PARAM_ANALYSIS.PY - CALCULATION METHODS
+==========================================
+
+1. PARAMETER TRANSFORMATION
+---------------------------
+Parameters are identified as log-transformed based on the 'partrans' column in
+pst.parameter_data. If partrans = 'log', the parameter group is treated as
+log-transformed.
+
+For log-transformed parameters:
+  - Statistics are calculated on log10(values)
+
+For non-transformed parameters:
+  - Statistics are calculated on original values
+
+
+2. MEAN CALCULATION
+-------------------
+For each parameter group at each iteration:
+
+  If log-transformed:
+    mean = mean(log10(values))
+
+  If not transformed:
+    mean = mean(values)
+
+Where 'values' includes all parameter values across all realizations for that group.
+
+
+3. COEFFICIENT OF VARIATION (CV)
+--------------------------------
+CV measures relative variability as a percentage:
+
+  CV = (std / |mean|) * 100
+
+Where std and mean are calculated on transformed values (log10 for log-transformed params).
+
+
+4. CV REDUCTION (Plots A and B in cv_reduction figure)
+------------------------------------------------------
+CV reduction measures how much parameter uncertainty was reduced during calibration:
+
+  reduction = ((prior_cv - final_cv) / prior_cv) * 100
+
+Where:
+  - prior_cv = CV at iteration 0 (prior ensemble)
+  - final_cv = CV at last iteration (posterior ensemble)
+
+Interpretation:
+  - Positive values = CV decreased = uncertainty reduced (good constraint)
+  - Negative values = CV increased = uncertainty increased
+
+Example:
+  - If prior CV = 50% and final CV = 20%
+  - Reduction = ((50 - 20) / 50) * 100 = 60% reduction in uncertainty
+
+  - If prior CV = 30% and final CV = 45%
+  - Reduction = ((30 - 45) / 30) * 100 = -50% (CV increased by 50%)
+
+
+5. % CHANGE IN TRANSFORMED MEAN (Plot A in combined figure)
+-----------------------------------------------------------
+Shows how much the mean parameter value changed between consecutive iterations:
+
+  pct_change = |(curr_mean - prev_mean) / prev_mean| * 100
+
+Where curr_mean and prev_mean are the transformed means (log10 for log-transformed params).
+
+
+6. PARAMETER CATEGORIZATION (using pglong)
+------------------------------------------
+Parameters are categorized using the 'pglong' column from par_data.csv:
+
+  npflayer1-{suffix}     -> Hydraulic Conductivity
+  stosslayer1-{suffix}   -> Storage
+  rchss-{suffix}         -> Recharge (steady-state)
+  rchtr-{suffix}         -> Recharge (transient)
+  ghb{type}-{param}-{suffix} -> GHB boundaries
+
+Where:
+  - suffix: gr (grid), pp (pilot point), cn (constant), hg (head grid)
+  - type: aw (Awanui), pw (Poukawa), spr (Spring), conf (Confined)
+  - param: cond (conductance), head, head-ts (time-series heads)
+
+Display names are generated automatically, e.g.:
+  - "K (grid)", "K (pilot)", "K (constant)"
+  - "Awanui cond (grid)", "Spring head-ts"
+
+
+7. NOTES
+--------
+- GHB Head and GHB Head TS categories are excluded from plots
+- Log scale is used for Plot A (% change) and Plots F-I (CV evolution)
+- Reinflation iterations are marked with red dashed vertical lines
+"""
+    with open(methods_path, 'w') as f:
+        f.write(methods_text)
+    print(f"Methods documentation saved to: {methods_path}")
+
     print("\n" + "=" * 100)
     print("ANALYSIS COMPLETE!")
+    print("Note: Statistics calculated on transformed values (log10 for log-transformed params)")
     print("=" * 100)
 
     return stats_df
@@ -689,7 +933,7 @@ def create_combined_plot(run_name, model_name, last_iter=None, reinflate_list=No
 def parse_args():
     """Parse command-line arguments."""
     parser = argparse.ArgumentParser(
-        description='Combined parameter analysis plot',
+        description='Combined parameter analysis plot (using transformed values)',
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=__doc__
     )

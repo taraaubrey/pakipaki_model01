@@ -4,8 +4,9 @@ Dask-optimized post-processing script for PEST++ IES results.
 Uses Dask for efficient loading of large CSV files.
 
 Usage:
-    python scripts/g_postprocess_dask.py run_name [options]
+    python scripts/g_postprocess_dask.py model_name [options]
     python scripts/g_postprocess_dask.py local_run34 --last-iter 8
+    python scripts/g_postprocess_dask.py local_run34 --run-name 62730_run34_rch250_rr --last-iter 19
     python scripts/g_postprocess_dask.py local_run34 --subset-method phi --phi-percentile 10 90
 """
 
@@ -17,6 +18,12 @@ import pyemu
 # Import standard helpers (Dask optimization doesn't provide benefit for PyEMU ensembles)
 from g_helpers_run4 import *
 import pandas as pd
+
+# Import default model name from setup
+try:
+    from setup import MODEL_NAME as DEFAULT_MODEL_NAME
+except ImportError:
+    DEFAULT_MODEL_NAME = None
 
 print("Note: Using standard data loading (PyEMU ensembles are already optimized)")
 
@@ -30,9 +37,18 @@ def parse_args():
     )
 
     parser.add_argument(
-        'run_name',
+        'model_name',
         type=str,
-        help='Name of the run directory'
+        nargs='?',
+        default=DEFAULT_MODEL_NAME,
+        help=f'Model name for file prefixes (default: {DEFAULT_MODEL_NAME} from setup.py)'
+    )
+
+    parser.add_argument(
+        '--run-name', '-r',
+        type=str,
+        default=None,
+        help='Run name for directory path (default: same as model_name)'
     )
 
     parser.add_argument(
@@ -74,10 +90,13 @@ def main():
 
     # Parse command-line arguments
     args = parse_args()
-    run_name = args.run_name
+    model_name = args.model_name
+    run_name = args.run_name if args.run_name else model_name
 
     print(f"\n{'='*70}")
     print(f"POST-PROCESSING (Dask-optimized): {run_name}")
+    if run_name != model_name:
+        print(f"Model name: {model_name}")
     print(f"{'='*70}\n")
 
     # Setup paths
@@ -97,7 +116,7 @@ def main():
 
     # Auto-detect last iteration if not specified
     if args.last_iter is None:
-        pst_file = os.path.join(check_dir, f"{run_name}.pst")
+        pst_file = os.path.join(check_dir, f"{model_name}.pst")
         if os.path.exists(pst_file):
             pst = pyemu.Pst(pst_file)
             last_iter = pst.control_data.noptmax
@@ -111,7 +130,7 @@ def main():
 
     # Load data with Dask optimization
     print("\nLoading data with Dask optimization...")
-    data = load_data(paths, run_name, last_iter=last_iter, use_prior_only=False, restart=False)
+    data = load_data(paths, model_name, last_iter=last_iter, use_prior_only=False, restart=False)
 
     output_dir = paths['output']
 
@@ -133,7 +152,7 @@ def main():
 
         if not os.path.exists(subset_oe_fn):
             subset_oe, subset_pe = get_subset_ensembles(
-                paths, data, run_name, subset_indexes,
+                paths, data, model_name, subset_indexes,
                 head_filter=False, output_suffix=suffix
             )
         else:
@@ -160,7 +179,7 @@ def main():
 
         if not os.path.exists(subset_oe_fn):
             subset_oe, subset_pe = get_subset_ensembles(
-                paths, data, run_name, subset_indexes,
+                paths, data, model_name, subset_indexes,
                 head_filter=True, output_suffix=suffix
             )
         else:
@@ -247,7 +266,9 @@ def main():
     print(f"\n{'='*70}")
     print(f"POST-PROCESSING COMPLETE!")
     print(f"{'='*70}")
-    print(f"Model: {run_name}")
+    print(f"Run: {run_name}")
+    if run_name != model_name:
+        print(f"Model name: {model_name}")
     print(f"Last iteration: {last_iter}")
     if subset_oe is not None:
         print(f"Subset method: {args.subset_method}")

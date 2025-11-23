@@ -1,4 +1,4 @@
-MODEL_NAME = 'run36'  # name of the model
+MODEL_NAME = 'run37'  # name of the model
 """
 - Removed recharge from parameterization.
 - Added shapefile for pilot points.
@@ -156,12 +156,12 @@ SPACE_SUBSAMPLE = 5  # spatial subsampling for pilot points
 # Pest options
 NREALS = 250  # number of realizations for parameterization
 NREALS_PRIOR = 50  # number of realizations for parameterization
-REINFLATE_ITERS = 3, 3, 3, 3 # iterations at which to reinflate
+REINFLATE_ITERS = 3, 3, 3, 3, 3 # iterations at which to reinflate
 NOPTMAX = 3
 MAXSING = 120
 
 if REINFLATE_ITERS:
-    NOPTMAX = sum(REINFLATE_ITERS) - 1  # number of optimization iterations
+    NOPTMAX = sum(REINFLATE_ITERS)  # number of optimization iterations
 else:
     REINFLATE_ITERS = 0
 

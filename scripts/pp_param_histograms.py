@@ -22,7 +22,7 @@ import pyemu
 
 # Add scripts directory to path
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from setup import REINFLATE_ITERS
+from setup import REINFLATE_ITERS, MODEL_NAME as DEFAULT_MODEL_NAME
 from h_analyze_params import categorize_parameter
 
 
@@ -261,9 +261,15 @@ def parse_args():
     parser = argparse.ArgumentParser(
         description='Generate parameter distribution histograms comparing final vs reinflated prior'
     )
-    parser.add_argument('run_name', type=str, help='Name of the run directory')
-    parser.add_argument('--model-name', type=str, default=None,
-                       help='Model name (default: same as run_name)')
+    parser.add_argument(
+        'model_name',
+        type=str,
+        nargs='?',
+        default=DEFAULT_MODEL_NAME,
+        help=f'Model name for file prefixes (default: {DEFAULT_MODEL_NAME} from setup.py)'
+    )
+    parser.add_argument('--run-name', '-r', type=str, default=None,
+                       help='Run name for directory path (default: same as model_name)')
     parser.add_argument('--last-iter', type=int, default=None,
                        help='Last iteration index (default: auto-detect)')
     parser.add_argument('--prior-iter', type=int, default=None,
@@ -278,8 +284,12 @@ def parse_args():
 if __name__ == '__main__':
     args = parse_args()
 
-    run_name = args.run_name
-    model_name = args.model_name if args.model_name else run_name
+    model_name = args.model_name
+    run_name = args.run_name if args.run_name else model_name
+
+    print(f"Model name: {model_name}")
+    if run_name != model_name:
+        print(f"Run name (directory): {run_name}")
 
     create_param_histograms(
         run_name,

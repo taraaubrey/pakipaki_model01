@@ -728,7 +728,7 @@ def extract_model_heads(model_name, gwf=None, sample_path=None):
         all_samples = all_samples.reset_index().rename(columns={'index': 'time'})
 
         # add derived columns
-        all_samples['pk4-spr-diff'] = compare_ghb_heads(gwf, 3, 'ts_array_11', all_samples)
+        all_samples['pk4-spr-diff'] = compare_ghb_heads(gwf, 3, 'ts_array_10', all_samples)
 
 
         all_samples['pk4-conf-diff'] = compare_ghb_heads(gwf, 1, 'ts_array_0', all_samples)

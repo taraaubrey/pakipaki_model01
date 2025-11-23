@@ -578,6 +578,114 @@ def analyze_phi(run_name, model_name, reinflate_iters, last_iter_idx=None, selec
     stats_df.to_csv(csv_path, index=False)
     print(f"Summary table saved to: {csv_path}")
 
+    # Write methods documentation
+    methods_path = os.path.join(output_dir, 'METHODS.txt')
+    methods_text = """PP_ANALYZE_PHI.PY - CALCULATION METHODS
+=======================================
+
+1. PHI (OBJECTIVE FUNCTION)
+---------------------------
+Phi (φ) is the weighted sum of squared residuals between observed and simulated values.
+It represents the model's fit to observations - lower phi means better fit.
+
+  φ = Σ (weight * (observed - simulated)²)
+
+PEST++ tracks phi for:
+  - Each observation group (phi.group.csv)
+  - Total phi across all groups (phi.actual.csv)
+
+
+2. NORMALIZED PHI (Plot A)
+--------------------------
+Phi values are normalized to their initial value (iteration 0) to show relative change:
+
+  Normalized φ = φ(current iteration) / φ(iteration 0)
+
+For each realization:
+  - Get initial total phi from iteration 0
+  - Divide current iteration phi by initial phi
+
+Plotted as:
+  - Median line
+  - IQR (25-75th percentile) shaded region
+  - 5-95th percentile shaded region
+
+
+3. PHI REDUCTION (Plot F)
+-------------------------
+Phi reduction measures the improvement from the prior (iteration 0):
+
+  Reduction (%) = ((φ_initial - φ_final) / φ_final) * 100
+
+Note: Using φ_final in denominator allows for >100% reductions when
+initial phi is much larger than final phi (e.g., 10^11 → 10^5).
+
+Interpretation:
+  - Higher reduction = better constraint by observations
+  - 100% reduction means final phi is half of initial
+  - 1000% reduction means initial was 11x the final
+
+
+4. FINAL PHI CONTRIBUTION (Plot E)
+----------------------------------
+Shows the absolute phi value for each observation group at the selected iteration.
+This indicates which groups still have the highest residuals.
+
+
+5. OBSERVATION GROUP CATEGORIES
+-------------------------------
+Observations are automatically categorized based on their names:
+
+  ARR-H groups:      Array head observations (spatial head constraints)
+  Head groups:       Time-series head observations (ts-heads)
+  Recession groups:  Recession rate observations
+  Flux groups:       Boundary flux observations (arr-awq, arr-sprq, arr-confq)
+  Budget groups:     Water budget observations (budget-confined, etc.)
+
+
+6. OBSERVATION WEIGHTS
+----------------------
+Weights are read from phi_factors.csv. Only observations with non-zero weights
+are included in the analysis plots.
+
+The weight determines how much each observation contributes to total phi:
+  - Higher weight = stronger influence on calibration
+  - Zero weight = observation not used in calibration
+
+
+7. PLOTS DESCRIPTION
+--------------------
+A. Normalized φ decrease:
+   - Ensemble evolution showing median and percentile bands
+   - Log scale y-axis
+
+B. Fluxes:
+   - Normalized phi for flux observation groups (Awanui, Spring, Confined, Poukawa)
+
+C. Heads:
+   - Normalized phi for head observations (arr-h, ts-heads, recession)
+
+D. Budget:
+   - Normalized phi for budget observations
+
+E. Final φ contributions:
+   - Horizontal bar chart of absolute phi at selected iteration
+   - Log scale x-axis
+
+F. φ reduction from prior:
+   - Horizontal bar chart of % reduction from iteration 0
+   - Log scale x-axis
+
+
+8. REINFLATION MARKERS
+----------------------
+Red dashed vertical lines mark iterations where parameter ensemble was reinflated.
+Reinflation increases parameter variability to prevent ensemble collapse.
+"""
+    with open(methods_path, 'w', encoding='utf-8') as f:
+        f.write(methods_text)
+    print(f"Methods documentation saved to: {methods_path}")
+
     # Create markdown summary
     md_path = os.path.join(output_dir, f'{model_name}_PHI_ANALYSIS.md')
     with open(md_path, 'w') as f:
