@@ -25,15 +25,15 @@ def extract_budget(model_name=None):
     # inc.columns = inc.columns.map(lambda x: x.lower().replace("_","-"))
     col_names = {
         'ghb': 'awanui',
-        'ghb2': 'confined',
-        'ghb3': 'poukawa',
-        'ghb4': 'spring',
+        # 'ghb2': 'confined',
+        'ghb2': 'poukawa',
+        'ghb3': 'spring',
         'rcha': 'recharge',
         'sto-ss': 'stoss',
         'total': 'total',
-        'wel': 'mbr',
-        'wel2': 'inflow',
-        'wel3': 'outflow',
+        # 'wel': 'mbr',
+        # 'wel2': 'inflow',
+        # 'wel3': 'outflow',
         'in-out': 'inout'
     }
     # replace any _ in column names
@@ -43,7 +43,6 @@ def extract_budget(model_name=None):
     incremental.index.name = "kper"
 
     incremental['sw'] = incremental['awanui'] + incremental['poukawa'] + incremental['spring']
-    incremental['inflow'] = incremental['recharge'] + incremental['confined']
 
     # in present day: awanui and spring seperate
     # incremental['awanui-spring'] = incremental['awanui'] + incremental['spring']
@@ -457,13 +456,11 @@ def extract_ghb_fluxes(model_name, gwf=None, save=True, sample_path=None):
 
     dfs = {
         'GHB_AW': [],
-        'GHB_CONF': [],
         'GHB_PW': [],
         'GHB_SP': []
     }
     arrs = {
         'GHB_AW': {},
-        'GHB_CONF': {},
         'GHB_PW': {},
         'GHB_SP': {},
     }
@@ -728,18 +725,18 @@ def extract_model_heads(model_name, gwf=None, sample_path=None):
         all_samples = all_samples.reset_index().rename(columns={'index': 'time'})
 
         # add derived columns
-        all_samples['pk4-spr-diff'] = compare_ghb_heads(gwf, 3, 'ts_array_10', all_samples)
-
-
-        all_samples['pk4-conf-diff'] = compare_ghb_heads(gwf, 1, 'ts_array_0', all_samples)
+        all_samples['pk4-aw-diff'] = compare_ghb_heads(gwf, 0, 'ts_array_0', all_samples)
+        all_samples['pk4-pw-diff'] = compare_ghb_heads(gwf, 1, 'ts_array_36', all_samples)
+        all_samples['pk4-spr-diff'] = compare_ghb_heads(gwf, 2, 'ts_array_0', all_samples)        
         # all_samples['d-losing'] = days_losing_regime(sim, all_samples)
 
         all_samples.fillna(-999, inplace=True)
 
         recession_rates = (all_samples.groupby(['kper']).last() - all_samples.groupby(['kper']).first())
         recession_rates['pk4'] = recession_rates['pk4'] / (recession_rates.loc[2,'time']+1)
+        recession_rates['pk4-aw-diff'] = recession_rates['pk4-aw-diff'] / (recession_rates.loc[2,'time']+1)
+        recession_rates['pk4-pw-diff'] = recession_rates['pk4-pw-diff'] / (recession_rates.loc[2,'time']+1)
         recession_rates['pk4-spr-diff'] = recession_rates['pk4-spr-diff'] / (recession_rates.loc[2,'time']+1)
-        recession_rates['pk4-conf-diff'] = recession_rates['pk4-conf-diff'] / (recession_rates.loc[2,'time']+1)
         
         # get days to regime switch
         recession_rates['fliptime'] = -1
@@ -826,8 +823,27 @@ def create_awghb_truth(ghb_dfs, dir):
     Replace all values in the kper, kstp dataframes with the truth values.
     Only valid for kper 1 and kstp 1.
     """
-
     df = ghb_dfs['GHB_AW'].copy()
+
+    # replace all values with GHB_Q
+    df['weight'] = 0
+    df['std'] = GHB_Qstd
+    df['AWq'] = GHB_Q
+    # time_space_filter = (df['kper'] < 3) & (df['i'] % SPACE_SUBSAMPLE == 0) & (df['j'] % SPACE_SUBSAMPLE == 0)
+    time_space_filter = (df['kper'] )
+    # set std only on kper 1 and kstp 1
+    # df.loc[(df['kper'] == 1) & (df['kstp'] == 1), 'weight'] = 1/GHB_Qstd
+    df['weight'] = np.where((df['kper'] < 3) & (df['kstp'] < 5), 1/GHB_Qstd, 0)
+
+    df.to_csv(Path(dir, f"output.GHB_AW_fluxes.truth.csv"), index=False)
+    return
+
+def create_pwghb_truth(ghb_dfs, dir):
+    """
+    Replace all values in the kper, kstp dataframes with the truth values.
+    Only valid for kper 1 and kstp 1.
+    """
+    df = ghb_dfs['GHB_PW'].copy()
 
     kstps = df['kstp'].unique()
     kstp_include = np.arange(min(kstps), max(kstps), TIME_SUBSAMPLE)  # include every 10th kstp
@@ -835,7 +851,7 @@ def create_awghb_truth(ghb_dfs, dir):
     # replace all values with GHB_Q
     df['weight'] = 0
     df['std'] = GHB_Qstd
-    df['AWq'] = GHB_Q
+    df['PWq'] = GHB_Q
     # time_space_filter = (df['kper'] < 3) & (df['i'] % SPACE_SUBSAMPLE == 0) & (df['j'] % SPACE_SUBSAMPLE == 0)
     time_space_filter = (df['kper'] < 3)
     # set std only on kper 1 and kstp 1
@@ -844,28 +860,28 @@ def create_awghb_truth(ghb_dfs, dir):
         time_space_filter & (df['kstp'].isin(kstp_include)), 
         1/GHB_Qstd, 0)
 
-    df.to_csv(Path(dir, f"output.GHB_AW_fluxes.truth.csv"), index=False)
+    df.to_csv(Path(dir, f"output.GHB_PW_fluxes.truth.csv"), index=False)
     return
 
-def create_sprghb_truth(ghb_dfs, dir):
+
+def create_sprghb_truth(ghb_dfs, spdf, dir):
     """
     Replace all values in the kper, kstp dataframes with the truth values.
     Only valid for kper 1 and kstp 1.
     """
 
     df = ghb_dfs['GHB_SP'].copy()
+    df = pd.merge(df, spdf['pk4-spr-diff'], left_on='time', right_index=True, how='left')
+    df.fillna(1, inplace=True)
 
-    kstps = df['kstp'].unique()
-    kstp_include = np.arange(min(kstps), max(kstps), TIME_SUBSAMPLE)  # include every 10th kstp
+    f_guess = GHB_SPRING_Q / spdf.loc[1, 'pk4-spr-diff']
 
     # replace all values with GHB_Q
     df['weight'] = 0
     df['std'] = GHB_Qstd
-    df['SPq'] = GHB_SPRING_Q
+    df['SPq'] = f_guess * df['pk4-spr-diff']
     # set std only on kper 1 and kstp 1
-    df['weight'] = np.where(
-        (df['kper'] < 2) & (df['kstp'].isin(kstp_include)), 
-        1/GHB_Qstd, 0)
+    df['weight'] = np.where(df['kper'] < 3, 1/GHB_Qstd, 0)
 
     df.to_csv(Path(dir, f"output.GHB_SP_fluxes.truth.csv"), index=False)
     return
@@ -915,34 +931,43 @@ def samples_truth(gwf, TRUTHREL_DIR):
 
     recession_fn = Path(f"output.sample_recession_rates.csv")
     pk4_path = Path(f'{MODEL_NAME}.pk4_level.csv')
-    spr_path = Path(f'{MODEL_NAME}.ts_spring_raw.csv')
-    conf_path = Path(f'{MODEL_NAME}.ts_confined_raw.csv')
+    spr_path = Path(f'{MODEL_NAME}.ghb_spring_heads.csv')
+    aw_path = Path(f'{MODEL_NAME}.ghb_aw_heads.csv')
+    pw_path = Path(f'{MODEL_NAME}.ghb_pw_heads.csv')
+    # conf_path = Path(f'{MODEL_NAME}.ts_confined_raw.csv')
     
     df = pd.read_csv(pk4_path, index_col=0)
-    sp_df = pd.read_csv(spr_path, index_col=0)
-    conf_df = pd.read_csv(conf_path, index_col=0)
+    sp_df = pd.read_csv(spr_path, header=None, index_col=0)
+    aw_df = pd.read_csv(aw_path, header=None, index_col=0)
+    pw_df = pd.read_csv(pw_path, header=None, index_col=0)
+
     rec_df = pd.read_csv(recession_fn, index_col='kper')
 
     times = list(df.index)
-    times_include = list(np.arange(1, max(times), TIME_SUBSAMPLE)) + [2]  # include every 10th kstp
+    times_include = list(np.arange(1, 54, TIME_SUBSAMPLE)) + [2]  # include every 10th kstp
     
     df.rename(columns={'sm_level_mRL': 'pk4'}, inplace=True)
-    df['spring'] = sp_df['sm_level_mRL'].values
-    df['conf'] = conf_df['level_mRL'].values
+    df['spring'] = sp_df.iloc[:53,1].values
+    df['aw'] = aw_df.iloc[:53,1].values
+    df['pw'] = pw_df.iloc[:53,-1].values
 
     df['std'] = np.where(~df['pk4'].isna(), PK4_std, 0)
-    df['weight'] = np.where(
-        (df.index.isin(times_include)) & (~df['pk4'].isna()), 1/PK4_std, 0)
+    
 
     df['pk4-spr-diff'] = df['spring'] - df['pk4']
-    df['pk4-conf-diff'] = df['conf'] - df['pk4']
+    df['pk4-aw-diff'] = df['aw'] - df['pk4']
+    df['pk4-pw-diff'] = df['pw'] - df['pk4']
+
+    df['weight'] = np.where(
+        (df.index < 34), 1/PK4_std, 0)
 
     df.fillna(0, inplace=True)
 
     # truth values
     rec_df.loc[2, 'pk4'] = (df['pk4'].iloc[-1] - df['pk4'].iloc[1]) / (rec_df.loc[2, 'time']+1)
-    rec_df.loc[2, 'pk4-spr-diff'] = (df['pk4-spr-diff'].iloc[-1] - df['pk4-spr-diff'].iloc[1]) / (rec_df.loc[2, 'time']+1)
-    rec_df.loc[2, 'pk4-conf-diff'] = (df['pk4-conf-diff'].iloc[-1] - df['pk4-conf-diff'].iloc[1]) / (rec_df.loc[2, 'time']+1)
+    rec_df.loc[2, 'pk4-aw-diff'] = (df['pk4-aw-diff'].iloc[-1] - df['pk4-aw-diff'].iloc[0]) / (rec_df.loc[2, 'time']+1)
+    rec_df.loc[2, 'pk4-pw-diff'] = (df['pk4-pw-diff'].iloc[-1] - df['pk4-pw-diff'].iloc[0]) / (rec_df.loc[2, 'time']+1)
+    rec_df.loc[2, 'pk4-spr-diff'] = (df['pk4-spr-diff'].iloc[-1] - df['pk4-spr-diff'].iloc[0]) / (rec_df.loc[2, 'time']+1)
     
     # default values
     rec_df['std'] = 0.
@@ -961,33 +986,25 @@ def samples_truth(gwf, TRUTHREL_DIR):
     rec_df.loc[2, 'std'] = PK4_std
     rec_df.loc[2, 'weight'] = 1/PK4_std
 
-    rec_df[['time','kstp', 'pk4', 'pk4-spr-diff', 'pk4-conf-diff', 'fliptime', 'std', 'weight']].to_csv(Path(TRUTHREL_DIR, f"output.sample_recession_rates.truth.csv"))
+    rec_df[['time','kstp', 'pk4', 'pk4-aw-diff', 'pk4-pw-diff', 'pk4-spr-diff', 'fliptime', 'std', 'weight']].to_csv(Path(TRUTHREL_DIR, f"output.sample_recession_rates.truth.csv"))
     
-    df = df[['pk4', 'pk4-spr-diff', 'pk4-conf-diff', 'std', 'weight']].reset_index().rename(columns={'index': 'time'})
+    df = df[['pk4', 'pk4-aw-diff', 'pk4-pw-diff', 'pk4-spr-diff', 'std', 'weight']].reset_index().rename(columns={'index': 'time'})
     df.to_csv(Path(TRUTHREL_DIR, f"output.sample_heads.truth.csv"), index=False)
     
-    return
+    return df
 
 def create_budget_truth(budget, TRUTHREL_DIR):
-    budget['confined'] = 0. # must be greater than
-    budget['sw'] = budget['recharge'] * -1 # must be less than
+    budget['sw'] = SW_TOTAL # must be less than
+    budget['sw_std'] = SW_STD # must be less than
+    budget['sw_weight'] = 0.
+    budget.loc[:2, 'sw_weight'] = 1/SW_STD  # only apply to kper 1-3
 
-    # default values
-    budget['conf-std'] = 0.
-    budget['conf-weight'] = 0.
-    budget['inflow-std'] = 0.
-    budget['inflow-weight'] = 0.
-
-    budget['confined'] = 0. # must be greater than
-    budget.loc[:, 'conf-std'] = 3000
-    budget.loc[:, 'conf-weight'] = (1/budget.loc[:, 'conf-std']).values
-
-    # sum of ghb conf and recharge can't be greater than awanui outflow
-    budget.loc[1, 'inflow'] = 73000 # must be less
-    budget.loc[2, 'inflow'] = 63000 # must be less than
-    budget.loc[1, 'inflow-std'] = budget.loc[1, 'inflow'] * 0.05
-    budget.loc[2, 'inflow-std'] = budget.loc[2, 'inflow'] * 0.05
-    budget.loc[:, 'inflow-weight'] = (1/budget.loc[:, 'inflow-std']).values
+    budget.loc[[1,3], 'recharge'] = RCH1_TOTAL
+    budget.loc[[2,4], 'recharge'] = RCH2_TOTAL
+    budget.loc[[1,3],'rch_std'] = RCH1_STD
+    budget.loc[[2,4],'rch_std'] = RCH2_STD
+    budget.loc[[1,3],'rch_weight'] = 1/RCH1_STD
+    budget.loc[[2,4],'rch_weight'] = 1/RCH2_STD
     
-    budget.replace(np.inf, 0, inplace=True)
+    budget.replace(np.inf, 0., inplace=True)
     budget.to_csv(Path(TRUTHREL_DIR, f"output.budget.truth.csv"))

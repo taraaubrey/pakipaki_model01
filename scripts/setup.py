@@ -1,4 +1,4 @@
-MODEL_NAME = 'run37'  # name of the model
+MODEL_NAME = 'run40'  # name of the model
 """
 - Removed recharge from parameterization.
 - Added shapefile for pilot points.
@@ -6,7 +6,7 @@ MODEL_NAME = 'run37'  # name of the model
 - 200 realizations for IES.
 """
 # model domain
-RES = 25
+RES = 10
 NLAY = 1
 NLAY_THICKNESS = 10  # thickness of each layer in meters
 
@@ -38,6 +38,8 @@ WETLAND_INFLUENCE = r"data\wetland_influence_area.shp"
 SPRING = r"data/spring.shp"
 
 POUKAWA_BOUNDARY = r"data/model2_chd.shp"
+AWANUI_BOUNDARY = r"data/awanui_boundary.shp"
+AWANUI_PAST = r"data/awanui_past.shp"
 INFLUX_BOUNDARY = r"data/model2_influx.shp"
 OUTFLUX_BOUNDARY = r"data/model2_outflux.shp"
 
@@ -64,13 +66,35 @@ PEST_DIR = f'models/{MODEL_NAME}/pest/{MODEL_NAME}'  # directory for pest files
 TEMP_DIR = f'models/{MODEL_NAME}/pest/{MODEL_NAME}_template'  # directory for temporary files
 HPTEMP_DIR = f'models/{MODEL_NAME}/pest/{MODEL_NAME}_hptemplate'  # directory for temporary files
 TRUTH_DIR = r'truth'
-
 # Particle locations
 SAMPLES = r"data/sample_locations.shp"
 
 PP_SHP = r"data/pilot_points.shp"
 GR_SHP = r"data/pp_grid.shp" # polygon of grid zone
 
+
+AW_WL = 7.22  # mRL
+PW_WL = 7.66  # mRL
+SP_WL = 7.59  # mRL
+PAST_OFFSET = 1.0 # m
+
+AWANUI_water_offset = 0.5  # m (above the minimum elevation as initial head)
+CONF_past_min = 12.95 # m ; represents the lowest water level recorded in confining area in past
+HEAD_offset = 1 # from top of model domain (water level can't be above this)
+HEAD_std = 0.025  # m
+PK4_std = 0.01  # m +/- 2 cm (assume 4 std is full range) 0.04/4
+
+# truth ++++++++++++++++++++++++++++++++++++++
+GHB_Q = -6.9  # m3/d
+GHB_Qstd = 1.8 # std
+GHB_SPRING_Q = -3.0  # m3/d
+# budget
+SW_TOTAL = -308.2  # m3/d (must be less than)
+SW_STD = 81.6 # m3/d
+RCH1_TOTAL = 150.38 # m3/d
+RCH2_TOTAL = 129.73 # m3/d
+RCH1_STD = 11  # m3/d
+RCH2_STD = 7  # m3/d
 
 # model parameters
 SS_PRIOR = {
@@ -83,20 +107,27 @@ SS_PRIOR = {
 
 KH_PRIOR = {
     'initial': 100,
-    'lb': 1e-2,
-    'ub': 1e2,
+    'lb': 1e-4,
+    'ub': 1e4,
     'ulb': 1e-8,
     'uub': 1e8,
 }
 
 RCH = {
-    'initial_rf': 2.5e-4, # rainfall recharge 0.00025
-    'initial_mbr': 1.6e-4, # mbr recharge
+    'initial_rf': 2.5e-4, # total recharge
+    'initial_mbr': 1.57e-3, # mbr recharge
     'lb': 1e-2,
     'ub': 1e2,
     'ulb': 1e-6,
     'uub': 1e6,
 }
+# RCH1_PARAMS = {
+#     'initial_rf': 2.5e-4, # total recharge
+#     'lb': 1e-1,
+#     'ub': 1e1,
+#     'ulb': 1e-6,
+#     'uub': 1e6,
+# }
 
 GHB_SW = {
     # 'initial_cond_aw': 100,
@@ -126,27 +157,15 @@ GHB_CONF = {
     'head_uub': 16,
 }
 
-AWANUI_water_offset = 0.5  # m (above the minimum elevation as initial head)
-CONF_past_min = 12.95 # m ; represents the lowest water level recorded in confining area in past
 
-# truth
-GHB_Q = -6.9  # m3/d
-GHB_Qstd = 1.8 
-
-GHB_SPRING_Q = -3.0  # m3/d
-
-HEAD_offset = 1 # from top of model domain (water level can't be above this)
-HEAD_std = 0.025  # m
-PK4_std = 0.01  # m +/- 2 cm (assume 4 std is full range) 0.04/4
 
 PHI_OBS = {
-        'arr-h': 0.3, # large penalty for exceeding
-        'arr-confq': 0.1, # flux obs
-        'budget': 0.2, # flux obs
-        'arr-spq': 0.05, # flux obs
-        'arr-awq': 0.05, # flux obs
-        'ts-heads': 0.3, # head obs
-        'recession': 0.005,
+        'arr-h': 3, # large penalty for exceeding
+        'budget': 1, # flux obs
+        'arr-spq': 2, # flux obs
+        'arr-awq': 1, # flux obs
+        'ts-heads': 2, # head obs
+        'recession': 1,
 }
 
 # parameterization settings (obs)
@@ -156,7 +175,7 @@ SPACE_SUBSAMPLE = 5  # spatial subsampling for pilot points
 # Pest options
 NREALS = 250  # number of realizations for parameterization
 NREALS_PRIOR = 50  # number of realizations for parameterization
-REINFLATE_ITERS = 3, 3, 3, 3, 3 # iterations at which to reinflate
+REINFLATE_ITERS = 3, 3, 3 # iterations at which to reinflate
 NOPTMAX = 3
 MAXSING = 120
 

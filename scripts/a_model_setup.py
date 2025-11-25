@@ -72,8 +72,8 @@ def main():
     active_domain = np.where(idomain > 0, 1, 0)
     fn_out, aw_ts, wetland_WL, aw_present_arr, aw_past_arr = ghb_aw_setup(grid, active_domain, start, end, fn_out)
     fn_out, spr_present_arr, spr_past_arr = ghb_spring_setup(grid, active_domain, start, end, aw_ts, wetland_WL, aw_present_arr, aw_past_arr, fn_out)
-    fn_out, ghb_pw_kper0, pw_present_arr, pw_past_arr = ghb_pw_setup(grid, active_domain, start, end, fn_out)
-    fn_out, conf_arr = ghb_conf_setup(grid, active_domain, start, end, model_thickness, fn_out)
+    fn_out, ghb_pw_kper0, pw_present_arr, pw_past_arr = ghb_pw_setup(grid, active_domain, start, end, aw_past_arr, fn_out)
+    # fn_out, conf_arr = ghb_conf_setup(grid, active_domain, start, end, model_thickness, fn_out)
     # wel
     # fn_out, mbr_df = wel_mbr_setup(grid, idomain, fn_out, ghb_pw_kper0)
     # fn_out = wel_inout_setup(grid, idomain, mbr_df, fn_out)
@@ -98,13 +98,13 @@ def main():
     sw_present_arr = aw_present_arr + pw_present_arr + spr_present_arr
     sw_past_arr = aw_past_arr + pw_past_arr + spr_past_arr
 
-    elev_constraint = grid.array_from_raster(TOP)
+    elev_constraint = grid.array_from_raster(TOP, resampling='max')
     grid_gpd = grid.cell_geodataframe()
     grid_gpd['idomain'] = idomain[0].flatten()
     grid_gpd['sw_present'] = sw_present_arr.flatten()
     grid_gpd['sw_past'] = sw_past_arr.flatten()
     grid_gpd['model_thickness'] = model_thickness.flatten()
-    grid_gpd['conf'] = conf_arr.flatten()
+    grid_gpd['khorr'] = k_hor.flatten()
     grid_gpd.to_file(Path(SPATIAL_DIR, f'{MODEL_NAME}_grid.shp'), driver='ESRI Shapefile')
 
     # other model parameters
@@ -205,16 +205,16 @@ def main():
         )
     # ghb_aw.ts.initialize(fn_out['ghb_aw_ts'])
     
-    ghb_conf = fp.mf6.ModflowGwfghb(
-        print_input=True,
-        # print_flows=True,
-        save_flows=True, # save flows for this package 
-        model=gwf,
-        timeseries=fn_out['ghb_conf_ts'],
-        stress_period_data=fn_out['ghb_conf'],
-        pname='ghb_conf', # package name
-        )
-    # ghb_conf.ts.initialize(fn_out['ghb_conf_ts'])
+    # ghb_conf = fp.mf6.ModflowGwfghb(
+    #     print_input=True,
+    #     # print_flows=True,
+    #     save_flows=True, # save flows for this package 
+    #     model=gwf,
+    #     timeseries=fn_out['ghb_conf_ts'],
+    #     stress_period_data=fn_out['ghb_conf'],
+    #     pname='ghb_conf', # package name
+    #     )
+    # # ghb_conf.ts.initialize(fn_out['ghb_conf_ts'])
 
     ghb_pw = fp.mf6.ModflowGwfghb(
         print_input=True,
@@ -285,13 +285,12 @@ def main():
     # tdis_data = sim.tdis.perioddata.get_data()
     
     # awanui flux truth
-    helpers.create_awghb_truth(ghb_dfs, TRUTHREL_DIR)
-    helpers.create_sprghb_truth(ghb_dfs, TRUTHREL_DIR)
-    helpers.create_confghb_truth(ghb_dfs, TRUTHREL_DIR)
     # top model constraints (head can't be greater than 1m above top)
     helpers.create_head_truth(elev_constraint, TRUTHREL_DIR)
     # sample location truth
-    helpers.samples_truth(gwf, TRUTHREL_DIR)
+    df = helpers.samples_truth(gwf, TRUTHREL_DIR)
+    helpers.create_awghb_truth(ghb_dfs, TRUTHREL_DIR)
+    helpers.create_sprghb_truth(ghb_dfs, df, TRUTHREL_DIR)
     helpers.create_budget_truth(budget, TRUTHREL_DIR)
 
 

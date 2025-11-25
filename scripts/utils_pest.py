@@ -28,22 +28,22 @@ def define_mult_array(
                 else:
                     iname = f[0].split(".")[1]
             
-                if par_type == 'pilotpoints':
-                    pf.add_parameters(
-                        f,
-                        zone_array=zone_array,
-                        par_type="pilotpoints",
-                        par_name_base=iname+suffix,
-                        geostruct=gs,
-                        pargp=iname+suffix, 
-                        lower_bound=lb, upper_bound=ub,
-                        ult_lbound=ulb, ult_ubound=uub,
-                        transform="log",
-                        par_style="multiplier",
-                        pp_options= {
-                            "pp_space": pp_space, # specify the spacing of the pilot points
-                            }
-                        )
+                # if par_type == 'pilotpoints':
+                #     pf.add_parameters(
+                #         f,
+                #         zone_array=zone_array,
+                #         par_type="pilotpoint",
+                #         par_name_base=iname+suffix,
+                #         geostruct=gs,
+                #         pargp=iname+suffix, 
+                #         lower_bound=lb, upper_bound=ub,
+                #         ult_lbound=ulb, ult_ubound=uub,
+                #         transform="log",
+                #         par_style="m",
+                #         pp_options= {
+                #             "pp_space": pp_space, # specify the spacing of the pilot points
+                #             }
+                #         )
             
                 if par_type == 'grid':
                     # constant (coarse) scale parameters
@@ -57,7 +57,7 @@ def define_mult_array(
                         lower_bound=lb, upper_bound=ub,
                         ult_lbound=ulb, ult_ubound=uub,
                         transform="log",
-                        par_style="multiplier",
+                        par_style="m",
                         )
                 
                 if par_type == 'constant':
@@ -85,15 +85,18 @@ def rcha(
         lb=0.2, ub=5.0,
         ulb=0.1, uub=10.,
         ):
+    
+    all_files = [f for f in os.listdir(ws) if tag in f.lower() and f.endswith(".txt")]
     ss_files = [f for f in os.listdir(ws) if tag in f.lower() and (f.endswith("0.txt") or f.endswith("2.txt"))]
     tr_files = [f for f in os.listdir(ws) if tag in f.lower() and (f.endswith("1.txt") or f.endswith("3.txt"))]
+    past_file = [f for f in os.listdir(ws) if tag in f.lower() and (f.endswith("2.txt") or f.endswith("3.txt"))]
 
     ins_files = {
         'rchss': ss_files,
         'rchtr': tr_files,
     }
 
-    for name, files in ins_files.items():
+    for f in all_files:
         for ins in p_ins:
             par_type = ins.get('type', 'pilotpoints')
             gs = ins.get('gs', None)
@@ -101,33 +104,50 @@ def rcha(
             suffix = ins.get('name_suffix', '')
             zone_array = ins.get('zone_array', ib[0])
 
-            if par_type == 'pilotpoints':
-                pf.add_parameters(
-                    files,
-                    zone_array=zone_array,
-                    par_type="pilotpoints",
-                    par_name_base=name+suffix,
-                    geostruct=gs,
-                    pargp=name+suffix, 
-                    lower_bound=lb, upper_bound=ub,
-                    ult_lbound=ulb, ult_ubound=uub,
-                    transform="log",
-                    par_style="multiplier",
-                    pp_options= {
-                        "pp_space": pp_space, # specify the spacing of the pilot points
-                        }
-                    )
-        
+            name ='rch'
+
+            if f in ins_files['rchss']:
+                name = 'rchss'
+            elif f in ins_files['rchtr']:
+                name = 'rchtr'
+            
+            if f in past_file:
+                input_lb = lb * 2
+                input_ub = ub * 2
+                name = name + '-past'
+            else:
+                input_lb = lb
+                input_ub = ub
+
+
+            # if par_type == 'pilotpoints':
+            #     pf.add_parameters(
+            #         f,
+            #         zone_array=zone_array,
+            #         par_type="pilotpoints",
+            #         par_name_base=name+suffix,
+            #         geostruct=gs,
+            #         pargp=name+suffix, 
+            #         lower_bound=input_lb, upper_bound=input_ub,
+            #         ult_lbound=ulb, ult_ubound=uub,
+            #         transform="log",
+            #         par_style="multiplier",
+            #         pp_options= {
+            #             "pp_space": pp_space, # specify the spacing of the pilot points
+            #             }
+            #         )
+
+
             if par_type == 'grid':
                 # constant (coarse) scale parameters
                 pf.add_parameters(
-                    files,
+                    f,
                     zone_array=zone_array,
                     par_type="grid",
                     par_name_base=name+suffix,
                     geostruct=gs,
                     pargp=name+suffix,
-                    lower_bound=lb, upper_bound=ub,
+                    lower_bound=input_lb, upper_bound=input_ub,
                     ult_lbound=ulb, ult_ubound=uub,
                     transform="log",
                     par_style="multiplier",
@@ -136,12 +156,12 @@ def rcha(
             if par_type == 'constant':
                 # constant scale parameters
                 pf.add_parameters(
-                    files,
+                    f,
                     zone_array=zone_array,
                     par_type="constant",
                     par_name_base=name+suffix,
                     pargp=name+suffix,
-                    lower_bound=lb, upper_bound=ub,
+                    lower_bound=input_lb, upper_bound=input_ub,
                     ult_lbound=ulb, ult_ubound=uub,
                     transform="log",
                     par_style="multiplier",

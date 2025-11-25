@@ -9,23 +9,22 @@ from utils import *
 
 
 def dis_setup(fn_out):
-    grid = gi.Grid.from_vector(DOMAIN, RES)
+    grid = gi.Grid.from_vector(GR_SHP, RES)
+    aw_stream = grid.array_from_vector(DRAINS)
     # grid_gpd = grid.cell_geodataframe()
     # # grid_gpd.to_file(Path(SPATIAL_DIR, f'{MODEL_NAME}_grid.shp'), driver='ESRI Shapefile')
 
     # top & bottom
-    elev = grid.array_from_raster(TOP)
+    top = grid.array_from_raster(TOP)
     bottom = grid.array_from_raster(BOTTOM)  # get the bottom elevation
-    top = np.ones_like(bottom) * 10  # flat top at 10mRL
+    # top = np.ones_like(bottom) * 10  # flat top at 10mRL
     
-    pp_grid = grid.array_from_vector(GR_SHP).data
+    # pp_grid = grid.array_from_vector(GR_SHP).data
     
-    # open domain
-    arr = ~grid.array_from_vector(DOMAIN).mask # want the binary version of the domain
-    arr = np.where(elev.data > 16, 0, arr) # remove areas where elev > 18mRL (mainly at boundaries)
-    arr = np.where((pp_grid == 1) & (arr == 1), 2, arr)  # set pilot point areas to active
-
-    idomain = np.stack([arr] * NLAY, axis=0)
+    # # open domain
+    arr = ~grid.array_from_vector(GR_SHP).mask # want the binary version of the domain
+    arr = np.where(top.data > 16, 0, arr) # remove areas where elev > 18mRL (mainly at boundaries)
+    # arr = np.where((grid == 1) & (arr == 1), 2, arr)  # set pilot point areas to active
 
     nrow = grid.shape[0]
     ncol = grid.shape[1]
@@ -42,6 +41,11 @@ def dis_setup(fn_out):
         bottom = np.where(model_thickness <= 0, top - 1, bottom)  # ensure bottom is always below top
         model_thickness = top.data - bottom  # calculate the thickness of the layers
 
+    arr = np.where((model_thickness > 2) & (arr == 1), 1, 0)
+    idomain = np.stack([arr] * NLAY, axis=0)
+    
+    model_thickness = model_thickness * idomain[0]
+    
     botm = [bottom]
     # min_b = 1 # min thickness
 
@@ -84,12 +88,23 @@ def dis_setup(fn_out):
 
 
 def ghb_aw_setup(grid, idomain, start, end, fn_out, save=True):
-    riv_mask = ~grid.array_from_vector(DRAINS).mask * idomain[0]
-    zones = grid.array_from_vector(DRAIN_ZONES, attribute='elev_ss_0')
-    riv_stage_zones = ~zones.mask
-    riv_rbot = grid.array_from_raster(TOP, resampling='min').data
-    # adjust riv elevations absed on survey data
-    riv_stage_arr = np.where(riv_stage_zones, zones.data, riv_rbot + AWANUI_water_offset) * riv_mask
+
+    top_min = grid.array_from_raster(TOP, resampling='min')
+    ghb_aw_arr = ~grid.array_from_vector(AWANUI_BOUNDARY).mask
+    pos_idomain = np.where(idomain[0] > 0, 1, 0)
+    in_idomarr, idom_i = get_interior_indices(pos_idomain, layer=0)  # idomainget interior indices of the mbr area
+    ghb_aw_mask = np.logical_and(ghb_aw_arr.data, in_idomarr)  # mbr area that is active in the model domain
+    
+    ghb_aw = ghb_aw_mask * top_min.data
+    ghb_aw = np.where(ghb_aw > 8.5, 0, ghb_aw) # remove areas above 8mRL (mainly at boundaries)
+    riv_stage_arr = np.where(ghb_aw > 0, AW_WL, 0)  # set max awanui water level to 6.62mRL (surveyed high flow level)
+    
+    # riv_mask = ~grid.array_from_vector(DRAINS).mask * idomain[0]
+    # zones = grid.array_from_vector(DRAIN_ZONES, attribute='elev_ss_0')
+    # riv_stage_zones = ~zones.mask
+    # riv_rbot = grid.array_from_raster(TOP, resampling='min').data
+    # # adjust riv elevations absed on survey data
+    # riv_stage_arr = np.where(riv_stage_zones, zones.data, riv_rbot + AWANUI_water_offset) * riv_mask
     
     # save to spatial
     if save:
@@ -119,26 +134,20 @@ def ghb_aw_setup(grid, idomain, start, end, fn_out, save=True):
     riv_kper1['cond'] = riv_kper0['cond']
 
     # kper2: PAST ############################################################
-    riv_mask = ~grid.array_from_vector(DRAINS_PAST).mask
-    wetland_mask = ~grid.array_from_vector(WETLANDA_PAST).mask
+    ghb_aw_past = ~grid.array_from_vector(AWANUI_PAST).mask
+    pos_idomain = np.where(idomain[0] > 0, 1, 0)
+    in_idomarr, idom_i = get_interior_indices(pos_idomain, layer=0)  # idomainget interior indices of the mbr area
+    ghb_aw_past = np.logical_and(ghb_aw_past.data, in_idomarr)  # mbr area that is active in the model domain
+    
+    
+    riv_mask = ~grid.array_from_vector(DRAINS_PAST).mask + ghb_aw_past
     spring_mask = grid.array_from_vector(SPRING_DRAIN).mask
-    wetland_influence_mask = ~grid.array_from_vector(WETLAND_INFLUENCE).mask
 
-    past_arr = np.where(wetland_mask + riv_mask > 0, 1, 0)
-    top = grid.array_from_raster(TOP).data
-    wetland_top = top * wetland_mask
-    wetland_water_level = np.median(wetland_top[wetland_top > 0])
     past_h = np.where(
-        wetland_mask, 
-        wetland_water_level, 
-        np.where(
-            riv_mask * wetland_influence_mask,
-            wetland_water_level,
-            np.where(
-                riv_mask, top, 0)))
-    past_h = np.where(idomain[0] > 0, past_h, 0)
-    past_h[past_h > wetland_water_level] = wetland_water_level  # ensure heads do not exceed wetland water level
-    past_h = past_h * spring_mask  # remove spring areas
+            riv_mask * spring_mask * idomain[0],
+            AW_WL + PAST_OFFSET,
+            0)
+    # past_h = np.where(past_h > 8.14, 8.14, past_h)
     
     riv_kper2 = extract_value_with_indices(
         past_h, layer=0, val_col='head', mask_value=0
@@ -148,7 +157,7 @@ def ghb_aw_setup(grid, idomain, start, end, fn_out, save=True):
     ts_0 = river_stage(riv_kper0, [0, 0], start_t = 0)
     ts_1 = river_stage(riv_kper0, riv_ts_values, start_t = ts_0.index[-1]+1)
     ts_2 = river_stage(riv_kper2, [0], start_t = ts_1.index[-1]+1)
-    ts_3 = river_stage(riv_kper2, riv_ts_values, start_t = ts_2.index[-1]+1)
+    ts_3 = river_stage(riv_kper2, riv_ts_values*0.5, start_t = ts_2.index[-1]+1)
 
     riv_kper1 = riv_kper0.copy()
     riv_kper1['head'] = ts_1.columns
@@ -173,7 +182,7 @@ def ghb_aw_setup(grid, idomain, start, end, fn_out, save=True):
     rivstage_ts.columns.to_series().to_csv(Path(MODEL_DIR, f'{MODEL_NAME}.ghb_aw_head_names.csv'), index=False, header=False)
     fn_out['ghb_aw_ts'] = tomf6tsinput(riv_ts_fn, rivstage_ts)
 
-    return fn_out, riv_ts_values, wetland_water_level, riv_stage_arr, past_h
+    return fn_out, riv_ts_values, 9.21, riv_stage_arr, past_h
 
 
 def get_awanui_timeseries(start, end):
@@ -188,7 +197,7 @@ def get_awanui_timeseries(start, end):
     riv_ts['sm_abs_val'] = riv_ts['sm_level_mRL'] - riv_ts['sm_level_mRL'].iloc[0]
     
     # save raw ts
-    riv_ts_raw_fn = Path(MODEL_DIR, f'ts_awanui_stream_raw.csv')
+    riv_ts_raw_fn = Path(MODEL_DIR, f'{MODEL_NAME}.ts_awanui_raw.csv')
     riv_ts.index.name = 'DateTime'
     riv_ts.to_csv(riv_ts_raw_fn)
 
@@ -205,6 +214,11 @@ def get_poukawa_timeseries(start, end):
     pw_ts = pw_ts[(pw_ts.index >= start) & (pw_ts.index < end)]
     pw_ts['sm_val'] = pw_ts['level_mRL'].rolling(window=5, center=True, min_periods=1).mean()
     pw_ts['sm_abs_val'] = pw_ts['sm_val'] - pw_ts['sm_val'].iloc[0]
+
+    # save raw ts
+    pw_ts_raw_fn = Path(MODEL_DIR, f'{MODEL_NAME}.ts_poukawa_raw.csv')
+    pw_ts.index.name = 'DateTime'
+    pw_ts.to_csv(pw_ts_raw_fn)
     
     # riv absolute values during recession
     return pw_ts['sm_abs_val'][1:].values
@@ -253,18 +267,15 @@ def conf_stage(ghb_cells, riv_ts_values, start_t = 1):
 
 def ghb_spring_setup(grid, idomain, start, end, aw_ts, wetland_WL, aw_present_arr, aw_past_arr, fn_out, save=True):
     spring_mask = ~grid.array_from_vector(SPRING_DRAIN).mask
-    spring_mask = np.where(idomain[0] > 0, spring_mask, 0)
-    zones = grid.array_from_vector(DRAIN_ZONES, attribute='elev_ss_0')
-    spring_stage_zones = ~zones.mask
-    spring_rbot = grid.array_from_raster(TOP, resampling='min').data
-    # adjust riv elevations absed on survey data
-    spring_stage_arr = np.where(spring_stage_zones, zones.data, spring_rbot + 0.3) * spring_mask
-    spring_stage_arr[spring_stage_arr > 7.59] = 7.59 # correct to no higher than surveyed max
-    spring_stage_arr = np.where(aw_present_arr>0, 0, spring_stage_arr)  # remove areas also covered by awanui ghb
+    spring_mask = np.where((idomain[0] > 0) & (aw_present_arr == 0), spring_mask, 0)
+    spring_stage_arr = np.where(spring_mask, SP_WL, 0)
+    # spring_stage_arr[spring_stage_arr > 7.59] = 7.59 # correct to no higher than surveyed max
+    # spring_stage_arr = np.where(aw_present_arr>0, 0, spring_stage_arr)  # remove areas also covered by awanui ghb
 
     # past spring_stage
-    past_spring_stage = np.where(spring_mask, spring_rbot + 2, 0)
-    past_spring_stage = np.where(past_spring_stage > wetland_WL, wetland_WL, past_spring_stage)
+    past_WL = np.max(aw_past_arr)
+    past_spring_stage = np.where(spring_mask, past_WL, 0)
+    # past_spring_stage = np.where(past_spring_stage > wetland_WL, wetland_WL, past_spring_stage)
     past_spring_stage = np.where(aw_past_arr>0, 0, past_spring_stage)  # remove areas also covered by awanui ghb
 
     # save to spatial
@@ -317,7 +328,7 @@ def ghb_spring_setup(grid, idomain, start, end, aw_ts, wetland_WL, aw_present_ar
     ts_0 = river_stage(spring_kper0, [0, 0], start_t = 0)
     ts_1 = river_stage(spring_kper0, spring_ts_values, start_t = ts_0.index[-1]+1)
     ts_2 = river_stage(spring_kper2, [0], start_t = ts_1.index[-1]+1)
-    ts_3 = river_stage(spring_kper2, aw_ts, start_t = ts_2.index[-1]+1)
+    ts_3 = river_stage(spring_kper2, aw_ts*0.5, start_t = ts_2.index[-1]+1)
 
     spring_kper1 = spring_kper0.copy()
     spring_kper1['head'] = ts_1.columns
@@ -344,14 +355,14 @@ def ghb_spring_setup(grid, idomain, start, end, aw_ts, wetland_WL, aw_present_ar
 
     return fn_out, spring_stage_arr, past_spring_stage
 
-def ghb_pw_setup(grid, idomain, start, end, fn_out, save=True):
-    top_min = grid.array_from_raster(TOP, resampling='min')
+def ghb_pw_setup(grid, idomain, start, end, aw_past_arr, fn_out, save=True):
+    # top_min = grid.array_from_raster(TOP, resampling='min')
     ghb_pw_arr = ~grid.array_from_vector(POUKAWA_BOUNDARY).mask
     pos_idomain = np.where(idomain[0] > 0, 1, 0)
 
     in_idomarr, idom_i = get_interior_indices(pos_idomain, layer=0)  # idomainget interior indices of the mbr area
-    ghb_pw_active = np.logical_and(ghb_pw_arr.data, in_idomarr)  # mbr area that is active in the model domain
-    ghb_pw_active = ghb_pw_active * top_min.data
+    ghb_pw_active = np.logical_and(ghb_pw_arr.data, in_idomarr) * idomain[0] # mbr area that is active in the model domain
+    ghb_pw_active = np.where(ghb_pw_active, PW_WL, 0)
 
     # save to spatial
     if save:
@@ -376,19 +387,15 @@ def ghb_pw_setup(grid, idomain, start, end, fn_out, save=True):
     aw_ts_values = get_awanui_timeseries(start, end)
 
     # kper3 - PAST SS ########################################################
-    # get Turamoe water level as PW water level boundary
-    wetland_mask = ~grid.array_from_vector(WETLANDA_PAST).mask
-    top = grid.array_from_raster(TOP).data
-    wetland_top = top * wetland_mask
-    wetland_water_level = np.median(wetland_top[wetland_top > 0])
+    past_wl = np.max(aw_past_arr)
 
     ghb_pw_arr = ~grid.array_from_vector(PW_PAST).mask
     active_domain = np.where(idomain[0] > 0, 1, 0)
     in_idomarr, idom_i = get_interior_indices(active_domain, layer=0)  # get edges of idomain
     ghb_pw_past = np.logical_and(ghb_pw_arr.data, in_idomarr)
-    ghb_pw_past = ghb_pw_past * wetland_water_level
+    ghb_pw_past = ghb_pw_past * past_wl
+    
     ghb_pw_indices = get_indices(ghb_pw_past, layer=0, value=True)
-
     ghb_pw_kper2 = pd.DataFrame({'index': [i[0] for i in ghb_pw_indices]})
     ghb_pw_kper2['head'] = [i[1] for i in ghb_pw_indices]  # head for Poukawa boundary
     ghb_pw_kper2 = pd.merge(ghb_pw_kper2, cond_df, left_on='index', right_on='index')
@@ -396,7 +403,7 @@ def ghb_pw_setup(grid, idomain, start, end, fn_out, save=True):
     ts_0 = river_stage(ghb_pw_kper0, [0, 0], start_t = 0)
     ts_1 = river_stage(ghb_pw_kper0, pw_ts_values, start_t = ts_0.index[-1]+1)
     ts_2 = river_stage(ghb_pw_kper2, [0], start_t = ts_1.index[-1]+1)
-    ts_3 = river_stage(ghb_pw_kper2, aw_ts_values, start_t = ts_2.index[-1]+1) #all the same
+    ts_3 = river_stage(ghb_pw_kper2, aw_ts_values*0.5, start_t = ts_2.index[-1]+1) #all the same
 
     ghb_pw_kper1 = ghb_pw_kper0.copy()
     ghb_pw_kper1['head'] = ts_1.columns
@@ -622,7 +629,7 @@ def rch_setup(idomain, fn_out):
         if i in [0, 2]:  # steady state periods
             recharge_rate = RCH['initial_rf'] + RCH['initial_mbr']
         else:
-            recharge_rate = RCH['initial_mbr']   
+            recharge_rate = RCH['initial_mbr']
         recharge = np.ones_like(idomain[0]) * recharge_rate * idomain[0]
         rch_fn = Path(MODEL_DIR, f'{MODEL_NAME}.rcha_recharge_{i}.txt').as_posix()
         fn_out['rch'][i] = tomf6input(rch_fn)
