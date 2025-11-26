@@ -528,10 +528,20 @@ def extract_ghb_fluxes(model_name, gwf=None, save=True, sample_path=None):
         # combine all
         sample_results = pd.concat(sample_dfs)
 
+        present_df = sample_results[sample_results['kper'].isin([1,2])]
+        past_df = sample_results[sample_results['kper'].isin([3,4])]
+        diff_flux = present_df[['kstp', 'flux']].copy()
+        diff_flux.rename(columns={'flux': 'present_q'}, inplace=True)
+        diff_flux['past_q'] = past_df['flux'].values
+        diff_flux['diff'] = diff_flux['past_q'].values - diff_flux['present_q'].values
+        diff_flux['kstp'] = [str(v) for v in diff_flux['kstp'].values]
+        diff_flux.loc[0,'kstp'] = 'ss'
+
         # fluxes = sample_results.groupby('time').sum()
         # save
         if save:
             sample_results.to_csv(f"output.spring_fluxes.csv")
+            diff_flux.to_csv(f"output.spring_flux_differences.csv")
 
     # combine all dataframes
     combined_dfs = {}
@@ -834,6 +844,7 @@ def create_awghb_truth(ghb_dfs, dir):
     # set std only on kper 1 and kstp 1
     # df.loc[(df['kper'] == 1) & (df['kstp'] == 1), 'weight'] = 1/GHB_Qstd
     df['weight'] = np.where((df['kper'] < 3) & (df['kstp'] < 5), 1/GHB_Qstd, 0)
+    df['std'] = np.where(df['weight'] == 0, 0, df['std'])
 
     df.to_csv(Path(dir, f"output.GHB_AW_fluxes.truth.csv"), index=False)
     return
@@ -882,6 +893,7 @@ def create_sprghb_truth(ghb_dfs, spdf, dir):
     df['SPq'] = f_guess * df['pk4-spr-diff']
     # set std only on kper 1 and kstp 1
     df['weight'] = np.where(df['kper'] < 3, 1/GHB_Qstd, 0)
+    df['std'] = np.where(df['weight'] == 0, 0, df['std'])
 
     df.to_csv(Path(dir, f"output.GHB_SP_fluxes.truth.csv"), index=False)
     return
@@ -913,15 +925,15 @@ def create_head_truth(arr, TRUTHREL_DIR):
 
     # std
     std_arr = np.ones_like(arr) * HEAD_std
-    np.savetxt(Path(TRUTHREL_DIR, f"output.heads.std.dat"), std_arr)
-
-    # weight
     weight_arr = np.ones_like(arr) * 1/HEAD_std
     # add subsample weighting
     for i in range(weight_arr.shape[0]):
         for j in range(weight_arr.shape[1]):
             if (i % SPACE_SUBSAMPLE != 0) or (j % SPACE_SUBSAMPLE != 0):
                 weight_arr[i,j] = 0
+                std_arr[i,j] = 0
+    
+    np.savetxt(Path(TRUTHREL_DIR, f"output.heads.std.dat"), std_arr)
     np.savetxt(Path(TRUTHREL_DIR, f"output.heads.weight.dat"), weight_arr)
 
     return
@@ -960,6 +972,9 @@ def samples_truth(gwf, TRUTHREL_DIR):
 
     df['weight'] = np.where(
         (df.index < 34), 1/PK4_std, 0)
+    df['std'] = np.where(
+        df['weight'] == 0, 0, df['std']
+    )
 
     df.fillna(0, inplace=True)
 
@@ -998,6 +1013,7 @@ def create_budget_truth(budget, TRUTHREL_DIR):
     budget['sw_std'] = SW_STD # must be less than
     budget['sw_weight'] = 0.
     budget.loc[:2, 'sw_weight'] = 1/SW_STD  # only apply to kper 1-3
+    budget['sw_std'] = np.where(budget['sw_weight'] == 0, 0., SW_STD)
 
     budget.loc[[1,3], 'recharge'] = RCH1_TOTAL
     budget.loc[[2,4], 'recharge'] = RCH2_TOTAL

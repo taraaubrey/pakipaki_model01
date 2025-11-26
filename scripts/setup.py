@@ -157,16 +157,15 @@ GHB_CONF = {
     'head_uub': 16,
 }
 
-
-
-PHI_OBS = {
-        'arr-h': 3, # large penalty for exceeding
-        'budget': 1, # flux obs
-        'arr-spq': 2, # flux obs
-        'arr-awq': 1, # flux obs
-        'ts-heads': 2, # head obs
-        'recession': 1,
-}
+# PHI_OBS = {
+#         'arr-h': 3, # large penalty for exceeding
+#         'budget': 1, # flux obs
+#         'arr-spq': 1, # flux obs
+#         'arr-awq': 1, # flux obs
+#         'ts-heads': 1, # head obs
+#         'recession': 1,
+#         'flux-diff': 1
+# }
 
 # parameterization settings (obs)
 TIME_SUBSAMPLE = 10  # time subsampling for pilot points

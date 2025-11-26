@@ -1,6 +1,7 @@
 import os
 import pyemu
 import pandas as pd
+import numpy as np
 
 from setup import *
 
@@ -11,12 +12,24 @@ def main():
     pst = pyemu.Pst(os.path.join(TEMP_DIR, pst_name))
     pst.pestpp_options.update(PEST_PP_OPTIONS)
     pst.control_data.noptmax = NOPTMAX
-    pst.svd_data.maxsing = MAXSING
+
+    if MAXSING is not None:
+        pst.svd_data.maxsing = MAXSING
     pst.write(os.path.join(TEMP_DIR, pst_name))
+
+    cycles = np.arange(0,10,1)
+    standard_deviation = 
+
+    for cycle in cycles:
+        if cycle > 0:
+            pst = pyemu.Pst(os.path.join(TEMP_DIR, pst_name))
+            pst.observation_data.loc[pst.forecast_names,'weight'] = 0.0
+            pst.observation_data.loc[pst.forecast_names,'standard_deviation'] = 0.0
+
     
     # start ies
     num_workers = os.cpu_count()
-    m_d=os.path.join(os.path.join(TEMP_DIR, '..'), 'master_ies')
+    m_d=os.path.join(os.path.join(TEMP_DIR, '..'), 'master_0')
     pyemu.os_utils.start_workers(
         worker_dir=TEMP_DIR, # the folder which contains the "template" PEST dataset
         exe_rel_path=f'pestpp-ies', #the PEST software version we want to run

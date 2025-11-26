@@ -157,17 +157,15 @@ GHB_CONF = {
     'head_uub': 16,
 }
 
-
-
-PHI_OBS = {
-        'arr-h': 0.3, # large penalty for exceeding
-        'arr-confq': 0.1, # flux obs
-        'budget': 0.2, # flux obs
-        'arr-spq': 0.05, # flux obs
-        'arr-awq': 0.05, # flux obs
-        'ts-heads': 0.3, # head obs
-        'recession': 0.005,
-}
+# PHI_OBS = {
+#         'arr-h': 3, # large penalty for exceeding
+#         'budget': 1, # flux obs
+#         'arr-spq': 1, # flux obs
+#         'arr-awq': 1, # flux obs
+#         'ts-heads': 1, # head obs
+#         'recession': 1,
+#         'flux-diff': 1
+# }
 
 # parameterization settings (obs)
 TIME_SUBSAMPLE = 10  # time subsampling for pilot points
@@ -176,7 +174,7 @@ SPACE_SUBSAMPLE = 5  # spatial subsampling for pilot points
 # Pest options
 NREALS = 250  # number of realizations for parameterization
 NREALS_PRIOR = 50  # number of realizations for parameterization
-REINFLATE_ITERS = 3, 3, 3, 3, 3 # iterations at which to reinflate
+REINFLATE_ITERS = 3, 3, 3 # iterations at which to reinflate
 NOPTMAX = 3
 MAXSING = 120
 

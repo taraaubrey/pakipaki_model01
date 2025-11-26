@@ -197,6 +197,16 @@ def main():
     # OBSERVATIONS ------------------------------------------------------
     print('SETTING OBSERVATIONS...')
 
+    index_cols = ['kstp']
+    use_cols = ['diff']
+    pf.add_observations(
+        "output.spring_flux_differences.csv", # this is being read from the template file not the above truth file
+        index_cols=index_cols,
+        use_cols=use_cols, # skip the index column
+        prefix='flux-diff',
+        obsgp='flux-diff',
+    )
+
     # add stress period head/fluxes observations
     index_cols = ['kper', 'kstp', 'time']
     obs_use_cols = ['pk4', 'pk4-spr-diff', 'pk4-aw-diff', 'pk4-pw-diff']
@@ -497,29 +507,29 @@ def main():
         print(f'  {old:20s} -> {new}')
 
     # PHI FACTORS ------------------------------------------------------
-    # map dict for phi factors
-    phi_obgnme = {}
-    for obgnme in pst.observation_data['obgnme'].unique():
-        oname = pst.observation_data[pst.observation_data['obgnme'] == obgnme]['oname'].values[0]
-        weights = pst.observation_data[pst.observation_data['obgnme'] == obgnme]['weight'].values
-        # only consider non-zero weights
-        if np.sum(weights) == 0:
-            continue
+    # # map dict for phi factors
+    # phi_obgnme = {}
+    # for obgnme in pst.observation_data['obgnme'].unique():
+    #     oname = pst.observation_data[pst.observation_data['obgnme'] == obgnme]['oname'].values[0]
+    #     weights = pst.observation_data[pst.observation_data['obgnme'] == obgnme]['weight'].values
+    #     # only consider non-zero weights
+    #     if np.sum(weights) == 0:
+    #         continue
 
-        phi_factor = PHI_OBS.get(oname, None)
-        if phi_factor:
-            # Keep the full obgnme including any less_/greater_ prefix
-            phi_obgnme[obgnme] = phi_factor
+    #     phi_factor = PHI_OBS.get(oname, None)
+    #     if phi_factor:
+    #         # Keep the full obgnme including any less_/greater_ prefix
+    #         phi_obgnme[obgnme] = phi_factor
 
-    df = pd.DataFrame(list(phi_obgnme.items()), columns=['obgnme', 'phi_factor'])
-    # Sort by obgnme for consistency
-    df = df.sort_values('obgnme')
-    df.to_csv(os.path.join(TEMP_DIR, 'phi_factors.csv'), index=False, header=False)
-    pst.pestpp_options['ies_phi_factor_file'] = 'phi_factors.csv'
+    # df = pd.DataFrame(list(phi_obgnme.items()), columns=['obgnme', 'phi_factor'])
+    # # Sort by obgnme for consistency
+    # df = df.sort_values('obgnme')
+    # df.to_csv(os.path.join(TEMP_DIR, 'phi_factors.csv'), index=False, header=False)
+    # pst.pestpp_options['ies_phi_factor_file'] = 'phi_factors.csv'
 
 
     ## ADD FORECASTS ------------------------------------------------------
-    forecast_obgnme = ['ts-flux', 'budget']
+    forecast_obgnme = ['flux-diff']
     
     mask = pst.observation_data.loc[:,'oname'].isin(forecast_obgnme)
     forecasts = pst.observation_data[mask].index.tolist()
@@ -812,7 +822,7 @@ def main():
 
     pst.write(final_pst, version=2)
     
-    # # Filter to non-zero weighted observations only
+    # # # Filter to non-zero weighted observations only
     # nz_obs = pst.observation_data[pst.observation_data.weight > 0].copy()
 
     # print(f"\n{'='*60}")
