@@ -26,7 +26,7 @@ def main():
     all_variances = v.x[:, 0]
     all_names = v.names
     # get index where non-zero obs are
-    pred_obs = pst.observation_data[pst.observation_data].copy()
+    pred_obs = pst.observation_data[pst.observation_data].coadd py()
     nz_variances = [all_variances[all_names.index(name)] for name in pred_obs.obsnme.tolist()]
     for name in pred_obs.obsnme.tolist():
         idx = all_names.index(name)
