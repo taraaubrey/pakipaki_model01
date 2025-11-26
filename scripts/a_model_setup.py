@@ -98,6 +98,7 @@ def main():
     sw_present_arr = aw_present_arr + pw_present_arr + spr_present_arr
     sw_past_arr = aw_past_arr + pw_past_arr + spr_past_arr
 
+    k_hor = k_hor * idomain[0]
     elev_constraint = grid.array_from_raster(TOP, resampling='max')
     grid_gpd = grid.cell_geodataframe()
     grid_gpd['idomain'] = idomain[0].flatten()
