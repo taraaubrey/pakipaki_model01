@@ -267,7 +267,7 @@ def create_spring_distribution_plot(run_name, model_name, post_iter=19, filter_f
 
     # Create figure with 3 rows: present, past, difference
     print("\nCreating plot...")
-    fig, axes = plt.subplots(3, 3, figsize=(14, 12))
+    fig, axes = plt.subplots(3, 3, figsize=(7.28, 7.28))
 
     colors = {
         'prior': '#8d8d8d',      # grey
@@ -302,9 +302,9 @@ def create_spring_distribution_plot(run_name, model_name, post_iter=19, filter_f
             ax_present.text(0.5, 0.5, 'Data not available', ha='center', va='center')
             ax_past.text(0.5, 0.5, 'Data not available', ha='center', va='center')
             ax_diff.text(0.5, 0.5, 'Data not available', ha='center', va='center')
-            ax_present.set_title(titles[(0, col_idx)], fontsize=10, fontweight='bold', loc='left')
-            ax_past.set_title(titles[(1, col_idx)], fontsize=10, fontweight='bold', loc='left')
-            ax_diff.set_title(titles[(2, col_idx)], fontsize=10, fontweight='bold', loc='left')
+            ax_present.set_title(titles[(0, col_idx)], fontsize=6, fontweight='bold', loc='left')
+            ax_past.set_title(titles[(1, col_idx)], fontsize=6, fontweight='bold', loc='left')
+            ax_diff.set_title(titles[(2, col_idx)], fontsize=6, fontweight='bold', loc='left')
             continue
 
         # Get data
@@ -342,25 +342,14 @@ def create_spring_distribution_plot(run_name, model_name, post_iter=19, filter_f
             # Set x-axis limits based on filtered posterior
             ax_present.set_xlim(xlim_present)
 
-            # Add median lines (from full data)
-            median_prior = np.median(prior_present)
-            median_post = np.median(post_present)
-            ax_present.axvline(median_prior, color=colors['prior'], linestyle='--', linewidth=2)
-            ax_present.axvline(median_post, color=colors['post_present'], linestyle='-', linewidth=2)
-
-            # Add median values in top left
-            ax_present.text(0.02, 0.98, f"Prior: {median_prior:.1f}\nPost: {median_post:.1f}",
-                           transform=ax_present.transAxes, fontsize=8, verticalalignment='top',
-                           bbox=dict(boxstyle='round', facecolor='white', alpha=0.8))
-
         ax_present.set_xlabel('Spring Flux (m³/d)', fontsize=9)
         ax_present.set_ylabel('Frequency', fontsize=9)
-        ax_present.set_title(titles[(0, col_idx)], fontsize=10, fontweight='bold', loc='left')
+        ax_present.set_title(titles[(0, col_idx)], fontsize=6, fontweight='bold', loc='left')
         ax_present.grid(True, alpha=0.3)
         ax_present.tick_params(labelsize=8)
 
         if col_idx == 0:
-            ax_present.legend(fontsize=8, loc='upper right')
+            ax_present.legend(fontsize=6, loc='upper right')
 
         # --- Row 1: Past ---
         if len(post_past) > 0:
@@ -389,20 +378,9 @@ def create_spring_distribution_plot(run_name, model_name, post_iter=19, filter_f
             # Set x-axis limits based on filtered posterior
             ax_past.set_xlim(xlim_past)
 
-            # Add median lines (from full data)
-            median_prior = np.median(prior_past)
-            median_post = np.median(post_past)
-            ax_past.axvline(median_prior, color=colors['prior'], linestyle='--', linewidth=2)
-            ax_past.axvline(median_post, color=colors['post_past'], linestyle='-', linewidth=2)
-
-            # Add median values in top left
-            ax_past.text(0.02, 0.98, f"Prior: {median_prior:.1f}\nPost: {median_post:.1f}",
-                        transform=ax_past.transAxes, fontsize=8, verticalalignment='top',
-                        bbox=dict(boxstyle='round', facecolor='white', alpha=0.8))
-
         ax_past.set_xlabel('Spring Flux (m³/d)', fontsize=9)
         ax_past.set_ylabel('Frequency', fontsize=9)
-        ax_past.set_title(titles[(1, col_idx)], fontsize=10, fontweight='bold', loc='left')
+        ax_past.set_title(titles[(1, col_idx)], fontsize=6, fontweight='bold', loc='left')
         ax_past.grid(True, alpha=0.3)
         ax_past.tick_params(labelsize=8)
 
@@ -437,20 +415,9 @@ def create_spring_distribution_plot(run_name, model_name, post_iter=19, filter_f
             # Set x-axis limits based on filtered posterior
             ax_diff.set_xlim(xlim_diff)
 
-            # Add median lines (from full data)
-            median_prior = np.median(prior_diff)
-            median_post = np.median(post_diff)
-            ax_diff.axvline(median_prior, color=colors['prior'], linestyle='--', linewidth=2)
-            ax_diff.axvline(median_post, color=colors['post_diff'], linestyle='-', linewidth=2)
-
-            # Add median values in top left
-            ax_diff.text(0.02, 0.98, f"Prior: {median_prior:.1f}\nPost: {median_post:.1f}",
-                        transform=ax_diff.transAxes, fontsize=8, verticalalignment='top',
-                        bbox=dict(boxstyle='round', facecolor='white', alpha=0.8))
-
         ax_diff.set_xlabel('Flux Difference (m³/d)', fontsize=9)
         ax_diff.set_ylabel('Frequency', fontsize=9)
-        ax_diff.set_title(titles[(2, col_idx)], fontsize=10, fontweight='bold', loc='left')
+        ax_diff.set_title(titles[(2, col_idx)], fontsize=6, fontweight='bold', loc='left')
         ax_diff.grid(True, alpha=0.3)
         ax_diff.tick_params(labelsize=8)
 
@@ -492,7 +459,7 @@ def create_spring_distribution_plot(run_name, model_name, post_iter=19, filter_f
             post_temporal = post_temporal.loc[[r for r in filtered_ids if r in post_temporal.index]]
 
         # Create figure with 2 rows
-        fig, axes = plt.subplots(2, 1, figsize=(7.28, 6))
+        fig, axes = plt.subplots(2, 1, figsize=(7.28, 7.28/2))
 
         # Panel A: kper 2 (present)
         ax_present = axes[0]
@@ -507,24 +474,39 @@ def create_spring_distribution_plot(run_name, model_name, post_iter=19, filter_f
         # Plot posterior ensemble lines (orange)
         for real_id in post_temporal.index:
             vals = [post_temporal.loc[real_id, kper2_obs[kstp]] for kstp in kstps_2]
-            ax_present.plot(kstps_2, vals, color=colors['post_present'], alpha=0.15, linewidth=0.5)
+            ax_present.plot(kstps_2, vals, color=colors['post_present'], alpha=0.4, linewidth=0.5)
 
-        # Plot medians
-        prior_p50 = [np.median(prior_temporal[kper2_obs[kstp]].values) for kstp in kstps_2]
+        # Calculate statistics for posterior
+        post_p10 = [np.percentile(post_temporal[kper2_obs[kstp]].values, 10) for kstp in kstps_2]
         post_p50 = [np.median(post_temporal[kper2_obs[kstp]].values) for kstp in kstps_2]
+        post_p90 = [np.percentile(post_temporal[kper2_obs[kstp]].values, 90) for kstp in kstps_2]
+        post_mean = [np.mean(post_temporal[kper2_obs[kstp]].values) for kstp in kstps_2]
+        post_std = [np.std(post_temporal[kper2_obs[kstp]].values) for kstp in kstps_2]
+        post_mean_plus_std = [m + s for m, s in zip(post_mean, post_std)]
+        post_mean_minus_std = [m - s for m, s in zip(post_mean, post_std)]
 
-        ax_present.plot(kstps_2, prior_p50, color=colors['prior'], linewidth=2, linestyle='--', label='Prior median')
+        # Calculate statistics for prior
+        prior_p50 = [np.median(prior_temporal[kper2_obs[kstp]].values) for kstp in kstps_2]
+
+        # Plot prior median
+        ax_present.plot(kstps_2, prior_p50, color=colors['prior'], linewidth=1.5, linestyle='--', label='Prior median')
+
+        # Plot posterior statistics
         ax_present.plot(kstps_2, post_p50, color=colors['post_present'], linewidth=2, label='Posterior median')
+        ax_present.plot(kstps_2, post_p10, color=colors['post_present'], linewidth=1, linestyle=':', label='P10/P90')
+        ax_present.plot(kstps_2, post_p90, color=colors['post_present'], linewidth=1, linestyle=':')
+        ax_present.plot(kstps_2, post_mean_plus_std, color=colors['post_present'], linewidth=1, linestyle='-.', alpha=0.7, label='Mean±1σ')
+        ax_present.plot(kstps_2, post_mean_minus_std, color=colors['post_present'], linewidth=1, linestyle='-.', alpha=0.7)
 
         # Set y-axis limits based on posterior values
         all_post_vals_2 = np.concatenate([post_temporal[kper2_obs[kstp]].values for kstp in kstps_2])
         ax_present.set_ylim(np.min(all_post_vals_2), np.max(all_post_vals_2))
 
-        ax_present.set_xlabel('Time step (kstp)', fontsize=8)
-        ax_present.set_ylabel('Spring Flux (m³/d)', fontsize=8)
-        ax_present.set_title('A: Present (kper 2)', fontsize=8, fontweight='bold', loc='left')
+        ax_present.set_xlabel('Time step (kstp)', fontsize=6)
+        ax_present.set_ylabel('Spring Flux (m³/d)', fontsize=6)
+        ax_present.set_title('A: Present (kper 2)', fontsize=6, fontweight='bold', loc='left')
         ax_present.grid(True, alpha=0.3)
-        ax_present.legend(fontsize=8, loc='best')
+        ax_present.legend(fontsize=6, loc='best')
         ax_present.tick_params(labelsize=8)
 
         # Panel B: kper 4 (past)
@@ -542,22 +524,37 @@ def create_spring_distribution_plot(run_name, model_name, post_iter=19, filter_f
             vals = [post_temporal.loc[real_id, kper4_obs[kstp]] for kstp in kstps_4]
             ax_past.plot(kstps_4, vals, color=colors['post_past'], alpha=0.15, linewidth=0.5)
 
-        # Plot medians
-        prior_p50_4 = [np.median(prior_temporal[kper4_obs[kstp]].values) for kstp in kstps_4]
+        # Calculate statistics for posterior
+        post_p10_4 = [np.percentile(post_temporal[kper4_obs[kstp]].values, 10) for kstp in kstps_4]
         post_p50_4 = [np.median(post_temporal[kper4_obs[kstp]].values) for kstp in kstps_4]
+        post_p90_4 = [np.percentile(post_temporal[kper4_obs[kstp]].values, 90) for kstp in kstps_4]
+        post_mean_4 = [np.mean(post_temporal[kper4_obs[kstp]].values) for kstp in kstps_4]
+        post_std_4 = [np.std(post_temporal[kper4_obs[kstp]].values) for kstp in kstps_4]
+        post_mean_plus_std_4 = [m + s for m, s in zip(post_mean_4, post_std_4)]
+        post_mean_minus_std_4 = [m - s for m, s in zip(post_mean_4, post_std_4)]
 
-        ax_past.plot(kstps_4, prior_p50_4, color=colors['prior'], linewidth=2, linestyle='--', label='Prior median')
+        # Calculate statistics for prior
+        prior_p50_4 = [np.median(prior_temporal[kper4_obs[kstp]].values) for kstp in kstps_4]
+
+        # Plot prior median
+        ax_past.plot(kstps_4, prior_p50_4, color=colors['prior'], linewidth=1.5, linestyle='--', label='Prior median')
+
+        # Plot posterior statistics
         ax_past.plot(kstps_4, post_p50_4, color=colors['post_past'], linewidth=2, label='Posterior median')
+        ax_past.plot(kstps_4, post_p10_4, color=colors['post_past'], linewidth=1, linestyle=':', label='P10/P90')
+        ax_past.plot(kstps_4, post_p90_4, color=colors['post_past'], linewidth=1, linestyle=':')
+        ax_past.plot(kstps_4, post_mean_plus_std_4, color=colors['post_past'], linewidth=1, linestyle='-.', alpha=0.7, label='Mean±1σ')
+        ax_past.plot(kstps_4, post_mean_minus_std_4, color=colors['post_past'], linewidth=1, linestyle='-.', alpha=0.7)
 
         # Set y-axis limits based on posterior values
         all_post_vals_4 = np.concatenate([post_temporal[kper4_obs[kstp]].values for kstp in kstps_4])
         ax_past.set_ylim(np.min(all_post_vals_4), np.max(all_post_vals_4))
 
-        ax_past.set_xlabel('Time step (kstp)', fontsize=8)
-        ax_past.set_ylabel('Spring Flux (m³/d)', fontsize=8)
-        ax_past.set_title('B: Past (kper 4)', fontsize=8, fontweight='bold', loc='left')
+        ax_past.set_xlabel('Time step (kstp)', fontsize=6)
+        ax_past.set_ylabel('Spring Flux (m³/d)', fontsize=6)
+        ax_past.set_title('B: Past (kper 4)', fontsize=6, fontweight='bold', loc='left')
         ax_past.grid(True, alpha=0.3)
-        ax_past.legend(fontsize=8, loc='best')
+        ax_past.legend(fontsize=6, loc='best')
         ax_past.tick_params(labelsize=8)
 
         plt.tight_layout()
@@ -630,6 +627,80 @@ def create_spring_distribution_plot(run_name, model_name, post_iter=19, filter_f
         summary_file = os.path.join(data_dir, f'{run_name}_spring_flux_summary{file_suffix}.csv')
         summary_df.to_csv(summary_file, index=False)
         print(f"Saved summary table to: {summary_file}")
+
+    # --- Create key timesteps statistics table ---
+    print("\nCreating key timesteps statistics table...")
+
+    # Define key timesteps
+    key_timesteps = [
+        (1, 1),
+        (2, 10),
+        (2, 52),
+        (3, 1),
+        (4, 10),
+        (4, 52),
+    ]
+
+    # Need to load data for all these timesteps
+    key_obs_names = []
+    for kper, kstp in key_timesteps:
+        obs_name = obs_dict.get((kper, kstp))
+        if obs_name:
+            key_obs_names.append(obs_name)
+
+    if len(key_obs_names) > 0:
+        # Read the required columns
+        cols_to_read_key = [prior_header.columns[0]]
+        cols_to_read_key.extend([col for col in key_obs_names if col in prior_header.columns])
+
+        prior_key = pd.read_csv(prior_file, usecols=cols_to_read_key, index_col=0)
+        post_key = pd.read_csv(post_file, usecols=cols_to_read_key, index_col=0)
+
+        # Filter realizations if specified
+        if filtered_ids:
+            prior_key = prior_key.loc[[r for r in filtered_ids if r in prior_key.index]]
+            post_key = post_key.loc[[r for r in filtered_ids if r in post_key.index]]
+
+        # Build statistics table
+        key_stats_rows = []
+        for kper, kstp in key_timesteps:
+            obs_name = obs_dict.get((kper, kstp))
+            if obs_name and obs_name in post_key.columns:
+                prior_vals = prior_key[obs_name].values
+                post_vals = post_key[obs_name].values
+
+                key_stats_rows.append({
+                    'kper': kper,
+                    'kstp': kstp,
+                    'prior_min': np.min(prior_vals),
+                    'prior_max': np.max(prior_vals),
+                    'prior_mean': np.mean(prior_vals),
+                    'prior_median': np.median(prior_vals),
+                    'post_min': np.min(post_vals),
+                    'post_max': np.max(post_vals),
+                    'post_mean': np.mean(post_vals),
+                    'post_median': np.median(post_vals),
+                })
+            else:
+                key_stats_rows.append({
+                    'kper': kper,
+                    'kstp': kstp,
+                    'prior_min': np.nan,
+                    'prior_max': np.nan,
+                    'prior_mean': np.nan,
+                    'prior_median': np.nan,
+                    'post_min': np.nan,
+                    'post_max': np.nan,
+                    'post_mean': np.nan,
+                    'post_median': np.nan,
+                })
+
+        key_stats_df = pd.DataFrame(key_stats_rows)
+        key_stats_file = os.path.join(output_dir, f'{run_name}_spring_flux_key_stats{file_suffix}.csv')
+        key_stats_df.to_csv(key_stats_file, index=False)
+        print(f"Saved key timesteps statistics to: {key_stats_file}")
+    else:
+        print("  No key timesteps data available")
 
 
 if __name__ == '__main__':

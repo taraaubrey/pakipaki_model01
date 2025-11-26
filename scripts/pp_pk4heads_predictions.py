@@ -54,6 +54,8 @@ def parse_args():
                        help='Lower percentile for filtering (default: 10)')
     parser.add_argument('--pct-high', type=int, default=90,
                        help='Upper percentile for filtering (default: 90)')
+    parser.add_argument('--reload', action='store_true',
+                       help='Force reload data from source files (ignore cache)')
     return parser.parse_args()
 
 
@@ -138,7 +140,7 @@ def load_truth_data(truth_file):
 
 
 def create_pk4_distribution_plot(run_name, model_name, post_iter=19, filter_file=None,
-                                  suffix=None, pct_low=10, pct_high=90):
+                                  suffix=None, pct_low=10, pct_high=90, reload=False):
     """
     Create distribution plot comparing prior vs posterior for pk4 heads.
     """
@@ -185,8 +187,8 @@ def create_pk4_distribution_plot(run_name, model_name, post_iter=19, filter_file
     else:
         last_kstp_4 = 1
 
-    # Load truth data
-    truth_file = os.path.join('truth', 'output.sample_heads.truth.csv')
+    # Load truth data from run-name directory
+    truth_file = os.path.join('models', run_name, 'truth', 'output.sample_heads.truth.csv')
     print(f"\nLoading truth data from: {truth_file}")
     truth_data = load_truth_data(truth_file)
     print(f"  Found {len(truth_data)} truth values")
@@ -213,34 +215,90 @@ def create_pk4_distribution_plot(run_name, model_name, post_iter=19, filter_file
     if filtered_ids:
         print(f"\nUsing {len(filtered_ids)} filtered realizations from {filter_file}")
 
-    # Load prior and posterior observation ensembles
-    print(f"\nLoading observation ensembles...")
+    # Setup cache directory
+    cache_dir = os.path.join(output_dir, 'cache')
+    if not os.path.exists(cache_dir):
+        os.makedirs(cache_dir)
+
+    # Cache file names
+    cache_prior = os.path.join(cache_dir, f'{run_name}_prior_oe{file_suffix}.csv')
+    cache_post = os.path.join(cache_dir, f'{run_name}_post_oe{file_suffix}.csv')
+    cache_noise = os.path.join(cache_dir, f'{run_name}_obs_noise_oe{file_suffix}.csv')
+
+    # Check if cached data exists
+    cache_exists = os.path.exists(cache_prior) and os.path.exists(cache_post)
+
+    # Define source file paths (needed for both cache and non-cache paths)
     prior_file = os.path.join(master_dir, f'{model_name}.0.obs.csv')
     post_file = os.path.join(master_dir, f'{model_name}.{post_iter}.obs.csv')
+    obs_noise_file = os.path.join(master_dir, f'{model_name}.obs+noise.csv')
 
-    # Get all needed observation columns
-    all_obs = []
-    for comp in comparisons:
-        if comp['present_obs']:
-            all_obs.append(comp['present_obs'])
-        if comp['past_obs']:
-            all_obs.append(comp['past_obs'])
-
-    # Read only needed columns
-    print(f"  Reading prior (iter 0)...")
+    # Read header for column information (needed for temporal data loading)
     prior_header = pd.read_csv(prior_file, nrows=0)
-    cols_to_read = [prior_header.columns[0]]  # index column
-    cols_to_read.extend([col for col in all_obs if col in prior_header.columns])
-    prior_oe = pd.read_csv(prior_file, usecols=cols_to_read, index_col=0)
 
-    print(f"  Reading posterior (iter {post_iter})...")
-    post_oe = pd.read_csv(post_file, usecols=cols_to_read, index_col=0)
+    if cache_exists and not reload:
+        # Load from cache
+        print(f"\nLoading from cache (use --reload to force refresh)...")
+        print(f"  Reading cached prior...")
+        prior_oe = pd.read_csv(cache_prior, index_col=0)
+        print(f"  Reading cached posterior...")
+        post_oe = pd.read_csv(cache_post, index_col=0)
 
-    # Filter realizations if specified
-    if filtered_ids:
-        prior_oe = prior_oe.loc[[r for r in filtered_ids if r in prior_oe.index]]
-        post_oe = post_oe.loc[[r for r in filtered_ids if r in post_oe.index]]
-        print(f"  Filtered to {len(prior_oe)} prior, {len(post_oe)} posterior realizations")
+        obs_noise_oe = None
+        if os.path.exists(cache_noise):
+            print(f"  Reading cached obs+noise...")
+            obs_noise_oe = pd.read_csv(cache_noise, index_col=0)
+
+        print(f"  Loaded {len(prior_oe)} prior, {len(post_oe)} posterior realizations from cache")
+
+    else:
+        # Load from source files
+        print(f"\nLoading observation ensembles from source...")
+
+        # Get all needed observation columns
+        all_obs = []
+        for comp in comparisons:
+            if comp['present_obs']:
+                all_obs.append(comp['present_obs'])
+            if comp['past_obs']:
+                all_obs.append(comp['past_obs'])
+
+        # Read only needed columns
+        print(f"  Reading prior (iter 0)...")
+        cols_to_read = [prior_header.columns[0]]  # index column
+        cols_to_read.extend([col for col in all_obs if col in prior_header.columns])
+        prior_oe = pd.read_csv(prior_file, usecols=cols_to_read, index_col=0)
+
+        print(f"  Reading posterior (iter {post_iter})...")
+        post_oe = pd.read_csv(post_file, usecols=cols_to_read, index_col=0)
+
+        # Load obs+noise if available
+        obs_noise_oe = None
+        if os.path.exists(obs_noise_file):
+            print(f"  Reading obs+noise...")
+            obs_noise_header = pd.read_csv(obs_noise_file, nrows=0)
+            cols_to_read_noise = [obs_noise_header.columns[0]]
+            cols_to_read_noise.extend([col for col in all_obs if col in obs_noise_header.columns])
+            obs_noise_oe = pd.read_csv(obs_noise_file, usecols=cols_to_read_noise, index_col=0)
+            print(f"    Loaded {len(obs_noise_oe)} realizations")
+        else:
+            print(f"  obs+noise file not found: {obs_noise_file}")
+
+        # Filter realizations if specified
+        if filtered_ids:
+            prior_oe = prior_oe.loc[[r for r in filtered_ids if r in prior_oe.index]]
+            post_oe = post_oe.loc[[r for r in filtered_ids if r in post_oe.index]]
+            if obs_noise_oe is not None:
+                obs_noise_oe = obs_noise_oe.loc[[r for r in filtered_ids if r in obs_noise_oe.index]]
+            print(f"  Filtered to {len(prior_oe)} prior, {len(post_oe)} posterior realizations")
+
+        # Save to cache
+        print(f"\nSaving to cache...")
+        prior_oe.to_csv(cache_prior)
+        post_oe.to_csv(cache_post)
+        if obs_noise_oe is not None:
+            obs_noise_oe.to_csv(cache_noise)
+        print(f"  Cached data saved to: {cache_dir}")
 
     # Save extracted data for quick reloading
     print("\nSaving extracted data...")
@@ -324,6 +382,7 @@ def create_pk4_distribution_plot(run_name, model_name, post_iter=19, filter_file
         'post_past': '#9467bd',     # purple (D-F)
         'post_diff': '#d62728',     # red (G-I)
         'truth': '#2ca02c',         # green for truth
+        'obs_noise': '#2ca02c',     # green for obs+noise
     }
 
     # Define titles for each panel (A-I)
@@ -354,9 +413,9 @@ def create_pk4_distribution_plot(run_name, model_name, post_iter=19, filter_file
             ax_present.text(0.5, 0.5, 'Data not available', ha='center', va='center')
             ax_past.text(0.5, 0.5, 'Data not available', ha='center', va='center')
             ax_diff.text(0.5, 0.5, 'Data not available', ha='center', va='center')
-            ax_present.set_title(titles[(0, col_idx)], fontsize=10, fontweight='bold', loc='left')
-            ax_past.set_title(titles[(1, col_idx)], fontsize=10, fontweight='bold', loc='left')
-            ax_diff.set_title(titles[(2, col_idx)], fontsize=10, fontweight='bold', loc='left')
+            ax_present.set_title(titles[(0, col_idx)], fontsize=6, fontweight='bold', loc='left')
+            ax_past.set_title(titles[(1, col_idx)], fontsize=6, fontweight='bold', loc='left')
+            ax_diff.set_title(titles[(2, col_idx)], fontsize=6, fontweight='bold', loc='left')
             continue
 
         # Get data
@@ -364,6 +423,11 @@ def create_pk4_distribution_plot(run_name, model_name, post_iter=19, filter_file
         prior_past = prior_oe[past_obs].values if past_obs in prior_oe.columns else np.array([])
         post_present = post_oe[present_obs].values if present_obs in post_oe.columns else np.array([])
         post_past = post_oe[past_obs].values if past_obs in post_oe.columns else np.array([])
+
+        # Get obs+noise data if available
+        obs_noise_present = np.array([])
+        if obs_noise_oe is not None and present_obs in obs_noise_oe.columns:
+            obs_noise_present = obs_noise_oe[present_obs].values
 
         alpha = 0.6
 
@@ -391,6 +455,17 @@ def create_pk4_distribution_plot(run_name, model_name, post_iter=19, filter_file
             ax_present.hist(post_present_filt, bins=bins_post_present, alpha=alpha, color=colors['post_present'],
                            label='Posterior', edgecolor='black', linewidth=0.3)
 
+            # Plot obs+noise histogram if available
+            median_obs_noise = None
+            if len(obs_noise_present) > 0:
+                obs_noise_plow, obs_noise_phigh = np.percentile(obs_noise_present, [pct_low, pct_high])
+                obs_noise_filt = obs_noise_present[(obs_noise_present >= obs_noise_plow) & (obs_noise_present <= obs_noise_phigh)]
+                bins_obs_noise = np.linspace(np.min(obs_noise_filt), np.max(obs_noise_filt), 25)
+                ax_present.hist(obs_noise_filt, bins=bins_obs_noise, alpha=0.5, color=colors['obs_noise'],
+                               label='Obs+noise', edgecolor='black', linewidth=0.3)
+                median_obs_noise = np.median(obs_noise_present)
+                ax_present.axvline(median_obs_noise, color=colors['obs_noise'], linestyle='-', linewidth=2)
+
             # Set x-axis limits based on filtered posterior
             ax_present.set_xlim(xlim_present)
 
@@ -402,24 +477,26 @@ def create_pk4_distribution_plot(run_name, model_name, post_iter=19, filter_file
 
             # Add truth line if available
             if present_truth is not None:
-                ax_present.axvline(present_truth, color=colors['truth'], linestyle=':', linewidth=2, label='Truth')
+                ax_present.axvline(present_truth, color='red', linestyle=':', linewidth=2, label='Truth')
 
             # Add median values in top left
             text_str = f"Prior: {median_prior:.2f}\nPost: {median_post:.2f}"
+            if median_obs_noise is not None:
+                text_str += f"\nObs+noise: {median_obs_noise:.2f}"
             if present_truth is not None:
                 text_str += f"\nTruth: {present_truth:.2f}"
             ax_present.text(0.02, 0.98, text_str,
-                           transform=ax_present.transAxes, fontsize=8, verticalalignment='top',
+                           transform=ax_present.transAxes, fontsize=6, verticalalignment='top',
                            bbox=dict(boxstyle='round', facecolor='white', alpha=0.8))
 
-        ax_present.set_xlabel('Head (m)', fontsize=9)
-        ax_present.set_ylabel('Frequency', fontsize=9)
-        ax_present.set_title(titles[(0, col_idx)], fontsize=10, fontweight='bold', loc='left')
+        ax_present.set_xlabel('Head (m)', fontsize=6)
+        ax_present.set_ylabel('Frequency', fontsize=6)
+        ax_present.set_title(titles[(0, col_idx)], fontsize=6, fontweight='bold', loc='left')
         ax_present.grid(True, alpha=0.3)
         ax_present.tick_params(labelsize=8)
 
         if col_idx == 0:
-            ax_present.legend(fontsize=8, loc='upper right')
+            ax_present.legend(fontsize=6, loc='upper right')
 
         # --- Row 1: Past ---
         if len(post_past) > 0:
@@ -463,12 +540,12 @@ def create_pk4_distribution_plot(run_name, model_name, post_iter=19, filter_file
             if past_truth is not None:
                 text_str += f"\nTruth: {past_truth:.2f}"
             ax_past.text(0.02, 0.98, text_str,
-                        transform=ax_past.transAxes, fontsize=8, verticalalignment='top',
+                        transform=ax_past.transAxes, fontsize=6, verticalalignment='top',
                         bbox=dict(boxstyle='round', facecolor='white', alpha=0.8))
 
-        ax_past.set_xlabel('Head (m)', fontsize=9)
-        ax_past.set_ylabel('Frequency', fontsize=9)
-        ax_past.set_title(titles[(1, col_idx)], fontsize=10, fontweight='bold', loc='left')
+        ax_past.set_xlabel('Head (m)', fontsize=6)
+        ax_past.set_ylabel('Frequency', fontsize=6)
+        ax_past.set_title(titles[(1, col_idx)], fontsize=6, fontweight='bold', loc='left')
         ax_past.grid(True, alpha=0.3)
         ax_past.tick_params(labelsize=8)
 
@@ -519,12 +596,12 @@ def create_pk4_distribution_plot(run_name, model_name, post_iter=19, filter_file
 
             # Add median values in top left
             ax_diff.text(0.02, 0.98, text_str,
-                        transform=ax_diff.transAxes, fontsize=8, verticalalignment='top',
+                        transform=ax_diff.transAxes, fontsize=6, verticalalignment='top',
                         bbox=dict(boxstyle='round', facecolor='white', alpha=0.8))
 
-        ax_diff.set_xlabel('Head Difference (m)', fontsize=9)
-        ax_diff.set_ylabel('Frequency', fontsize=9)
-        ax_diff.set_title(titles[(2, col_idx)], fontsize=10, fontweight='bold', loc='left')
+        ax_diff.set_xlabel('Head Difference (m)', fontsize=6)
+        ax_diff.set_ylabel('Frequency', fontsize=6)
+        ax_diff.set_title(titles[(2, col_idx)], fontsize=6, fontweight='bold', loc='left')
         ax_diff.grid(True, alpha=0.3)
         ax_diff.tick_params(labelsize=8)
 
@@ -566,7 +643,7 @@ def create_pk4_distribution_plot(run_name, model_name, post_iter=19, filter_file
             post_temporal = post_temporal.loc[[r for r in filtered_ids if r in post_temporal.index]]
 
         # Create figure with 2 rows
-        fig, axes = plt.subplots(2, 1, figsize=(7.28, 6))
+        fig, axes = plt.subplots(2, 1, figsize=(7.28, 7.28/2))
 
         # Panel A: kper 2 (present)
         ax_present = axes[0]
@@ -583,30 +660,35 @@ def create_pk4_distribution_plot(run_name, model_name, post_iter=19, filter_file
             vals = [post_temporal.loc[real_id, kper2_obs[kstp]] for kstp in kstps_2]
             ax_present.plot(kstps_2, vals, color=colors['post_present'], alpha=0.15, linewidth=0.5)
 
-        # Plot medians
-        prior_p50 = [np.median(prior_temporal[kper2_obs[kstp]].values) for kstp in kstps_2]
-        post_p50 = [np.median(post_temporal[kper2_obs[kstp]].values) for kstp in kstps_2]
+        # Plot means (thinner, darker orange dotted for present)
+        prior_mean = [np.mean(prior_temporal[kper2_obs[kstp]].values) for kstp in kstps_2]
+        post_mean = [np.mean(post_temporal[kper2_obs[kstp]].values) for kstp in kstps_2]
 
-        ax_present.plot(kstps_2, prior_p50, color=colors['prior'], linewidth=2, linestyle='--', label='Prior median')
-        ax_present.plot(kstps_2, post_p50, color=colors['post_present'], linewidth=2, label='Posterior median')
+        ax_present.plot(kstps_2, prior_mean, color='#4d4d4d', linewidth=1, linestyle=':', label='Prior mean')
+        ax_present.plot(kstps_2, post_mean, color='#cc5500', linewidth=1, linestyle=':', label='Posterior mean')
 
         # Plot truth if available
         truth_vals_2 = [truth_data.get((2, kstp)) for kstp in kstps_2]
         if any(v is not None for v in truth_vals_2):
             valid_kstps = [k for k, v in zip(kstps_2, truth_vals_2) if v is not None]
             valid_vals = [v for v in truth_vals_2 if v is not None]
-            ax_present.plot(valid_kstps, valid_vals, color=colors['truth'], linewidth=2, linestyle=':', label='Truth')
+            ax_present.plot(valid_kstps, valid_vals, color=colors['truth'], linewidth=2, linestyle='-', label='Truth')
 
-        # Set y-axis limits based on posterior values
+        # Set y-axis limits based on IQR * 1.5 of posterior values
         all_post_vals_2 = np.concatenate([post_temporal[kper2_obs[kstp]].values for kstp in kstps_2])
-        ax_present.set_ylim(np.min(all_post_vals_2), np.max(all_post_vals_2))
+        q25_2 = np.percentile(all_post_vals_2, 25)
+        q75_2 = np.percentile(all_post_vals_2, 75)
+        iqr_2 = q75_2 - q25_2
+        y_min_2 = max(np.min(all_post_vals_2), q25_2 - 1.5 * iqr_2)
+        y_max_2 = min(np.max(all_post_vals_2), q75_2 + 1.5 * iqr_2)
+        ax_present.set_ylim(y_min_2, y_max_2)
 
-        ax_present.set_xlabel('Time step (kstp)', fontsize=8)
-        ax_present.set_ylabel('Head (m)', fontsize=8)
-        ax_present.set_title('A: Present (kper 2)', fontsize=8, fontweight='bold', loc='left')
+        ax_present.set_xlabel('Time step (kstp)', fontsize=6)
+        ax_present.set_ylabel('Head (m)', fontsize=6)
+        ax_present.set_title('A: shGW1 Present (kper 2)', fontsize=6, fontweight='bold', loc='left')
         ax_present.grid(True, alpha=0.3)
-        ax_present.legend(fontsize=8, loc='best')
-        ax_present.tick_params(labelsize=8)
+        ax_present.legend(fontsize=6, loc='best')
+        ax_present.tick_params(labelsize=6)
 
         # Panel B: kper 4 (past)
         ax_past = axes[1]
@@ -623,35 +705,40 @@ def create_pk4_distribution_plot(run_name, model_name, post_iter=19, filter_file
             vals = [post_temporal.loc[real_id, kper4_obs[kstp]] for kstp in kstps_4]
             ax_past.plot(kstps_4, vals, color=colors['post_past'], alpha=0.15, linewidth=0.5)
 
-        # Plot medians
-        prior_p50_4 = [np.median(prior_temporal[kper4_obs[kstp]].values) for kstp in kstps_4]
-        post_p50_4 = [np.median(post_temporal[kper4_obs[kstp]].values) for kstp in kstps_4]
+        # Plot means (thinner, darker purple dotted for past)
+        prior_mean_4 = [np.mean(prior_temporal[kper4_obs[kstp]].values) for kstp in kstps_4]
+        post_mean_4 = [np.mean(post_temporal[kper4_obs[kstp]].values) for kstp in kstps_4]
 
-        ax_past.plot(kstps_4, prior_p50_4, color=colors['prior'], linewidth=2, linestyle='--', label='Prior median')
-        ax_past.plot(kstps_4, post_p50_4, color=colors['post_past'], linewidth=2, label='Posterior median')
+        ax_past.plot(kstps_4, prior_mean_4, color='#4d4d4d', linewidth=1, linestyle=':', label='Prior mean')
+        ax_past.plot(kstps_4, post_mean_4, color='#5c3d6e', linewidth=1, linestyle=':', label='Posterior mean')
 
         # Plot truth if available
         truth_vals_4 = [truth_data.get((4, kstp)) for kstp in kstps_4]
         if any(v is not None for v in truth_vals_4):
             valid_kstps = [k for k, v in zip(kstps_4, truth_vals_4) if v is not None]
             valid_vals = [v for v in truth_vals_4 if v is not None]
-            ax_past.plot(valid_kstps, valid_vals, color=colors['truth'], linewidth=2, linestyle=':', label='Truth')
+            ax_past.plot(valid_kstps, valid_vals, color=colors['truth'], linewidth=2, linestyle='-', label='Truth')
 
-        # Set y-axis limits based on posterior values
+        # Set y-axis limits based on IQR * 1.5 of posterior values
         all_post_vals_4 = np.concatenate([post_temporal[kper4_obs[kstp]].values for kstp in kstps_4])
-        ax_past.set_ylim(np.min(all_post_vals_4), np.max(all_post_vals_4))
+        q25_4 = np.percentile(all_post_vals_4, 25)
+        q75_4 = np.percentile(all_post_vals_4, 75)
+        iqr_4 = q75_4 - q25_4
+        y_min_4 = max(np.min(all_post_vals_4), q25_4 - 1.5 * iqr_4)
+        y_max_4 = min(np.max(all_post_vals_4), q75_4 + 1.5 * iqr_4)
+        ax_past.set_ylim(y_min_4, y_max_4)
 
-        ax_past.set_xlabel('Time step (kstp)', fontsize=8)
-        ax_past.set_ylabel('Head (m)', fontsize=8)
-        ax_past.set_title('B: Past (kper 4)', fontsize=8, fontweight='bold', loc='left')
+        ax_past.set_xlabel('Time step (kstp)', fontsize=6)
+        ax_past.set_ylabel('Head (m)', fontsize=6)
+        ax_past.set_title('B: shGW1 Past (kper 4)', fontsize=6, fontweight='bold', loc='left')
         ax_past.grid(True, alpha=0.3)
-        ax_past.legend(fontsize=8, loc='best')
-        ax_past.tick_params(labelsize=8)
+        ax_past.legend(fontsize=6, loc='best')
+        ax_past.tick_params(labelsize=6)
 
         plt.tight_layout()
 
         # Save temporal plot
-        temporal_path = os.path.join(output_dir, f'{run_name}_pk4heads_temporal{file_suffix}.png')
+        temporal_path = os.path.join(output_dir, f'{run_name}_shGW1_temporal{file_suffix}.png')
         plt.savefig(temporal_path, dpi=150, bbox_inches='tight')
         plt.close()
 
@@ -723,6 +810,98 @@ def create_pk4_distribution_plot(run_name, model_name, post_iter=19, filter_file
         summary_df.to_csv(summary_file, index=False)
         print(f"Saved summary table to: {summary_file}")
 
+        # --- Calculate head decline statistics ---
+        print("\nCalculating head decline statistics...")
+
+        decline_stats = []
+
+        # kper 2: decline from kstp 1 to kstp 10
+        if 1 in kper2_obs and 10 in kper2_obs:
+            obs_kstp1 = kper2_obs[1]
+            obs_kstp10 = kper2_obs[10]
+
+            if obs_kstp1 in prior_temporal.columns and obs_kstp10 in prior_temporal.columns:
+                # Decline = kstp1 - kstp10 (positive means head dropped)
+                prior_decline = prior_temporal[obs_kstp1].values - prior_temporal[obs_kstp10].values
+                post_decline = post_temporal[obs_kstp1].values - post_temporal[obs_kstp10].values
+
+                decline_stats.append({
+                    'kper': 2,
+                    'from_kstp': 1,
+                    'to_kstp': 10,
+                    'description': 'Present (kper 2) decline kstp 1 to 10',
+                    'prior_min': np.min(prior_decline),
+                    'prior_p05': np.percentile(prior_decline, 5),
+                    'prior_p25': np.percentile(prior_decline, 25),
+                    'prior_median': np.median(prior_decline),
+                    'prior_mean': np.mean(prior_decline),
+                    'prior_p75': np.percentile(prior_decline, 75),
+                    'prior_p95': np.percentile(prior_decline, 95),
+                    'prior_max': np.max(prior_decline),
+                    'prior_std': np.std(prior_decline),
+                    'post_min': np.min(post_decline),
+                    'post_p05': np.percentile(post_decline, 5),
+                    'post_p25': np.percentile(post_decline, 25),
+                    'post_median': np.median(post_decline),
+                    'post_mean': np.mean(post_decline),
+                    'post_p75': np.percentile(post_decline, 75),
+                    'post_p95': np.percentile(post_decline, 95),
+                    'post_max': np.max(post_decline),
+                    'post_std': np.std(post_decline),
+                })
+
+                print(f"\n  kper 2 (Present) head decline (kstp 1 to 10):")
+                print(f"    Prior:     median={np.median(prior_decline):.3f}, mean={np.mean(prior_decline):.3f}, std={np.std(prior_decline):.3f}")
+                print(f"    Posterior: median={np.median(post_decline):.3f}, mean={np.mean(post_decline):.3f}, std={np.std(post_decline):.3f}")
+                print(f"    Posterior range: [{np.min(post_decline):.3f}, {np.max(post_decline):.3f}]")
+                print(f"    Posterior IQR: [{np.percentile(post_decline, 25):.3f}, {np.percentile(post_decline, 75):.3f}]")
+
+        # kper 4: decline from kstp 1 to kstp 10
+        if 1 in kper4_obs and 10 in kper4_obs:
+            obs_kstp1 = kper4_obs[1]
+            obs_kstp10 = kper4_obs[10]
+
+            if obs_kstp1 in prior_temporal.columns and obs_kstp10 in prior_temporal.columns:
+                prior_decline = prior_temporal[obs_kstp1].values - prior_temporal[obs_kstp10].values
+                post_decline = post_temporal[obs_kstp1].values - post_temporal[obs_kstp10].values
+
+                decline_stats.append({
+                    'kper': 4,
+                    'from_kstp': 1,
+                    'to_kstp': 10,
+                    'description': 'Past (kper 4) decline kstp 1 to 10',
+                    'prior_min': np.min(prior_decline),
+                    'prior_p05': np.percentile(prior_decline, 5),
+                    'prior_p25': np.percentile(prior_decline, 25),
+                    'prior_median': np.median(prior_decline),
+                    'prior_mean': np.mean(prior_decline),
+                    'prior_p75': np.percentile(prior_decline, 75),
+                    'prior_p95': np.percentile(prior_decline, 95),
+                    'prior_max': np.max(prior_decline),
+                    'prior_std': np.std(prior_decline),
+                    'post_min': np.min(post_decline),
+                    'post_p05': np.percentile(post_decline, 5),
+                    'post_p25': np.percentile(post_decline, 25),
+                    'post_median': np.median(post_decline),
+                    'post_mean': np.mean(post_decline),
+                    'post_p75': np.percentile(post_decline, 75),
+                    'post_p95': np.percentile(post_decline, 95),
+                    'post_max': np.max(post_decline),
+                    'post_std': np.std(post_decline),
+                })
+
+                print(f"\n  kper 4 (Past) head decline (kstp 1 to 10):")
+                print(f"    Prior:     median={np.median(prior_decline):.3f}, mean={np.mean(prior_decline):.3f}, std={np.std(prior_decline):.3f}")
+                print(f"    Posterior: median={np.median(post_decline):.3f}, mean={np.mean(post_decline):.3f}, std={np.std(post_decline):.3f}")
+                print(f"    Posterior range: [{np.min(post_decline):.3f}, {np.max(post_decline):.3f}]")
+                print(f"    Posterior IQR: [{np.percentile(post_decline, 25):.3f}, {np.percentile(post_decline, 75):.3f}]")
+
+        if decline_stats:
+            decline_df = pd.DataFrame(decline_stats)
+            decline_file = os.path.join(data_dir, f'{run_name}_pk4heads_decline{file_suffix}.csv')
+            decline_df.to_csv(decline_file, index=False)
+            print(f"\nSaved head decline statistics to: {decline_file}")
+
     print(f"\nAll outputs saved to: {output_dir}")
 
 
@@ -743,5 +922,6 @@ if __name__ == '__main__':
         filter_file=args.filter_file,
         suffix=args.suffix,
         pct_low=args.pct_low,
-        pct_high=args.pct_high
+        pct_high=args.pct_high,
+        reload=args.reload
     )

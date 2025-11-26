@@ -1,0 +1,42 @@
+{
+  "run_name": "63077_run40",
+  "model_name": "run40",
+  "post_iter": 11,
+  "filter_file": null,
+  "suffix": null,
+  "comparisons": [
+    {
+      "name": "Steady state",
+      "present": [
+        1,
+        1
+      ],
+      "past": [
+        3,
+        1
+      ]
+    },
+    {
+      "name": "10 days after recession",
+      "present": [
+        2,
+        10
+      ],
+      "past": [
+        4,
+        10
+      ]
+    },
+    {
+      "name": "End of recession",
+      "present": [
+        2,
+        52
+      ],
+      "past": [
+        4,
+        52
+      ]
+    }
+  ]
+}

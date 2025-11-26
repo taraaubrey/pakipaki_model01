@@ -1,0 +1,94 @@
+PP_PARAM_ANALYSIS.PY - CALCULATION METHODS
+==========================================
+
+1. PARAMETER TRANSFORMATION
+---------------------------
+Parameters are identified as log-transformed based on the 'partrans' column in
+pst.parameter_data. If partrans = 'log', the parameter group is treated as
+log-transformed.
+
+For log-transformed parameters:
+  - Statistics are calculated on log10(values)
+
+For non-transformed parameters:
+  - Statistics are calculated on original values
+
+
+2. MEAN CALCULATION
+-------------------
+For each parameter group at each iteration:
+
+  If log-transformed:
+    mean = mean(log10(values))
+
+  If not transformed:
+    mean = mean(values)
+
+Where 'values' includes all parameter values across all realizations for that group.
+
+
+3. COEFFICIENT OF VARIATION (CV)
+--------------------------------
+CV measures relative variability as a percentage:
+
+  CV = (std / |mean|) * 100
+
+Where std and mean are calculated on transformed values (log10 for log-transformed params).
+
+
+4. CV REDUCTION (Plots A and B in cv_reduction figure)
+------------------------------------------------------
+CV reduction measures how much parameter uncertainty was reduced during calibration:
+
+  reduction = ((prior_cv - final_cv) / prior_cv) * 100
+
+Where:
+  - prior_cv = CV at iteration 0 (prior ensemble)
+  - final_cv = CV at last iteration (posterior ensemble)
+
+Interpretation:
+  - Positive values = CV decreased = uncertainty reduced (good constraint)
+  - Negative values = CV increased = uncertainty increased
+
+Example:
+  - If prior CV = 50% and final CV = 20%
+  - Reduction = ((50 - 20) / 50) * 100 = 60% reduction in uncertainty
+
+  - If prior CV = 30% and final CV = 45%
+  - Reduction = ((30 - 45) / 30) * 100 = -50% (CV increased by 50%)
+
+
+5. % CHANGE IN TRANSFORMED MEAN (Plot A in combined figure)
+-----------------------------------------------------------
+Shows how much the mean parameter value changed between consecutive iterations:
+
+  pct_change = |(curr_mean - prev_mean) / prev_mean| * 100
+
+Where curr_mean and prev_mean are the transformed means (log10 for log-transformed params).
+
+
+6. PARAMETER CATEGORIZATION (using pglong)
+------------------------------------------
+Parameters are categorized using the 'pglong' column from par_data.csv:
+
+  npflayer1-{suffix}     -> Hydraulic Conductivity
+  stosslayer1-{suffix}   -> Storage
+  rchss-{suffix}         -> Recharge (steady-state)
+  rchtr-{suffix}         -> Recharge (transient)
+  ghb{type}-{param}-{suffix} -> GHB boundaries
+
+Where:
+  - suffix: gr (grid), pp (pilot point), cn (constant), hg (head grid)
+  - type: aw (Awanui), pw (Poukawa), spr (Spring), conf (Confined)
+  - param: cond (conductance), head, head-ts (time-series heads)
+
+Display names are generated automatically, e.g.:
+  - "K (grid)", "K (pilot)", "K (constant)"
+  - "Awanui cond (grid)", "Spring head-ts"
+
+
+7. NOTES
+--------
+- GHB Head and GHB Head TS categories are excluded from plots
+- Log scale is used for Plot A (% change) and Plots F-I (CV evolution)
+- Reinflation iterations are marked with red dashed vertical lines
