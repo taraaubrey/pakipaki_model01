@@ -822,19 +822,31 @@ def main():
 
     pst.write(final_pst, version=2)
     
-    # # # Filter to non-zero weighted observations only
-    # nz_obs = pst.observation_data[pst.observation_data.weight > 0].copy()
+    # # Filter to non-zero weighted observations only
+    nz_obs = pst.observation_data[pst.observation_data.weight > 0].copy()
 
-    # print(f"\n{'='*60}")
-    # print(f"BUILDING OBSERVATION COVARIANCE MATRIX")
-    # print(f"{'='*60}")
-    # print(f"Total observations: {len(pst.observation_data)}")
-    # print(f"Non-zero weighted observations: {len(nz_obs)}")
-    # print(f"Reduction: {100 * (1 - len(nz_obs)/len(pst.observation_data)):.1f}%")
+    print(f"\n{'='*60}")
+    print(f"BUILDING OBSERVATION COVARIANCE MATRIX")
+    print(f"{'='*60}")
+    print(f"Total observations: {len(pst.observation_data)}")
+    print(f"Non-zero weighted observations: {len(nz_obs)}")
+    print(f"Reduction: {100 * (1 - len(nz_obs)/len(pst.observation_data)):.1f}%")
 
-    # v = pyemu.Cov.from_obsweights(final_pst)
-    # all_variances = v.x[:, 0]
-    # all_names = v.row_names
+    v = pyemu.Cov.from_obsweights(final_pst)
+    all_variances = v.x[:, 0]
+    all_names = v.row_names
+
+    # get index where non-zero obs are
+    idx_names = nz_obs.index.tolist() + pst.forecast_names
+    nz_variances = [all_variances[all_names.index(name)] for name in idx_names]
+    obscov = pyemu.Cov(x=np.array(nz_variances).reshape(-1, 1), names=idx_names, isdiagonal=True)
+
+    print(f"Saving to binary format...")
+    obscov.to_binary(os.path.join(TEMP_DIR, 'obscov.jcb'))
+    pst.pestpp_options['observation_covariance'] = 'obscov.jcb'
+    # v.x = np.diag(nz_variances)
+    # v.names = nz_obs.obsnme.tolist()
+
     # var_dict = dict(zip(all_names, all_variances))
 
     # # Pre-allocate the full covariance matrix
@@ -933,7 +945,7 @@ def main():
     # obscov.to_binary(os.path.join(TEMP_DIR, 'obscov.jcb'))
     # pst.pestpp_options['observation_covariance'] = 'obscov.jcb'
 
-    # # Calculate matrix statistics
+    # Calculate matrix statistics
     # n_nonzero = np.count_nonzero(cov_matrix)
     # matrix_density = 100 * n_nonzero / (n**2)
 
