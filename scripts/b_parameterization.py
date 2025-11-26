@@ -806,135 +806,135 @@ def main():
     # ===================================================================
     # BUILD OBSERVATION COVARIANCE MATRIX
     # ===================================================================
-
-    # Filter to non-zero weighted observations only
-    nz_obs = pst.observation_data[pst.observation_data.weight > 0].copy()
-    print(f"\n{'='*60}")
-    print(f"BUILDING OBSERVATION COVARIANCE MATRIX")
-    print(f"{'='*60}")
-    print(f"Total observations: {len(pst.observation_data)}")
-    print(f"Non-zero weighted observations: {len(nz_obs)}")
-    print(f"Reduction: {100 * (1 - len(nz_obs)/len(pst.observation_data)):.1f}%")
-
     # Get variance lookup for non-zero weighted obs only
     pst_file = f'{MODEL_NAME}.pst'
     final_pst = os.path.join(TEMP_DIR, pst_file)
 
     pst.write(final_pst, version=2)
+    
+    # # Filter to non-zero weighted observations only
+    # nz_obs = pst.observation_data[pst.observation_data.weight > 0].copy()
 
-    v = pyemu.Cov.from_obsweights(final_pst)
-    all_variances = v.x[:, 0]
-    all_names = v.row_names
-    var_dict = dict(zip(all_names, all_variances))
+    # print(f"\n{'='*60}")
+    # print(f"BUILDING OBSERVATION COVARIANCE MATRIX")
+    # print(f"{'='*60}")
+    # print(f"Total observations: {len(pst.observation_data)}")
+    # print(f"Non-zero weighted observations: {len(nz_obs)}")
+    # print(f"Reduction: {100 * (1 - len(nz_obs)/len(pst.observation_data)):.1f}%")
 
-    # Pre-allocate the full covariance matrix
-    nz_obs_names = nz_obs.obsnme.tolist()
-    n = len(nz_obs_names)
-    cov_matrix = np.zeros((n, n))
-    name_to_idx = {name: i for i, name in enumerate(nz_obs_names)}
+    # v = pyemu.Cov.from_obsweights(final_pst)
+    # all_variances = v.x[:, 0]
+    # all_names = v.row_names
+    # var_dict = dict(zip(all_names, all_variances))
 
-    print(f"Pre-allocated {n}x{n} covariance matrix")
+    # # Pre-allocate the full covariance matrix
+    # nz_obs_names = nz_obs.obsnme.tolist()
+    # n = len(nz_obs_names)
+    # cov_matrix = np.zeros((n, n))
+    # name_to_idx = {name: i for i, name in enumerate(nz_obs_names)}
 
-    # Process each observation group
-    obs_groups = nz_obs.obgnme.unique()
+    # print(f"Pre-allocated {n}x{n} covariance matrix")
 
-    for obgnme in obs_groups:
-        group_mask = nz_obs.obgnme == obgnme
-        grp_data = nz_obs[group_mask].copy()
-        oname = grp_data['oname'].unique()[0]
+    # # Process each observation group
+    # obs_groups = nz_obs.obgnme.unique()
+
+    # for obgnme in obs_groups:
+    #     group_mask = nz_obs.obgnme == obgnme
+    #     grp_data = nz_obs[group_mask].copy()
+    #     oname = grp_data['oname'].unique()[0]
         
-        if len(grp_data) == 0:
-            continue
+    #     if len(grp_data) == 0:
+    #         continue
 
-        print(f"\nProcessing group: {oname} ({obgnme}) ({len(grp_data)} obs)")
+    #     print(f"\nProcessing group: {oname} ({obgnme}) ({len(grp_data)} obs)")
 
-        # Array observations - temporal and spatial correlation with subsampling
-        if oname in ['arr-awq', 'arr-spq', 'arr-h']:
-            # create (i, j) subsampling lists
-            i_j_list = list(zip(grp_data['i'], grp_data['j']))
-            # i_list = [int(i) for i in grp_data['i'].unique()]
-            # j_list = [int(j) for j in grp_data['j'].unique()]
-            times_unique = [int(t) for t in grp_data['time'].unique()]
+    #     # Array observations - temporal and spatial correlation with subsampling
+    #     if oname in ['arr-awq', 'arr-spq', 'arr-h']:
+    #         # create (i, j) subsampling lists
+    #         i_j_list = list(zip(grp_data['i'], grp_data['j']))
+    #         # i_list = [int(i) for i in grp_data['i'].unique()]
+    #         # j_list = [int(j) for j in grp_data['j'].unique()]
+    #         times_unique = [int(t) for t in grp_data['time'].unique()]
             
-            print(f"  Original grid: {len(i_j_list)} locations")
-            # print(f"  Original grid: {len(i_list)} x {len(j_list)} = {len(i_list)*len(j_list)} cells")
+    #         print(f"  Original grid: {len(i_j_list)} locations")
+    #         # print(f"  Original grid: {len(i_list)} x {len(j_list)} = {len(i_list)*len(j_list)} cells")
             
-            # Temporal correlation within each subsampled (i,j) location
-            n_temporal = 0
-            for i, j in i_j_list:
-                mask_ij = (grp_data['i'] == i) & (grp_data['j'] == j)
-                grp_data_ij = grp_data[mask_ij]
+    #         # Temporal correlation within each subsampled (i,j) location
+    #         n_temporal = 0
+    #         for i, j in i_j_list:
+    #             mask_ij = (grp_data['i'] == i) & (grp_data['j'] == j)
+    #             grp_data_ij = grp_data[mask_ij]
                 
-                if len(grp_data_ij) > 0:
-                    update_time_covariance_direct(
-                        grp_data_ij, v_time, var_dict, cov_matrix, name_to_idx
-                    )
-                    n_temporal += 1
+    #             if len(grp_data_ij) > 0:
+    #                 update_time_covariance_direct(
+    #                     grp_data_ij, v_time, var_dict, cov_matrix, name_to_idx
+    #                 )
+    #                 n_temporal += 1
 
             
-            print(f"  Processed temporal correlation for {n_temporal} locations")
+    #         print(f"  Processed temporal correlation for {n_temporal} locations")
             
-            # Spatial correlation at each time step (using subsampled cells)
-            n_spatial = 0
-            for time in times_unique:
-                mask_time = grp_data['time'] == str(time)
-                grp_data_time = grp_data[mask_time]
+    #         # Spatial correlation at each time step (using subsampled cells)
+    #         n_spatial = 0
+    #         for time in times_unique:
+    #             mask_time = grp_data['time'] == str(time)
+    #             grp_data_time = grp_data[mask_time]
                 
-                if len(grp_data_time) > 0:
-                    update_spatial_covariance_direct(
-                        grp_data_time, v_coarse, var_dict, cov_matrix, name_to_idx
-                    )
-                    n_spatial += 1
+    #             if len(grp_data_time) > 0:
+    #                 update_spatial_covariance_direct(
+    #                     grp_data_time, v_coarse, var_dict, cov_matrix, name_to_idx
+    #                 )
+    #                 n_spatial += 1
             
-            print(f"  Processed spatial correlation for {n_spatial} time steps")
+    #         print(f"  Processed spatial correlation for {n_spatial} time steps")
         
-        # Time series observations - temporal correlation only
-        elif oname in ['ts-heads', 'ts-sprflux']:
-            usecols = grp_data['usecol'].unique()
-            n_cols = 0
-            for col in usecols:
-                mask_col = grp_data['usecol'] == col
-                grp_data_col = grp_data[mask_col]
+    #     # Time series observations - temporal correlation only
+    #     elif oname in ['ts-heads', 'ts-sprflux']:
+    #         usecols = grp_data['usecol'].unique()
+    #         n_cols = 0
+    #         for col in usecols:
+    #             mask_col = grp_data['usecol'] == col
+    #             grp_data_col = grp_data[mask_col]
                 
-                if len(grp_data_col) > 0:
-                    update_time_covariance_direct(
-                        grp_data_col, v_time, var_dict, cov_matrix, name_to_idx
-                    )
-                    n_cols += 1
+    #             if len(grp_data_col) > 0:
+    #                 update_time_covariance_direct(
+    #                     grp_data_col, v_time, var_dict, cov_matrix, name_to_idx
+    #                 )
+    #                 n_cols += 1
             
-            print(f"  Processed temporal correlation for {n_cols} locations")
+    #         print(f"  Processed temporal correlation for {n_cols} locations")
         
-        # Other observation groups - just diagonal
-        else:
-            n_diag = 0
-            for oname in grp_data.obsnme:
-                if oname in var_dict and oname in name_to_idx:
-                    idx = name_to_idx[oname]
-                    cov_matrix[idx, idx] = var_dict[oname]
-                    n_diag += 1
+    #     # Other observation groups - just diagonal
+    #     else:
+    #         n_diag = 0
+    #         for oname in grp_data.obsnme:
+    #             if oname in var_dict and oname in name_to_idx:
+    #                 idx = name_to_idx[oname]
+    #                 cov_matrix[idx, idx] = var_dict[oname]
+    #                 n_diag += 1
             
-            print(f"  Processed diagonal for {n_diag} observations")
+    #         print(f"  Processed diagonal for {n_diag} observations")
 
 
-    print(f"\nCreating pyemu.Cov object...")
-    obscov = pyemu.Cov(x=cov_matrix, names=nz_obs_names, isdiagonal=False)
+    # print(f"\nCreating pyemu.Cov object...")
+    # obscov = pyemu.Cov(x=cov_matrix, names=nz_obs_names, isdiagonal=False)
 
-    print(f"Saving to binary format...")
-    obscov.to_binary(os.path.join(TEMP_DIR, 'obscov.jcb'))
-    pst.pestpp_options['observation_covariance'] = 'obscov.jcb'
+    # print(f"Saving to binary format...")
+    # obscov.to_binary(os.path.join(TEMP_DIR, 'obscov.jcb'))
+    # pst.pestpp_options['observation_covariance'] = 'obscov.jcb'
 
-    # Calculate matrix statistics
-    n_nonzero = np.count_nonzero(cov_matrix)
-    matrix_density = 100 * n_nonzero / (n**2)
+    # # Calculate matrix statistics
+    # n_nonzero = np.count_nonzero(cov_matrix)
+    # matrix_density = 100 * n_nonzero / (n**2)
 
-    print(f"\n{'='*60}")
-    print(f"OBSERVATION COVARIANCE SUMMARY")
-    print(f"{'='*60}")
-    print(f"Matrix size: {n} x {n}")
-    print(f"Non-zero entries: {n_nonzero:,}")
-    print(f"Matrix density: {matrix_density:.2f}%")
-    print(f"Saved to: obscov.jcb")
-    print(f"{'='*60}\n")
+    # print(f"\n{'='*60}")
+    # print(f"OBSERVATION COVARIANCE SUMMARY")
+    # print(f"{'='*60}")
+    # print(f"Matrix size: {n} x {n}")
+    # print(f"Non-zero entries: {n_nonzero:,}")
+    # print(f"Matrix density: {matrix_density:.2f}%")
+    # print(f"Saved to: obscov.jcb")
+    # print(f"{'='*60}\n")
     
     # RUN PESTPP-IES --------------------------------------------------
     print("Writing PEST template file...")
