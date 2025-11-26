@@ -326,6 +326,11 @@ def main():
 
     ###############################################################################
     print('ADDING OBSERVATION VALUES AND WEIGHTS FROM TRUTH...')
+    spring_flux_diff = pd.read_csv(
+        os.path.join(
+            TRUTH_DIR, 
+            'output.spring_flux_differences.csv'), 
+        index_col=1)
     # load truth data
     ts_heads = pd.read_csv(
         os.path.join(
@@ -379,7 +384,12 @@ def main():
     for _, row in pst.observation_data.iterrows():
         oname = row['oname']
 
-        if oname == 'ts-heads':
+        if oname == 'flux-diff':
+            idx = row['kstp']
+
+            pst.observation_data.at[row.name, 'obsval'] = spring_flux_diff.loc[idx, 'diff']
+        
+        elif oname == 'ts-heads':
             time = int(row['time'])
             col = row['usecol']
 

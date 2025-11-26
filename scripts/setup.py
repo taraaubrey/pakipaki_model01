@@ -174,9 +174,9 @@ SPACE_SUBSAMPLE = 5  # spatial subsampling for pilot points
 # Pest options
 NREALS = 250  # number of realizations for parameterization
 NREALS_PRIOR = 50  # number of realizations for parameterization
-REINFLATE_ITERS = 3, 3, 3 # iterations at which to reinflate
+REINFLATE_ITERS = 3, 3, 3, 3, 3 # iterations at which to reinflate
 NOPTMAX = 3
-MAXSING = 120
+MAXSING = "None"
 
 if REINFLATE_ITERS:
     NOPTMAX = sum(REINFLATE_ITERS)  # number of optimization iterations

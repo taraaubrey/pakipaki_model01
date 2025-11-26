@@ -882,6 +882,7 @@ def create_sprghb_truth(ghb_dfs, spdf, dir):
     """
 
     df = ghb_dfs['GHB_SP'].copy()
+    spdf['pk4-spr-diff'].index = spdf['pk4-spr-diff'].index+1
     df = pd.merge(df, spdf['pk4-spr-diff'], left_on='time', right_index=True, how='left')
     df.fillna(1, inplace=True)
 
