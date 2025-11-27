@@ -176,10 +176,10 @@ NREALS = 250  # number of realizations for parameterization
 NREALS_PRIOR = 50  # number of realizations for parameterization
 REINFLATE_ITERS = 3, 3, 3, 3, 3 # iterations at which to reinflate
 NOPTMAX = 3
-MAXSING = "None"
+MAXSING = None
 
 if REINFLATE_ITERS:
-    NOPTMAX = sum(REINFLATE_ITERS)  # number of optimization iterations
+    NOPTMAX = sum(REINFLATE_ITERS) + len(REINFLATE_ITERS) - 1 # number of optimization iterations
 else:
     REINFLATE_ITERS = 0
 

@@ -829,6 +829,7 @@ def main():
     # Get variance lookup for non-zero weighted obs only
     pst_file = f'{MODEL_NAME}.pst'
     final_pst = os.path.join(TEMP_DIR, pst_file)
+    pst.observation_data = pst.observation_data.fillna(0)
 
     pst.write(final_pst, version=2)
     
