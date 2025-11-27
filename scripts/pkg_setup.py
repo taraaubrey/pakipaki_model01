@@ -289,7 +289,7 @@ def ghb_spring_setup(grid, idomain, start, end, aw_ts, wetland_WL, aw_present_ar
         )
     #conductance
     cond = grid.array_from_raster(SHALLOW_K).data
-    cond = (cond * 2 * 25) / 2 # calculating conductance from K (m/d) and cell length & 2m width (m2) & thickness (m)
+    cond = ((cond * 2 * 25) / 2)/100 # calculating conductance from K (m/d) and cell length & 2m width (m2) & thickness (m)
     cond_df = extract_value_with_indices(
             cond, layer=0, val_col='cond', mask_value=0
             )
