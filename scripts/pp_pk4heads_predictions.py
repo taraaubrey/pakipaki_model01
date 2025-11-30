@@ -477,7 +477,7 @@ def create_pk4_distribution_plot(run_name, model_name, post_iter=19, filter_file
 
             # Add truth line if available
             if present_truth is not None:
-                ax_present.axvline(present_truth, color='red', linestyle=':', linewidth=2, label='Truth')
+                ax_present.axvline(present_truth, color='black', linestyle=':', linewidth=2, label='Truth')
 
             # Add median values in top left
             text_str = f"Prior: {median_prior:.2f}\nPost: {median_post:.2f}"
@@ -642,11 +642,15 @@ def create_pk4_distribution_plot(run_name, model_name, post_iter=19, filter_file
             prior_temporal = prior_temporal.loc[[r for r in filtered_ids if r in prior_temporal.index]]
             post_temporal = post_temporal.loc[[r for r in filtered_ids if r in post_temporal.index]]
 
-        # Create figure with 2 rows
-        fig, axes = plt.subplots(2, 1, figsize=(7.28, 7.28/2))
+        # Create figure with 2 rows and 2 columns (main plot + histogram)
+        from matplotlib.gridspec import GridSpec
+        fig = plt.figure(figsize=(9, 7.28/2))
+        gs = GridSpec(2, 2, figure=fig, width_ratios=[3, 1], wspace=0.3, hspace=0.3)
 
-        # Panel A: kper 2 (present)
-        ax_present = axes[0]
+        # Panel A: kper 2 (present) - main plot
+        ax_present = fig.add_subplot(gs[0, 0])
+        ax_present_hist = fig.add_subplot(gs[0, 1])
+
         # Filter out kstp 1-2 (start from kstp 3)
         kstps_2 = sorted([k for k in kper2_obs.keys() if k >= 3])
 
@@ -672,16 +676,54 @@ def create_pk4_distribution_plot(run_name, model_name, post_iter=19, filter_file
         if any(v is not None for v in truth_vals_2):
             valid_kstps = [k for k, v in zip(kstps_2, truth_vals_2) if v is not None]
             valid_vals = [v for v in truth_vals_2 if v is not None]
-            ax_present.plot(valid_kstps, valid_vals, color=colors['truth'], linewidth=2, linestyle='-', label='Truth')
+            ax_present.plot(valid_kstps, valid_vals, color='black', linewidth=2, linestyle=':', label='Truth')
 
-        # Set y-axis limits based on IQR * 1.5 of posterior values
+        # Set y-axis limits based on truth data range with margin
         all_post_vals_2 = np.concatenate([post_temporal[kper2_obs[kstp]].values for kstp in kstps_2])
-        q25_2 = np.percentile(all_post_vals_2, 25)
-        q75_2 = np.percentile(all_post_vals_2, 75)
-        iqr_2 = q75_2 - q25_2
-        y_min_2 = max(np.min(all_post_vals_2), q25_2 - 1.5 * iqr_2)
-        y_max_2 = min(np.max(all_post_vals_2), q75_2 + 1.5 * iqr_2)
+        all_prior_vals_2 = np.concatenate([prior_temporal[kper2_obs[kstp]].values for kstp in kstps_2])
+
+        if any(v is not None for v in truth_vals_2):
+            valid_truth = [v for v in truth_vals_2 if v is not None]
+            truth_min = np.min(valid_truth)
+            truth_max = np.max(valid_truth)
+            truth_range = truth_max - truth_min
+            y_min_2 = truth_min - 0.2 * truth_range
+            y_max_2 = truth_max + 0.2 * truth_range
+        else:
+            q25_2 = np.percentile(all_post_vals_2, 25)
+            q75_2 = np.percentile(all_post_vals_2, 75)
+            iqr_2 = q75_2 - q25_2
+            y_min_2 = max(np.min(all_post_vals_2), q25_2 - 1.5 * iqr_2)
+            y_max_2 = min(np.max(all_post_vals_2), q75_2 + 1.5 * iqr_2)
         ax_present.set_ylim(y_min_2, y_max_2)
+
+        # Create histogram for panel A (right side)
+        # Collect all values across time for each ensemble
+        bins_hist = np.linspace(y_min_2, y_max_2, 30)
+
+        ax_present_hist.hist(all_prior_vals_2, bins=bins_hist, orientation='horizontal',
+                            alpha=0.6, color=colors['prior'], label='Prior', edgecolor='black', linewidth=0.3)
+        ax_present_hist.hist(all_post_vals_2, bins=bins_hist, orientation='horizontal',
+                            alpha=0.6, color=colors['post_present'], label='Posterior', edgecolor='black', linewidth=0.3)
+
+        # Add obs+noise histogram if available
+        if obs_noise_oe is not None:
+            obs_noise_vals_2 = []
+            for kstp in kstps_2:
+                obs_name = kper2_obs[kstp]
+                if obs_name in obs_noise_oe.columns:
+                    obs_noise_vals_2.extend(obs_noise_oe[obs_name].values)
+            if len(obs_noise_vals_2) > 0:
+                obs_noise_vals_2 = np.array(obs_noise_vals_2)
+                ax_present_hist.hist(obs_noise_vals_2, bins=bins_hist, orientation='horizontal',
+                                    alpha=0.5, color=colors['obs_noise'], label='Obs+noise', edgecolor='black', linewidth=0.3)
+
+        ax_present_hist.set_ylim(y_min_2, y_max_2)
+        ax_present_hist.set_xlabel('Count', fontsize=6)
+        ax_present_hist.set_ylabel('')
+        ax_present_hist.tick_params(labelsize=6)
+        ax_present_hist.yaxis.set_ticklabels([])
+        ax_present_hist.grid(True, alpha=0.3, axis='x')
 
         ax_present.set_xlabel('Time step (kstp)', fontsize=6)
         ax_present.set_ylabel('Head (m)', fontsize=6)
@@ -690,8 +732,10 @@ def create_pk4_distribution_plot(run_name, model_name, post_iter=19, filter_file
         ax_present.legend(fontsize=6, loc='best')
         ax_present.tick_params(labelsize=6)
 
-        # Panel B: kper 4 (past)
-        ax_past = axes[1]
+        # Panel B: kper 4 (past) - main plot
+        ax_past = fig.add_subplot(gs[1, 0])
+        ax_past_hist = fig.add_subplot(gs[1, 1])
+
         # Filter out kstp 1-2 (start from kstp 3)
         kstps_4 = sorted([k for k in kper4_obs.keys() if k >= 3])
 
@@ -717,16 +761,45 @@ def create_pk4_distribution_plot(run_name, model_name, post_iter=19, filter_file
         if any(v is not None for v in truth_vals_4):
             valid_kstps = [k for k, v in zip(kstps_4, truth_vals_4) if v is not None]
             valid_vals = [v for v in truth_vals_4 if v is not None]
-            ax_past.plot(valid_kstps, valid_vals, color=colors['truth'], linewidth=2, linestyle='-', label='Truth')
+            ax_past.plot(valid_kstps, valid_vals, color='black', linewidth=2, linestyle=':', label='Truth')
 
         # Set y-axis limits based on IQR * 1.5 of posterior values
         all_post_vals_4 = np.concatenate([post_temporal[kper4_obs[kstp]].values for kstp in kstps_4])
+        all_prior_vals_4 = np.concatenate([prior_temporal[kper4_obs[kstp]].values for kstp in kstps_4])
+
         q25_4 = np.percentile(all_post_vals_4, 25)
         q75_4 = np.percentile(all_post_vals_4, 75)
         iqr_4 = q75_4 - q25_4
         y_min_4 = max(np.min(all_post_vals_4), q25_4 - 1.5 * iqr_4)
         y_max_4 = min(np.max(all_post_vals_4), q75_4 + 1.5 * iqr_4)
         ax_past.set_ylim(y_min_4, y_max_4)
+
+        # Create histogram for panel B (right side)
+        bins_hist_4 = np.linspace(y_min_4, y_max_4, 30)
+
+        ax_past_hist.hist(all_prior_vals_4, bins=bins_hist_4, orientation='horizontal',
+                         alpha=0.6, color=colors['prior'], label='Prior', edgecolor='black', linewidth=0.3)
+        ax_past_hist.hist(all_post_vals_4, bins=bins_hist_4, orientation='horizontal',
+                         alpha=0.6, color=colors['post_past'], label='Posterior', edgecolor='black', linewidth=0.3)
+
+        # Add obs+noise histogram if available
+        if obs_noise_oe is not None:
+            obs_noise_vals_4 = []
+            for kstp in kstps_4:
+                obs_name = kper4_obs[kstp]
+                if obs_name in obs_noise_oe.columns:
+                    obs_noise_vals_4.extend(obs_noise_oe[obs_name].values)
+            if len(obs_noise_vals_4) > 0:
+                obs_noise_vals_4 = np.array(obs_noise_vals_4)
+                ax_past_hist.hist(obs_noise_vals_4, bins=bins_hist_4, orientation='horizontal',
+                                 alpha=0.5, color=colors['obs_noise'], label='Obs+noise', edgecolor='black', linewidth=0.3)
+
+        ax_past_hist.set_ylim(y_min_4, y_max_4)
+        ax_past_hist.set_xlabel('Count', fontsize=6)
+        ax_past_hist.set_ylabel('')
+        ax_past_hist.tick_params(labelsize=6)
+        ax_past_hist.yaxis.set_ticklabels([])
+        ax_past_hist.grid(True, alpha=0.3, axis='x')
 
         ax_past.set_xlabel('Time step (kstp)', fontsize=6)
         ax_past.set_ylabel('Head (m)', fontsize=6)
