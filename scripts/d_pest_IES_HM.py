@@ -27,6 +27,8 @@ def main():
         master_dir=m_d, #the manager directory
         )
     
+    pst.get_res_stats().to_csv(os.path.join(m_d, f'{MODEL_NAME}.res_stats.csv'))
+    
     # pst.plot()
 
 

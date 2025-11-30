@@ -2,25 +2,62 @@ import os
 import pyemu
 import numpy as np
 import shutil
+import argparse
+import sys
 
 from setup import *
 
-def main():
+# Add scripts directory to path
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+
+def parse_args():
+    """Parse command line arguments."""
+    parser = argparse.ArgumentParser(
+        description='Perform Pareto hypothesis testing with PEST++ IES.'
+    )
+
+    parser.add_argument('--post-iter', type=int, default=3,
+                       help='Posterior iteration to use (default: 3)')
+    parser.add_argument('--m_d', type=str, default='master_ies',
+                       help='name of pest master directory (default: master_ies)')
+    return parser.parse_args()
+
+
+
+def main(posterior_iter, og_md):
     
     # update global run settings
+    og_obscov = os.path.join(og_md, f'{MODEL_NAME}.{posterior_iter}.shrunk_res.cov')
     og_pst = f"{MODEL_NAME}.pst"
-    og_obscov = f"obscov.jcb"
-
-    pst = pyemu.Pst(os.path.join(TEMP_DIR, og_pst))
+    pst = pyemu.Pst(os.path.join(og_md, og_pst))
     pst.pestpp_options['observation_covariance'] = og_obscov
-    pst.pestpp_options.update(PEST_PP_OPTIONS)
-    pst.control_data.noptmax = 0
-    if MAXSING is not None:
-        pst.svd_data.maxsing = MAXSING
 
-    
-    cycles = np.arange(0,10,1)
-    standard_deviation = [100, 80, 60, 40, 20, 10, 5, 2, 1, 0.5]
+    # update ensemble (same as restarting)
+    for filename, argname in zip(
+        [
+            f'{MODEL_NAME}.{posterior_iter}.par.csv',
+            f'{MODEL_NAME}.{posterior_iter}.obs.csv',
+            f'{MODEL_NAME}.obs+noise.csv',
+        ],
+        [
+            "ies_parameter_ensemble",
+            "ies_restart_observation_ensemble",
+            "ies_observation_ensemble"
+        ]):
+        
+        renamed_filename = f"ht_"+filename
+        # copy the original restart file from the prior master dir to the renamed filename in the template dir
+        shutil.copy2(
+            os.path.join(og_md, filename),
+            os.path.join(TEMP_DIR, renamed_filename))
+        #modify/set the pestpp option
+        pst.pestpp_options[argname] = renamed_filename
+
+    pst.control_data.noptmax = 1
+
+    cycles = np.arange(0,CYCLES,1).tolist()
+    pred_variances = np.linspace(MIN, MAX, CYCLES)
 
     for i, cycle in enumerate(cycles):
         RUN_NAME = f"{MODEL_NAME}_c{cycle}"
@@ -29,10 +66,10 @@ def main():
         m_d=os.path.join(os.path.join(TEMP_DIR, '..'), f'master_c{cycle}')
 
         if cycle > 0:
-            pst = pyemu.Pst(os.path.join(TEMP_DIR, last_pst_name))
+            pst = pyemu.Pst(os.path.join(TEMP_DIR, og_pst))
             new_obscov_name = f'obscov_c{cycle}.jcb'
             
-            v = pyemu.Cov.from_binary(os.path.join(TEMP_DIR, last_obscov_name))
+            v = pyemu.Cov.from_binary(os.path.join(TEMP_DIR, og_obscov))
             all_names = v.names
             all_variances = v.x[:, 0]
 
@@ -43,35 +80,12 @@ def main():
 
             for name in pst.forecast_names:
                 idx = idx_names.index(name)
-                var_x[idx] = standard_deviation[i]**2
+                var_x[idx] = pred_variances[i]**2
             
             obscov = pyemu.Cov(x=var_x, names=idx_names, isdiagonal=True)
             obscov.to_binary(os.path.join(TEMP_DIR, new_obscov_name))
             pst.pestpp_options['observation_covariance'] = new_obscov_name
-
-            # update ensemble (same as restarting)
-            for filename, argname in zip(
-                [
-                    f'{last_pst_name}.{NOPTMAX}.par.csv',
-                    f'{last_pst_name}.{NOPTMAX}.obs.csv'
-                    f'{last_pst_name}.obs+noise.csv',
-                ],
-                [
-                    "ies_parameter_ensemble",
-                    "ies_restart_observation_ensemble",
-                    "ies_observation_ensemble"
-                ]):
-                
-                renamed_filename = f"c{cycle}_"+filename
-                # copy the original restart file from the prior master dir to the renamed filename in the template dir
-                shutil.copy2(
-                    os.path.join(last_m_d, filename),
-                    os.path.join(TEMP_DIR, renamed_filename))
-                #modify/set the pestpp option
-                pst.pestpp_options[argname] = renamed_filename
-            
-            num_workers = os.cpu_count()
-
+        
         pst.write(pst_path, version=2)
         
         # start ies
@@ -84,12 +98,15 @@ def main():
             worker_root= os.path.join(TEMP_DIR, '..'),
             master_dir=m_d, #the manager directory
             )
-        
-        # update last
-        last_pst_name = pst_name
-        last_obscov_name = pst.pestpp_options['observation_covariance']
-        last_m_d = m_d
 
 
 if __name__ == "__main__":
-    main()  # run the main function to build the model and extract observations
+    args = parse_args()
+
+    TEMP_DIR = r'C:\Users\tfo46\e_Python\e_projects\pakipaki_01\models\63168_run43\run43\pest\master_ies'
+
+    posterior_iter = args.post_iter
+    md_name = args.m_d
+    og_md = os.path.join(os.path.join(TEMP_DIR, '..'), md_name)
+
+    main(posterior_iter, og_md)  # run the main function to build the model and extract observations

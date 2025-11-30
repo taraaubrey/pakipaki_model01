@@ -303,6 +303,8 @@ def create_1to1_plots(run_name, model_name, post_iter=19, filter_file=None, suff
                 # Clip to 1.5*IQR for axis limits
                 clipped_min = max(actual_min, p25 - 1.5 * IQR)
                 clipped_max = min(actual_max, p75 + 1.5 * IQR)
+
+                
             else:
                 sim_val = None
 
