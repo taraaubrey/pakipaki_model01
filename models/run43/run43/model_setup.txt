@@ -157,15 +157,17 @@ GHB_CONF = {
     'head_uub': 16,
 }
 
-# PHI_OBS = {
-#         'arr-h': 3, # large penalty for exceeding
-#         'budget': 1, # flux obs
-#         'arr-spq': 1, # flux obs
-#         'arr-awq': 1, # flux obs
-#         'ts-heads': 1, # head obs
-#         'recession': 1,
-#         'flux-diff': 1
-# }
+PHI_OBS = {
+        'arr-h': 3, # large penalty for exceeding
+        'budget': 1, # flux obs
+        'arr-spq': 1, # flux obs
+        'arr-awq': 1, # flux obs
+        'ts-pk4': 1, # head obs
+        'ts-pk4-spring': 1,
+        'ts-pk4-diff': 1,
+        'recession': 1,
+        'flux-diff': 1
+}
 
 # parameterization settings (obs)
 TIME_SUBSAMPLE = 10  # time subsampling for pilot points
@@ -174,8 +176,8 @@ SPACE_SUBSAMPLE = 5  # spatial subsampling for pilot points
 # Pest options
 NREALS = 250  # number of realizations for parameterization
 NREALS_PRIOR = 50  # number of realizations for parameterization
-REINFLATE_ITERS = 3, 3, 3, 3, 3 # iterations at which to reinflate
-NOPTMAX = 3
+REINFLATE_ITERS = None # iterations at which to reinflate
+NOPTMAX = 0
 MAXSING = None
 
 if REINFLATE_ITERS:
@@ -195,3 +197,9 @@ PEST_PP_OPTIONS = {
     'ies_reinflate_factor': 1,
     'ies_n_iter_reinflate': REINFLATE_ITERS,
 }
+
+
+#
+CYCLES = 10  # number of cycles
+MIN = 0.1  # minimum std for obs in reinflation
+MAX = 100.0  # maximum std for obs in reinflation
