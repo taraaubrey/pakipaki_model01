@@ -210,47 +210,13 @@ def main():
     # add stress period head/fluxes observations
     index_cols = ['kper', 'kstp', 'time']
     # obs_use_cols = ['pk4', 'pk4-spr-diff', 'pk4-aw-diff', 'pk4-pw-diff']
-    obs_use_cols = ['pk4']
+    obs_use_cols = ['pk4', 'pk4-spr-diff', 'pk4-diff', 'pk4-aw-diff']
     pf.add_observations(
         'output.sample_heads.csv',
         index_cols=index_cols,
         use_cols=obs_use_cols, # skip the index column
         prefix='ts-pk4',
         obsgp='ts-pk4',
-    )
-
-    # add stress period head/fluxes observations
-    index_cols = ['kper', 'kstp', 'time']
-    # obs_use_cols = ['pk4', 'pk4-spr-diff', 'pk4-aw-diff', 'pk4-pw-diff']
-    obs_use_cols = ['pk4-spr-diff']
-    pf.add_observations(
-        'output.sample_heads.csv',
-        index_cols=index_cols,
-        use_cols=obs_use_cols, # skip the index column
-        prefix='ts-pk4-spring',
-        obsgp='ts-pk4-spring',
-    )
-
-    index_cols = ['kper', 'kstp', 'time']
-    # obs_use_cols = ['pk4', 'pk4-spr-diff', 'pk4-aw-diff', 'pk4-pw-diff']
-    obs_use_cols = ['pk4-diff']
-    pf.add_observations(
-        'output.sample_heads.csv',
-        index_cols=index_cols,
-        use_cols=obs_use_cols, # skip the index column
-        prefix='ts-pk4-diff',
-        obsgp='ts-pk4-diff',
-    )
-
-    index_cols = ['kper', 'kstp', 'time']
-    # obs_use_cols = ['pk4', 'pk4-spr-diff', 'pk4-aw-diff', 'pk4-pw-diff']
-    obs_use_cols = ['pk4-aw-diff']
-    pf.add_observations(
-        'output.sample_heads.csv',
-        index_cols=index_cols,
-        use_cols=obs_use_cols, # skip the index column
-        prefix='ts-pk4-aw',
-        obsgp='ts-pk4-aw',
     )
 
     index_cols = ['kper', 'kstp', 'time']
@@ -429,18 +395,21 @@ def main():
             time = int(row['time'])
             col = row['usecol']
 
-            try:
-                pst.observation_data.at[row.name, 'obsval'] = ts_heads.loc[time, col]
-                pst.observation_data.at[row.name, 'standard_deviation'] = ts_heads.loc[time, 'std']
-                pst.observation_data.at[row.name, 'weight'] = ts_heads.loc[time, 'weight']
-            except:
-                continue
-        
-        elif oname == 'ts-pk4-diff':
-            time = int(row['time'])
-            col = row['usecol']
-
-            if time < 19:
+            if col == 'pk4':
+                try:
+                    pst.observation_data.at[row.name, 'obsval'] = ts_heads.loc[time, col]
+                    pst.observation_data.at[row.name, 'standard_deviation'] = ts_heads.loc[time, 'std']
+                    pst.observation_data.at[row.name, 'weight'] = ts_heads.loc[time, 'weight']
+                except:
+                    continue
+            elif col == 'pk4-spr-diff' and time < 19:
+                try:
+                    pst.observation_data.at[row.name, 'obsval'] = ts_heads.loc[time, col]
+                    pst.observation_data.at[row.name, 'standard_deviation'] = ts_heads.loc[time, 'std']
+                    pst.observation_data.at[row.name, 'weight'] = ts_heads.loc[time, 'weight']
+                except:
+                    continue
+            elif col == 'pk4-spr-diff':
                 try:
                     pst.observation_data.at[row.name, 'obsval'] = ts_heads.loc[time, col]
                     pst.observation_data.at[row.name, 'standard_deviation'] = ts_heads.loc[time, 'std']
@@ -448,29 +417,15 @@ def main():
                 except:
                     continue
 
+            elif col == 'pk4-aw-diff':
+                try:
+                    pst.observation_data.at[row.name, 'obsval'] = ts_heads.loc[time, col]
+                    pst.observation_data.at[row.name, 'standard_deviation'] = ts_heads.loc[time, 'std']*4
+                    if pst.observation_data.at[row.name, 'standard_deviation'] > 0:
+                        pst.observation_data.at[row.name, 'weight'] = 1/ts_heads.loc[time, 'std']*4
+                except:
+                    continue
 
-        elif oname == 'ts-pk4-spring':
-            time = int(row['time'])
-            col = row['usecol']
-
-            try:
-                pst.observation_data.at[row.name, 'obsval'] = ts_heads.loc[time, col]
-                pst.observation_data.at[row.name, 'standard_deviation'] = ts_heads.loc[time, 'std']
-                pst.observation_data.at[row.name, 'weight'] = ts_heads.loc[time, 'weight']
-            except:
-                continue
-
-        elif oname == 'ts-pk4-aw':
-            time = int(row['time'])
-            col = row['usecol']
-
-            try:
-                pst.observation_data.at[row.name, 'obsval'] = ts_heads.loc[time, col]
-                pst.observation_data.at[row.name, 'standard_deviation'] = ts_heads.loc[time, 'std']*4
-                if pst.observation_data.at[row.name, 'standard_deviation'] > 0:
-                    pst.observation_data.at[row.name, 'weight'] = 1/ts_heads.loc[time, 'std']*4
-            except:
-                continue    
 
         elif oname == 'arr-awq':
             kper = int(row['kper'])
