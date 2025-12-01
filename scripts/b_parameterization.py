@@ -467,7 +467,8 @@ def main():
             try:
                 pst.observation_data.at[row.name, 'obsval'] = ts_heads.loc[time, col]
                 pst.observation_data.at[row.name, 'standard_deviation'] = ts_heads.loc[time, 'std']*4
-                pst.observation_data.at[row.name, 'weight'] = 1/ts_heads.loc[time, 'std']*4
+                if pst.observation_data.at[row.name, 'standard_deviation'] > 0:
+                    pst.observation_data.at[row.name, 'weight'] = 1/ts_heads.loc[time, 'std']*4
             except:
                 continue    
 
