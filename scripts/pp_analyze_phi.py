@@ -770,7 +770,10 @@ if __name__ == '__main__':
     if run_name != model_name:
         print(f"Run name (directory): {run_name}")
 
-    reinflate_iters = DEFAULT_REINFLATE_LIST
+    if DEFAULT_REINFLATE_LIST is not None:
+        reinflate_iters = DEFAULT_REINFLATE_LIST
+    else:
+        reinflate_iters = [-1]  # No reinflation by default
 
     r_iters = []
     start = 0

@@ -172,6 +172,11 @@ def calculate_reinflation_iters(reinflate_list):
     Returns:
         list: Cumulative iteration numbers where reinflation occurred
     """
+    if DEFAULT_REINFLATE_LIST is not None:
+        reinflate_iters = DEFAULT_REINFLATE_LIST
+    else:
+        reinflate_iters = [-1]  # No reinflation by default
+    
     r_iters = []
     start = 0
     for i in reinflate_list:
@@ -981,4 +986,4 @@ if __name__ == '__main__':
     if run_name != model_name:
         print(f"Run name (directory): {run_name}")
 
-    create_combined_plot(run_name, model_name, args.last_iter, args.reinflate_iters)
+    create_combined_plot(run_name, model_name, args.last_iter, [-1])
