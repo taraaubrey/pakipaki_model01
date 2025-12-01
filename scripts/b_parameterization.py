@@ -436,6 +436,19 @@ def main():
             except:
                 continue
         
+        elif oname == 'ts-pk4-diff':
+            time = int(row['time'])
+            col = row['usecol']
+
+            if time < 19:
+                try:
+                    pst.observation_data.at[row.name, 'obsval'] = ts_heads.loc[time, col]
+                    pst.observation_data.at[row.name, 'standard_deviation'] = ts_heads.loc[time, 'std']
+                    pst.observation_data.at[row.name, 'weight'] = ts_heads.loc[time, 'weight']
+                except:
+                    continue
+
+
         elif oname == 'ts-pk4-spring':
             time = int(row['time'])
             col = row['usecol']

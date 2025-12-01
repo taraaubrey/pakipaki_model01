@@ -1012,7 +1012,7 @@ def samples_truth(gwf, TRUTHREL_DIR):
 
     rec_df[['time','kstp', 'pk4', 'pk4-aw-diff', 'pk4-pw-diff', 'pk4-spr-diff', 'fliptime', 'std', 'weight']].to_csv(Path(TRUTHREL_DIR, f"output.sample_recession_rates.truth.csv"))
     
-    df = df[['pk4', 'pk4-aw-diff', 'pk4-pw-diff', 'pk4-spr-diff', 'std', 'weight']].reset_index().rename(columns={'index': 'time'})
+    df = df[['pk4', 'pk4-diff', 'pk4-aw-diff', 'pk4-pw-diff', 'pk4-spr-diff', 'std', 'weight']].reset_index().rename(columns={'index': 'time'})
     df.to_csv(Path(TRUTHREL_DIR, f"output.sample_heads.truth.csv"), index=False)
     
     return df
