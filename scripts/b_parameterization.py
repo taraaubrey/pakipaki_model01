@@ -402,7 +402,7 @@ def main():
                     pst.observation_data.at[row.name, 'weight'] = ts_heads.loc[time, 'weight']
                 except:
                     continue
-            elif col == 'pk4-spr-diff' and time < 19:
+            elif col == 'pk4-diff' and time < 34:
                 try:
                     pst.observation_data.at[row.name, 'obsval'] = ts_heads.loc[time, col]
                     pst.observation_data.at[row.name, 'standard_deviation'] = ts_heads.loc[time, 'std']
