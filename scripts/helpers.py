@@ -734,6 +734,10 @@ def extract_model_heads(model_name, gwf=None, sample_path=None):
         all_samples = pd.concat(samples_ts.values(), ignore_index=False)
         all_samples = all_samples.reset_index().rename(columns={'index': 'time'})
 
+        all_samples['pk4-diff'] = 0.
+        for i in np.arange(1,52):
+            all_samples.loc[i, 'pk4-diff'] = all_samples.loc[i+1, 'pk4'] - all_samples.loc[i, 'pk4']
+
         # add derived columns
         all_samples['pk4-aw-diff'] = compare_ghb_heads(gwf, 0, 'ts_array_0', all_samples)
         all_samples['pk4-pw-diff'] = compare_ghb_heads(gwf, 1, 'ts_array_36', all_samples)
@@ -893,7 +897,8 @@ def create_sprghb_truth(ghb_dfs, spdf, dir):
     df['std'] = GHB_Qstd
     df['SPq'] = f_guess * df['pk4-spr-diff']
     # set std only on kper 1 and kstp 1
-    df['weight'] = np.where(df['kper'] < 3, 1/GHB_Qstd, 0)
+    df['weight'] = np.where(
+        (df['kper'] < 3) & (df['kstp'] < 34), 1/GHB_Qstd, 0)
     df['std'] = np.where(df['weight'] == 0, 0, df['std'])
 
     df.to_csv(Path(dir, f"output.GHB_SP_fluxes.truth.csv"), index=False)
@@ -966,7 +971,10 @@ def samples_truth(gwf, TRUTHREL_DIR):
 
     df['std'] = np.where(~df['pk4'].isna(), PK4_std, 0)
     
-
+    df['pk4-diff'] = 0.
+    for i in np.arange(1, len(df['pk4-diff'])-1):
+        df.loc[i, 'pk4-diff'] = df.loc[i+1, 'pk4'] - df.loc[i, 'pk4']
+    
     df['pk4-spr-diff'] = df['spring'] - df['pk4']
     df['pk4-aw-diff'] = df['aw'] - df['pk4']
     df['pk4-pw-diff'] = df['pw'] - df['pk4']

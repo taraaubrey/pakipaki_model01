@@ -215,8 +215,42 @@ def main():
         'output.sample_heads.csv',
         index_cols=index_cols,
         use_cols=obs_use_cols, # skip the index column
-        prefix='ts-heads',
-        obsgp='ts-heads',
+        prefix='ts-pk4',
+        obsgp='ts-pk4',
+    )
+
+    # add stress period head/fluxes observations
+    index_cols = ['kper', 'kstp', 'time']
+    # obs_use_cols = ['pk4', 'pk4-spr-diff', 'pk4-aw-diff', 'pk4-pw-diff']
+    obs_use_cols = ['pk4-spr-diff']
+    pf.add_observations(
+        'output.sample_heads.csv',
+        index_cols=index_cols,
+        use_cols=obs_use_cols, # skip the index column
+        prefix='ts-pk4-spring',
+        obsgp='ts-pk4-spring',
+    )
+
+    index_cols = ['kper', 'kstp', 'time']
+    # obs_use_cols = ['pk4', 'pk4-spr-diff', 'pk4-aw-diff', 'pk4-pw-diff']
+    obs_use_cols = ['pk4-diff']
+    pf.add_observations(
+        'output.sample_heads.csv',
+        index_cols=index_cols,
+        use_cols=obs_use_cols, # skip the index column
+        prefix='ts-pk4-diff',
+        obsgp='ts-pk4-diff',
+    )
+
+    index_cols = ['kper', 'kstp', 'time']
+    # obs_use_cols = ['pk4', 'pk4-spr-diff', 'pk4-aw-diff', 'pk4-pw-diff']
+    obs_use_cols = ['pk4-aw-diff']
+    pf.add_observations(
+        'output.sample_heads.csv',
+        index_cols=index_cols,
+        use_cols=obs_use_cols, # skip the index column
+        prefix='ts-pk4-aw',
+        obsgp='ts-pk4-aw',
     )
 
     index_cols = ['kper', 'kstp', 'time']
@@ -391,7 +425,7 @@ def main():
 
             pst.observation_data.at[row.name, 'obsval'] = spring_flux_diff.loc[idx, 'diff']
         
-        elif oname == 'ts-heads':
+        elif oname == 'ts-pk4':
             time = int(row['time'])
             col = row['usecol']
 
@@ -402,15 +436,38 @@ def main():
             except:
                 continue
         
+        elif oname == 'ts-pk4-spring':
+            time = int(row['time'])
+            col = row['usecol']
+
+            try:
+                pst.observation_data.at[row.name, 'obsval'] = ts_heads.loc[time, col]
+                pst.observation_data.at[row.name, 'standard_deviation'] = ts_heads.loc[time, 'std']
+                pst.observation_data.at[row.name, 'weight'] = ts_heads.loc[time, 'weight']
+            except:
+                continue
+
+        elif oname == 'ts-pk4-aw':
+            time = int(row['time'])
+            col = row['usecol']
+
+            try:
+                pst.observation_data.at[row.name, 'obsval'] = ts_heads.loc[time, col]
+                pst.observation_data.at[row.name, 'standard_deviation'] = ts_heads.loc[time, 'std']*4
+                pst.observation_data.at[row.name, 'weight'] = 1/ts_heads.loc[time, 'std']*4
+            except:
+                continue    
+
         elif oname == 'arr-awq':
             kper = int(row['kper'])
             kstp = int(row['kstp'])
             i = int(row['i'])
             j = int(row['j'])
             
-            pst.observation_data.at[row.name, 'obsval'] = AWq.loc[(kper, kstp, i, j), 'AWq']
-            pst.observation_data.at[row.name, 'standard_deviation'] = AWq.loc[(kper, kstp, i, j), 'std']
-            pst.observation_data.at[row.name, 'weight'] = AWq.loc[(kper, kstp, i, j), 'weight']
+            if kper < 2:
+                pst.observation_data.at[row.name, 'obsval'] = AWq.loc[(kper, kstp, i, j), 'AWq']
+                pst.observation_data.at[row.name, 'standard_deviation'] = AWq.loc[(kper, kstp, i, j), 'std']
+                pst.observation_data.at[row.name, 'weight'] = AWq.loc[(kper, kstp, i, j), 'weight']
         
         elif oname == 'arr-spq':
             kper = int(row['kper'])
@@ -918,7 +975,7 @@ def main():
     #         print(f"  Processed spatial correlation for {n_spatial} time steps")
         
     #     # Time series observations - temporal correlation only
-    #     elif oname in ['ts-heads', 'ts-sprflux']:
+    #     elif oname in ['ts-pk4', 'ts-sprflux']:
     #         usecols = grp_data['usecol'].unique()
     #         n_cols = 0
     #         for col in usecols:

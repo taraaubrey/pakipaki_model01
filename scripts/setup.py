@@ -162,7 +162,9 @@ PHI_OBS = {
         'budget': 1, # flux obs
         'arr-spq': 1, # flux obs
         'arr-awq': 1, # flux obs
-        'ts-heads': 1, # head obs
+        'ts-pk4': 1, # head obs
+        'ts-pk4-spring': 1,
+        'ts-pk4-diff': 1,
         'recession': 1,
         'flux-diff': 1
 }
