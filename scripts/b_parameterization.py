@@ -89,11 +89,7 @@ def main():
 
     # geostatistical structure for spatially varying parameters
     fine_gs = pyemu.geostats.GeoStruct(variograms=v_fine, transform='log')
-    coarse_gs = pyemu.geostats.GeoStruct(variograms=v_coarse, transform='log')
-    
-    h_fine_gs = pyemu.geostats.GeoStruct(variograms=vh_fine, transform='none')
-    h_coarse_gs = pyemu.geostats.GeoStruct(variograms=vh_coarse, transform='none')
-    
+    coarse_gs = pyemu.geostats.GeoStruct(variograms=v_coarse, transform='log')  
     time_gs = pyemu.geostats.GeoStruct(variograms=v_time, transform='none')
 
     # plot the gs if you like:
@@ -133,7 +129,6 @@ def main():
     define_mult_array(
         pf, TEMP_DIR,
         tag=f'{MODEL_NAME}.npf_k_layer',
-        ib=ib,
         p_ins = K_ins,
         lb=KH_PRIOR['lb'], ub=KH_PRIOR['ub'],
         ulb=KH_PRIOR['ulb'], uub=KH_PRIOR['uub'], 
@@ -143,22 +138,62 @@ def main():
     define_mult_array(
         pf, TEMP_DIR,
         tag=f'{MODEL_NAME}.sto_ss_layer',
-        ib=ib,
         p_ins = K_ins,
         lb=SS_PRIOR['lb'], ub=SS_PRIOR['ub'],
         ulb=SS_PRIOR['ulb'], uub=SS_PRIOR['uub'],
         lays=np.arange(NLAY).tolist()
         )
+    define_mult_array(
+        pf, TEMP_DIR,
+        tag=f'{MODEL_NAME}.sto_sy_layer',
+        p_ins = K_ins,
+        lb=SY_PRIOR['lb'], ub=SY_PRIOR['ub'],
+        ulb=SY_PRIOR['ulb'], uub=SY_PRIOR['uub'],
+        lays=np.arange(NLAY).tolist()
+        )
 
     # RECHARGE ------------------------------------------------------
-    rcha(
+    R_ins = [
+        {
+            'type': 'grid',
+            'gs': time_gs,
+            'name_suffix': '-gr'
+        },
+        {
+            'type': 'constant',
+            'name_suffix': '-cn'
+        },
+    ]
+    
+    rch(pf, TEMP_DIR,
+        name='rch',
+        tag=f'{MODEL_NAME}.rch_stress_period_data',
+        grid_gs={'gr': fine_gs},
+        bounds=[RCH['lb'], RCH['ub']],
+        ult_bounds=[RCH['ulb'], RCH['uub']],
+        )
+    # rch(pf, TEMP_DIR,
+    #     name='rch',
+    #     tag=f'{MODEL_NAME}.rch_stress_period_data',
+    #     grid_gs={'ts': time_gs},
+    #     bounds=[RCH['lb'], RCH['ub']],
+    #     ult_bounds=[RCH['ulb'], RCH['uub']],
+    #     datetime=START_DATE,
+    #     )
+    rch_param(
         pf, TEMP_DIR,
-        tag=f'{MODEL_NAME}.rcha_recharge',
-        ib=ib,
-        p_ins = K_ins,
-        lb=RCH['lb'], ub=RCH['ub'],
-        ulb=RCH['ulb'], uub=RCH['uub'],
-        # lays=[0, 2]
+        name='rch-slope',
+        tag=f'{MODEL_NAME}.rch_slope_array',
+        bounds=[RCH_PARMS['lb'], RCH_PARMS['ub']],
+        ult_bounds=[RCH_PARMS['ulb'], RCH_PARMS['uub']],
+        )
+    # constant only
+    rch_param(
+        pf, TEMP_DIR,
+        name='rch-val',
+        tag=f'{MODEL_NAME}.rch_parameter_value',
+        bounds=[RCH_PARMS['lb'], RCH_PARMS['ub']],
+        ult_bounds=[RCH_PARMS['ulb'], RCH_PARMS['uub']],
         )
     
     # GHBS ------------------------------------------------------
@@ -200,7 +235,7 @@ def main():
     index_cols = ['kstp']
     use_cols = ['diff']
     pf.add_observations(
-        "output.spring_flux_differences.csv", # this is being read from the template file not the above truth file
+        "output.spring_flux_differences.csv",
         index_cols=index_cols,
         use_cols=use_cols, # skip the index column
         prefix='flux-diff',
@@ -210,7 +245,7 @@ def main():
     # add stress period head/fluxes observations
     index_cols = ['kper', 'kstp', 'time']
     # obs_use_cols = ['pk4', 'pk4-spr-diff', 'pk4-aw-diff', 'pk4-pw-diff']
-    obs_use_cols = ['pk4', 'pk4-spr-diff', 'pk4-diff', 'pk4-aw-diff']
+    obs_use_cols = ['pk4', 'pk4-diff', 'pk4-spr-diff', 'pk4-aw-diff', 'pk4-pw-diff']
     pf.add_observations(
         'output.sample_heads.csv',
         index_cols=index_cols,
@@ -222,7 +257,7 @@ def main():
     index_cols = ['kper', 'kstp', 'time']
     obs_use_cols = ['flux']
     pf.add_observations(
-        'output.spring_fluxes.csv', 
+        'output.spring_fluxes.csv',
         index_cols=index_cols,
         use_cols=obs_use_cols, # skip the index column
         prefix='ts-sprflux',
@@ -252,19 +287,19 @@ def main():
     )
 
     # add recession
-    index_cols = ['kper']
-    use_cols=['pk4']
-    pf.add_observations(
-        "output.sample_recession_rates.csv", # this is being read from the template file not the above truth file
-        index_cols=index_cols,
-        use_cols=use_cols,
-        prefix='recession',
-        obsgp='recession',
-    )
+    # index_cols = ['kper']
+    # use_cols=['pk4']
+    # pf.add_observations(
+    #     "output.sample_recession_rates.csv", # this is being read from the template file not the above truth file
+    #     index_cols=index_cols,
+    #     use_cols=use_cols,
+    #     prefix='recession',
+    #     obsgp='recession',
+    # )
 
     # add budget
     index_cols = ['kper']
-    use_cols = ['awanui','poukawa','spring','recharge','stoss','sw']
+    use_cols = ['awanui','poukawa','spring','rch','stoss','sw', 'percentdiscrepancy']
     pf.add_observations(
         "output.budget.csv", # this is being read from the template file not the above truth file
         index_cols=index_cols,
@@ -312,6 +347,10 @@ def main():
     pf.mod_sys_cmds.append("mf6") #do this only once
 
     sample_rel = os.path.relpath(SAMPLES, TEMP_DIR)
+    pf.add_py_function(
+            f"{SCRIPTS_DIR}/helpers.py",
+            f"adjust_recharge_to_fvalue(model_name=f'{MODEL_NAME}')", is_pre_cmd=True)
+
     # post-processing to get observations
     pf.add_py_function(
         f"{SCRIPTS_DIR}/helpers.py",
@@ -327,11 +366,11 @@ def main():
 
     ###############################################################################
     print('ADDING OBSERVATION VALUES AND WEIGHTS FROM TRUTH...')
-    spring_flux_diff = pd.read_csv(
-        os.path.join(
-            TRUTH_DIR, 
-            'output.spring_flux_differences.csv'), 
-        index_col=1)
+    # spring_flux_diff = pd.read_csv(
+    #     os.path.join(
+    #         TRUTH_DIR, 
+    #         'output.spring_flux_differences.csv'), 
+    #     index_col=1)
     # load truth data
     ts_heads = pd.read_csv(
         os.path.join(
@@ -348,11 +387,11 @@ def main():
             TRUTH_DIR, 
             "output.GHB_SP_fluxes.truth.csv"), 
         index_col=['kper', 'kstp', 'i', 'j'])
-    recession_truth = pd.read_csv(
-        os.path.join(
-            TRUTH_DIR, 
-            'output.sample_recession_rates.truth.csv'), 
-        index_col='kper')
+    # recession_truth = pd.read_csv(
+    #     os.path.join(
+    #         TRUTH_DIR, 
+    #         'output.sample_recession_rates.truth.csv'), 
+    #     index_col='kper')
     budget = pd.read_csv(
         os.path.join(
             TRUTH_DIR, 
@@ -372,7 +411,7 @@ def main():
             TRUTH_DIR, 
             "output.heads.weight.dat"))
     
-    get_oname = lambda x: x['obgnme'].split('_')[0].split(':')[-1]
+    # get_oname = lambda x: x['obgnme'].split('_')[0].split(':')[-1]
 
     # adjust obgnme to main groups (for some reason not working above)
     # pst.observation_data['obgnme'] = pst.observation_data.apply(get_oname, axis=1)
@@ -386,12 +425,7 @@ def main():
     for _, row in pst.observation_data.iterrows():
         oname = row['oname']
 
-        if oname == 'flux-diff':
-            idx = row['kstp']
-
-            pst.observation_data.at[row.name, 'obsval'] = spring_flux_diff.loc[idx, 'diff']
-        
-        elif oname == 'ts-pk4':
+        if oname == 'ts-pk4':
             time = int(row['time'])
             col = row['usecol']
 
@@ -405,8 +439,9 @@ def main():
             elif col == 'pk4-diff' and time < 34:
                 try:
                     pst.observation_data.at[row.name, 'obsval'] = ts_heads.loc[time, col]
-                    pst.observation_data.at[row.name, 'standard_deviation'] = ts_heads.loc[time, 'std']
-                    pst.observation_data.at[row.name, 'weight'] = ts_heads.loc[time, 'weight']
+                    pst.observation_data.at[row.name, 'standard_deviation'] = (max(ts_heads.loc[:, col]) - min(ts_heads.loc[:, col])) / PEST_PP_OPTIONS['par_sigma_range']
+                    if pst.observation_data.at[row.name, 'standard_deviation'] > 0:
+                        pst.observation_data.at[row.name, 'weight'] = 1/pst.observation_data.at[row.name, 'standard_deviation']
                 except:
                     continue
             elif col == 'pk4-spr-diff':
@@ -420,9 +455,9 @@ def main():
             elif col == 'pk4-aw-diff':
                 try:
                     pst.observation_data.at[row.name, 'obsval'] = ts_heads.loc[time, col]
-                    pst.observation_data.at[row.name, 'standard_deviation'] = ts_heads.loc[time, 'std']*4
+                    pst.observation_data.at[row.name, 'standard_deviation'] = ts_heads.loc[time, 'std']*10
                     if pst.observation_data.at[row.name, 'standard_deviation'] > 0:
-                        pst.observation_data.at[row.name, 'weight'] = 1/ts_heads.loc[time, 'std']*4
+                        pst.observation_data.at[row.name, 'weight'] = 1/pst.observation_data.at[row.name, 'standard_deviation']
                 except:
                     continue
 
@@ -433,7 +468,7 @@ def main():
             i = int(row['i'])
             j = int(row['j'])
             
-            if kper < 2:
+            if kper == 1:
                 pst.observation_data.at[row.name, 'obsval'] = AWq.loc[(kper, kstp, i, j), 'AWq']
                 pst.observation_data.at[row.name, 'standard_deviation'] = AWq.loc[(kper, kstp, i, j), 'std']
                 pst.observation_data.at[row.name, 'weight'] = AWq.loc[(kper, kstp, i, j), 'weight']
@@ -444,9 +479,10 @@ def main():
             i = int(row['i'])
             j = int(row['j'])
             
-            pst.observation_data.at[row.name, 'obsval'] = SPq.loc[(kper, kstp, i, j), 'SPq']
-            pst.observation_data.at[row.name, 'standard_deviation'] = SPq.loc[(kper, kstp, i, j), 'std']
-            pst.observation_data.at[row.name, 'weight'] = SPq.loc[(kper, kstp, i, j), 'weight']
+            if (kper < 3) and (kstp < 35):
+                pst.observation_data.at[row.name, 'obsval'] = SPq.loc[(kper, kstp, i, j), 'SPq']
+                pst.observation_data.at[row.name, 'standard_deviation'] = SPq.loc[(kper, kstp, i, j), 'std']
+                pst.observation_data.at[row.name, 'weight'] = SPq.loc[(kper, kstp, i, j), 'weight']
         
         elif oname == 'arr-h':
             i = int(row['i'])
@@ -483,13 +519,13 @@ def main():
                 pst.observation_data.at[row.name, 'standard_deviation'] = budget.loc[kper, 'rch_std']
                 pst.observation_data.at[row.name, 'weight'] = budget.loc[kper, 'rch_weight']
 
-        elif oname == 'recession':
-            kper = int(row['kper'])
-            col = row['usecol']
+        # elif oname == 'recession':
+        #     kper = int(row['kper'])
+        #     col = row['usecol']
             
-            pst.observation_data.at[row.name, 'obsval'] = recession_truth.loc[kper, col]
-            pst.observation_data.at[row.name, 'standard_deviation'] = recession_truth.loc[kper, 'std']
-            pst.observation_data.at[row.name, 'weight'] = recession_truth.loc[kper, 'weight']
+        #     pst.observation_data.at[row.name, 'obsval'] = recession_truth.loc[kper, col]
+        #     pst.observation_data.at[row.name, 'standard_deviation'] = recession_truth.loc[kper, 'std']
+        #     pst.observation_data.at[row.name, 'weight'] = recession_truth.loc[kper, 'weight']
     
     print('*' * 40)
     print(f'Number of observations: {pst.nobs}')
@@ -865,14 +901,14 @@ def main():
     print(f"Non-zero weighted observations: {len(nz_obs)}")
     print(f"Reduction: {100 * (1 - len(nz_obs)/len(pst.observation_data)):.1f}%")
 
-    v = pyemu.Cov.from_obsweights(final_pst)
-    all_variances = v.x[:, 0]
-    all_names = v.row_names
+    # v = pyemu.Cov.from_obsweights(final_pst)
+    nz_variances = list(nz_obs.loc[:,'standard_deviation']**2) + [0]*len(pst.forecast_names)
+    nz_names = nz_obs.index.tolist() + pst.forecast_names
 
     # get index where non-zero obs are
-    idx_names = nz_obs.index.tolist() + pst.forecast_names
-    nz_variances = [all_variances[all_names.index(name)] for name in idx_names]
-    obscov = pyemu.Cov(x=np.array(nz_variances).reshape(-1, 1), names=idx_names, isdiagonal=True)
+    # idx_names = nz_obs.index.tolist() + pst.forecast_names
+    # nz_variances = [all_variances[all_names.index(name)] for name in idx_names]
+    obscov = pyemu.Cov(x=np.array(nz_variances).reshape(-1, 1), names=nz_names, isdiagonal=True)
 
     print(f"Saving to binary format...")
     obscov.to_binary(os.path.join(TEMP_DIR, 'obscov.jcb'))

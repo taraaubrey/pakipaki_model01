@@ -19,7 +19,7 @@ def main():
     print(f'Model directory: {os.path.abspath(MODEL_DIR)}')
 
     # create directories if they do not exist
-    for d in [SPATIAL_DIR, FIG_DIR, POST_DIR]:
+    for d in [SPATIAL_DIR, FIG_DIR, POST_DIR, TRUTH_DIR]:
         if not os.path.exists(d):
             os.makedirs(d)
     # if dir exists delete it
@@ -70,19 +70,14 @@ def main():
     grid, idomain, top, nrow, ncol, delr, delc, fn_out, model_thickness = dis_setup(fn_out)
     # ghbs
     active_domain = np.where(idomain > 0, 1, 0)
-    fn_out, aw_ts, wetland_WL, aw_present_arr, aw_past_arr = ghb_aw_setup(grid, active_domain, start, end, fn_out)
-    fn_out, spr_present_arr, spr_past_arr = ghb_spring_setup(grid, active_domain, start, end, aw_ts, wetland_WL, aw_present_arr, aw_past_arr, fn_out)
-    fn_out, ghb_pw_kper0, pw_present_arr, pw_past_arr = ghb_pw_setup(grid, active_domain, start, end, aw_past_arr, fn_out)
-    # fn_out, conf_arr = ghb_conf_setup(grid, active_domain, start, end, model_thickness, fn_out)
-    # wel
-    # fn_out, mbr_df = wel_mbr_setup(grid, idomain, fn_out, ghb_pw_kper0)
-    # fn_out = wel_inout_setup(grid, idomain, mbr_df, fn_out)
-    # npf
+    fn_out, aw_ts, aw_arrs = ghb_aw_setup(grid, active_domain, start, end, fn_out)
+    fn_out, spr_arrs = ghb_spring_setup(grid, active_domain, start, end, aw_ts, aw_arrs, fn_out)
+    fn_out, ghb_pw_kper0, pw_arrs = ghb_pw_setup(grid, active_domain, start, end, aw_arrs, fn_out)
     fn_out, k_hor = npf_setup(grid, active_domain, fn_out)
-    # sto
     fn_out = sto_ss_setup(active_domain, fn_out)
-    # rch
-    fn_out = rch_setup(active_domain, fn_out)
+    fn_out = sto_sy_setup(idomain, fn_out)
+    fn_out = rch_setup(grid, active_domain, start, end, fn_out)
+
     #obs - save file
     pk4_h = pk4_ts(start, end)
     aw_Q = awanui_ts(start, end)
@@ -95,8 +90,10 @@ def main():
         if src_file.exists():
             shutil.copy2(src_file, MODEL_DIR)
 
-    sw_present_arr = aw_present_arr + pw_present_arr + spr_present_arr
-    sw_past_arr = aw_past_arr + pw_past_arr + spr_past_arr
+    sw_present_arr = aw_arrs['h_present'] + pw_arrs['h_present'] + spr_arrs['h_present']
+    sw_past_arr = aw_arrs['h_past'] + pw_arrs['h_past'] + spr_arrs['h_past']
+    sw_cond_present = aw_arrs['c_present'] + pw_arrs['c_present'] + spr_arrs['c_present']
+    sw_cond_past = aw_arrs['c_past'] + pw_arrs['c_past'] + spr_arrs['c_past']
 
     k_hor = k_hor * idomain[0]
     elev_constraint = grid.array_from_raster(TOP, resampling='max')
@@ -104,6 +101,8 @@ def main():
     grid_gpd['idomain'] = idomain[0].flatten()
     grid_gpd['sw_present'] = sw_present_arr.flatten()
     grid_gpd['sw_past'] = sw_past_arr.flatten()
+    grid_gpd['sw_cond_present'] = sw_cond_present.flatten()
+    grid_gpd['sw_cond_past'] = sw_cond_past.flatten()
     grid_gpd['model_thickness'] = model_thickness.flatten()
     grid_gpd['khorr'] = k_hor.flatten()
     grid_gpd.to_file(Path(SPATIAL_DIR, f'{MODEL_NAME}_grid.shp'), driver='ESRI Shapefile')
@@ -116,7 +115,7 @@ def main():
     sim = fp.mf6.MFSimulation(
         sim_name=MODEL_NAME, # name of simulation
         version='mf6', # version of MODFLOW
-        exe_name=f'{MODEL_DIR}/mf6',
+        exe_name=f'mf6',
         sim_ws=MODEL_DIR, # path to workspace where all files are stored
         )
 
@@ -163,9 +162,9 @@ def main():
     
     sto = fp.mf6.ModflowGwfsto(
         model=gwf,
-        ss = fn_out['sto_ss'],
-        # sy=SS_PRIOR['sy'], 
-        # ss=SS_PRIOR['ss'],
+        # ss = fn_out['sto_ss'],
+        sy=fn_out['sto_sy'], 
+        ss=fn_out['sto_ss'],
         # iconvert=SS_PRIOR['iconvert'],
         steady_state={
             0: True,
@@ -189,10 +188,12 @@ def main():
         strt=init_h, # initial head, only used for iterative solution in steady model (arbitrary)
         )
 
-    rch = fp.mf6.ModflowGwfrcha(
+    rch = fp.mf6.ModflowGwfrch(
+        print_input=True,
         model=gwf,
-        recharge=fn_out['rch'], # recharge file names for each layer
-        save_flows=True, # save flows for this package
+        timeseries=fn_out['rch_ts'],
+        stress_period_data=fn_out['rch'],
+        save_flows=True,
         pname='rch' # package name
     )
     
@@ -204,18 +205,6 @@ def main():
         pname='ghb_aw', # package name
         save_flows=True,
         )
-    # ghb_aw.ts.initialize(fn_out['ghb_aw_ts'])
-    
-    # ghb_conf = fp.mf6.ModflowGwfghb(
-    #     print_input=True,
-    #     # print_flows=True,
-    #     save_flows=True, # save flows for this package 
-    #     model=gwf,
-    #     timeseries=fn_out['ghb_conf_ts'],
-    #     stress_period_data=fn_out['ghb_conf'],
-    #     pname='ghb_conf', # package name
-    #     )
-    # # ghb_conf.ts.initialize(fn_out['ghb_conf_ts'])
 
     ghb_pw = fp.mf6.ModflowGwfghb(
         print_input=True,
@@ -235,26 +224,6 @@ def main():
         save_flows=True, # save flows for this package 
         )
 
-    # wel_mbr = fp.mf6.ModflowGwfwel(
-    #     model=gwf,
-    #     stress_period_data=fn_out['wel_mbr'],
-    #     pname='wel_mbr', # package name
-    #     save_flows=True,
-    #     )
-    
-    # influx = fp.mf6.ModflowGwfwel(
-    #     model=gwf,
-    #     stress_period_data=fn_out['wel_influx'],
-    #     pname='influx', # package name
-    #     save_flows=True,
-    #     )
-    # outflux = fp.mf6.ModflowGwfwel(
-    #     model=gwf,
-    #     stress_period_data=fn_out['wel_outflux'],
-    #     pname='outflux', # package name
-    #     save_flows=True,
-    #     )
-
     oc = fp.mf6.ModflowGwfoc(
         model=gwf, # add output control to model gwf (created in previous code cell)
         budget_filerecord=f"{MODEL_NAME}.cbc", # file name where all budget output is stored
@@ -267,15 +236,20 @@ def main():
     print('Writing model files...')
     sim.write_simulation()  # write all model files to disk
     print('Running model...')
+    
+    # pre run
+    os.chdir(MODEL_DIR)  # change directory to model directory
+    # 1 - adjust recharge to f_value
+    helpers.adjust_recharge_to_fvalue(model_name=MODEL_NAME)
+
     success, _ = sim.run_simulation()  # run the model
 
     if not success:
         raise Exception("Model did not run successfully. Please check the output files for errors.")
 
     
-    TRUTHREL_DIR = os.path.abspath(TRUTH_DIR)
+    TRUTHREL_DIR = os.path.relpath(TRUTH_DIR, MODEL_DIR)
     # TEST OBS ------------------------------------------------------------
-    os.chdir(MODEL_DIR)  # change directory to model directory
     sample_path = os.path.relpath(SAMPLES, MODEL_DIR)
     
     budget = helpers.extract_budget(model_name=f'{MODEL_NAME}')  # extract heads and budget from model output    
@@ -287,9 +261,9 @@ def main():
     
     # awanui flux truth
     # top model constraints (head can't be greater than 1m above top)
-    helpers.create_head_truth(elev_constraint, TRUTHREL_DIR)
+    helpers.create_head_truth(elev_constraint, TRUTHREL_DIR, save_plot=True)
     # sample location truth
-    df = helpers.samples_truth(gwf, TRUTHREL_DIR)
+    df = helpers.samples_truth(gwf, TRUTHREL_DIR, save_plot=True)
     helpers.create_awghb_truth(ghb_dfs, TRUTHREL_DIR)
     helpers.create_sprghb_truth(ghb_dfs, df, TRUTHREL_DIR)
     helpers.create_budget_truth(budget, TRUTHREL_DIR)

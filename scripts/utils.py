@@ -145,9 +145,32 @@ def tomf6tsinput(fn, data, interpolation_method="LINEAREND"):
         'filename': os.path.basename(fn)[:-3] +'ts',
         'time_series_namerecord': col_names,
         'timeseries': ts_data,
-
         'interpolation_methodrecord': [interpolation_method] * len(col_names),
     }
+
+def tomf6tsarrinput(fn, data, interpolation_method="LINEAREND"):
+    import pandas as pd
+
+    ts_data = []
+    for n in range(0, len(data.index)):
+        time = int(data.index[n])
+        vals = []
+        for val in data.iloc[n,:].values:
+            vals.append(float(val))
+        ts_data.append(tuple([time] + vals))
+
+    if isinstance(data, pd.Series):
+        col_names = [data.name]
+    else:
+        col_names = data.columns.to_list()
+
+    return {
+        'filename': os.path.basename(fn)[:-3] +'ts',
+        'time_series_namerecord': col_names,
+        'timeseries': ts_data,
+        'interpolation_methodrecord': [interpolation_method] * len(col_names),
+    }
+
 
 def tomf6input(fn, list=False):
     if list:

@@ -119,7 +119,7 @@ def ghb_aw_setup(grid, idomain, start, end, fn_out, save=True):
     # riv_kper0['cond'] = GHB_SW['initial_cond_aw']
     # conf_kper0['head'] = GHB_CONF['initial_head']
     cond = grid.array_from_raster(SHALLOW_K).data
-    cond = (cond * 2 * 25) / 2 # calculating conductance from K (m/d) and cell length & 2m width (m2) & thickness (m)
+    cond = ((cond * RIV_W * RES) / RIV_L) * AW_f # calculating conductance from K (m/d) and cell length & 2m width (m2) & thickness (m)
     cond_df = extract_value_with_indices(
             cond, layer=0, val_col='cond', mask_value=0
             )
@@ -153,8 +153,9 @@ def ghb_aw_setup(grid, idomain, start, end, fn_out, save=True):
         past_h, layer=0, val_col='head', mask_value=0
         )
     riv_kper2 = pd.merge(riv_kper2, cond_df, left_on='index', right_on='index')
+    riv_kper2['cond'] = riv_kper2['cond'] * PAST_f
 
-    ts_0 = river_stage(riv_kper0, [0, 0], start_t = 0)
+    ts_0 = river_stage(riv_kper0, [0], start_t = 1)
     ts_1 = river_stage(riv_kper0, riv_ts_values, start_t = ts_0.index[-1]+1)
     ts_2 = river_stage(riv_kper2, [0], start_t = ts_1.index[-1]+1)
     ts_3 = river_stage(riv_kper2, riv_ts_values*0.5, start_t = ts_2.index[-1]+1)
@@ -182,7 +183,14 @@ def ghb_aw_setup(grid, idomain, start, end, fn_out, save=True):
     rivstage_ts.columns.to_series().to_csv(Path(MODEL_DIR, f'{MODEL_NAME}.ghb_aw_head_names.csv'), index=False, header=False)
     fn_out['ghb_aw_ts'] = tomf6tsinput(riv_ts_fn, rivstage_ts)
 
-    return fn_out, riv_ts_values, 9.21, riv_stage_arr, past_h
+    arrs = {
+        'h_present': riv_stage_arr,
+        'h_past': past_h,
+        'c_present': cond,
+        'c_past': cond * PAST_f
+    }
+
+    return fn_out, riv_ts_values, arrs
 
 
 def get_awanui_timeseries(start, end):
@@ -254,9 +262,7 @@ def conf_stage(ghb_cells, riv_ts_values, start_t = 1):
     for row in range(len(ghb_cells)):
         index = ghb_cells.at[row, 'index']
         col = f'cf_1_{index[1]+1}_{index[2]+1}'
-        initial_elev = ghb_cells.at[row, 'head']
-        kper_list = (initial_elev + riv_ts_values).tolist()
-        rivstage_dat[col] = kper_list
+        rivstage_dat[col] = riv_ts_values
     riv_df = pd.DataFrame(
         rivstage_dat, 
         index=np.arange(start_t, len(riv_ts_values) + start_t)
@@ -265,18 +271,18 @@ def conf_stage(ghb_cells, riv_ts_values, start_t = 1):
     return riv_df
 
 
-def ghb_spring_setup(grid, idomain, start, end, aw_ts, wetland_WL, aw_present_arr, aw_past_arr, fn_out, save=True):
+def ghb_spring_setup(grid, idomain, start, end, aw_ts, aw_arrs, fn_out, save=True):
     spring_mask = ~grid.array_from_vector(SPRING_DRAIN).mask
-    spring_mask = np.where((idomain[0] > 0) & (aw_present_arr == 0), spring_mask, 0)
+    spring_mask = np.where((idomain[0] > 0) & (aw_arrs['h_present'] == 0), spring_mask, 0)
     spring_stage_arr = np.where(spring_mask, SP_WL, 0)
     # spring_stage_arr[spring_stage_arr > 7.59] = 7.59 # correct to no higher than surveyed max
     # spring_stage_arr = np.where(aw_present_arr>0, 0, spring_stage_arr)  # remove areas also covered by awanui ghb
 
     # past spring_stage
-    past_WL = np.max(aw_past_arr)
+    past_WL = np.max(aw_arrs['h_past'])
     past_spring_stage = np.where(spring_mask, past_WL, 0)
     # past_spring_stage = np.where(past_spring_stage > wetland_WL, wetland_WL, past_spring_stage)
-    past_spring_stage = np.where(aw_past_arr>0, 0, past_spring_stage)  # remove areas also covered by awanui ghb
+    past_spring_stage = np.where(aw_arrs['h_past']>0, 0, past_spring_stage)  # remove areas also covered by awanui ghb
 
     # save to spatial
     if save:
@@ -289,7 +295,7 @@ def ghb_spring_setup(grid, idomain, start, end, aw_ts, wetland_WL, aw_present_ar
         )
     #conductance
     cond = grid.array_from_raster(SHALLOW_K).data
-    cond = ((cond * 2 * 25) / 2)/100 # calculating conductance from K (m/d) and cell length & 2m width (m2) & thickness (m)
+    cond = ((cond * SP_W * RES) / SP_W) * SP_f # calculating conductance from K (m/d) and cell length & 2m width (m2) & thickness (m)
     cond_df = extract_value_with_indices(
             cond, layer=0, val_col='cond', mask_value=0
             )
@@ -325,7 +331,7 @@ def ghb_spring_setup(grid, idomain, start, end, aw_ts, wetland_WL, aw_present_ar
     # correct so values do not exceed 0
     spring_ts_values = np.where(spring_ts_values > 0, 0, spring_ts_values)
 
-    ts_0 = river_stage(spring_kper0, [0, 0], start_t = 0)
+    ts_0 = river_stage(spring_kper0, [0], start_t = 1)
     ts_1 = river_stage(spring_kper0, spring_ts_values, start_t = ts_0.index[-1]+1)
     ts_2 = river_stage(spring_kper2, [0], start_t = ts_1.index[-1]+1)
     ts_3 = river_stage(spring_kper2, aw_ts*0.5, start_t = ts_2.index[-1]+1)
@@ -353,9 +359,16 @@ def ghb_spring_setup(grid, idomain, start, end, aw_ts, wetland_WL, aw_present_ar
     spring_h_ts.columns.to_series().to_csv(Path(MODEL_DIR, f'{MODEL_NAME}.ghb_spring_head_names.csv'), index=False, header=False)
     fn_out['ghb_sp_ts'] = tomf6tsinput(spring_ts_fn, spring_h_ts)
 
-    return fn_out, spring_stage_arr, past_spring_stage
+    arrs = {
+        'h_present': spring_stage_arr,
+        'h_past': past_spring_stage,
+        'c_present': cond,
+        'c_past': cond
+    }
 
-def ghb_pw_setup(grid, idomain, start, end, aw_past_arr, fn_out, save=True):
+    return fn_out, arrs
+
+def ghb_pw_setup(grid, idomain, start, end, aw_arrs, fn_out, save=True):
     # top_min = grid.array_from_raster(TOP, resampling='min')
     ghb_pw_arr = ~grid.array_from_vector(POUKAWA_BOUNDARY).mask
     pos_idomain = np.where(idomain[0] > 0, 1, 0)
@@ -376,7 +389,7 @@ def ghb_pw_setup(grid, idomain, start, end, aw_past_arr, fn_out, save=True):
     # ghb_pw_kper0['cond'] = GHB_SW['initial_cond_pw']
     #conductance
     cond = grid.array_from_raster(SHALLOW_K).data
-    cond = (cond * 2 * 25) / 2 # calculating conductance from K (m/d) and cell length & 2m width (m2) & thickness (m)
+    cond = ((cond * RIV_W * RES) / RIV_L) * PW_f # calculating conductance from K (m/d) and cell length & 2m width (m2) & thickness (m)
     cond_df = extract_value_with_indices(
             cond, layer=0, val_col='cond', mask_value=0
             )
@@ -387,7 +400,7 @@ def ghb_pw_setup(grid, idomain, start, end, aw_past_arr, fn_out, save=True):
     aw_ts_values = get_awanui_timeseries(start, end)
 
     # kper3 - PAST SS ########################################################
-    past_wl = np.max(aw_past_arr)
+    past_wl = np.max(aw_arrs['h_past'])
 
     ghb_pw_arr = ~grid.array_from_vector(PW_PAST).mask
     active_domain = np.where(idomain[0] > 0, 1, 0)
@@ -399,8 +412,9 @@ def ghb_pw_setup(grid, idomain, start, end, aw_past_arr, fn_out, save=True):
     ghb_pw_kper2 = pd.DataFrame({'index': [i[0] for i in ghb_pw_indices]})
     ghb_pw_kper2['head'] = [i[1] for i in ghb_pw_indices]  # head for Poukawa boundary
     ghb_pw_kper2 = pd.merge(ghb_pw_kper2, cond_df, left_on='index', right_on='index')
+    ghb_pw_kper2['cond'] = ghb_pw_kper2['cond'] * PAST_f
 
-    ts_0 = river_stage(ghb_pw_kper0, [0, 0], start_t = 0)
+    ts_0 = river_stage(ghb_pw_kper0, [0], start_t = 1)
     ts_1 = river_stage(ghb_pw_kper0, pw_ts_values, start_t = ts_0.index[-1]+1)
     ts_2 = river_stage(ghb_pw_kper2, [0], start_t = ts_1.index[-1]+1)
     ts_3 = river_stage(ghb_pw_kper2, aw_ts_values*0.5, start_t = ts_2.index[-1]+1) #all the same
@@ -427,7 +441,15 @@ def ghb_pw_setup(grid, idomain, start, end, aw_past_arr, fn_out, save=True):
     pwelev_ts.to_csv(pwelev_ts_fn, header=False)
     pwelev_ts.columns.to_series().to_csv(Path(MODEL_DIR, f'{MODEL_NAME}.ghb_pw_head_names.csv'), index=False, header=False)
     fn_out['ghb_pw_ts'] = tomf6tsinput(pwelev_ts_fn, pwelev_ts)
-    return fn_out, ghb_pw_kper0, ghb_pw_active, ghb_pw_past
+
+    arrs = {
+        'h_present': ghb_pw_active,
+        'h_past': ghb_pw_past,
+        'c_present': cond,
+        'c_past': cond * PAST_f
+    }
+    
+    return fn_out, ghb_pw_kper0, arrs
 
 
 def get_confined_timeseries(start, end):
@@ -531,6 +553,69 @@ def ghb_conf_setup(grid, idomain, start, end, model_thickness, fn_out):
     fn_out['ghb_conf_ts'] = tomf6tsinput(conf_ts_fn, conf_ts)
     return fn_out, conf_arr
 
+
+def rch_setup(grid, idomain, start, end, fn_out):
+    rcha02_arr = idomain[0].copy() * (RCH['initial_rf'] + RCH['initial_mbr'])
+
+    rcha_kper0 = extract_value_with_indices(
+        rcha02_arr, layer=0, val_col='recharge', mask_value=0
+        )
+    
+    # calculate decrease in recharge usinf confined aquifer decrease as a proxy
+    conf_K = grid.array_from_raster(CONF_K).data
+    f_value = np.median(conf_K) / CONF_THICKNESS
+
+    rcha_kper2 = rcha_kper0.copy()
+
+    conf_ts1, conf_ts3 = get_confined_timeseries(start, end)
+
+    #NEW
+    ts_0 = conf_stage(rcha_kper0, [0], start_t = 1)
+    ts_1 = conf_stage(rcha_kper0, conf_ts1, start_t = ts_0.index[-1]+1)
+    ts_2 = conf_stage(rcha_kper2, [0], start_t = ts_1.index[-1]+1)
+    ts_3 = conf_stage(rcha_kper2, conf_ts3, start_t = ts_2.index[-1]+1)
+
+    rcha_kper1 = rcha_kper0.copy()
+    rcha_kper1['recharge'] = ts_1.columns
+    
+    rcha_kper3 = rcha_kper2.copy()
+    rcha_kper3['recharge'] = ts_3.columns
+
+    # convert to dataframe
+    recharge_ts = pd.concat([ts_0, ts_1, ts_2, ts_3]).fillna(0)
+    
+    #save
+    fn_out['rch'] = {}
+    for i, dat in enumerate([rcha_kper0, rcha_kper1, rcha_kper2, rcha_kper3]):
+        fn = Path(MODEL_DIR, f'{MODEL_NAME}.rch_stress_period_data_{i}.txt')
+        fn_out['rch'][i] = tomf6input(fn ,list=True)
+        savedf2txt(dat, filename=fn, col_order=['recharge'])
+    
+    # save ts file
+    recharge_ts_fn = Path(MODEL_DIR, f'{MODEL_NAME}.rch.csv')
+    recharge_ts.index.name = '#time'
+    recharge_ts.to_csv(recharge_ts_fn, header=False)
+    recharge_ts.columns.to_series().to_csv(Path(MODEL_DIR, f'{MODEL_NAME}.recharge_names.csv'), index=False, header=False)
+
+    i_recharge_ts = (recharge_ts * f_value) + RCH['initial_mbr']
+    i_recharge_ts = i_recharge_ts.clip(lower=0)  # ensure recharge does not go below mbr
+
+    fn_out['rch_ts'] = tomf6tsinput(recharge_ts_fn, recharge_ts)
+
+    # save cvs with initial recharge and f_value
+    slope_array = np.where(recharge_ts.iloc[:,0].values, f_value, f_value)
+    index = np.arange(1, len(slope_array)+1)
+    combined = np.column_stack((index, slope_array))
+    np.savetxt(Path(MODEL_DIR, f'{MODEL_NAME}.rch_slope_array.txt'), combined)
+
+    # save parameter values file
+    rch_init_fn = Path(MODEL_DIR, f'{MODEL_NAME}.rch_parameter_value.txt')
+    combined = np.column_stack([0, RCH['initial_mbr']])
+    np.savetxt(rch_init_fn, combined)
+    
+    return fn_out
+
+
 def wel_mbr_setup(grid, idomain, fn_out, ghb_pw_kper0):
     mbr_arr = ~grid.array_from_vector(MBR).mask
     mbr_indices = []
@@ -593,7 +678,7 @@ def wel_inout_setup(grid, idomain, mbr_df, fn_out):
 def npf_setup(grid, idomain, fn_out):
     all_k = []
     for i in range(NLAY):
-        k = grid.array_from_raster(SHALLOW_K).data
+        k = grid.array_from_raster(SHALLOW_K).data * KH_f
         # k = np.ones_like(idomain[0]) * KH_PRIOR['initial']  # horizontal hydraulic conductivity in m/day
         # if i == 1:
         #     k = np.ones_like(idomain[0]) * 0.001  # horizontal hydraulic conductivity in m/day
@@ -623,7 +708,22 @@ def sto_ss_setup(idomain, fn_out):
         np.savetxt(fn, sto_ss[i])
     return fn_out
 
-def rch_setup(idomain, fn_out):
+def sto_sy_setup(idomain, fn_out):
+    sto_ss = np.ones_like(idomain) * SY_PRIOR['initial']
+
+    # save
+    fn_out['sto_sy'] = []
+    for i in range(NLAY):
+        ilay = i + 1  # layer number starts from 1
+        fn = Path(MODEL_DIR, f'{MODEL_NAME}.sto_sy_layer{ilay}.txt').as_posix()
+        fn_out['sto_sy'].append(tomf6input(fn))
+        np.savetxt(fn, sto_ss[i])
+    return fn_out
+
+def rcha_setup(idomain, start, end, fn_out):
+
+    conf_ts1, conf_ts3 = get_confined_timeseries(start, end)
+
     fn_out['rch'] = {}
     for i in range(NPER):
         if i in [0, 2]:  # steady state periods
@@ -634,6 +734,13 @@ def rch_setup(idomain, fn_out):
         rch_fn = Path(MODEL_DIR, f'{MODEL_NAME}.rcha_recharge_{i}.txt').as_posix()
         fn_out['rch'][i] = tomf6input(rch_fn)
         np.savetxt(rch_fn, recharge) 
+    
+    # fn_out['rch_ts'] = {}
+    # ts_fn = Path(MODEL_DIR, f'{MODEL_NAME}.rcha.csv')
+    # ts.index.name = '#time'
+    # ts.to_csv(ts_fn, header=False)
+    # fn_out['rcha_ts'] = tomf6tsarrayinput(ts_fn, ts)
+    
     return fn_out
 
 def pk4_ts(start, end):

@@ -1,4 +1,4 @@
-MODEL_NAME = 'run43'  # name of the model
+MODEL_NAME = 'run44'  # name of the model
 """
 - Removed recharge from parameterization.
 - Added shapefile for pilot points.
@@ -65,13 +65,24 @@ SPATIAL_DIR = f'models/{MODEL_NAME}/spatial'  # directory for spatial ./data
 PEST_DIR = f'models/{MODEL_NAME}/pest/{MODEL_NAME}'  # directory for pest files
 TEMP_DIR = f'models/{MODEL_NAME}/pest/{MODEL_NAME}_template'  # directory for temporary files
 HPTEMP_DIR = f'models/{MODEL_NAME}/pest/{MODEL_NAME}_hptemplate'  # directory for temporary files
-TRUTH_DIR = r'truth'
+TRUTH_DIR = f'models/{MODEL_NAME}/truth'
 # Particle locations
 SAMPLES = r"data/sample_locations.shp"
 
 PP_SHP = r"data/pilot_points.shp"
 GR_SHP = r"data/pp_grid.shp" # polygon of grid zone
 
+# PARAMS
+RIV_W = 2
+RIV_L = 2
+PAST_f = 2e-1 # (factor on conductance to make much lower)
+SP_W = 2
+
+SP_f = 1e-1 # (factor on conductance to make much lower)
+AW_f = 1e0
+PW_f = 1e0
+RCH_f = 0.2 # (anything lower than e-4; little impact on recharge)
+KH_f = 10 # multiplier for kh
 
 AW_WL = 7.22  # mRL
 PW_WL = 7.66  # mRL
@@ -85,30 +96,39 @@ HEAD_std = 0.025  # m
 PK4_std = 0.01  # m +/- 2 cm (assume 4 std is full range) 0.04/4
 
 # truth ++++++++++++++++++++++++++++++++++++++
-GHB_Q = -6.9  # m3/d
-GHB_Qstd = 1.8 # std
-GHB_SPRING_Q = -3.0  # m3/d
+GHB_Q = -2.8  # m3/d
+GHB_Qstd = 3 # std
+GHB_SPRING_Q = -1.4  # m3/d
+GHB_SPRING_Qstd = 0.46 # std
 # budget
 SW_TOTAL = -308.2  # m3/d (must be less than)
 SW_STD = 81.6 # m3/d
-RCH1_TOTAL = 150.38 # m3/d
-RCH2_TOTAL = 129.73 # m3/d
-RCH1_STD = 11  # m3/d
-RCH2_STD = 7  # m3/d
+RCH1_TOTAL = 150 # m3/d
+RCH2_TOTAL = 60 # m3/d
+RCH1_STD = 50  # m3/d
+RCH2_STD = 30  # m3/d
 
 # model parameters
 SS_PRIOR = {
-    'initial': 1e-1,
-    'lb': 1e-3,
-    'ub': 1e3,
+    'iconvert': True,
+    'initial': 1e-4,
+    'lb': 1e-2,
+    'ub': 1e2,
     'ulb': 1e-6,
     'uub': 1,
 }
 
+SY_PRIOR = {
+    'initial': 0.3,
+    'lb': 1e-1,
+    'ub': 1e1,
+    'ulb': 1e-2,
+    'uub': 1,
+}
+
 KH_PRIOR = {
-    'initial': 100,
-    'lb': 1e-4,
-    'ub': 1e4,
+    'lb': 1e-2,
+    'ub': 1e2,
     'ulb': 1e-8,
     'uub': 1e8,
 }
@@ -116,45 +136,27 @@ KH_PRIOR = {
 RCH = {
     'initial_rf': 2.5e-4, # total recharge
     'initial_mbr': 1.57e-3, # mbr recharge
-    'lb': 1e-2,
-    'ub': 1e2,
+    'lb': 1e-1,
+    'ub': 1e1,
     'ulb': 1e-6,
     'uub': 1e6,
 }
-# RCH1_PARAMS = {
-#     'initial_rf': 2.5e-4, # total recharge
-#     'lb': 1e-1,
-#     'ub': 1e1,
-#     'ulb': 1e-6,
-#     'uub': 1e6,
-# }
+
+RCH_PARMS = {
+    'lb': 1e-3,
+    'ub': 1e3,
+    'ulb': 1e-6,
+    'uub': 1e6,
+}
 
 GHB_SW = {
     # 'initial_cond_aw': 100,
     # 'initial_cond_pw': 100,
     # 'initial_cond_spr': 1000,
-    'cond_lb': 1e-8,
-    'cond_ub': 1e8,
-    'cond_ulb': 1e-10,
-    'cond_uub': 1e10,
-    'head_lb': -0.5,
-    'head_ub': 0.5,
-    'head_ulb': 5,
-    'head_uub': 12,
-}
-
-GHB_CONF = {
-    # 'initial_cond': 1,
-    'initial_head_offset': 2,
-    'initial_head_min': 14,
-    'cond_lb': 1e-8,
-    'cond_ub': 1e8,
-    'cond_ulb': 1e-10,
-    'cond_uub': 1e10,
-    'head_lb': -0.5,
-    'head_ub': 0.5,
-    'head_ulb': 10,
-    'head_uub': 16,
+    'cond_lb': 1e-2,
+    'cond_ub': 1e2,
+    'cond_ulb': 1e-6,
+    'cond_uub': 1e6,
 }
 
 PHI_OBS = {

@@ -1,7 +1,92 @@
 import pandas as pd
 import numpy as np
+import os
 from pathlib import Path
 from setup import *
+
+
+def tomf6tsinput(fn, data, interpolation_method="LINEAREND"):
+    import pandas as pd
+
+    ts_data = []
+    for n in range(0, len(data.index)):
+        time = int(data.index[n])
+        vals = []
+        for val in data.iloc[n,:].values:
+            vals.append(float(val))
+        ts_data.append(tuple([time] + vals))
+
+    if isinstance(data, pd.Series):
+        col_names = [data.name]
+    else:
+        col_names = data.columns.to_list()
+
+    return {
+        'filename': os.path.basename(fn)[:-3] +'ts',
+        'time_series_namerecord': col_names,
+        'timeseries': ts_data,
+        'interpolation_methodrecord': [interpolation_method] * len(col_names),
+    }
+
+def adjust_recharge_to_fvalue(gwf=None, model_name=None):
+
+    def tomf6tsinput(fn, data, interpolation_method="LINEAREND"):
+        import pandas as pd
+
+        ts_data = []
+        for n in range(0, len(data.index)):
+            time = int(data.index[n])
+            vals = []
+            for val in data.iloc[n,:].values:
+                vals.append(float(val))
+            ts_data.append(tuple([time] + vals))
+
+        if isinstance(data, pd.Series):
+            col_names = [data.name]
+        else:
+            col_names = data.columns.to_list()
+
+        return {
+            'filename': os.path.basename(fn)[:-3] +'ts',
+            'time_series_namerecord': col_names,
+            'timeseries': ts_data,
+            'interpolation_methodrecord': [interpolation_method] * len(col_names),
+        }
+
+
+
+
+    def get_gwf(model_name, gwf=None):
+        if gwf is None:
+            import flopy
+
+            sim = flopy.mf6.MFSimulation.load(sim_ws='.')
+            gwf = sim.get_model(model_name)
+        return sim, gwf
+
+    # load recharge ts file
+    fn = f'{model_name}.rch.csv'
+    headers_fn = f'{model_name}.recharge_names.csv'
+
+    rch_ts = pd.read_csv(fn, index_col=0, header=None)
+    header = pd.read_csv(headers_fn, header=None)
+    rch_ts.columns = header.iloc[:,0].to_list()
+    slope_array = np.loadtxt(f'{model_name}.rch_slope_array.txt')
+    rch_value = np.loadtxt(f'{model_name}.rch_parameter_value.txt')
+
+    # calculate recharge ts based on param_df
+    rch_ts_adjusted = (rch_ts * slope_array[:,1][:,None]) + rch_value[1]
+    # where recharge is less than 0, set to 0
+    rch_ts_adjusted = rch_ts_adjusted.clip(lower=0)
+
+    # write new ts file
+    rch_ts_adjusted.to_csv(fn, header=False)
+
+    rch_ts_dict = tomf6tsinput(fn, rch_ts_adjusted)
+
+    _, gwf = get_gwf(model_name, gwf)
+    gwf.rch.ts.initialize(**rch_ts_dict)
+    gwf.rch.ts.write()
 
 
 def extract_budget(model_name=None):
@@ -36,18 +121,32 @@ def extract_budget(model_name=None):
         # 'wel3': 'outflow',
         'in-out': 'inout'
     }
+    time = cumulative.index[1] - cumulative.index[0]
     # replace any _ in column names
-    incremental.columns = incremental.columns.map(lambda x: x.lower().replace("_",""))
-    incremental.rename(columns=col_names, inplace=True)
-    incremental.index = np.arange(1, len(incremental) + 1)
-    incremental.index.name = "kper"
-
-    incremental['sw'] = incremental['awanui'] + incremental['poukawa'] + incremental['spring']
+    for df in [incremental, cumulative]:
+        df.columns = df.columns.map(lambda x: x.lower().replace("_",""))
+        df.rename(columns=col_names, inplace=True)
+        df.index = np.arange(1, len(df) + 1)
+        df.index.name = "kper"
+        # calculate incremental sw flow
+        df['sw'] = df['awanui'] + df['poukawa'] + df['spring']
 
     # in present day: awanui and spring seperate
     # incremental['awanui-spring'] = incremental['awanui'] + incremental['spring']
     # inc.to_csv(f"{MODEL_DIR}/inc.csv")
-    incremental.to_csv(f"output.budget.csv")
+
+    kper_budget = cumulative.copy()
+    for i in range(len(cumulative)).__reversed__():
+        if i == 0:
+            continue
+        row = kper_budget.iloc[i]
+        kper_budget.iloc[i,:] = (row.values - kper_budget.iloc[i-1,:].values)
+    # get average budget per day
+    for i in range(len(cumulative)):
+        if i in [1, 3]:
+            kper_budget.iloc[i,:] = kper_budget.iloc[i] / time
+
+    kper_budget.to_csv(f"output.budget.csv")
     return incremental
 
 
@@ -739,8 +838,8 @@ def extract_model_heads(model_name, gwf=None, sample_path=None):
             all_samples.loc[i, 'pk4-diff'] = all_samples.loc[i+1, 'pk4'] - all_samples.loc[i, 'pk4']
 
         # add derived columns
-        all_samples['pk4-aw-diff'] = compare_ghb_heads(gwf, 0, 'ts_array_0', all_samples)
-        all_samples['pk4-pw-diff'] = compare_ghb_heads(gwf, 1, 'ts_array_36', all_samples)
+        all_samples['pk4-aw-diff'] = all_samples['pk4'] - all_samples['awanui']
+        all_samples['pk4-pw-diff'] = all_samples['pk4'] - all_samples['poukawa']
         all_samples['pk4-spr-diff'] = compare_ghb_heads(gwf, 2, 'ts_array_0', all_samples)        
         # all_samples['d-losing'] = days_losing_regime(sim, all_samples)
 
@@ -926,7 +1025,7 @@ def create_confghb_truth(ghb_dfs, dir):
     return
 
 
-def create_head_truth(arr, TRUTHREL_DIR):
+def create_head_truth(arr, TRUTHREL_DIR, save_plot=False):
     np.savetxt(Path(TRUTHREL_DIR, f"output.heads.truth.dat"), arr + HEAD_offset)
 
     # std
@@ -942,12 +1041,45 @@ def create_head_truth(arr, TRUTHREL_DIR):
     np.savetxt(Path(TRUTHREL_DIR, f"output.heads.std.dat"), std_arr)
     np.savetxt(Path(TRUTHREL_DIR, f"output.heads.weight.dat"), weight_arr)
 
+    if save_plot:
+        # open model heads and save plot comparison
+        import matplotlib.pyplot as plt
+        # open numpy array
+        t1 = np.loadtxt(f"output.heads_kper1_kstp1_time1.0.dat")
+        t10 = np.loadtxt(f"output.heads_kper2_kstp10_time11.0.dat")
+        t30 = np.loadtxt(f"output.heads_kper2_kstp30_time31.0.dat")
+
+        ts = {
+            't1': t1,
+            't10': t10,
+            't30': t30
+        }
+        
+        for name, t in ts.items():
+            t[t > 1e20] = np.nan
+
+            plt.figure(figsize=(10,6))
+            plt.imshow(t, cmap='viridis')
+            plt.colorbar(label='Head (mRL)')
+            plt.title(f'Model Heads at {name}')
+            plt.savefig(Path(TRUTHREL_DIR, f'model_heads_{name}.png'))
+            plt.close()
+
+            plt.figure(figsize=(10,6))
+            plt.imshow(arr-t, cmap='RdBu', vmin=-5, vmax=5)
+            plt.colorbar(label='Head (top - GW) (mbgl)\n(blue (+) = below ground level)')
+            plt.title(f'Model Heads at {name}')
+            plt.savefig(Path(TRUTHREL_DIR, f'model_heads_diff_{name}.png'))
+            plt.close()
+
     return
 
-def samples_truth(gwf, TRUTHREL_DIR):
+def samples_truth(gwf, TRUTHREL_DIR, save_plot=False):
     import pandas as pd
 
+    model_heads = Path(f"output.sample_heads.csv")
     recession_fn = Path(f"output.sample_recession_rates.csv")
+    
     pk4_path = Path(f'{MODEL_NAME}.pk4_level.csv')
     spr_path = Path(f'{MODEL_NAME}.ghb_spring_heads.csv')
     aw_path = Path(f'{MODEL_NAME}.ghb_aw_heads.csv')
@@ -960,9 +1092,8 @@ def samples_truth(gwf, TRUTHREL_DIR):
     pw_df = pd.read_csv(pw_path, header=None, index_col=0)
 
     rec_df = pd.read_csv(recession_fn, index_col='kper')
+    model_df = pd.read_csv(model_heads, index_col='time')
 
-    times = list(df.index)
-    times_include = list(np.arange(1, 54, TIME_SUBSAMPLE)) + [2]  # include every 10th kstp
     
     df.rename(columns={'sm_level_mRL': 'pk4'}, inplace=True)
     df['spring'] = sp_df.iloc[:53,1].values
@@ -1009,6 +1140,21 @@ def samples_truth(gwf, TRUTHREL_DIR):
     rec_df.loc[2, 'fliptime'] = day
     rec_df.loc[2, 'std'] = PK4_std
     rec_df.loc[2, 'weight'] = 1/PK4_std
+
+    if save_plot:
+        # save pk4 model_df and truth comparison plot
+        import matplotlib.pyplot as plt
+        plt.figure(figsize=(10,6))
+        plt.plot(model_df.index, model_df['pk4'], label='Model PK4', color='blue')
+        plt.plot(df.index, df['pk4'], label='Truth PK4', color='orange', linestyle='--')
+        plt.xlabel('Time (days)')
+        plt.ylabel('Head (mRL)')
+        plt.title('Model vs Truth PK4 Head Comparison')
+        plt.legend()
+        plt.grid()
+        plt.savefig(Path(TRUTHREL_DIR, 'pk4_head_comparison.png'))
+        plt.close()
+
 
     rec_df[['time','kstp', 'pk4', 'pk4-aw-diff', 'pk4-pw-diff', 'pk4-spr-diff', 'fliptime', 'std', 'weight']].to_csv(Path(TRUTHREL_DIR, f"output.sample_recession_rates.truth.csv"))
     

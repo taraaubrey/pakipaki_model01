@@ -1,11 +1,11 @@
 import os
 import pyemu
 import copy
+import numpy as np
 
 def define_mult_array(
         pf, ws,
         tag='local1.recharge',
-        ib=None,
         p_ins = [],
         lb=0.2, ub=5.0,
         ulb=0.1, uub=10.,
@@ -20,7 +20,7 @@ def define_mult_array(
             gs = ins.get('gs', None)
             pp_space = ins.get('pp_space', None)
             suffix = ins.get('name_suffix', '')
-            zone_array = ins.get('zone_array', ib[0])
+            zone_array = ins.get('zone_array', None)
 
             if i in lays:
                 if isinstance(f,str):
@@ -167,6 +167,115 @@ def rcha(
                     par_style="multiplier",
                     )
             
+    return
+
+def rch(
+        pf, ws,
+        name='ghb', 
+        tag='local1.drn_stress_period_data',
+        grid_gs=None,
+        bounds=[None, None], 
+        ult_bounds=[None, None],
+        datetime=None,
+        ):
+    kper_files = [f for f in os.listdir(ws) if tag in f.lower() and (f.endswith("0.txt") or f.endswith("2.txt"))]
+    # conductances all the same for each stress period
+    if grid_gs:
+        if isinstance(grid_gs, dict):
+            if datetime:
+                for suffix, gs in grid_gs.items():
+                    iname = name + f'-{suffix}'
+                    # every cell scale (fine scale)
+                    pf.add_parameters(
+                        kper_files,
+                        par_type="grid",
+                        geostruct=gs,
+                        par_name_base=iname,
+                        pargp=iname,
+                        index_cols={'k':0, 'i':1, 'j':2},
+                        use_cols=[3],
+                        lower_bound=bounds[0],
+                        upper_bound=bounds[1],
+                        ult_lbound=ult_bounds[0],
+                        ult_ubound=ult_bounds[1],
+                        datetime=datetime,
+                        )
+            else:
+                for suffix, gs in grid_gs.items():
+                    iname = name + f'-{suffix}'
+                    # every cell scale (fine scale)
+                    pf.add_parameters(
+                        kper_files,
+                        par_type="grid",
+                        geostruct=gs,
+                        par_name_base=iname,
+                        pargp=iname,
+                        index_cols={'k':0, 'i':1, 'j':2},
+                        use_cols=[3],
+                        lower_bound=bounds[0],
+                        upper_bound=bounds[1],
+                        ult_lbound=ult_bounds[0],
+                        ult_ubound=ult_bounds[1],
+                        )
+
+        pf.add_parameters(
+            kper_files,
+            par_type="constant",
+            par_name_base=name+"-cn",
+            pargp=name+"-cond-cn",
+            index_cols={'k':0, 'i':1, 'j':2},
+            use_cols=[3],  
+            lower_bound=bounds[0],
+            upper_bound=bounds[1],
+            ult_lbound=ult_bounds[0],
+            ult_ubound=ult_bounds[1],
+            )
+
+        return
+
+def rch_param(
+        pf, ws,
+        name='ghb', 
+        tag='local1.drn_stress_period_data',
+        grid_gs=None,
+        bounds=[None, None], 
+        ult_bounds=[None, None],
+        datetime=None,
+        ):
+    files = [f for f in os.listdir(ws) if tag in f.lower()]
+    # conductances all the same for each stress period
+    if grid_gs:
+        if isinstance(grid_gs, dict):
+            for suffix, gs in grid_gs.items():
+                iname = name + f'-{suffix}'
+                # every cell scale (fine scale)
+                pf.add_parameters(
+                    files,
+                    par_type="grid",
+                    par_name_base=iname,
+                    pargp=iname,
+                    index_cols=[0],
+                    use_cols=[1],
+                    use_rows=np.arange(0, 54).tolist(),
+                    lower_bound=bounds[0],
+                    upper_bound=bounds[1],
+                    ult_lbound=ult_bounds[0],
+                    ult_ubound=ult_bounds[1],
+                    )
+
+    pf.add_parameters(
+        files,
+        par_type="constant",
+        par_name_base=name+"-cn",
+        pargp=name+"-cn",
+        index_cols=[0],
+        use_cols=[1],  
+        lower_bound=bounds[0],
+        upper_bound=bounds[1],
+        ult_lbound=ult_bounds[0],
+        ult_ubound=ult_bounds[1],
+        )
+
     return
 
 
