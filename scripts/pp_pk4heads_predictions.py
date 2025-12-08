@@ -85,10 +85,10 @@ def get_pk4_obs_by_kper_kstp(obs_data):
     # Try new format first (oname = 'pk4-heads')
     pk4_heads = obs_data[obs_data['oname'] == 'pk4-heads'].copy()
 
-    # If not found, try old format (pk4-heads with usecol = pk4)
+    # If not found, try ts-pk4 format (ts-pk4 with usecol = pk4)
     if len(pk4_heads) == 0:
-        print("  No 'pk4-heads' observations found, trying 'pk4-heads' with usecol='pk4'...")
-        ts_heads = obs_data[obs_data['oname'] == 'pk4-heads'].copy()
+        print("  No 'pk4-heads' observations found, trying 'ts-pk4' with usecol='pk4'...")
+        ts_heads = obs_data[obs_data['oname'] == 'ts-pk4'].copy()
         pk4_heads = ts_heads[ts_heads['usecol'] == 'pk4'].copy()
 
     pk4_heads['kper'] = pd.to_numeric(pk4_heads['kper'], errors='coerce')

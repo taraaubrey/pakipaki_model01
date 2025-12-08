@@ -79,9 +79,9 @@ PAST_f = 2e-1 # (factor on conductance to make much lower)
 SP_W = 2
 
 SP_f = 1e-1 # (factor on conductance to make much lower)
-AW_f = 1e0
-PW_f = 1e0
-RCH_f = 0.2 # (anything lower than e-4; little impact on recharge)
+AW_f = 1e1
+PW_f = 1e1
+RCH_f = 0.4
 KH_f = 10 # multiplier for kh
 
 AW_WL = 7.22  # mRL
@@ -112,8 +112,8 @@ RCH2_STD = 30  # m3/d
 SS_PRIOR = {
     'iconvert': True,
     'initial': 1e-4,
-    'lb': 1e-2,
-    'ub': 1e2,
+    'lb': 1e-1,
+    'ub': 1e1,
     'ulb': 1e-6,
     'uub': 1,
 }
@@ -127,8 +127,8 @@ SY_PRIOR = {
 }
 
 KH_PRIOR = {
-    'lb': 1e-2,
-    'ub': 1e2,
+    'lb': 1e-1,
+    'ub': 1e1,
     'ulb': 1e-8,
     'uub': 1e8,
 }
@@ -143,8 +143,8 @@ RCH = {
 }
 
 RCH_PARMS = {
-    'lb': 1e-3,
-    'ub': 1e3,
+    'lb': 1e-1,
+    'ub': 1e1,
     'ulb': 1e-6,
     'uub': 1e6,
 }
@@ -153,8 +153,8 @@ GHB_SW = {
     # 'initial_cond_aw': 100,
     # 'initial_cond_pw': 100,
     # 'initial_cond_spr': 1000,
-    'cond_lb': 1e-2,
-    'cond_ub': 1e2,
+    'cond_lb': 1e-1,
+    'cond_ub': 1e1,
     'cond_ulb': 1e-6,
     'cond_uub': 1e6,
 }

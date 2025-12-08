@@ -593,17 +593,19 @@ def rch_setup(grid, idomain, start, end, fn_out):
     
     # save ts file
     recharge_ts_fn = Path(MODEL_DIR, f'{MODEL_NAME}.rch.csv')
+    recharge_ts_raw = Path(MODEL_DIR, f'{MODEL_NAME}.rch_raw.csv')
     recharge_ts.index.name = '#time'
     recharge_ts.to_csv(recharge_ts_fn, header=False)
+    recharge_ts.to_csv(recharge_ts_raw, header=False)
     recharge_ts.columns.to_series().to_csv(Path(MODEL_DIR, f'{MODEL_NAME}.recharge_names.csv'), index=False, header=False)
-
-    i_recharge_ts = (recharge_ts * f_value) + RCH['initial_mbr']
-    i_recharge_ts = i_recharge_ts.clip(lower=0)  # ensure recharge does not go below mbr
 
     fn_out['rch_ts'] = tomf6tsinput(recharge_ts_fn, recharge_ts)
 
+    # i_recharge_ts = (recharge_ts * f_value) + RCH['initial_mbr']
+    # i_recharge_ts = i_recharge_ts.clip(lower=0)  # ensure recharge does not go below mbr
+
     # save cvs with initial recharge and f_value
-    slope_array = np.where(recharge_ts.iloc[:,0].values, f_value, f_value)
+    slope_array = np.where(recharge_ts.iloc[:,0].values, f_value * RCH_f, f_value * RCH_f)
     index = np.arange(1, len(slope_array)+1)
     combined = np.column_stack((index, slope_array))
     np.savetxt(Path(MODEL_DIR, f'{MODEL_NAME}.rch_slope_array.txt'), combined)

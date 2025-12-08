@@ -49,10 +49,10 @@ def parse_args():
                        help='Posterior iteration (default: 19)')
     parser.add_argument('--filter-file', type=str, default=None,
                        help='Path to file with filtered realization indices')
-    parser.add_argument('--spring-i', type=int, default=36,
-                       help='Spring cell i index (default: 36)')
-    parser.add_argument('--spring-j', type=int, default=33,
-                       help='Spring cell j index (default: 33)')
+    parser.add_argument('--spring-i', type=int, default=12,
+                       help='Spring cell i index (default: 12)')
+    parser.add_argument('--spring-j', type=int, default=18,
+                       help='Spring cell j index (default: 18)')
     parser.add_argument('--suffix', type=str, default=None,
                        help='Suffix for output files (e.g., "_filtered")')
     parser.add_argument('--pct-low', type=int, default=10,
@@ -112,7 +112,7 @@ def get_spring_obs_by_kper_kstp(obs_data, spring_i, spring_j):
 
 
 def create_spring_distribution_plot(run_name, model_name, post_iter=19, filter_file=None,
-                                    spring_i=36, spring_j=33, suffix=None, pct_low=10, pct_high=90):
+                                    spring_i=12, spring_j=18, suffix=None, pct_low=10, pct_high=90):
     """
     Create distribution plot comparing prior vs posterior for spring flux.
     """

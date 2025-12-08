@@ -53,9 +53,6 @@ def adjust_recharge_to_fvalue(gwf=None, model_name=None):
             'interpolation_methodrecord': [interpolation_method] * len(col_names),
         }
 
-
-
-
     def get_gwf(model_name, gwf=None):
         if gwf is None:
             import flopy
@@ -66,9 +63,10 @@ def adjust_recharge_to_fvalue(gwf=None, model_name=None):
 
     # load recharge ts file
     fn = f'{model_name}.rch.csv'
+    fn_raw = f'{model_name}.rch_raw.csv'
     headers_fn = f'{model_name}.recharge_names.csv'
 
-    rch_ts = pd.read_csv(fn, index_col=0, header=None)
+    rch_ts = pd.read_csv(fn_raw, index_col=0, header=None)
     header = pd.read_csv(headers_fn, header=None)
     rch_ts.columns = header.iloc[:,0].to_list()
     slope_array = np.loadtxt(f'{model_name}.rch_slope_array.txt')
@@ -1106,15 +1104,17 @@ def samples_truth(gwf, TRUTHREL_DIR, save_plot=False):
     for i in np.arange(1, len(df['pk4-diff'])-1):
         df.loc[i, 'pk4-diff'] = df.loc[i+1, 'pk4'] - df.loc[i, 'pk4']
     
-    df['pk4-spr-diff'] = df['spring'] - df['pk4']
-    df['pk4-aw-diff'] = df['aw'] - df['pk4']
-    df['pk4-pw-diff'] = df['pw'] - df['pk4']
+    df['pk4-spr-diff'] = df['pk4'] - df['spring']
+    df['pk4-aw-diff'] = df['pk4'] - df['aw']
+    df['pk4-pw-diff'] = df['pk4'] - df['pw']
 
-    df['weight'] = np.where(
-        (df.index < 34), 1/PK4_std, 0)
-    df['std'] = np.where(
-        df['weight'] == 0, 0, df['std']
-    )
+    df['weight'] = 1/PK4_std
+    # np.where(
+        # (df.index < 34), 1/PK4_std, 1/(PK4_std*100))
+    df['std'] = PK4_std
+    # np.where(
+    #     (df.index < 34), df['std'], df['std']*100
+    # )
 
     df.fillna(0, inplace=True)
 

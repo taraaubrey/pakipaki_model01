@@ -100,7 +100,7 @@ def load_truth_data(run_name):
             # Handle different file formats
             if filepath.endswith('.dat'):
                 # Load .dat files as space-delimited
-                truth_data[key] = pd.read_csv(filepath, delim_whitespace=True)
+                truth_data[key] = pd.read_csv(filepath, sep=r'\s+')
             else:
                 truth_data[key] = pd.read_csv(filepath)
             print(f"  Loaded {key}: {filepath} ({len(truth_data[key])} rows)")
@@ -154,7 +154,28 @@ def get_truth_value(obs_row, truth_data):
                     return row['pk4'].values[0]
             return None
 
-        # pk4-diff - use pk4-diff column
+        # ts-pk4 observations - check usecol for column name
+        elif oname == 'ts-pk4' and truth_data.get('pk4-sample-heads') is not None:
+            df = truth_data['pk4-sample-heads']
+            if kper == 1:
+                time_idx = 1
+            elif kper == 2:
+                time_idx = 1 + kstp
+            elif kper == 3:
+                time_idx = 54
+            elif kper == 4:
+                time_idx = 54 + kstp
+            else:
+                return None
+
+            # Use usecol as the column name
+            if 'time' in df.columns and usecol in df.columns:
+                row = df[df['time'] == time_idx]
+                if len(row) > 0:
+                    return row[usecol].values[0]
+            return None
+
+        # pk4-diff - use pk4-diff column (backward compatibility)
         elif oname == 'pk4-diff' and truth_data.get('pk4-sample-heads') is not None:
             df = truth_data['pk4-sample-heads']
             if kper == 1:
@@ -174,7 +195,7 @@ def get_truth_value(obs_row, truth_data):
                     return row['pk4-diff'].values[0]
             return None
 
-        # pk4-spring-diff - use pk4-spr-diff column
+        # pk4-spring-diff - use pk4-spr-diff column (backward compatibility)
         elif oname == 'pk4-spring-diff' and truth_data.get('pk4-sample-heads') is not None:
             df = truth_data['pk4-sample-heads']
             if kper == 1:
@@ -194,7 +215,7 @@ def get_truth_value(obs_row, truth_data):
                     return row['pk4-spr-diff'].values[0]
             return None
 
-        # pk4-aw-diff - use pk4-aw-diff column
+        # pk4-aw-diff - use pk4-aw-diff column (backward compatibility)
         elif oname == 'pk4-aw-diff' and truth_data.get('pk4-sample-heads') is not None:
             df = truth_data['pk4-sample-heads']
             if kper == 1:
@@ -245,22 +266,32 @@ def get_truth_value(obs_row, truth_data):
                     return row['sw'].values[0]
             return None
 
-        # budget-rch - use rch column
+        # budget-rch - use rch or recharge column
         elif oname == 'budget-rch' and truth_data.get('budget') is not None:
             df = truth_data['budget']
-            if 'kper' in df.columns and 'rch' in df.columns:
+            if 'kper' in df.columns:
                 row = df[df['kper'] == kper]
                 if len(row) > 0:
-                    return row['rch'].values[0]
+                    # Try 'rch' first, then 'recharge'
+                    if 'rch' in df.columns:
+                        return row['rch'].values[0]
+                    elif 'recharge' in df.columns:
+                        return row['recharge'].values[0]
             return None
 
         # budget (original handler for other usecol values)
         elif oname == 'budget' and truth_data.get('budget') is not None:
             df = truth_data['budget']
-            if 'kper' in df.columns and usecol in df.columns:
+            if 'kper' in df.columns:
                 row = df[df['kper'] == kper]
                 if len(row) > 0:
-                    return row[usecol].values[0]
+                    # Try usecol first, then check for common aliases
+                    if usecol in df.columns:
+                        return row[usecol].values[0]
+                    elif usecol == 'rch' and 'recharge' in df.columns:
+                        return row['recharge'].values[0]
+                    elif usecol == 'recharge' and 'rch' in df.columns:
+                        return row['rch'].values[0]
             return None
 
         # recession - match by kper and usecol
