@@ -160,15 +160,15 @@ GHB_SW = {
 }
 
 PHI_OBS = {
-        'arr-h': 3, # large penalty for exceeding
-        'budget': 1, # flux obs
-        'arr-spq': 1, # flux obs
-        'arr-awq': 1, # flux obs
-        'ts-pk4': 1, # head obs
-        'ts-pk4-spring': 1,
-        'ts-pk4-diff': 1,
-        'recession': 1,
-        'flux-diff': 1
+        'less_top-heads': 3,
+        'budget-rch': 1,
+        'greater_budget-sw': 1,
+        'spring-q': 1,
+        'aw-q': 1,
+        'pk4-aw-diff': 1,
+        'pk4-spring-diff': 3,
+        'pk4-diff': 1,
+        'pk4-heads': 3,
 }
 
 # parameterization settings (obs)
@@ -178,7 +178,7 @@ SPACE_SUBSAMPLE = 5  # spatial subsampling for pilot points
 # Pest options
 NREALS = 250  # number of realizations for parameterization
 NREALS_PRIOR = 50  # number of realizations for parameterization
-REINFLATE_ITERS = None # iterations at which to reinflate
+REINFLATE_ITERS = [3] # iterations at which to reinflate
 NOPTMAX = 0
 MAXSING = None
 
