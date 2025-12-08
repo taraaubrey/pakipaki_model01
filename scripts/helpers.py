@@ -981,8 +981,10 @@ def create_sprghb_truth(ghb_dfs, spdf, dir):
     Replace all values in the kper, kstp dataframes with the truth values.
     Only valid for kper 1 and kstp 1.
     """
+    spr_fn = Path('output.spring_fluxes.csv')
+    df = pd.read_csv(spr_fn, index_col='time')
 
-    df = ghb_dfs['GHB_SP'].copy()
+    # df = ghb_dfs['GHB_SP'].copy()
     spdf['pk4-spr-diff'].index = spdf['pk4-spr-diff'].index+1
     df = pd.merge(df, spdf['pk4-spr-diff'], left_on='time', right_index=True, how='left')
     df.fillna(1, inplace=True)
@@ -991,14 +993,15 @@ def create_sprghb_truth(ghb_dfs, spdf, dir):
 
     # replace all values with GHB_Q
     df['weight'] = 0
-    df['std'] = GHB_Qstd
-    df['SPq'] = f_guess * df['pk4-spr-diff']
+    df['std'] = np.where(
+        (df['kper'] < 3), GHB_Qstd, 0)
+    df['flux'] = f_guess * df['pk4-spr-diff']
     # set std only on kper 1 and kstp 1
     df['weight'] = np.where(
-        (df['kper'] < 3) & (df['kstp'] < 34), 1/GHB_Qstd, 0)
+        (df['kper'] < 3), 1/GHB_Qstd, 0)
     df['std'] = np.where(df['weight'] == 0, 0, df['std'])
 
-    df.to_csv(Path(dir, f"output.GHB_SP_fluxes.truth.csv"), index=False)
+    df.to_csv(Path(dir, f"output.spring_fluxes.truth.csv"))
     return
 
 def create_confghb_truth(ghb_dfs, dir):

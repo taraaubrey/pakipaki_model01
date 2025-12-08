@@ -254,16 +254,6 @@ def main():
         obsgp='ts-pk4',
     )
 
-    index_cols = ['kper', 'kstp', 'time']
-    obs_use_cols = ['flux']
-    pf.add_observations(
-        'output.spring_fluxes.csv',
-        index_cols=index_cols,
-        use_cols=obs_use_cols, # skip the index column
-        prefix='ts-sprflux',
-        obsgp='ts-sprflux',
-    )
-
     # add budget
     index_cols = ['kper', 'kstp', 'time', 'i', 'j']
     use_cols = ['AWq']
@@ -276,14 +266,14 @@ def main():
     )
 
     # add budget
-    index_cols = ['kper', 'kstp', 'time', 'i', 'j']
-    use_cols = ['SPq']
+    index_cols = ['kper', 'kstp', 'time']
+    use_cols = ['flux']
     pf.add_observations(
-        "output.GHB_SP_fluxes.csv", # this is being read from the template file not the above truth file
+        "output.spring_fluxes.csv", # this is being read from the template file not the above truth file
         index_cols=index_cols,
         use_cols=use_cols, # skip the index column
-        prefix='arr-spq',
-        obsgp='arr-spq',
+        prefix='spq',
+        obsgp='spq',
     )
 
     # add recession
@@ -385,8 +375,8 @@ def main():
     SPq = pd.read_csv(
         os.path.join(
             TRUTH_DIR, 
-            "output.GHB_SP_fluxes.truth.csv"), 
-        index_col=['kper', 'kstp', 'i', 'j'])
+            "output.spring_fluxes.truth.csv"), 
+        index_col=['kper', 'kstp', 'time'])
     # recession_truth = pd.read_csv(
     #     os.path.join(
     #         TRUTH_DIR, 
@@ -482,17 +472,17 @@ def main():
                 if pst.observation_data.at[row.name, 'standard_deviation'] > 0:
                     pst.observation_data.at[row.name, 'weight'] = 1/pst.observation_data.at[row.name, 'standard_deviation']
         
-        elif oname == 'arr-spq':
+        elif oname == 'spq':
             kper = int(row['kper'])
             kstp = int(row['kstp'])
-            i = int(row['i'])
-            j = int(row['j'])
+            time = int(row['time'])
             pst.observation_data.at[row.name, 'obgnme'] = 'spring-q'
             
             if (kper < 3) and (kstp < 35):
-                pst.observation_data.at[row.name, 'obsval'] = SPq.loc[(kper, kstp, i, j), 'SPq']
-                pst.observation_data.at[row.name, 'standard_deviation'] = SPq.loc[(kper, kstp, i, j), 'std']
-                pst.observation_data.at[row.name, 'weight'] = SPq.loc[(kper, kstp, i, j), 'weight']
+                pst.observation_data.at[row.name, 'obsval'] = SPq.loc[(kper, kstp, time), 'flux']
+                pst.observation_data.at[row.name, 'standard_deviation'] = SPq.loc[(kper, kstp, time), 'std']
+                if pst.observation_data.at[row.name, 'standard_deviation'] > 0:
+                    pst.observation_data.at[row.name, 'weight'] = 1/pst.observation_data.at[row.name, 'standard_deviation']
         
         elif oname == 'arr-h':
             i = int(row['i'])

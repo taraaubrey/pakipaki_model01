@@ -164,7 +164,7 @@ PHI_OBS = {
         'budget-rch': 1,
         'greater_budget-sw': 1,
         'spring-q': 1,
-        'aw-q': 1,
+        'aw-q': 0.1,
         'pk4-aw-diff': 1,
         'pk4-spring-diff': 3,
         'pk4-diff': 1,
@@ -178,7 +178,7 @@ SPACE_SUBSAMPLE = 5  # spatial subsampling for pilot points
 # Pest options
 NREALS = 250  # number of realizations for parameterization
 NREALS_PRIOR = 50  # number of realizations for parameterization
-REINFLATE_ITERS = [3] # iterations at which to reinflate
+REINFLATE_ITERS = [3, 3, 5] # iterations at which to reinflate
 NOPTMAX = 0
 MAXSING = None
 

@@ -71,36 +71,49 @@ def load_filtered_realizations(filter_file):
     return df['realization'].tolist()
 
 
-def get_spring_obs_by_kper_kstp(obs_data, spring_i, spring_j):
+def get_spring_obs_by_kper_kstp(obs_data, spring_i=None, spring_j=None):
     """
     Get spring flux observation names organized by kper and kstp.
 
-    Supports both formats:
-    - Old: oname='arr-spq' (array observations)
-    - New: oname='spring-q' (from GHB_SP_fluxes)
+    Supports formats:
+    - ts-sprflux: time series spring flux (preferred)
+    - arr-spq: array observations (for backward compatibility)
+    - spring-q: from GHB_SP_fluxes
 
     Returns dict: {(kper, kstp): obs_name}
     """
-    # Try new format first (oname = 'spring-q')
-    spring_q = obs_data[obs_data['oname'] == 'spring-q'].copy()
+    # Try ts-sprflux format first (oname = 'ts-sprflux' with usecol='flux')
+    ts_sprflux = obs_data[obs_data['oname'] == 'ts-sprflux'].copy()
 
-    if len(spring_q) > 0:
-        spring_q['i'] = pd.to_numeric(spring_q['i'], errors='coerce')
-        spring_q['j'] = pd.to_numeric(spring_q['j'], errors='coerce')
-        spring_q['kper'] = pd.to_numeric(spring_q['kper'], errors='coerce')
-        spring_q['kstp'] = pd.to_numeric(spring_q['kstp'], errors='coerce')
+    if len(ts_sprflux) > 0:
+        print("  Using 'ts-sprflux' observations...")
+        ts_sprflux['kper'] = pd.to_numeric(ts_sprflux['kper'], errors='coerce')
+        ts_sprflux['kstp'] = pd.to_numeric(ts_sprflux['kstp'], errors='coerce')
+        spring = ts_sprflux[ts_sprflux['usecol'] == 'flux']
 
-        spring = spring_q[(spring_q['i'] == spring_i) & (spring_q['j'] == spring_j)]
+    elif spring_i is not None and spring_j is not None:
+        # Try spring-q format (oname = 'spring-q')
+        spring_q = obs_data[obs_data['oname'] == 'spring-q'].copy()
+
+        if len(spring_q) > 0:
+            spring_q['i'] = pd.to_numeric(spring_q['i'], errors='coerce')
+            spring_q['j'] = pd.to_numeric(spring_q['j'], errors='coerce')
+            spring_q['kper'] = pd.to_numeric(spring_q['kper'], errors='coerce')
+            spring_q['kstp'] = pd.to_numeric(spring_q['kstp'], errors='coerce')
+
+            spring = spring_q[(spring_q['i'] == spring_i) & (spring_q['j'] == spring_j)]
+        else:
+            # Fall back to old format (oname = 'arr-spq')
+            print("  No 'spring-q' observations found, trying 'arr-spq'...")
+            arr_spq = obs_data[obs_data['oname'] == 'arr-spq'].copy()
+            arr_spq['i'] = pd.to_numeric(arr_spq['i'], errors='coerce')
+            arr_spq['j'] = pd.to_numeric(arr_spq['j'], errors='coerce')
+            arr_spq['kper'] = pd.to_numeric(arr_spq['kper'], errors='coerce')
+            arr_spq['kstp'] = pd.to_numeric(arr_spq['kstp'], errors='coerce')
+
+            spring = arr_spq[(arr_spq['i'] == spring_i) & (arr_spq['j'] == spring_j)]
     else:
-        # Fall back to old format (oname = 'arr-spq')
-        print("  No 'spring-q' observations found, trying 'arr-spq'...")
-        arr_spq = obs_data[obs_data['oname'] == 'arr-spq'].copy()
-        arr_spq['i'] = pd.to_numeric(arr_spq['i'], errors='coerce')
-        arr_spq['j'] = pd.to_numeric(arr_spq['j'], errors='coerce')
-        arr_spq['kper'] = pd.to_numeric(arr_spq['kper'], errors='coerce')
-        arr_spq['kstp'] = pd.to_numeric(arr_spq['kstp'], errors='coerce')
-
-        spring = arr_spq[(arr_spq['i'] == spring_i) & (arr_spq['j'] == spring_j)]
+        spring = pd.DataFrame()
 
     obs_dict = {}
     for idx, row in spring.iterrows():
@@ -109,6 +122,47 @@ def get_spring_obs_by_kper_kstp(obs_data, spring_i, spring_j):
         obs_dict[(kper, kstp)] = idx
 
     return obs_dict, spring
+
+
+def load_spring_truth_data(truth_file='truth/output.spring_flux_differences.csv'):
+    """
+    Load spring flux truth data.
+
+    File format:
+    - kstp: time step
+    - present_q: flux for present period (kper 2)
+    - past_q: flux for past period (kper 4)
+    - diff: difference between periods
+
+    Returns dict: {(kper, kstp): truth_value}
+    """
+    if not os.path.exists(truth_file):
+        print(f"  Truth file not found: {truth_file}")
+        return {}
+
+    try:
+        truth_df = pd.read_csv(truth_file, index_col=0)
+
+        truth_dict = {}
+
+        for idx, row in truth_df.iterrows():
+            # kstp can be 'ss' for steady state or a number
+            if idx == 0:  # First row is steady state
+                kstp_val = 1
+                # Steady state for both present (kper 1) and past (kper 3)
+                truth_dict[(1, 1)] = row['present_q']
+                truth_dict[(3, 1)] = row['past_q']
+            else:
+                kstp_val = int(row['kstp'])
+                # Present period (kper 2)
+                truth_dict[(2, kstp_val)] = row['present_q']
+                # Past period (kper 4)
+                truth_dict[(4, kstp_val)] = row['past_q']
+
+        return truth_dict
+    except Exception as e:
+        print(f"  Error loading truth file: {e}")
+        return {}
 
 
 def create_spring_distribution_plot(run_name, model_name, post_iter=19, filter_file=None,
@@ -166,13 +220,20 @@ def create_spring_distribution_plot(run_name, model_name, post_iter=19, filter_f
         {'name': 'End of recession', 'present': (2, last_kstp_2), 'past': (4, last_kstp_4)},
     ]
 
-    # Get observation names for each comparison
+    # Load truth data
+    print(f"\nLoading truth data...")
+    truth_data = load_spring_truth_data()
+    print(f"  Found {len(truth_data)} truth values")
+
+    # Get observation names and truth values for each comparison
     for comp in comparisons:
         comp['present_obs'] = obs_dict.get(comp['present'])
         comp['past_obs'] = obs_dict.get(comp['past'])
+        comp['present_truth'] = truth_data.get(comp['present'])
+        comp['past_truth'] = truth_data.get(comp['past'])
         print(f"\n{comp['name']}:")
-        print(f"  Present {comp['present']}: {comp['present_obs']}")
-        print(f"  Past {comp['past']}: {comp['past_obs']}")
+        print(f"  Present {comp['present']}: {comp['present_obs']} (truth: {comp['present_truth']})")
+        print(f"  Past {comp['past']}: {comp['past_obs']} (truth: {comp['past_truth']})")
 
     # Load filtered realizations if specified
     filtered_ids = load_filtered_realizations(filter_file)
@@ -309,6 +370,8 @@ def create_spring_distribution_plot(run_name, model_name, post_iter=19, filter_f
     for col_idx, comp in enumerate(comparisons):
         present_obs = comp['present_obs']
         past_obs = comp['past_obs']
+        present_truth = comp['present_truth']
+        past_truth = comp['past_truth']
 
         # Get axes for this column
         ax_present = axes[0, col_idx]
@@ -359,6 +422,10 @@ def create_spring_distribution_plot(run_name, model_name, post_iter=19, filter_f
             # Set x-axis limits based on filtered posterior
             ax_present.set_xlim(xlim_present)
 
+            # Add truth line if available
+            if present_truth is not None:
+                ax_present.axvline(present_truth, color='black', linestyle=':', linewidth=2.5, label='Truth', zorder=10)
+
         ax_present.set_xlabel('Spring Flux (m³/d)', fontsize=9)
         ax_present.set_ylabel('Frequency', fontsize=9)
         ax_present.set_title(titles[(0, col_idx)], fontsize=6, fontweight='bold', loc='left')
@@ -394,6 +461,10 @@ def create_spring_distribution_plot(run_name, model_name, post_iter=19, filter_f
 
             # Set x-axis limits based on filtered posterior
             ax_past.set_xlim(xlim_past)
+
+            # Add truth line if available
+            if past_truth is not None:
+                ax_past.axvline(past_truth, color='black', linestyle=':', linewidth=2.5, label='Truth', zorder=10)
 
         ax_past.set_xlabel('Spring Flux (m³/d)', fontsize=9)
         ax_past.set_ylabel('Frequency', fontsize=9)
@@ -431,6 +502,11 @@ def create_spring_distribution_plot(run_name, model_name, post_iter=19, filter_f
 
             # Set x-axis limits based on filtered posterior
             ax_diff.set_xlim(xlim_diff)
+
+            # Add truth line if both present and past truth are available
+            if present_truth is not None and past_truth is not None:
+                truth_diff = past_truth - present_truth
+                ax_diff.axvline(truth_diff, color='black', linestyle=':', linewidth=2.5, label='Truth', zorder=10)
 
         ax_diff.set_xlabel('Flux Difference (m³/d)', fontsize=9)
         ax_diff.set_ylabel('Frequency', fontsize=9)
@@ -483,15 +559,15 @@ def create_spring_distribution_plot(run_name, model_name, post_iter=19, filter_f
         # Filter out kstp 1-2 (start from kstp 3)
         kstps_2 = sorted([k for k in kper2_obs.keys() if k >= 3])
 
-        # Plot prior ensemble lines (grey)
+        # Plot prior ensemble lines (grey) - reduced alpha for less emphasis
         for real_id in prior_temporal.index:
             vals = [prior_temporal.loc[real_id, kper2_obs[kstp]] for kstp in kstps_2]
-            ax_present.plot(kstps_2, vals, color=colors['prior'], alpha=0.15, linewidth=0.5)
+            ax_present.plot(kstps_2, vals, color=colors['prior'], alpha=0.08, linewidth=0.5)
 
-        # Plot posterior ensemble lines (orange)
+        # Plot posterior ensemble lines (orange) - reduced alpha for less emphasis
         for real_id in post_temporal.index:
             vals = [post_temporal.loc[real_id, kper2_obs[kstp]] for kstp in kstps_2]
-            ax_present.plot(kstps_2, vals, color=colors['post_present'], alpha=0.4, linewidth=0.5)
+            ax_present.plot(kstps_2, vals, color=colors['post_present'], alpha=0.15, linewidth=0.5)
 
         # Calculate statistics for posterior
         post_p10 = [np.percentile(post_temporal[kper2_obs[kstp]].values, 10) for kstp in kstps_2]
@@ -515,6 +591,11 @@ def create_spring_distribution_plot(run_name, model_name, post_iter=19, filter_f
         ax_present.plot(kstps_2, post_mean_plus_std, color=colors['post_present'], linewidth=1, linestyle='-.', alpha=0.7, label='Mean±1σ')
         ax_present.plot(kstps_2, post_mean_minus_std, color=colors['post_present'], linewidth=1, linestyle='-.', alpha=0.7)
 
+        # Plot truth line if available
+        truth_vals_present = [truth_data.get((2, kstp)) for kstp in kstps_2]
+        if all(v is not None for v in truth_vals_present):
+            ax_present.plot(kstps_2, truth_vals_present, color='black', linewidth=3, label='Truth', zorder=100)
+
         # Set y-axis limits based on posterior values
         all_post_vals_2 = np.concatenate([post_temporal[kper2_obs[kstp]].values for kstp in kstps_2])
         ax_present.set_ylim(np.min(all_post_vals_2), np.max(all_post_vals_2))
@@ -531,15 +612,15 @@ def create_spring_distribution_plot(run_name, model_name, post_iter=19, filter_f
         # Filter out kstp 1-2 (start from kstp 3)
         kstps_4 = sorted([k for k in kper4_obs.keys() if k >= 3])
 
-        # Plot prior ensemble lines (grey)
+        # Plot prior ensemble lines (grey) - reduced alpha for less emphasis
         for real_id in prior_temporal.index:
             vals = [prior_temporal.loc[real_id, kper4_obs[kstp]] for kstp in kstps_4]
-            ax_past.plot(kstps_4, vals, color=colors['prior'], alpha=0.15, linewidth=0.5)
+            ax_past.plot(kstps_4, vals, color=colors['prior'], alpha=0.08, linewidth=0.5)
 
-        # Plot posterior ensemble lines (purple)
+        # Plot posterior ensemble lines (purple) - reduced alpha for less emphasis
         for real_id in post_temporal.index:
             vals = [post_temporal.loc[real_id, kper4_obs[kstp]] for kstp in kstps_4]
-            ax_past.plot(kstps_4, vals, color=colors['post_past'], alpha=0.15, linewidth=0.5)
+            ax_past.plot(kstps_4, vals, color=colors['post_past'], alpha=0.08, linewidth=0.5)
 
         # Calculate statistics for posterior
         post_p10_4 = [np.percentile(post_temporal[kper4_obs[kstp]].values, 10) for kstp in kstps_4]
@@ -562,6 +643,11 @@ def create_spring_distribution_plot(run_name, model_name, post_iter=19, filter_f
         ax_past.plot(kstps_4, post_p90_4, color=colors['post_past'], linewidth=1, linestyle=':')
         ax_past.plot(kstps_4, post_mean_plus_std_4, color=colors['post_past'], linewidth=1, linestyle='-.', alpha=0.7, label='Mean±1σ')
         ax_past.plot(kstps_4, post_mean_minus_std_4, color=colors['post_past'], linewidth=1, linestyle='-.', alpha=0.7)
+
+        # Plot truth line if available
+        truth_vals_past = [truth_data.get((4, kstp)) for kstp in kstps_4]
+        if all(v is not None for v in truth_vals_past):
+            ax_past.plot(kstps_4, truth_vals_past, color='black', linewidth=3, label='Truth', zorder=100)
 
         # Set y-axis limits based on posterior values
         all_post_vals_4 = np.concatenate([post_temporal[kper4_obs[kstp]].values for kstp in kstps_4])
