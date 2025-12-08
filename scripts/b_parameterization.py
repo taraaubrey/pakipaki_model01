@@ -597,7 +597,7 @@ def main():
         if np.sum(weights) == 0:
             continue
 
-        phi_factor = PHI_OBS.get(oname, None)
+        phi_factor = PHI_OBS.get(obgnme, None)
         if phi_factor:
             # Keep the full obgnme including any less_/greater_ prefix
             phi_obgnme[obgnme] = phi_factor

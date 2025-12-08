@@ -160,9 +160,9 @@ GHB_SW = {
 }
 
 PHI_OBS = {
-        'top-heads': 3,
+        'less_top-heads': 3,
         'budget-rch': 1,
-        'budget-sw': 1,
+        'greater_budget-sw': 1,
         'spring-q': 1,
         'aw-q': 1,
         'pk4-aw-diff': 1,
