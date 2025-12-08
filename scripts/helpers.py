@@ -793,7 +793,7 @@ def extract_model_heads(model_name, gwf=None, sample_path=None):
         ghb_h.set_index('ts_time', inplace=True)
 
         df = pd.merge(all_samples, ghb_h, how='left', right_index=True, left_on='time')
-        return df[ghb_col] - df['pk4']
+        return df['pk4'] - df[ghb_col]
 
     _, gwf = get_gwf(gwf, model_name)
     kstpkper = gwf.output.head().get_kstpkper()
