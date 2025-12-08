@@ -6,7 +6,7 @@ showing present vs past across different stress periods.
 
 Supports both observation formats:
 - New format: oname='pk4-heads' (from models/{run_name}/truth/output.sample_heads.truth.csv)
-- Old format: oname='ts-heads' with usecol='pk4'
+- Old format: oname='pk4-heads' with usecol='pk4'
 
 Usage:
     python scripts/pp_pk4heads_predictions.py run_name [options]
@@ -77,7 +77,7 @@ def get_pk4_obs_by_kper_kstp(obs_data):
     Get pk4 head observation names organized by kper and kstp.
 
     Looks for both:
-    - Old format: oname='ts-heads' with usecol='pk4'
+    - Old format: oname='pk4-heads' with usecol='pk4'
     - New format: oname='pk4-heads'
 
     Returns dict: {(kper, kstp): obs_name}
@@ -85,10 +85,10 @@ def get_pk4_obs_by_kper_kstp(obs_data):
     # Try new format first (oname = 'pk4-heads')
     pk4_heads = obs_data[obs_data['oname'] == 'pk4-heads'].copy()
 
-    # If not found, try old format (ts-heads with usecol = pk4)
+    # If not found, try old format (pk4-heads with usecol = pk4)
     if len(pk4_heads) == 0:
-        print("  No 'pk4-heads' observations found, trying 'ts-heads' with usecol='pk4'...")
-        ts_heads = obs_data[obs_data['oname'] == 'ts-heads'].copy()
+        print("  No 'pk4-heads' observations found, trying 'pk4-heads' with usecol='pk4'...")
+        ts_heads = obs_data[obs_data['oname'] == 'pk4-heads'].copy()
         pk4_heads = ts_heads[ts_heads['usecol'] == 'pk4'].copy()
 
     pk4_heads['kper'] = pd.to_numeric(pk4_heads['kper'], errors='coerce')

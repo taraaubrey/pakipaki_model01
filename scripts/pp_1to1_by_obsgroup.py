@@ -9,7 +9,7 @@ Truth data sources:
 - aw-q: truth/output.GHB_AW_fluxes.truth.csv (column AWq)
 - spring-q: truth/output.GHB_SP_fluxes.truth.csv (column SPq)
 - budget-sw, budget-rch: truth/output.budget.truth.csv (columns sw, rch)
-- ts-heads: truth/output.sample_heads.truth.csv
+- pk4-heads: truth/output.sample_heads.truth.csv
 - recession: truth/output.sample_recession_rates.truth.csv
 - top-heads: truth/output.heads.truth.dat (excluded from plots)
 
@@ -86,7 +86,7 @@ def load_truth_data(run_name):
         'pk4-sample-heads': os.path.join(model_truth_dir, 'output.sample_heads.truth.csv'),
 
         # Global truth files
-        'ts-heads': os.path.join(truth_dir, 'output.sample_heads.truth.csv'),
+        'pk4-heads': os.path.join(truth_dir, 'output.sample_heads.truth.csv'),
         'budget': os.path.join(truth_dir, 'output.budget.truth.csv'),
         'awq': os.path.join(truth_dir, 'output.GHB_AW_fluxes.truth.csv'),
         'spq': os.path.join(truth_dir, 'output.GHB_SP_fluxes.truth.csv'),
@@ -135,7 +135,7 @@ def get_truth_value(obs_row, truth_data):
         # pk4-heads - use pk4 column from model-specific truth file
         if oname == 'pk4-heads' and truth_data.get('pk4-sample-heads') is not None:
             df = truth_data['pk4-sample-heads']
-            # Map kper/kstp to time index (same logic as ts-heads)
+            # Map kper/kstp to time index (same logic as pk4-heads)
             if kper == 1:
                 time_idx = 1
             elif kper == 2:
@@ -214,9 +214,9 @@ def get_truth_value(obs_row, truth_data):
                     return row['pk4-aw-diff'].values[0]
             return None
 
-        # ts-heads
-        elif oname == 'ts-heads' and truth_data.get('ts-heads') is not None:
-            df = truth_data['ts-heads']
+        # pk4-heads
+        elif oname == 'pk4-heads' and truth_data.get('pk4-heads') is not None:
+            df = truth_data['pk4-heads']
             # Map kper/kstp to time index
             if kper == 1:
                 time_idx = 1
