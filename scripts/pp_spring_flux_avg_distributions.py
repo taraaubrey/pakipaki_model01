@@ -70,16 +70,29 @@ def get_spring_obs_by_kper_kstp(obs_data):
     """
     Get all spring flux observation names organized by kper and kstp.
 
+    Supports both formats:
+    - Old: oname='arr-spq' (array observations)
+    - New: oname='spring-q' (from GHB_SP_fluxes)
+
     Returns dict: {(kper, kstp): [list of obs_names]}
     """
-    arr_spq = obs_data[obs_data['oname'] == 'arr-spq'].copy()
-    arr_spq['i'] = pd.to_numeric(arr_spq['i'], errors='coerce')
-    arr_spq['j'] = pd.to_numeric(arr_spq['j'], errors='coerce')
-    arr_spq['kper'] = pd.to_numeric(arr_spq['kper'], errors='coerce')
-    arr_spq['kstp'] = pd.to_numeric(arr_spq['kstp'], errors='coerce')
+    # Try new format first (oname = 'spring-q')
+    spring_q = obs_data[obs_data['oname'] == 'spring-q'].copy()
+
+    if len(spring_q) > 0:
+        spring_df = spring_q
+    else:
+        # Fall back to old format (oname = 'arr-spq')
+        print("  No 'spring-q' observations found, trying 'arr-spq'...")
+        spring_df = obs_data[obs_data['oname'] == 'arr-spq'].copy()
+
+    spring_df['i'] = pd.to_numeric(spring_df['i'], errors='coerce')
+    spring_df['j'] = pd.to_numeric(spring_df['j'], errors='coerce')
+    spring_df['kper'] = pd.to_numeric(spring_df['kper'], errors='coerce')
+    spring_df['kstp'] = pd.to_numeric(spring_df['kstp'], errors='coerce')
 
     obs_dict = {}
-    for idx, row in arr_spq.iterrows():
+    for idx, row in spring_df.iterrows():
         kper = int(row['kper'])
         kstp = int(row['kstp']) if pd.notna(row['kstp']) else 1
         key = (kper, kstp)
@@ -87,7 +100,7 @@ def get_spring_obs_by_kper_kstp(obs_data):
             obs_dict[key] = []
         obs_dict[key].append(idx)
 
-    return obs_dict, arr_spq
+    return obs_dict, spring_df
 
 
 def create_spring_avg_distribution_plot(run_name, model_name, post_iter=19, filter_file=None,

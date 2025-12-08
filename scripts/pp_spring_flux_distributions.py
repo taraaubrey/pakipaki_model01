@@ -75,15 +75,32 @@ def get_spring_obs_by_kper_kstp(obs_data, spring_i, spring_j):
     """
     Get spring flux observation names organized by kper and kstp.
 
+    Supports both formats:
+    - Old: oname='arr-spq' (array observations)
+    - New: oname='spring-q' (from GHB_SP_fluxes)
+
     Returns dict: {(kper, kstp): obs_name}
     """
-    arr_spq = obs_data[obs_data['oname'] == 'arr-spq'].copy()
-    arr_spq['i'] = pd.to_numeric(arr_spq['i'], errors='coerce')
-    arr_spq['j'] = pd.to_numeric(arr_spq['j'], errors='coerce')
-    arr_spq['kper'] = pd.to_numeric(arr_spq['kper'], errors='coerce')
-    arr_spq['kstp'] = pd.to_numeric(arr_spq['kstp'], errors='coerce')
+    # Try new format first (oname = 'spring-q')
+    spring_q = obs_data[obs_data['oname'] == 'spring-q'].copy()
 
-    spring = arr_spq[(arr_spq['i'] == spring_i) & (arr_spq['j'] == spring_j)]
+    if len(spring_q) > 0:
+        spring_q['i'] = pd.to_numeric(spring_q['i'], errors='coerce')
+        spring_q['j'] = pd.to_numeric(spring_q['j'], errors='coerce')
+        spring_q['kper'] = pd.to_numeric(spring_q['kper'], errors='coerce')
+        spring_q['kstp'] = pd.to_numeric(spring_q['kstp'], errors='coerce')
+
+        spring = spring_q[(spring_q['i'] == spring_i) & (spring_q['j'] == spring_j)]
+    else:
+        # Fall back to old format (oname = 'arr-spq')
+        print("  No 'spring-q' observations found, trying 'arr-spq'...")
+        arr_spq = obs_data[obs_data['oname'] == 'arr-spq'].copy()
+        arr_spq['i'] = pd.to_numeric(arr_spq['i'], errors='coerce')
+        arr_spq['j'] = pd.to_numeric(arr_spq['j'], errors='coerce')
+        arr_spq['kper'] = pd.to_numeric(arr_spq['kper'], errors='coerce')
+        arr_spq['kstp'] = pd.to_numeric(arr_spq['kstp'], errors='coerce')
+
+        spring = arr_spq[(arr_spq['i'] == spring_i) & (arr_spq['j'] == spring_j)]
 
     obs_dict = {}
     for idx, row in spring.iterrows():

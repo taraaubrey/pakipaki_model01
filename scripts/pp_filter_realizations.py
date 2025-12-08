@@ -92,7 +92,7 @@ def parse_args():
         '--min-awq',
         type=float,
         default=None,
-        help='Minimum Awanui flux threshold - filter out realizations with any arr-awq below this value (e.g., -100)'
+        help='Minimum Awanui flux threshold - filter out realizations with any Awanui flux (aw-q or arr-awq) below this value (e.g., -100)'
     )
 
     parser.add_argument(
@@ -258,12 +258,23 @@ def filter_by_min_head(oe, obs_data, min_head):
 def filter_by_min_awq(oe, obs_data, min_awq):
     """
     Filter ensemble by minimum Awanui flux threshold.
-    Removes realizations where any arr-awq observation is below threshold.
+    Removes realizations where any Awanui flux observation is below threshold.
+
+    Supports both formats:
+    - Old: oname='arr-awq'
+    - New: oname='aw-q'
 
     Returns mask of realizations to keep.
     """
-    # Get arr-awq observation names
-    awq_obs = obs_data[obs_data['oname'] == 'arr-awq'].index.tolist()
+    # Try new format first (oname = 'aw-q')
+    awq_obs = obs_data[obs_data['oname'] == 'aw-q'].index.tolist()
+
+    # Fall back to old format if needed
+    if len(awq_obs) == 0:
+        awq_obs = obs_data[obs_data['oname'] == 'arr-awq'].index.tolist()
+        oname_used = 'arr-awq'
+    else:
+        oname_used = 'aw-q'
 
     if len(awq_obs) > 0:
         awq_cols = [col for col in oe.columns if col in awq_obs]
@@ -271,14 +282,14 @@ def filter_by_min_awq(oe, obs_data, min_awq):
             # Check minimum awq for each realization
             min_awq_per_real = oe[awq_cols].min(axis=1)
             mask = min_awq_per_real >= min_awq
-            print(f"  Filter (min arr-awq >= {min_awq}): {mask.sum()} realizations pass")
-            print(f"    Min arr-awq range: {min_awq_per_real.min():.2f} to {min_awq_per_real.max():.2f}")
+            print(f"  Filter (min {oname_used} >= {min_awq}): {mask.sum()} realizations pass")
+            print(f"    Min {oname_used} range: {min_awq_per_real.min():.2f} to {min_awq_per_real.max():.2f}")
             return mask
         else:
-            print(f"  Warning: No arr-awq observations found in ensemble, skipping min awq filter")
+            print(f"  Warning: No {oname_used} observations found in ensemble, skipping min awq filter")
             return pd.Series([True] * len(oe), index=oe.index)
     else:
-        print(f"  Warning: No arr-awq observations found, skipping min awq filter")
+        print(f"  Warning: No Awanui flux observations found, skipping min awq filter")
         return pd.Series([True] * len(oe), index=oe.index)
 
 

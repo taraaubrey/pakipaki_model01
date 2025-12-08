@@ -73,40 +73,58 @@ def get_budget_obs(obs_data):
     """
     Get budget observation names organized by type and kper.
 
+    Supports both formats:
+    - Old: oname='budget' with usecol patterns
+    - New: oname='budget-sw', 'budget-rch', etc.
+
     Returns dict: {budget_type: {kper: obs_name}}
     """
-    # Filter budget observations
-    budget_obs = obs_data[obs_data['oname'] == 'budget'].copy()
-
-    if len(budget_obs) == 0:
-        print("  No budget observations found with oname='budget'")
-        return {}
-
-    budget_obs['kper'] = pd.to_numeric(budget_obs['kper'], errors='coerce')
-
-    # Define budget types to look for in usecol field
-    budget_types = {
-        'Awanui': ['awanui'],
-        'Poukawa': ['poukawa'],
-        'Spring': ['spring'],
-        'Confined': ['confined'],
-        'Recharge': ['recharge'],
-    }
-
     result = {}
 
-    for btype, usecol_patterns in budget_types.items():
+    # Define budget types and their patterns
+    budget_mappings = {
+        'Awanui': {'old_patterns': ['awanui'], 'new_oname': 'budget-aw'},
+        'Poukawa': {'old_patterns': ['poukawa'], 'new_oname': 'budget-pw'},
+        'Spring': {'old_patterns': ['spring'], 'new_oname': 'budget-spring'},
+        'Confined': {'old_patterns': ['confined'], 'new_oname': 'budget-conf'},
+        'Recharge': {'old_patterns': ['recharge', 'rch'], 'new_oname': 'budget-rch'},
+        'Surface Water': {'old_patterns': ['sw'], 'new_oname': 'budget-sw'},
+        'Storage': {'old_patterns': ['stoss', 'storage'], 'new_oname': 'budget-storage'},
+    }
+
+    for btype, mapping in budget_mappings.items():
         result[btype] = {}
 
-        for idx, row in budget_obs.iterrows():
-            usecol = str(row.get('usecol', '')).lower()
+        # Try new format first (oname = 'budget-sw', 'budget-rch', etc.)
+        new_oname = mapping['new_oname']
+        new_obs = obs_data[obs_data['oname'] == new_oname].copy()
 
-            # Check if this observation matches the budget type
-            for pattern in usecol_patterns:
-                if pattern == usecol:
-                    kper = int(row['kper']) if pd.notna(row['kper']) else 1
-                    result[btype][kper] = idx
-                    break
+        if len(new_obs) > 0:
+            new_obs['kper'] = pd.to_numeric(new_obs['kper'], errors='coerce')
+            for idx, row in new_obs.iterrows():
+                kper = int(row['kper']) if pd.notna(row['kper']) else 1
+                result[btype][kper] = idx
+        else:
+            # Fall back to old format (oname = 'budget' with usecol)
+            budget_obs = obs_data[obs_data['oname'] == 'budget'].copy()
+            if len(budget_obs) > 0:
+                budget_obs['kper'] = pd.to_numeric(budget_obs['kper'], errors='coerce')
+
+                for idx, row in budget_obs.iterrows():
+                    usecol = str(row.get('usecol', '')).lower()
+
+                    # Check if this observation matches the budget type
+                    for pattern in mapping['old_patterns']:
+                        if pattern == usecol:
+                            kper = int(row['kper']) if pd.notna(row['kper']) else 1
+                            result[btype][kper] = idx
+                            break
+
+    # Remove empty budget types
+    result = {k: v for k, v in result.items() if len(v) > 0}
+
+    if len(result) == 0:
+        print("  No budget observations found")
 
     return result
 

@@ -5,10 +5,13 @@ Creates 1:1 plots for each observation group (oname) and unique usecol combinati
 Excludes zero-weight observations and constraint observations (less_than/greater_than).
 
 Truth data sources:
+- pk4-heads, pk4-diff, pk4-spring-diff, pk4-aw-diff: models/{MODEL_NAME}/truth/output.sample_heads.truth.csv
+- aw-q: truth/output.GHB_AW_fluxes.truth.csv (column AWq)
+- spring-q: truth/output.GHB_SP_fluxes.truth.csv (column SPq)
+- budget-sw, budget-rch: truth/output.budget.truth.csv (columns sw, rch)
 - ts-heads: truth/output.sample_heads.truth.csv
-- budget: truth/output.budget.truth.csv
-- awq: truth/output.GHB_AW_fluxes.truth.csv
 - recession: truth/output.sample_recession_rates.truth.csv
+- top-heads: truth/output.heads.truth.dat (excluded from plots)
 
 Usage:
     python scripts/pp_1to1_by_obsgroup.py run_name [options]
@@ -66,25 +69,40 @@ def load_filtered_realizations(filter_file):
     return df['realization'].tolist()
 
 
-def load_truth_data():
+def load_truth_data(run_name):
     """
     Load all truth data files.
+
+    Args:
+        run_name: Run name for locating model-specific truth files
 
     Returns dict of DataFrames: {filename: DataFrame}
     """
     truth_dir = 'truth'
+    model_truth_dir = os.path.join('models', run_name, 'truth')
+
     truth_files = {
+        # Model-specific truth files
+        'pk4-sample-heads': os.path.join(model_truth_dir, 'output.sample_heads.truth.csv'),
+
+        # Global truth files
         'ts-heads': os.path.join(truth_dir, 'output.sample_heads.truth.csv'),
         'budget': os.path.join(truth_dir, 'output.budget.truth.csv'),
         'awq': os.path.join(truth_dir, 'output.GHB_AW_fluxes.truth.csv'),
         'spq': os.path.join(truth_dir, 'output.GHB_SP_fluxes.truth.csv'),
         'recession': os.path.join(truth_dir, 'output.sample_recession_rates.truth.csv'),
+        'top-heads': os.path.join(truth_dir, 'output.heads.truth.dat'),
     }
 
     truth_data = {}
     for key, filepath in truth_files.items():
         if os.path.exists(filepath):
-            truth_data[key] = pd.read_csv(filepath)
+            # Handle different file formats
+            if filepath.endswith('.dat'):
+                # Load .dat files as space-delimited
+                truth_data[key] = pd.read_csv(filepath, delim_whitespace=True)
+            else:
+                truth_data[key] = pd.read_csv(filepath)
             print(f"  Loaded {key}: {filepath} ({len(truth_data[key])} rows)")
         else:
             print(f"  Warning: {key} truth file not found: {filepath}")
@@ -114,8 +132,90 @@ def get_truth_value(obs_row, truth_data):
         kper = int(kper) if pd.notna(kper) else 1
         kstp = int(kstp) if pd.notna(kstp) else 1
 
+        # pk4-heads - use pk4 column from model-specific truth file
+        if oname == 'pk4-heads' and truth_data.get('pk4-sample-heads') is not None:
+            df = truth_data['pk4-sample-heads']
+            # Map kper/kstp to time index (same logic as ts-heads)
+            if kper == 1:
+                time_idx = 1
+            elif kper == 2:
+                time_idx = 1 + kstp
+            elif kper == 3:
+                time_idx = 54
+            elif kper == 4:
+                time_idx = 54 + kstp
+            else:
+                return None
+
+            # Find row with this time and use pk4 column
+            if 'time' in df.columns and 'pk4' in df.columns:
+                row = df[df['time'] == time_idx]
+                if len(row) > 0:
+                    return row['pk4'].values[0]
+            return None
+
+        # pk4-diff - use pk4-diff column
+        elif oname == 'pk4-diff' and truth_data.get('pk4-sample-heads') is not None:
+            df = truth_data['pk4-sample-heads']
+            if kper == 1:
+                time_idx = 1
+            elif kper == 2:
+                time_idx = 1 + kstp
+            elif kper == 3:
+                time_idx = 54
+            elif kper == 4:
+                time_idx = 54 + kstp
+            else:
+                return None
+
+            if 'time' in df.columns and 'pk4-diff' in df.columns:
+                row = df[df['time'] == time_idx]
+                if len(row) > 0:
+                    return row['pk4-diff'].values[0]
+            return None
+
+        # pk4-spring-diff - use pk4-spr-diff column
+        elif oname == 'pk4-spring-diff' and truth_data.get('pk4-sample-heads') is not None:
+            df = truth_data['pk4-sample-heads']
+            if kper == 1:
+                time_idx = 1
+            elif kper == 2:
+                time_idx = 1 + kstp
+            elif kper == 3:
+                time_idx = 54
+            elif kper == 4:
+                time_idx = 54 + kstp
+            else:
+                return None
+
+            if 'time' in df.columns and 'pk4-spr-diff' in df.columns:
+                row = df[df['time'] == time_idx]
+                if len(row) > 0:
+                    return row['pk4-spr-diff'].values[0]
+            return None
+
+        # pk4-aw-diff - use pk4-aw-diff column
+        elif oname == 'pk4-aw-diff' and truth_data.get('pk4-sample-heads') is not None:
+            df = truth_data['pk4-sample-heads']
+            if kper == 1:
+                time_idx = 1
+            elif kper == 2:
+                time_idx = 1 + kstp
+            elif kper == 3:
+                time_idx = 54
+            elif kper == 4:
+                time_idx = 54 + kstp
+            else:
+                return None
+
+            if 'time' in df.columns and 'pk4-aw-diff' in df.columns:
+                row = df[df['time'] == time_idx]
+                if len(row) > 0:
+                    return row['pk4-aw-diff'].values[0]
+            return None
+
         # ts-heads
-        if oname == 'ts-heads' and truth_data.get('ts-heads') is not None:
+        elif oname == 'ts-heads' and truth_data.get('ts-heads') is not None:
             df = truth_data['ts-heads']
             # Map kper/kstp to time index
             if kper == 1:
@@ -136,7 +236,25 @@ def get_truth_value(obs_row, truth_data):
                     return row[usecol].values[0]
             return None
 
-        # budget
+        # budget-sw - use sw column
+        elif oname == 'budget-sw' and truth_data.get('budget') is not None:
+            df = truth_data['budget']
+            if 'kper' in df.columns and 'sw' in df.columns:
+                row = df[df['kper'] == kper]
+                if len(row) > 0:
+                    return row['sw'].values[0]
+            return None
+
+        # budget-rch - use rch column
+        elif oname == 'budget-rch' and truth_data.get('budget') is not None:
+            df = truth_data['budget']
+            if 'kper' in df.columns and 'rch' in df.columns:
+                row = df[df['kper'] == kper]
+                if len(row) > 0:
+                    return row['rch'].values[0]
+            return None
+
+        # budget (original handler for other usecol values)
         elif oname == 'budget' and truth_data.get('budget') is not None:
             df = truth_data['budget']
             if 'kper' in df.columns and usecol in df.columns:
@@ -154,7 +272,22 @@ def get_truth_value(obs_row, truth_data):
                     return row[usecol].values[0]
             return None
 
-        # arr-awq - match by kper, kstp, i, j
+        # aw-q - use AWq column from GHB_AW_fluxes
+        elif oname == 'aw-q' and truth_data.get('awq') is not None:
+            df = truth_data['awq']
+            i = obs_row.get('i')
+            j = obs_row.get('j')
+            if i is not None and j is not None:
+                i = int(i)
+                j = int(j)
+                # Match by kper, kstp, i, j
+                mask = (df['kper'] == kper) & (df['kstp'] == kstp) & (df['i'] == i) & (df['j'] == j)
+                row = df[mask]
+                if len(row) > 0 and 'AWq' in df.columns:
+                    return row['AWq'].values[0]
+            return None
+
+        # arr-awq - match by kper, kstp, i, j (original handler)
         elif oname == 'arr-awq' and truth_data.get('awq') is not None:
             df = truth_data['awq']
             i = obs_row.get('i')
@@ -169,7 +302,22 @@ def get_truth_value(obs_row, truth_data):
                     return row['AWq'].values[0]
             return None
 
-        # arr-spq - match by kper, kstp, i, j
+        # spring-q - use SPq column from GHB_SP_fluxes
+        elif oname == 'spring-q' and truth_data.get('spq') is not None:
+            df = truth_data['spq']
+            i = obs_row.get('i')
+            j = obs_row.get('j')
+            if i is not None and j is not None:
+                i = int(i)
+                j = int(j)
+                # Match by kper, kstp, i, j
+                mask = (df['kper'] == kper) & (df['kstp'] == kstp) & (df['i'] == i) & (df['j'] == j)
+                row = df[mask]
+                if len(row) > 0 and 'SPq' in df.columns:
+                    return row['SPq'].values[0]
+            return None
+
+        # arr-spq - match by kper, kstp, i, j (original handler)
         elif oname == 'arr-spq' and truth_data.get('spq') is not None:
             df = truth_data['spq']
             i = obs_row.get('i')
@@ -182,6 +330,26 @@ def get_truth_value(obs_row, truth_data):
                 row = df[mask]
                 if len(row) > 0 and 'SPq' in df.columns:
                     return row['SPq'].values[0]
+            return None
+
+        # top-heads - excluded from plots, but handler provided for completeness
+        elif oname == 'top-heads' and truth_data.get('top-heads') is not None:
+            df = truth_data['top-heads']
+            i = obs_row.get('i')
+            j = obs_row.get('j')
+            if i is not None and j is not None:
+                i = int(i)
+                j = int(j)
+                # Match by kper, kstp, i, j
+                # Assuming the .dat file has columns: kper, kstp, i, j, head
+                if all(col in df.columns for col in ['kper', 'kstp', 'i', 'j']):
+                    mask = (df['kper'] == kper) & (df['kstp'] == kstp) & (df['i'] == i) & (df['j'] == j)
+                    row = df[mask]
+                    if len(row) > 0:
+                        # Try common column names for head values
+                        for head_col in ['head', 'heads', 'value']:
+                            if head_col in df.columns:
+                                return row[head_col].values[0]
             return None
 
         else:
@@ -222,15 +390,19 @@ def create_1to1_plots(run_name, model_name, post_iter=19, filter_file=None, suff
 
     # Load truth data
     print("\nLoading truth data...")
-    truth_data = load_truth_data()
+    truth_data = load_truth_data(run_name)
 
     # Filter observations:
     # 1. Non-zero weight
     # 2. Not a constraint (less_than/greater_than)
+    # 3. Not top-heads (excluded from plots per user requirement)
     obs_data['is_constraint'] = obs_data['obgnme'].apply(is_constraint_obs)
-    filtered_obs = obs_data[(obs_data['weight'] > 0) & (~obs_data['is_constraint'])].copy()
+    obs_data['is_top_heads'] = obs_data['oname'].apply(lambda x: str(x).lower() == 'top-heads')
+    filtered_obs = obs_data[(obs_data['weight'] > 0) &
+                            (~obs_data['is_constraint']) &
+                            (~obs_data['is_top_heads'])].copy()
 
-    print(f"\nFiltered observations (non-zero weight, non-constraint): {len(filtered_obs)}")
+    print(f"\nFiltered observations (non-zero weight, non-constraint, excluding top-heads): {len(filtered_obs)}")
 
     # Group by oname and usecol
     if 'usecol' not in filtered_obs.columns:
