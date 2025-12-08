@@ -430,21 +430,27 @@ def main():
             col = row['usecol']
 
             if col == 'pk4':
+                pst.observation_data.at[row.name, 'obgnme'] = 'pk4-heads'
                 try:
                     pst.observation_data.at[row.name, 'obsval'] = ts_heads.loc[time, col]
                     pst.observation_data.at[row.name, 'standard_deviation'] = ts_heads.loc[time, 'std']
                     pst.observation_data.at[row.name, 'weight'] = ts_heads.loc[time, 'weight']
                 except:
                     continue
-            elif col == 'pk4-diff' and time < 34:
-                try:
-                    pst.observation_data.at[row.name, 'obsval'] = ts_heads.loc[time, col]
-                    pst.observation_data.at[row.name, 'standard_deviation'] = (max(ts_heads.loc[:, col]) - min(ts_heads.loc[:, col])) / PEST_PP_OPTIONS['par_sigma_range']
-                    if pst.observation_data.at[row.name, 'standard_deviation'] > 0:
-                        pst.observation_data.at[row.name, 'weight'] = 1/pst.observation_data.at[row.name, 'standard_deviation']
-                except:
-                    continue
+            elif col == 'pk4-diff':
+                pst.observation_data.at[row.name, 'obgnme'] = 'pk4-diff'
+                
+                if time < 34:
+                    try:
+                        pst.observation_data.at[row.name, 'obsval'] = ts_heads.loc[time, col]
+                        pst.observation_data.at[row.name, 'standard_deviation'] = (max(ts_heads.loc[:, col]) - min(ts_heads.loc[:, col])) / PEST_PP_OPTIONS['par_sigma_range']
+                        if pst.observation_data.at[row.name, 'standard_deviation'] > 0:
+                            pst.observation_data.at[row.name, 'weight'] = 1/pst.observation_data.at[row.name, 'standard_deviation']
+                    except:
+                        continue
             elif col == 'pk4-spr-diff':
+                pst.observation_data.at[row.name, 'obgnme'] = 'pk4-spring-diff'
+                
                 try:
                     pst.observation_data.at[row.name, 'obsval'] = ts_heads.loc[time, col]
                     pst.observation_data.at[row.name, 'standard_deviation'] = ts_heads.loc[time, 'std']
@@ -453,6 +459,7 @@ def main():
                     continue
 
             elif col == 'pk4-aw-diff':
+                pst.observation_data.at[row.name, 'obgnme'] = 'pk4-aw-diff'
                 try:
                     pst.observation_data.at[row.name, 'obsval'] = ts_heads.loc[time, col]
                     pst.observation_data.at[row.name, 'standard_deviation'] = ts_heads.loc[time, 'std']*10
@@ -467,17 +474,20 @@ def main():
             kstp = int(row['kstp'])
             i = int(row['i'])
             j = int(row['j'])
+            pst.observation_data.at[row.name, 'obgnme'] = 'aw-q'
             
             if kper == 1:
                 pst.observation_data.at[row.name, 'obsval'] = AWq.loc[(kper, kstp, i, j), 'AWq']
-                pst.observation_data.at[row.name, 'standard_deviation'] = AWq.loc[(kper, kstp, i, j), 'std']
-                pst.observation_data.at[row.name, 'weight'] = AWq.loc[(kper, kstp, i, j), 'weight']
+                pst.observation_data.at[row.name, 'standard_deviation'] = AWq.loc[(kper, kstp, i, j), 'std']*10
+                if pst.observation_data.at[row.name, 'standard_deviation'] > 0:
+                    pst.observation_data.at[row.name, 'weight'] = 1/pst.observation_data.at[row.name, 'standard_deviation']
         
         elif oname == 'arr-spq':
             kper = int(row['kper'])
             kstp = int(row['kstp'])
             i = int(row['i'])
             j = int(row['j'])
+            pst.observation_data.at[row.name, 'obgnme'] = 'spring-q'
             
             if (kper < 3) and (kstp < 35):
                 pst.observation_data.at[row.name, 'obsval'] = SPq.loc[(kper, kstp, i, j), 'SPq']
@@ -490,6 +500,7 @@ def main():
             kper = int(row['kper'])
             kstp = int(row['kstp'])
             idom = ib[0, i-1, j-1]
+            pst.observation_data.at[row.name, 'obgnme'] = 'top-heads'
 
             if (kstp in np.arange(1,35, 10)):
                 # if idom == 1 & (i % 10 == 0) & (j % 10 == 0):
@@ -500,7 +511,7 @@ def main():
                 pst.observation_data.at[row.name, 'obsval'] = heads[i, j]
                 pst.observation_data.at[row.name, 'standard_deviation'] = heads_std[i, j]
                 pst.observation_data.at[row.name, 'weight'] = heads_weight[i, j]
-                pst.observation_data.at[row.name, 'obgnme'] = 'less_' + row['obgnme']
+                pst.observation_data.at[row.name, 'obgnme'] = 'less_' + pst.observation_data.at[row.name, 'obgnme']
                 pst.observation_data.at[row.name, 'drop_violations'] = True
             
         
@@ -508,13 +519,15 @@ def main():
             kper = int(row['kper'])
             col = row['usecol']
 
-            if (col in ['sw']): 
+            if (col in ['sw']):
+                pst.observation_data.at[row.name, 'obgnme'] = 'budget-sw'
                 pst.observation_data.at[row.name, 'obsval'] = budget.loc[kper, col]
-                pst.observation_data.at[row.name, 'obgnme'] = 'greater_' + row['obgnme']
+                pst.observation_data.at[row.name, 'obgnme'] = 'greater_' + pst.observation_data.at[row.name, 'obgnme']
                 pst.observation_data.at[row.name, 'standard_deviation'] = budget.loc[kper, 'sw_std']
                 pst.observation_data.at[row.name, 'weight'] = budget.loc[kper, 'sw_weight']
                 
-            elif (col in ['recharge']):
+            elif (col in ['rch']):
+                pst.observation_data.at[row.name, 'obgnme'] = 'budget-rch'
                 pst.observation_data.at[row.name, 'obsval'] = budget.loc[kper, col]
                 pst.observation_data.at[row.name, 'standard_deviation'] = budget.loc[kper, 'rch_std']
                 pst.observation_data.at[row.name, 'weight'] = budget.loc[kper, 'rch_weight']
@@ -538,41 +551,41 @@ def main():
     # PEST++ does pattern matching on phi factors, so obg1 matches obg1, obg10, obg11, etc.
     # Add unique numeric prefix to each group (e.g., 1obg0, 2obg1, 3obg2, 4obg10, etc.)
     # For less_/greater_ groups, map them to the same base group
-    print('\nRenaming observation groups to avoid PEST++ pattern matching conflicts...')
+    # print('\nRenaming observation groups to avoid PEST++ pattern matching conflicts...')
 
-    # First, identify base groups (without less_/greater_ prefix)
-    base_groups = set()
-    for obgnme in pst.observation_data['obgnme'].unique():
-        if obgnme.startswith('less_') or obgnme.startswith('greater_'):
-            # Extract base group name
-            base = obgnme.split('_', 1)[1]
-            base_groups.add(base)
-        else:
-            base_groups.add(obgnme)
+    # # First, identify base groups (without less_/greater_ prefix)
+    # base_groups = set()
+    # for obgnme in pst.observation_data['obgnme'].unique():
+    #     if obgnme.startswith('less_') or obgnme.startswith('greater_'):
+    #         # Extract base group name
+    #         base = obgnme.split('_', 1)[1]
+    #         base_groups.add(base)
+    #     else:
+    #         base_groups.add(obgnme)
 
-    # Create mapping for base groups with unique prefixes
-    base_to_new = {}
-    for idx, base in enumerate(sorted(base_groups), start=1):
-        base_to_new[base] = f"{idx}{base}"
+    # # Create mapping for base groups with unique prefixes
+    # base_to_new = {}
+    # for idx, base in enumerate(sorted(base_groups), start=1):
+    #     base_to_new[base] = f"{idx}{base}"
 
-    # Create mapping of old to new names
-    old_to_new = {}
-    for obgnme in pst.observation_data['obgnme'].unique():
-        if obgnme.startswith('less_'):
-            base = obgnme.split('_', 1)[1]
-            old_to_new[obgnme] = f"less_{base_to_new[base]}"
-        elif obgnme.startswith('greater_'):
-            base = obgnme.split('_', 1)[1]
-            old_to_new[obgnme] = f"greater_{base_to_new[base]}"
-        else:
-            old_to_new[obgnme] = base_to_new[obgnme]
+    # # Create mapping of old to new names
+    # old_to_new = {}
+    # for obgnme in pst.observation_data['obgnme'].unique():
+    #     if obgnme.startswith('less_'):
+    #         base = obgnme.split('_', 1)[1]
+    #         old_to_new[obgnme] = f"less_{base_to_new[base]}"
+    #     elif obgnme.startswith('greater_'):
+    #         base = obgnme.split('_', 1)[1]
+    #         old_to_new[obgnme] = f"greater_{base_to_new[base]}"
+    #     else:
+    #         old_to_new[obgnme] = base_to_new[obgnme]
 
-    # Apply renaming
-    pst.observation_data['obgnme'] = pst.observation_data['obgnme'].map(old_to_new)
+    # # Apply renaming
+    # pst.observation_data['obgnme'] = pst.observation_data['obgnme'].map(old_to_new)
 
-    print('\nRenamed observation groups to avoid PEST++ pattern matching conflicts:')
-    for old, new in old_to_new.items():
-        print(f'  {old:20s} -> {new}')
+    # print('\nRenamed observation groups to avoid PEST++ pattern matching conflicts:')
+    # for old, new in old_to_new.items():
+    #     print(f'  {old:20s} -> {new}')
 
     # PHI FACTORS ------------------------------------------------------
     # map dict for phi factors
